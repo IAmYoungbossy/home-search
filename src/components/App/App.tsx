@@ -1,9 +1,9 @@
-import React from 'react';
+import Header from "../Header/Header";
 
 function App() {
   return (
     <div>
-      <h1>Home Search</h1>
+      <Header />
     </div>
   );
 }
