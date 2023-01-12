@@ -6,6 +6,7 @@ const StyledHeader = styled.header`
   padding: 2px;
   align-items: center;
   justify-content: space-around;
+  font-family: Roboto, sans-serif;
 `;
 
 export default function Header() {
@@ -74,7 +75,6 @@ const StyledNavLinks = styled.nav`
       font-size: 14px;
       list-style: none;
       position: relative;
-      font-family: Roboto, sans-serif;
     }
 
     & > li > sup {
