@@ -35,15 +35,20 @@ export const StyledNavLinks = styled.nav`
     justify-content: space-between;
 
     & > li {
-      padding: 0 8px;
       cursor: pointer;
       font-size: 14px;
       list-style: none;
+      padding: 13px 8px;
       position: relative;
+
+      &:hover {
+        padding: 13px 8px 10px;
+        border-bottom: 3px solid #d92228;
+      }
     }
 
     & > li > sup {
-      top: -2px;
+      top: 10px;
       font-size: 11px;
       position: absolute;
     }
