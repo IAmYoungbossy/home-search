@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const StyledHeader = styled.header`
   display: flex;
-  padding: 10px;
+  padding: 2px;
   align-items: center;
   justify-content: space-around;
 `;
@@ -13,8 +13,7 @@ export default function Header() {
     <StyledHeader>
       <HeaderLogoAndNav />
       <CTAButtons />
-      <HeartSVG />
-      <UserButton />
+      <UserIcon />
     </StyledHeader>
   );
 }
@@ -64,7 +63,7 @@ const navLinks = [
 ];
 const StyledNavLinks = styled.nav`
   & > ul {
-    gap: 4px;
+    gap: 1px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -74,18 +73,32 @@ const StyledNavLinks = styled.nav`
       cursor: pointer;
       font-size: 14px;
       list-style: none;
+      position: relative;
       font-family: Roboto, sans-serif;
+    }
+
+    & > li > sup {
+      top: -2px;
+      font-size: 11px;
+      position: absolute;
     }
   }
 `;
 function NavLinks() {
+  const showList = (link: string) => {
+    if (link === "Find Realtors")
+      return (
+        <li key={link}>
+          {link}
+          <sup>&reg;</sup>
+        </li>
+      );
+    return <li key={link}>{link}</li>;
+  };
+
   return (
     <StyledNavLinks>
-      <ul>
-        {navLinks.map((link) => (
-          <li key={link}>{link}</li>
-        ))}
-      </ul>
+      <ul>{navLinks.map(showList)}</ul>
     </StyledNavLinks>
   );
 }
@@ -100,7 +113,7 @@ const StyledCTAButtons = styled.div`
 `;
 const Button = styled.button`
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 6px 12px;
   width: max-content;
   border-radius: 5px;
   border: 1px solid #a0a0a0;
@@ -121,6 +134,53 @@ function CTAButtons() {
     </StyledCTAButtons>
   );
 }
+
+// User account
+const StyledUserIcon = styled.div`
+  gap: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+function UserIcon() {
+  return (
+    <StyledUserIcon>
+      <HeartSVG />
+      <UserButton />
+    </StyledUserIcon>
+  );
+}
+
+function UserButton() {
+  return (
+    <StyledUserButton>
+      <UserSVG />
+      <ArrowDown />
+    </StyledUserButton>
+  );
+}
+
+// SVG Icons
+const StyledUserButton = styled(Button)`
+  width: 80px;
+  display: flex;
+  padding: 2px 10px;
+  align-items: center;
+  border-radius: 20px;
+  justify-content: space-evenly;
+  &:hover {
+    background: none;
+    svg {
+      path {
+        fill: red;
+      }
+      &:hover {
+        fill: red;
+      }
+    }
+  }
+`;
 
 const StyledHeartSVG = styled.div`
   & > svg {
@@ -152,23 +212,6 @@ function HeartSVG() {
   );
 }
 
-const StyledUserButton = styled(Button)`
-  width: 80px;
-  display: flex;
-  position: relative;
-  align-items: center;
-  border-radius: 20px;
-`;
-
-function UserButton() {
-  return (
-    <StyledUserButton>
-      <UserSVG />
-      <ArrowDown />
-    </StyledUserButton>
-  );
-}
-
 function UserSVG() {
   return (
     <StyledHeartSVG>
@@ -176,11 +219,15 @@ function UserSVG() {
         xmlns="http://www.w3.org/2000/svg"
         width="20"
         height="20"
-        stroke="#000"
-        strokeWidth="0.001"
-        viewBox="0 0 96 96"
+        fill="none"
+        viewBox="0 0 28 28"
       >
-        <path d="M69.368 51.006a30 30 0 10-42.736 0A41.997 41.997 0 000 90a5.997 5.997 0 006 6h84a5.997 5.997 0 006-6 41.997 41.997 0 00-26.632-38.994zM48 12a18 18 0 11-18 18 18.02 18.02 0 0118-18zM12.598 84A30.062 30.062 0 0142 60h12a30.062 30.062 0 0129.402 24z"></path>
+        <path
+          fill="#000"
+          fillRule="evenodd"
+          d="M14 2c-3.36 0-6.11 2.674-6.11 6.007 0 2.143 1.136 4.013 2.84 5.075-4.774 1.443-8.31 5.932-8.724 10.995-.09 1.096.81 1.923 1.81 1.923h20.367c1.001 0 1.9-.826 1.81-1.923-.413-5.063-3.95-9.553-8.724-10.995 1.704-1.063 2.84-2.933 2.84-5.075 0-3.333-2.751-6.007-6.11-6.007zM9.74 8.007c0-2.281 1.892-4.159 4.26-4.159 2.367 0 4.258 1.878 4.258 4.16 0 2.28-1.891 4.158-4.259 4.158-2.367 0-4.258-1.877-4.258-4.159zM4.95 24.152c-.586 0-1.051-.506-.94-1.082.931-4.786 5.088-8.622 9.99-8.622s9.059 3.836 9.99 8.622c.111.576-.354 1.082-.94 1.082H4.95z"
+          clipRule="evenodd"
+        ></path>
       </svg>
     </StyledHeartSVG>
   );
@@ -191,13 +238,15 @@ function ArrowDown() {
     <StyledHeartSVG>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="44"
-        height="44"
-        viewBox="0 0 1024 1024"
+        width="25"
+        height="25"
+        fill="currentColor"
+        className="bi bi-chevron-down"
+        viewBox="0 0 16 16"
       >
         <path
-          fill="black"
-          d="M705.6 376.2L512 569.8 318.5 376.2 266.7 428 512 673.2 757.3 428z"
+          fillRule="evenodd"
+          d="M1.646 4.646a.5.5 0 01.708 0L8 10.293l5.646-5.647a.5.5 0 01.708.708l-6 6a.5.5 0 01-.708 0l-6-6a.5.5 0 010-.708z"
         ></path>
       </svg>
     </StyledHeartSVG>
