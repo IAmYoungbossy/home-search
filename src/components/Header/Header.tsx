@@ -10,6 +10,7 @@ import {
 } from "./Header.styled";
 import Logo from "../assets/header/Logo.svg";
 import { ArrowDownSVG, HeartSVG, UserSVG } from "../assets/header/SvgMarkUp";
+import { dropdownList } from "./dropdownList";
 
 export default function Header() {
   return (
@@ -95,4 +96,27 @@ function UserButton() {
       <ArrowDownSVG />
     </StyledUserButton>
   );
+}
+
+type sectionType = { SectionName: string; SectionList: string[] }[];
+
+const getDropDown = (navLinkName: string) =>
+  dropdownList.filter((dropDown) => dropDown.LinkName === navLinkName)[0];
+
+const getSectionList = (section: sectionType) => {
+  const sectionHeader = section[0].SectionName;
+  const lists = (list: string) => <li>{list}</li>;
+  const sectionLists = section[0].SectionList.map(lists);
+  return (
+    <>
+      <h4>{sectionHeader}</h4>
+      <ul>{sectionLists}</ul>
+    </>
+  );
+};
+
+function DropDownList(navLinkName: string) {
+  const dropDownObj = getDropDown(navLinkName);
+  const sectionList = dropDownObj.dropDown.map(getSectionList);
+  return sectionList;
 }

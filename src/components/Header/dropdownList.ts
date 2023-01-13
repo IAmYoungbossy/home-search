@@ -1,11 +1,11 @@
 export const dropdownList = [
   {
     LinkName: "Buy",
-    Lists: [
+    dropDown: [
       [
         {
-          Section: "Homes for Sale",
-          lists: [
+          SectionName: "Homes for Sale",
+          SectionList: [
             "Surprise Homes For Sale",
             "Surprise Foreclosures",
             "Surprise Open Houses",
@@ -19,8 +19,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Homes Values",
-          lists: [
+          SectionName: "Homes Values",
+          SectionList: [
             "Surprise Housing Market",
             "Surprise Recently Sold",
             "Surprise Property Records",
@@ -29,8 +29,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Home Buying Tips",
-          lists: [
+          SectionName: "Home Buying Tips",
+          SectionList: [
             "Home Buying Checklist",
             "Home Buyers Reveal: 'What I Wish I Had Known Before Buying My First Home",
             "First-Time Home Buyer Resource Center",
@@ -43,11 +43,11 @@ export const dropdownList = [
   },
   {
     LinkName: "Sell",
-    Lists: [
+    dropDown: [
       [
         {
-          Section: "Home selling tools",
-          lists: [
+          SectionName: "Home selling tools",
+          SectionList: [
             "Find the right selling option for you",
             "Compare top agents with UpNest",
             "See What Your Home Is Worth",
@@ -56,8 +56,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Home selling advice",
-          lists: [
+          SectionName: "Home selling advice",
+          SectionList: [
             "Complete Guide To Selling Your Home",
             "hr",
             "Should I Sell My Home Now?",
@@ -72,19 +72,19 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Recently sold",
-          lists: ["Recently sold homes in Surprise"],
+          SectionName: "Recently sold",
+          SectionList: ["Recently sold homes in Surprise"],
         },
       ],
     ],
   },
   {
     LinkName: "Rent",
-    Lists: [
+    dropDown: [
       [
         {
-          Section: "Apartments For Rent",
-          lists: [
+          SectionName: "Apartments For Rent",
+          SectionList: [
             "Apartments for Rent in Surprise",
             "Houses for Rent in Surprise",
             "All Surprise Rentals",
@@ -93,8 +93,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Landlord Tools",
-          lists: [
+          SectionName: "Landlord Tools",
+          SectionList: [
             "Manage Rentals",
             "List Your Rentals",
             "Screen Tenants",
@@ -105,8 +105,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Home Renting Tips",
-          lists: [
+          SectionName: "Home Renting Tips",
+          SectionList: [
             "Renter's Resource Center",
             "Should I Rent Or Buy?",
             "Debunked! 8 Myths About Renting You Should Stop Believing Immediately",
@@ -120,11 +120,11 @@ export const dropdownList = [
   },
   {
     LinkName: "Mortgage",
-    Lists: [
+    dropDown: [
       [
         {
-          Section: "Mortgage Rates",
-          lists: [
+          SectionName: "Mortgage Rates",
+          SectionList: [
             "Get Pre-Approved",
             "Surprise Mortgage Rates",
             "Home Equity Financing Rates",
@@ -136,8 +136,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Calculators",
-          lists: [
+          SectionName: "Calculators",
+          SectionList: [
             "Mortgage Calculator",
             "Refinance Calculator",
             "How Much House Can I Afford",
@@ -147,8 +147,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Financial Advice",
-          lists: [
+          SectionName: "Financial Advice",
+          SectionList: [
             "6 Ways Home Buyers Mess Up Getting A Mortgage",
             "Mortgage Guide",
             "Learn About Home Insurance",
@@ -160,11 +160,11 @@ export const dropdownList = [
   },
   {
     LinkName: "Find Realtors",
-    Lists: [
+    dropDown: [
       [
         {
-          Section: "Find REALTORS",
-          lists: [
+          SectionName: "Find REALTORS",
+          SectionList: [
             "Top Rated Surprise REALTORS",
             "Search For Real Estate Agent",
           ],
@@ -172,8 +172,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Why Use A REALTOR",
-          lists: [
+          SectionName: "Why Use A REALTOR",
+          SectionList: [
             "6 Reasons You Should Never Buy Or Sell A Home Without An Agent",
             "Difference Between Agent, Broker & Realtor",
             "Listing vs. Buyer Agent",
@@ -183,8 +183,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "News Around REALTORS",
-          lists: [
+          SectionName: "News Around REALTORS",
+          SectionList: [
             "Real Estate Agents Reveal the Toughest Home Buyers They've Ever Met",
             "More News Around REALTORS®",
           ],
@@ -194,11 +194,11 @@ export const dropdownList = [
   },
   {
     LinkName: "News & Insights",
-    Lists: [
+    dropDown: [
       [
         {
-          Section: "News",
-          lists: [
+          SectionName: "News",
+          SectionList: [
             "The Latest News",
             "Housing Trends",
             "Real Estate News",
@@ -211,8 +211,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Insights",
-          lists: [
+          SectionName: "Insights",
+          SectionList: [
             "Buying",
             "Selling",
             "Renting",
@@ -228,8 +228,8 @@ export const dropdownList = [
       ],
       [
         {
-          Section: "Guides & More",
-          lists: [
+          SectionName: "Guides & More",
+          SectionList: [
             "All Guides",
             "Complete Guide on How to Sell your Home",
             "First-Time Home Buyer Resource Center",
