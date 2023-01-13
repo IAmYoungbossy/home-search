@@ -39,16 +39,26 @@ export const StyledNavLinks = styled.nav`
       font-size: 14px;
       list-style: none;
       padding: 13px 8px;
-      position: relative;
+
+      & > div:first-of-type {
+        position: relative;
+      }
+
+      & > div:nth-child(2) {
+        display: none;
+      }
 
       &:hover {
         padding: 13px 8px 10px;
         border-bottom: 3px solid #d92228;
+        & > div:last-of-type {
+          display: flex;
+        }
       }
     }
 
-    & > li > sup {
-      top: 10px;
+    & > li > div > sup {
+      top: -3px;
       font-size: 11px;
       position: absolute;
     }
@@ -102,5 +112,30 @@ export const StyledUserButton = styled(Button)`
         fill: red;
       }
     }
+  }
+`;
+
+export const DropDown = styled.div`
+  left: 0;
+  top: 44px;
+  width: 100%;
+  display: flex;
+  padding: 15px 0;
+  position: absolute;
+  justify-content: space-around;
+
+  section {
+    flex: 1;
+    max-width: 355px;
+    padding: 0px 16px 0 5px;
+  }
+
+  li {
+    list-style: none;
+    line-height: 25px;
+  }
+
+  h4 {
+    margin: 16px 0 10px;
   }
 `;

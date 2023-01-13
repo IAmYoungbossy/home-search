@@ -7,10 +7,11 @@ import {
   StyledUserButton,
   StyledHeaderLogo,
   StyledHeaderLogoAndNav,
+  DropDown,
 } from "./Header.styled";
 import Logo from "../assets/header/Logo.svg";
-import { ArrowDownSVG, HeartSVG, UserSVG } from "../assets/header/SvgMarkUp";
 import { dropdownList } from "./dropdownList";
+import { ArrowDownSVG, HeartSVG, UserSVG } from "../assets/header/SvgMarkUp";
 
 export default function Header() {
   return (
@@ -49,16 +50,28 @@ const navLinks = [
   "News & Insights",
 ];
 
+type ListType = { children?: JSX.Element; link: string };
+
+const List = ({ children, link }: ListType) => {
+  return (
+    <li key={link}>
+      <div>
+        {link}
+        <sup>&reg;</sup>
+      </div>
+      {children}
+    </li>
+  );
+};
+
 function NavLinks() {
   const showList = (link: string) => {
-    if (link === "Find Realtors")
-      return (
-        <li key={link}>
-          {link}
-          <sup>&reg;</sup>
-        </li>
-      );
-    return <li key={link}>{link}</li>;
+    if (link === "Find Realtors") return <List link={link} />;
+    return (
+      <List link={link}>
+        <DropDown>{DropDownList({ navLinkName: link })}</DropDown>
+      </List>
+    );
   };
 
   return (
@@ -99,24 +112,30 @@ function UserButton() {
 }
 
 type sectionType = { SectionName: string; SectionList: string[] }[];
+type sectionListType = { SectionName: string; SectionList: string[] };
 
 const getDropDown = (navLinkName: string) =>
   dropdownList.filter((dropDown) => dropDown.LinkName === navLinkName)[0];
 
-const getSectionList = (section: sectionType) => {
-  const sectionHeader = section[0].SectionName;
-  const lists = (list: string) => <li>{list}</li>;
-  const sectionLists = section[0].SectionList.map(lists);
+const listItems = (list: string, index: number) => <li key={index}>{list}</li>;
+
+const displaySectionList = (sectionList: sectionListType) => {
+  const header = sectionList.SectionName;
+  const lists = sectionList.SectionList.map(listItems);
   return (
-    <>
-      <h4>{sectionHeader}</h4>
-      <ul>{sectionLists}</ul>
-    </>
+    <section key={header}>
+      <h4>{header}</h4>
+      <ul>{lists}</ul>
+    </section>
   );
 };
 
-function DropDownList(navLinkName: string) {
+const getSectionList = (section: sectionType) =>
+  section.map(displaySectionList);
+
+function DropDownList({ navLinkName }: { navLinkName: string }) {
   const dropDownObj = getDropDown(navLinkName);
+  if (!dropDownObj) return null;
   const sectionList = dropDownObj.dropDown.map(getSectionList);
   return sectionList;
 }

@@ -177,7 +177,7 @@ export const dropdownList = [
             "6 Reasons You Should Never Buy Or Sell A Home Without An Agent",
             "Difference Between Agent, Broker & Realtor",
             "Listing vs. Buyer Agent",
-            "How To Find A REALTOR®",
+            "How To Find A REALTOR",
           ],
         },
       ],
@@ -186,7 +186,7 @@ export const dropdownList = [
           SectionName: "News Around REALTORS",
           SectionList: [
             "Real Estate Agents Reveal the Toughest Home Buyers They've Ever Met",
-            "More News Around REALTORS®",
+            "More News Around REALTORS",
           ],
         },
       ],
