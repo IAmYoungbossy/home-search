@@ -123,10 +123,12 @@ export const StyledUserButton = styled(Button)`
 export const DropDown = styled.div`
   left: 0;
   top: 46px;
+  z-index: 1;
   width: 100%;
   display: flex;
   padding: 15px 0;
   position: absolute;
+  background-color: white;
   justify-content: space-around;
 
   section {

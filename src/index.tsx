@@ -16,6 +16,7 @@ const GlobalCSS = createGlobalStyle`
   }
   body {
     min-height: 100vh;
+    font-family: Roboto, san-serif;
   }
 `;
 
