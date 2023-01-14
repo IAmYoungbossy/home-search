@@ -57,6 +57,7 @@ export const StyledNavLinks = styled.nav`
         border-bottom: 3px solid #d92228;
         & > div:last-of-type {
           display: flex;
+          border-top: 1px solid #cacaca;
         }
       }
     }
@@ -121,7 +122,7 @@ export const StyledUserButton = styled(Button)`
 
 export const DropDown = styled.div`
   left: 0;
-  top: 44px;
+  top: 46px;
   width: 100%;
   display: flex;
   padding: 15px 0;
@@ -136,7 +137,11 @@ export const DropDown = styled.div`
 
   li {
     list-style: none;
-    line-height: 25px;
+    line-height: 28px;
+  }
+
+  hr {
+    margin: 15px 0;
   }
 
   h4 {
