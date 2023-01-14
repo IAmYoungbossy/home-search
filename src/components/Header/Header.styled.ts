@@ -6,6 +6,10 @@ export const StyledHeader = styled.header`
   align-items: center;
   justify-content: space-around;
   font-family: Roboto, sans-serif;
+
+  sup {
+    font-size: 10px;
+  }
 `;
 
 // Header logo and Nav links container
