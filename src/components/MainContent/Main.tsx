@@ -1,9 +1,9 @@
-import NewListing from "./NewListing";
+import NewListingContainer from "./NewListing";
 
 export default function MainLandingPage() {
   return (
     <main>
-      <NewListing />
+      <NewListingContainer />
     </main>
   );
 }

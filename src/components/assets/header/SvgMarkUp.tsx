@@ -109,6 +109,8 @@ function HeartSaveSVG() {
       width="64"
       height="64"
       fill="#000"
+      stroke="#000"
+      strokeWidth="5.12"
       version="1.1"
       viewBox="0 0 511.999 511.999"
       xmlSpace="preserve"
