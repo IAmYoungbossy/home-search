@@ -15,6 +15,7 @@ export const StyledHeroText = styled.div`
   display: flex;
   position: absolute;
   align-items: center;
+  justify-content: center;
 
   h1 {
     font-size: 56px;
@@ -25,18 +26,20 @@ export const StyledHeroText = styled.div`
   p {
     font-size: 20px;
     line-height: 1.5;
-    margin: 6px 0 32px;
+    margin: 4px 0 32px;
     text-shadow: rgb(0 0 0 / 50%) 0px 1px 3px;
   }
 
   div {
-    margin: 0 auto 35px;
+    /* margin: 0 auto 35px; */
     text-align: center;
     width: max-content;
+    margin-bottom: 35px;
     ul {
       gap: 10px;
       display: flex;
-      padding: 0 20px;
+      padding: 0 25px;
+      margin-bottom: 25px;
       text-align: center;
       justify-content: space-evenly;
     }
@@ -57,7 +60,8 @@ export const StyledHeroText = styled.div`
 
   & > div > div:last-of-type {
     width: 100%;
-    margin-top: 50px;
+    height: fit-content;
+    /* margin-top: 50px; */
     position: relative;
 
     button {

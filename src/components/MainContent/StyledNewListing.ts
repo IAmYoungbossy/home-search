@@ -1,26 +1,31 @@
 import styled from "styled-components";
 
 export const StyledNewListingContainer = styled.div`
-  & > div:first-child {
-    display: flex;
-    line-height: 1.5;
-    color: #2b2b4c;
-    margin: 15px 0 11px;
-    flex-direction: column;
-    p {
-      color: #3377d5;
-    }
-  }
-
   & > div {
-    display: flex;
-    padding: 5px 0;
-    overflow-x: auto;
+    max-width: 1280px;
+    margin: 15px auto 11px;
+
+    & > div:first-child {
+      display: flex;
+      line-height: 1.5;
+      color: #2b2b4c;
+      flex-direction: column;
+      p {
+        color: #3377d5;
+      }
+    }
+
+    & > div {
+      display: flex;
+      padding: 5px 0;
+      overflow-x: auto;
+      justify-content: space-between;
+    }
   }
 `;
 
 export const StyledNewListing = styled.div`
-  margin: 0 auto;
+  /* margin: 0 auto; */
   color: #2b2b2b;
   width: max-content;
   box-shadow: 0px 0px 8px rgb(0 0 0 / 15%);

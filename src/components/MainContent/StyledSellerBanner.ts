@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const StyledSellerBanner = styled.div`
   display: flex;
+  max-width: 1280px;
   margin: 50px auto;
-  width: max-content;
   background-color: #f7f7f7;
 
   h2 {

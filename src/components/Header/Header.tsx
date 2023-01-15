@@ -17,9 +17,11 @@ import { ArrowDownSVG, HeartSVG, UserSVG } from "../assets/header/SvgMarkUp";
 export default function Header() {
   return (
     <StyledHeader>
-      <HeaderLogoAndNav />
-      <CTAButtons />
-      <UserIcon />
+      <div>
+        <HeaderLogoAndNav />
+        <CTAButtons />
+        <UserIcon />
+      </div>
     </StyledHeader>
   );
 }
@@ -76,7 +78,9 @@ function NavLinks() {
   const showList = (link: string) => {
     return (
       <List link={link} key={link}>
-        <DropDown>{DropDownList({ navLinkName: link })}</DropDown>
+        <DropDown>
+          <div>{DropDownList({ navLinkName: link })}</div>
+        </DropDown>
       </List>
     );
   };

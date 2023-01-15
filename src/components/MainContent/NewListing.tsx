@@ -12,14 +12,16 @@ export default function NewListingContainer() {
   return (
     <StyledNewListingContainer>
       <div>
-        <h2>New Listings in Surprise, AZ</h2>
-        <p>View All 356 New Listings</p>
-      </div>
-      <div>
-        <NewListingCard />
-        <NewListingCard />
-        <NewListingCard />
-        <NewListingCard />
+        <div>
+          <h2>New Listings in Surprise, AZ</h2>
+          <p>View All 356 New Listings</p>
+        </div>
+        <div>
+          <NewListingCard />
+          <NewListingCard />
+          <NewListingCard />
+          <NewListingCard />
+        </div>
       </div>
     </StyledNewListingContainer>
   );

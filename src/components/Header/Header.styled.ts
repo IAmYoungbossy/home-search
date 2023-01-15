@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
 export const StyledHeader = styled.header`
-  display: flex;
-  padding: 2px;
-  align-items: center;
-  justify-content: space-around;
-  font-family: Roboto, sans-serif;
+  & > div {
+    padding: 2px;
+    display: flex;
+    margin: 0 auto;
+    max-width: 1280px;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Roboto, sans-serif;
 
-  sup {
-    font-size: 10px;
+    sup {
+      font-size: 10px;
+    }
   }
 `;
 
@@ -125,28 +129,31 @@ export const DropDown = styled.div`
   top: 46px;
   z-index: 1;
   width: 100%;
-  display: flex;
-  padding: 15px 0;
+  /* padding: 15px 0; */
   position: absolute;
   background-color: white;
-  justify-content: space-around;
+  & > div {
+    width: 100%;
+    display: flex;
+    max-width: 1280px;
+    justify-content: space-between;
+    margin: 0 auto;
+    section {
+      flex: 0 0 33.33%;
+      padding: 0px 16px 0 5px;
+    }
 
-  section {
-    flex: 1;
-    max-width: 355px;
-    padding: 0px 16px 0 5px;
-  }
+    li {
+      list-style: none;
+      line-height: 28px;
+    }
 
-  li {
-    list-style: none;
-    line-height: 28px;
-  }
+    hr {
+      margin: 15px 0;
+    }
 
-  hr {
-    margin: 15px 0;
-  }
-
-  h4 {
-    margin: 16px 0 10px;
+    h4 {
+      margin: 16px 0 10px;
+    }
   }
 `;

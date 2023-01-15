@@ -16,7 +16,6 @@ const GlobalCSS = createGlobalStyle`
   }
   body {
     min-height: 100vh;
-    overflow-x: hidden;
     font-family: Roboto, san-serif;
   }
 `;
