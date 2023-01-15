@@ -75,7 +75,7 @@ const navLinks = [
 function NavLinks() {
   const showList = (link: string) => {
     return (
-      <List link={link}>
+      <List link={link} key={link}>
         <DropDown>{DropDownList({ navLinkName: link })}</DropDown>
       </List>
     );
