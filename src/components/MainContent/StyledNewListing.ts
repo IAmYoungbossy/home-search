@@ -5,9 +5,8 @@ export const StyledNewListingContainer = styled.div`
     display: flex;
     line-height: 1.5;
     color: #2b2b4c;
-    margin: 20px 0 16px;
+    margin: 15px 0 11px;
     flex-direction: column;
-
     p {
       color: #3377d5;
     }
@@ -15,6 +14,7 @@ export const StyledNewListingContainer = styled.div`
 
   & > div {
     display: flex;
+    padding: 5px 0;
     overflow-x: auto;
   }
 `;
