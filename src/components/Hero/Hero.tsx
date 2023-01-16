@@ -4,8 +4,7 @@ import { SearchSVG } from "../assets/header/SvgMarkUp";
 
 export default function Hero() {
   return (
-    <StyledHero>
-      <img src={HeroImage} alt="Lanscape of beautiful houses" />
+    <StyledHero bgImage={HeroImage}>
       <HeroText />
     </StyledHero>
   );

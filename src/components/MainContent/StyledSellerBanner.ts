@@ -10,12 +10,20 @@ export const StyledSellerBanner = styled.div`
     font-size: 34px;
   }
 
+  div {
+    flex: 1;
+  }
+
   & > div:first-child {
     display: flex;
     align-items: flex-start;
     flex-direction: column;
     padding: 40px 0 40px 50px;
     justify-content: space-between;
+  }
+
+  img {
+    width: 100%;
   }
 
   button {

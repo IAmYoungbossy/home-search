@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
-export const StyledHero = styled.div`
+export const StyledHero = styled.div<{ bgImage: string }>`
+  width: 100%;
   color: white;
+  height: 440px;
   position: relative;
-  img {
-    width: 100%;
-  }
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(${({ bgImage }) => bgImage});
 `;
 
 export const StyledHeroText = styled.div`
@@ -31,7 +34,6 @@ export const StyledHeroText = styled.div`
   }
 
   div {
-    /* margin: 0 auto 35px; */
     text-align: center;
     width: max-content;
     margin-bottom: 35px;
@@ -61,7 +63,6 @@ export const StyledHeroText = styled.div`
   & > div > div:last-of-type {
     width: 100%;
     height: fit-content;
-    /* margin-top: 50px; */
     position: relative;
 
     button {

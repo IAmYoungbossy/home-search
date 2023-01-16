@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledNewListingContainer = styled.div`
+  margin-top: 50px;
   & > div {
     max-width: 1280px;
     margin: 15px auto 11px;
@@ -10,14 +11,16 @@ export const StyledNewListingContainer = styled.div`
       line-height: 1.5;
       color: #2b2b4c;
       flex-direction: column;
+
       p {
         color: #3377d5;
       }
     }
 
     & > div {
+      gap: 10px;
       display: flex;
-      padding: 5px 0;
+      padding: 5px;
       overflow-x: auto;
       justify-content: space-between;
     }
@@ -25,7 +28,6 @@ export const StyledNewListingContainer = styled.div`
 `;
 
 export const StyledNewListing = styled.div`
-  /* margin: 0 auto; */
   color: #2b2b2b;
   width: max-content;
   box-shadow: 0px 0px 8px rgb(0 0 0 / 15%);
