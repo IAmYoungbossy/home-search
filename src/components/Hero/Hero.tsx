@@ -1,6 +1,10 @@
-import { StyledHero, StyledHeroText } from "./StyledHero";
-import HeroImage from "../assets/hp-hero-desktop-xl.webp";
 import { SearchSVG } from "../assets/header/SvgMarkUp";
+import HeroImage from "../assets/hp-hero-desktop-xl.webp";
+import {
+  StyledHero,
+  StyledHeroText,
+  StyledSearchInputField,
+} from "./StyledHero";
 
 export default function Hero() {
   return (
@@ -30,13 +34,19 @@ function HeroText() {
             <li key={link}>{link}</li>
           ))}
         </ul>
-        <div>
-          <input type="search" name="search" placeholder="Surprise, AZ" />
-          <button>
-            <SearchSVG />
-          </button>
-        </div>
+        <SearchInputField />
       </div>
     </StyledHeroText>
+  );
+}
+
+export function SearchInputField() {
+  return (
+    <StyledSearchInputField>
+      <input type="search" name="search" placeholder="Surprise, AZ" />
+      <button>
+        <SearchSVG />
+      </button>
+    </StyledSearchInputField>
   );
 }

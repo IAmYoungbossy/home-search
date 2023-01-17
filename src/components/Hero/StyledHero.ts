@@ -33,7 +33,7 @@ export const StyledHeroText = styled.div`
     text-shadow: rgb(0 0 0 / 50%) 0px 1px 3px;
   }
 
-  div {
+  & > div {
     text-align: center;
     width: max-content;
     margin-bottom: 35px;
@@ -59,29 +59,29 @@ export const StyledHeroText = styled.div`
       }
     }
   }
+`;
 
-  & > div > div:last-of-type {
-    width: 100%;
-    height: fit-content;
-    position: relative;
+export const StyledSearchInputField = styled.div`
+  width: 100%;
+  height: fit-content;
+  position: relative;
 
-    button {
-      top: 8px;
-      right: 7px;
-      width: 40px;
-      height: 40px;
-      border: none;
-      display: flex;
-      position: absolute;
-      border-radius: 50%;
-      align-items: center;
-      justify-content: center;
-      background-color: #d92228;
+  button {
+    top: 8px;
+    right: 7px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    display: flex;
+    position: absolute;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    background-color: #d92228;
 
-      &:hover {
-        background-color: rgb(184, 29, 34);
-        border-color: rgb(184, 29, 34);
-      }
+    &:hover {
+      background-color: rgb(184, 29, 34);
+      border-color: rgb(184, 29, 34);
     }
   }
 
