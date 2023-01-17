@@ -1,25 +1,29 @@
 import LocalHelpImage from "../assets/hp-local-desktop.jpg";
 import MortgageImage from "../assets/hp-hero-mortgage-desktop.jpg";
+import { SearchInputField } from "../Hero/Hero";
+import { StyledImage, StyledDetails, StyledWrapper } from "./StyledLoanAndInfo";
 
 export default function LoanAndInfo() {
-  return <div></div>;
+  return (
+    <div>
+      <Loan />
+      <LocalInfo />
+    </div>
+  );
 }
 
 function Loan() {
-  return <div></div>;
-}
-
-function LoanImage() {
   return (
-    <div>
-      <img src={MortgageImage} alt="People Around" />
-    </div>
+    <StyledWrapper>
+      <StyledImage bgImage={MortgageImage} />
+      <LoanDetails />
+    </StyledWrapper>
   );
 }
 
 function LoanDetails() {
   return (
-    <div>
+    <StyledDetails>
       <div>
         <h2>Need a home loan? Get pre-approved</h2>
         <p>
@@ -29,30 +33,30 @@ function LoanDetails() {
         <button>Get pre-approved now</button>
       </div>
       <small>Advertising disclosure</small>
-    </div>
+    </StyledDetails>
   );
 }
 
 function LocalInfo() {
-  return <div></div>;
-}
-
-function LocalInfoImage() {
   return (
-    <div>
-      <img src={LocalHelpImage} alt="Happy family" />
-    </div>
+    <StyledWrapper>
+      <LocalinfoDetails />
+      <StyledImage bgImage={LocalHelpImage} />
+    </StyledWrapper>
   );
 }
 
 function LocalinfoDetails() {
   return (
-    <div>
-      <h2>Get Local Info</h2>
-      <p>
-        Does it have pet-friendly rentals? How are the schools? Get important
-        local information on the area you're most interested in.
-      </p>
-    </div>
+    <StyledDetails>
+      <div>
+        <h2>Get Local Info</h2>
+        <p>
+          Does it have pet-friendly rentals? How are the schools? Get important
+          local information on the area you're most interested in.
+        </p>
+        <SearchInputField />
+      </div>
+    </StyledDetails>
   );
 }
