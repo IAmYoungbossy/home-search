@@ -1,5 +1,6 @@
-import Header from "../Header/Header";
 import Hero from "../Hero/Hero";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 import MainLandingPage from "../MainContent/Main";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
       <Header />
       <Hero />
       <MainLandingPage />
+      <Footer />
     </div>
   );
 }

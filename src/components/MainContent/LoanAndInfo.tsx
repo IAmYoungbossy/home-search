@@ -1,6 +1,6 @@
+import { SearchInputField } from "../Hero/Hero";
 import LocalHelpImage from "../assets/hp-local-desktop.jpg";
 import MortgageImage from "../assets/hp-hero-mortgage-desktop.jpg";
-import { SearchInputField } from "../Hero/Hero";
 import { StyledImage, StyledDetails, StyledWrapper } from "./StyledLoanAndInfo";
 
 export default function LoanAndInfo() {

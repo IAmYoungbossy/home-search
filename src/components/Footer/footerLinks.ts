@@ -1,0 +1,15 @@
+export const footerLinksArray = [
+  "About us",
+  "Careers",
+  "Accessibility",
+  "Feedback",
+  "Media room",
+  "Ad Choices",
+  "Advertise with us",
+  "Agent support",
+  "Privacy",
+  "Terms",
+  "Home made",
+  "Tech blog",
+  "sitemap",
+];
