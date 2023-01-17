@@ -1,3 +1,4 @@
+import DiscountCard from "./DiscountCard";
 import ListingStatistics from "./ListingStatistics";
 import NewListingContainer from "./NewListing";
 import { SellerBanner } from "./SellerBanner";
@@ -11,6 +12,7 @@ export default function MainLandingPage() {
       <NewListingContainer />
       <ListingStatistics />
       <Trends />
+      <DiscountCard />
     </main>
   );
 }
