@@ -1,14 +1,12 @@
-import Hero from "../Hero/Hero";
-import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import MainLandingPage from "../MainContent/Main";
+import Header from "../Header/Header";
+import LandingPage from "../LandingPage/LandingPage";
 
 function App() {
   return (
     <div>
       <Header />
-      <Hero />
-      <MainLandingPage />
+      <LandingPage />
       <Footer />
     </div>
   );
