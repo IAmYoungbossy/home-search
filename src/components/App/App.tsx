@@ -1,5 +1,4 @@
-import Footer from "../Footer/Footer";
-// import Header from "../Header/Header";
+// import Footer from "../Footer/Footer";
 // import LandingPage from "../LandingPage/LandingPage";
 import SocialPage from "../SocialPage/SocialPage";
 
@@ -8,7 +7,7 @@ function App() {
     <div>
       {/* <LandingPage /> */}
       <SocialPage />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

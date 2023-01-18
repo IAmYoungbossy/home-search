@@ -15,6 +15,7 @@ export const StyledHeaderSocial = styled.header`
 `;
 
 export const StyledSocialPage = styled.div`
+  min-height: 100vh;
   background-color: #dae0e6;
 `;
 
