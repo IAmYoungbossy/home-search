@@ -1,12 +1,13 @@
 import Footer from "../Footer/Footer";
-import Header from "../Header/Header";
-import LandingPage from "../LandingPage/LandingPage";
+// import Header from "../Header/Header";
+// import LandingPage from "../LandingPage/LandingPage";
+import SocialPage from "../SocialPage/SocialPage";
 
 function App() {
   return (
     <div>
-      <Header />
-      <LandingPage />
+      {/* <LandingPage /> */}
+      <SocialPage />
       <Footer />
     </div>
   );

@@ -56,7 +56,7 @@ function UserIcon() {
   );
 }
 
-function HeaderLogo() {
+export function HeaderLogo() {
   return (
     <StyledHeaderLogo>
       <img src={Logo} alt="Logo" />
