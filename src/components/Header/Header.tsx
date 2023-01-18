@@ -37,7 +37,7 @@ function HeaderLogoAndNav() {
 
 const buttonContent = ["Manage Rentals", "Advertise"];
 
-function CTAButtons() {
+export function CTAButtons() {
   return (
     <StyledCTAButtons>
       {buttonContent.map((content) => (
@@ -47,7 +47,7 @@ function CTAButtons() {
   );
 }
 
-function UserIcon() {
+export function UserIcon() {
   return (
     <StyledUserIcon>
       <HeartSVG />
