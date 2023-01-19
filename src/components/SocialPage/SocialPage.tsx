@@ -12,6 +12,8 @@ export default function SocialPage() {
         <CreatePost />
         <FilterBar />
         <ClientCard />
+        <ClientCard />
+        <ClientCard />
       </main>
     </StyledSocialPage>
   );
