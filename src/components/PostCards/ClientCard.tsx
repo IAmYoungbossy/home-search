@@ -16,6 +16,7 @@ function PostDetails() {
     <StyledPostDetails>
       <OriginalPoster />
       <HouseSpec />
+      <Description />
     </StyledPostDetails>
   );
 }
@@ -65,32 +66,68 @@ function HouseSpec() {
   );
 }
 
+function Description() {
+  return (
+    <StyledDescription>
+      <p>
+        Hello guys, it'll be nice if I can get an apartment around Ada George
+        area where there is federal light or Apara link road off NTA Road
+        Mgboaba. Thanks.
+      </p>
+    </StyledDescription>
+  );
+}
+
+const StyledDescription = styled.div`
+  z-index: 2;
+  padding: 2px;
+  border-top: none;
+  border-radius: 5px;
+  position: relative;
+  padding: 2px 19px 2px 2px;
+  background-color: white;
+  margin: -1px 10px 2px 41px;
+  border: 1px solid #d6d4d4;
+  border-top-left-radius: 0;
+`;
+
 const StyledHouseSpec = styled.div`
   display: flex;
   flex-wrap: wrap;
+  border-radius: 5px;
+  padding: 5px 16px 0;
+  margin: -7px 15px 0 22px;
+  border-top-left-radius: 0;
+  border-bottom-right-radius: 0;
+  justify-content: space-between;
+  border-left: 1px solid #ddc8c8;
+  border-bottom: 1px solid #ddc8c8;
 
   & > div {
-    flex: 1;
     padding: 3px 5px;
+    width: max-content;
+    text-align: start;
     border-radius: 20px;
   }
 
   & > div > p {
     font-size: 13px;
-    text-align: center;
+    color: #414244;
     min-width: max-content;
   }
 
   & > div > p:first-of-type {
-    margin: 0 auto;
+    min-width: 100%;
     font-size: 11px;
-    color: #550000;
-    padding: 3px 10px;
+    color: #757677;
+    padding: 3px 0px;
+    font-weight: bold;
     border-radius: 5px;
     max-width: max-content;
-    min-width: max-content;
-    border: 1px solid #80808033;
-    background-color: #f8f9fa;
+  }
+
+  & > div > p:last-of-type {
+    font-family: "IBM Plex Sans", sans-serif;
   }
 `;
 
