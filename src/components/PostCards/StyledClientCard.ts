@@ -4,12 +4,14 @@ export const StyledInteractWithPostIcons = styled.div`
   gap: 10px;
   display: flex;
   align-items: center;
-  padding: 14px 14px 14px 41px;
-  justify-content: space-between;
+  margin: -3px 31px 0 23px;
+  padding: 5px 14px 6px 0px;
+  border-top-left-radius: 5px;
+  border-top: 1px solid #d6d6d6;
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     cursor: pointer;
   }
 
@@ -31,13 +33,10 @@ export const StyledInteractWithPostIcons = styled.div`
 export const StyledDescription = styled.div`
   z-index: 2;
   border-top: none;
-  border-radius: 5px;
   position: relative;
-  padding: 2px 19px 2px 2px;
-  margin: -1px 10px 2px 41px;
+  padding: 2px 19px 2px 22px;
+  margin: -1px 31px 2px 22px;
   border: 1px solid #d6d6d6;
-  background-color: #f6f7f887;
-  border-top-left-radius: 0;
 
   p {
     font-size: 0.9rem;
@@ -46,36 +45,21 @@ export const StyledDescription = styled.div`
 `;
 
 export const StyledHouseSpec = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  border-radius: 5px;
-  padding: 5px 16px 0;
-  margin: -7px 15px 0 22px;
-  border-top-left-radius: 0;
-  border-bottom-right-radius: 0;
-  justify-content: space-between;
+  padding: 5px 0px 0 20px;
+  margin: -7px 31px 0 22px;
   border-left: 1px solid #ddc8c8;
   border-bottom: 1px solid #ddc8c8;
 
   & > div {
     flex: 1;
-    padding: 3px 5px;
-    width: max-content;
-    text-align: start;
-    border-radius: 20px;
+    padding: 3px 0px;
   }
 
-  & > div > h6 {
-    min-width: max-content;
+  h4 {
+    padding: 5px 0;
   }
 
   & > div > p {
-    min-width: 100%;
-    font-size: 14px;
-    padding: 3px 0px;
-    font-weight: bold;
-    border-radius: 5px;
-    max-width: max-content;
     font-family: "IBM Plex Sans", sans-serif;
   }
 `;
@@ -103,7 +87,7 @@ export const StyledOriginalPoster = styled.div`
   }
 `;
 
-export const StyledClientCard = styled.div`
+export const StyledPostCard = styled.div`
   width: 100%;
   display: flex;
   max-width: 600px;

@@ -1,7 +1,7 @@
 import {
+  StyledPostCard,
   StyledHouseSpec,
   StyledVoteArrow,
-  StyledClientCard,
   StyledDescription,
   StyledPostDetails,
   StyledOriginalPoster,
@@ -12,27 +12,41 @@ import { FaUserCircle } from "react-icons/fa";
 import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
-export default function ClientCard() {
+interface PostCardProps {
+  children: JSX.Element;
+}
+
+export function ClientCard() {
   return (
-    <StyledClientCard>
-      <VoteArrow />
-      <PostDetails />
-    </StyledClientCard>
+    <PostCard>
+      <HouseSpec />
+    </PostCard>
   );
 }
 
-function PostDetails() {
+export default function PostCard({ children }: PostCardProps) {
+  return (
+    <StyledPostCard>
+      <VoteArrow />
+      <PostDetails>
+        <StyledHouseSpec>{children}</StyledHouseSpec>
+      </PostDetails>
+    </StyledPostCard>
+  );
+}
+
+function PostDetails({ children }: PostCardProps) {
   return (
     <StyledPostDetails>
       <OriginalPoster />
-      <HouseSpec />
+      {children}
       <Description />
       <InteractWithPostIcons />
     </StyledPostDetails>
   );
 }
 
-function VoteArrow() {
+export function VoteArrow() {
   return (
     <StyledVoteArrow>
       <ArrowUpSVG />
@@ -48,45 +62,23 @@ function OriginalPoster() {
       <FaUserCircle />
       <div>
         <p>Letam Bossman Barinua</p>
-        <p>23 minutes ago</p>
+        <p>Budget N600,000 || 23 minutes ago</p>
       </div>
     </StyledOriginalPoster>
   );
 }
 
-const houseSpecArray = [
-  {
-    tag: "Looking For",
-    value: "2 Bedrooms",
-  },
-  {
-    tag: "Budget",
-    value: "N600,000",
-  },
-  {
-    tag: "Location",
-    value: "Port Harcourt",
-  },
-  {
-    tag: "Agent Logistics",
-    value: "Paid",
-  },
-];
+const houseInfo = {
+  budget: "N600,000",
+  house: "2 Bedrooms",
+  location: "Port Harcourt",
+};
 
-function HouseSpec() {
-  return (
-    <StyledHouseSpec>
-      {houseSpecArray.map((tag, index) => (
-        <div key={index}>
-          <h6>{tag.tag}</h6>
-          <p>{tag.value}</p>
-        </div>
-      ))}
-    </StyledHouseSpec>
-  );
+export function HouseSpec() {
+  return <h4>Looking for a {houseInfo.house} appartment.</h4>;
 }
 
-function Description() {
+export function Description() {
   return (
     <StyledDescription>
       <p>
@@ -105,7 +97,7 @@ function InteractWithPostIcons() {
         <TfiComment /> 1 Comment
       </div>
       <div>
-        Save <HeartSaveSVG />
+        <HeartSaveSVG /> Save
       </div>
     </StyledInteractWithPostIcons>
   );

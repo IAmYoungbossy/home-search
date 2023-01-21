@@ -1,8 +1,9 @@
-import { HeaderSocial } from "../App/HeaderSocialPage/HeaderSocialPage";
-import { StyledSocialPage } from "../App/HeaderSocialPage/StyledHeaderSocialPage";
-import ClientCard from "../PostCards/ClientCard";
-import CreatePost from "./CreatePost";
 import FilterBar from "./FilterBar";
+import CreatePost from "./CreatePost";
+import { HeaderSocial } from "../App/HeaderSocialPage/HeaderSocialPage";
+import { ClientCard } from "../PostCards/ClientCard";
+import { StyledSocialPage } from "../App/HeaderSocialPage/StyledHeaderSocialPage";
+import AgentCard from "../PostCards/AgentCard";
 
 export default function SocialPage() {
   return (
@@ -12,8 +13,7 @@ export default function SocialPage() {
         <CreatePost />
         <FilterBar />
         <ClientCard />
-        <ClientCard />
-        <ClientCard />
+        <AgentCard />
       </main>
     </StyledSocialPage>
   );
