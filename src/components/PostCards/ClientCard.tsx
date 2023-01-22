@@ -27,7 +27,7 @@ export function ClientCard() {
 export default function PostCard({ children }: PostCardProps) {
   return (
     <StyledPostCard>
-      <VoteArrow />
+      <VoteArrow primary="#f8f9fa" />
       <PostDetails>
         <StyledHouseSpec>{children}</StyledHouseSpec>
       </PostDetails>
@@ -48,9 +48,13 @@ function PostDetails({ children }: PostCardProps) {
   );
 }
 
-export function VoteArrow() {
+interface VoteArrowProps {
+  primary?: string;
+}
+
+export function VoteArrow({ primary }: VoteArrowProps) {
   return (
-    <StyledVoteArrow>
+    <StyledVoteArrow primary={primary}>
       <ArrowUpSVG />
       <p>Vote</p>
       <ArrowDownSVG />
@@ -62,7 +66,7 @@ interface OriginalPosterProps {
   children?: JSX.Element;
 }
 
-function OriginalPoster({ children }: OriginalPosterProps) {
+export function OriginalPoster({ children }: OriginalPosterProps) {
   return (
     <StyledOriginalPoster>
       <FaUserCircle />
