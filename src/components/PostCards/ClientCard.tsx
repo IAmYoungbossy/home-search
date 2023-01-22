@@ -38,7 +38,9 @@ export default function PostCard({ children }: PostCardProps) {
 function PostDetails({ children }: PostCardProps) {
   return (
     <StyledPostDetails>
-      <OriginalPoster />
+      <OriginalPoster>
+        <p>Budget N600,000 || 23 minutes ago</p>
+      </OriginalPoster>
       {children}
       <Description />
       <InteractWithPostIcons />
@@ -56,13 +58,17 @@ export function VoteArrow() {
   );
 }
 
-function OriginalPoster() {
+interface OriginalPosterProps {
+  children?: JSX.Element;
+}
+
+function OriginalPoster({ children }: OriginalPosterProps) {
   return (
     <StyledOriginalPoster>
       <FaUserCircle />
       <div>
         <p>Letam Bossman Barinua</p>
-        <p>Budget N600,000 || 23 minutes ago</p>
+        {children}
       </div>
     </StyledOriginalPoster>
   );
