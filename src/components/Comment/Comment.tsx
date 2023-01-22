@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { TfiComment } from "react-icons/tfi";
 import { OriginalPoster, VoteArrow } from "../PostCards/ClientCard";
 
 export default function Comment() {
@@ -6,7 +7,6 @@ export default function Comment() {
     <StyledComment>
       <OriginalPoster />
       <CommentBox />
-      <VoteArrow />
     </StyledComment>
   );
 }
@@ -20,9 +20,51 @@ function CommentBox() {
         the float c is assigned to 0. You can tell the compiler to treat 5 or 7
         as a float and then 5/7 will also be treated as a float:
       </p>
+      <ReactionButtons />
     </StyledCommentBox>
   );
 }
+
+const reactionBtnArray: (JSX.Element | string)[] = [
+  <VoteArrow />,
+  <>
+    <TfiComment /> Reply
+  </>,
+  "Give award",
+  "Share",
+  "Report",
+  "Save",
+  "Follow",
+];
+
+function ReactionButtons() {
+  return (
+    <StyledReactionButtons>
+      <ul>
+        {reactionBtnArray.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </StyledReactionButtons>
+  );
+}
+
+const StyledReactionButtons = styled.div`
+  padding: 5px 0;
+  ul,
+  li {
+    gap: 5px;
+    display: flex;
+    font-size: 12px;
+    max-width: 400px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  li {
+    list-style: none;
+  }
+`;
 
 const StyledCommentBox = styled.div`
   padding-left: 20px;
