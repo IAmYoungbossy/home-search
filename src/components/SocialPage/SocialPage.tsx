@@ -1,5 +1,5 @@
 import FilterBar from "./FilterBar";
-import CreatePost from "./CreatePost";
+import CreatePost from "../CreatePost/CreatePost";
 import AgentCard from "../PostCards/AgentCard";
 import { ClientCard } from "../PostCards/ClientCard";
 import { HeaderSocial } from "../App/HeaderSocialPage/HeaderSocialPage";
@@ -10,14 +10,15 @@ export default function SocialPage() {
     <StyledSocialPage>
       <HeaderSocial />
       <main>
-        <CreatePost />
+        {/* <CreatePost />
         <FilterBar />
         <ClientCard />
         <AgentCard />
         <ClientCard />
         <AgentCard />
         <ClientCard />
-        <AgentCard />
+        <AgentCard /> */}
+        <CreatePost />
       </main>
     </StyledSocialPage>
   );
