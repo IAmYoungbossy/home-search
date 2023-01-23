@@ -100,12 +100,16 @@ export const StyledPostDetails = styled.div`
   flex: 1;
 `;
 
-export const StyledVoteArrow = styled.div<{ primary?: string }>`
+export const StyledVoteArrow = styled.div<{
+  primary?: string;
+  secondary?: string;
+}>`
   display: flex;
   align-items: center;
   padding: ${({ primary }) => (primary ? "10px 9px" : "0")};
   flex-direction: ${({ primary }) => (primary ? "column" : "row")};
-  background-color: ${({ primary }) => (primary ? primary : "transparent")};
+  background-color: ${({ primary, secondary }) =>
+    !primary || secondary ? "transparent" : primary};
 
   svg {
     display: block;

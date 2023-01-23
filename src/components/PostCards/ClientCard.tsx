@@ -14,20 +14,21 @@ import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
 interface PostCardProps {
   children: JSX.Element;
+  secondary?: string;
 }
 
-export function ClientCard() {
+export function ClientCard({ secondary }: { secondary?: string }) {
   return (
-    <PostCard>
+    <PostCard secondary={secondary}>
       <HouseSpec />
     </PostCard>
   );
 }
 
-export default function PostCard({ children }: PostCardProps) {
+export default function PostCard({ children, secondary }: PostCardProps) {
   return (
     <StyledPostCard>
-      <VoteArrow primary="#f8f9fa" />
+      <VoteArrow primary="#f8f9fa" secondary={secondary} />
       <PostDetails>
         <StyledHouseSpec>{children}</StyledHouseSpec>
       </PostDetails>
@@ -50,11 +51,12 @@ function PostDetails({ children }: PostCardProps) {
 
 interface VoteArrowProps {
   primary?: string;
+  secondary?: string;
 }
 
-export function VoteArrow({ primary }: VoteArrowProps) {
+export function VoteArrow({ primary, secondary }: VoteArrowProps) {
   return (
-    <StyledVoteArrow primary={primary}>
+    <StyledVoteArrow primary={primary} secondary={secondary}>
       <ArrowUpSVG />
       <p>Vote</p>
       <ArrowDownSVG />

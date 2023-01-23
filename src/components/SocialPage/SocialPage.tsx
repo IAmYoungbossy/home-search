@@ -1,21 +1,23 @@
-// import FilterBar from "./FilterBar";
-// import CreatePost from "./CreatePost";
-import { HeaderSocial } from "../App/HeaderSocialPage/HeaderSocialPage";
+import FilterBar from "./FilterBar";
+import CreatePost from "./CreatePost";
+import AgentCard from "../PostCards/AgentCard";
 import { ClientCard } from "../PostCards/ClientCard";
+import { HeaderSocial } from "../App/HeaderSocialPage/HeaderSocialPage";
 import { StyledSocialPage } from "../App/HeaderSocialPage/StyledHeaderSocialPage";
-import Comment from "../Comment/Comment";
-// import AgentCard from "../PostCards/AgentCard";
 
 export default function SocialPage() {
   return (
     <StyledSocialPage>
       <HeaderSocial />
       <main>
-        {/* <CreatePost />
-        <FilterBar /> */}
+        <CreatePost />
+        <FilterBar />
         <ClientCard />
-        <Comment />
-        {/* <AgentCard /> */}
+        <AgentCard />
+        <ClientCard />
+        <AgentCard />
+        <ClientCard />
+        <AgentCard />
       </main>
     </StyledSocialPage>
   );
