@@ -30,8 +30,6 @@ export default function CreatePost() {
       <ChooseCommunity />
       <PostOptions />
       <Post />
-      <ButtonTags />
-      <ActionButtons />
       <Check />
     </StyledCreatePost>
   );
@@ -62,6 +60,8 @@ function Post() {
       <PostInputFields />
       <Markdown />
       <PostTextArea />
+      <ButtonTags />
+      <ActionButtons />
     </StyledPost>
   );
 }
@@ -88,13 +88,19 @@ function Markdown() {
 function PostTextArea() {
   return (
     <StyledPostTextArea>
-      <textarea name="text" id="" cols={10} rows={10}></textarea>
+      <textarea
+        name="text"
+        id=""
+        cols={10}
+        rows={10}
+        placeholder="Text (Optional)"
+      ></textarea>
     </StyledPostTextArea>
   );
 }
 
 function TitleInput() {
-  return <input type="text" name="title" placeholder="Text (Optional)" />;
+  return <input type="text" name="title" placeholder="Title" />;
 }
 
 const postOptionsArray = [
@@ -162,8 +168,8 @@ function Check() {
   return (
     <StyledCheck>
       <div>
-        <label htmlFor="check">Send me post reply notifications</label>
         <input type="checkbox" name="check" id="check" />
+        <label htmlFor="check">Send me post reply notifications</label>
       </div>
       <p>
         Connect accounts to share your post <RiErrorWarningLine />

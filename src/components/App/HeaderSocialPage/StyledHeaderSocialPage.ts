@@ -15,7 +15,9 @@ export const StyledHeaderSocial = styled.header`
 `;
 
 export const StyledSocialPage = styled.div`
+  display: flex;
   min-height: 100vh;
+  flex-direction: column;
   background-color: #dae0e6;
 `;
 

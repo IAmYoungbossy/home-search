@@ -1,30 +1,60 @@
 import styled from "styled-components";
 
 export const StyledCheck = styled.div`
+  color: #1c1c1d;
+  font-size: 12px;
+  line-height: 2.5;
   padding: 20px 10px;
   background-color: #f6f7f8;
+  font-family: "IBMPlexSans", Arial, Helvetica, sans-serif;
+
+  label {
+    font-weight: bold;
+  }
+
+  p {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    color: var(--social-secondary-font-color);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--social-font-color);
+  }
 
   div {
     gap: 5px;
     display: flex;
+    align-items: center;
   }
 `;
 
 export const StyleActionButtons = styled.div`
+  gap: 10px;
   display: flex;
-  padding: 10px;
+  padding: 15px 0;
   align-items: center;
-  justify-content: flex-end;
   background-color: white;
+  justify-content: flex-end;
 
   button {
+    border: none;
     padding: 4px 8px;
+    font-weight: bold;
     border-radius: 20px;
+    outline: 2px solid #878a8c4f;
     background-color: transparent;
+    color: var(--social-font-color);
   }
 
   & > button:last-child {
-    background-color: #1c1c1c;
+    outline: none;
+    padding: 5px 9px;
+    background-color: #848484;
+    color: var(--social-border-color);
   }
 `;
 
@@ -125,33 +155,40 @@ export const StyledButtonTags = styled.div`
   display: flex;
   padding: 15px 10px 15px;
   background-color: white;
-  border-bottom: 1px solid grey;
+  border-bottom: 1px solid var(--social-border-color);
 
   button {
     gap: 5px;
     display: flex;
-    outline: none;
+    border: none;
     padding: 5px 12px;
+    font-weight: bold;
     border-radius: 20px;
-    border: 1px solid grey;
+    outline: 2px solid #878a8c4f;
     background-color: transparent;
+    color: var(--social-font-color);
   }
 `;
 
 export const StyledMarkdown = styled.div`
   display: flex;
-  padding: 5px 0;
   font-size: 12px;
   margin-top: 10px;
+  padding: 8px 16px;
+  border-radius: 5px;
   align-items: center;
-  border: 1px solid grey;
   background-color: #f6f7f8;
   justify-content: space-between;
+  border: 1px solid var(--social-border-color);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   border-bottom: none;
 
   p {
     padding: 4px 8px;
+    font-weight: bold;
     border-radius: 20px;
+    color: var(--social-secondary-font-color);
     &:hover {
       background-color: #1c1c1c24;
     }
@@ -161,6 +198,7 @@ export const StyledMarkdown = styled.div`
     gap: 5px;
     display: flex;
     align-items: center;
+    color: var(--social-font-color);
   }
 
   svg {
@@ -176,6 +214,10 @@ export const StyledPostTextArea = styled.div`
     width: 100%;
     padding: 5px;
     resize: vertical;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: 1px solid var(--social-border-color);
     border-top: none;
   }
 `;
@@ -185,6 +227,9 @@ export const StyledPostInputFields = styled.div`
 
   input {
     width: 100%;
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: 1px solid var(--social-border-color);
   }
 `;
 
@@ -195,6 +240,7 @@ export const StyledCreatePost = styled.div`
 `;
 
 export const StyledPost = styled.div`
-  padding: 15px 15px 15px;
+  padding: 15px 15px 0;
   background-color: white;
+  border-bottom: 1px solid var(--social-border-color);
 `;

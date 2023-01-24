@@ -18,6 +18,7 @@ const GlobalCSS = createGlobalStyle`
   :root {
     --social-font-color: #878A8C;
     --social-border-color: #EDEFF1;
+    --social-secondary-font-color: #1181d4;
   }
 
   body {
