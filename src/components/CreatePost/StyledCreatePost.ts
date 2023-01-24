@@ -76,14 +76,19 @@ export const StyledPostOptions = styled.div`
   background-color: white;
   font-family: "IBMPlanSans", Arial, sans-serif;
 
-  div {
+  button {
     flex: 1;
     gap: 5px;
     display: flex;
     padding: 15px 17px;
+    font-weight: bolder;
     align-items: center;
     min-width: max-content;
     justify-content: flex-start;
+    background-color: transparent;
+    color: var(--social-font-color);
+    border: 1px solid var(--social-border-color);
+    border-right: none;
   }
 
   svg {
@@ -94,12 +99,13 @@ export const StyledPostOptions = styled.div`
 
 export const StyledChooseCommunity = styled.div`
   display: flex;
-  color: #6a6a6a;
   max-width: 300px;
   padding: 5px 10px;
+  border-radius: 4px;
   align-items: center;
   background-color: white;
   justify-content: space-between;
+  color: var(--social-font-color);
 
   & > div {
     gap: 10px;
@@ -189,6 +195,6 @@ export const StyledCreatePost = styled.div`
 `;
 
 export const StyledPost = styled.div`
-  padding: 0 15px 15px;
+  padding: 15px 15px 15px;
   background-color: white;
 `;

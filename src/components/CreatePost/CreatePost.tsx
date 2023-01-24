@@ -109,10 +109,10 @@ function PostOptions() {
   return (
     <StyledPostOptions>
       {postOptionsArray.map((item, index) => (
-        <div key={index}>
+        <button key={index}>
           {item.svg}
           <p>{item.name}</p>
-        </div>
+        </button>
       ))}
     </StyledPostOptions>
   );

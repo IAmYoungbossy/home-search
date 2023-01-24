@@ -14,6 +14,12 @@ const GlobalCSS = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
   }
+
+  :root {
+    --social-font-color: #878A8C;
+    --social-border-color: #EDEFF1;
+  }
+
   body {
     min-height: 100vh;
     font-family: Roboto, san-serif;
