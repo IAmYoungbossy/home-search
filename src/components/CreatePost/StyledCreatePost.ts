@@ -94,7 +94,8 @@ export const StyledPostOptions = styled.div`
 
 export const StyledChooseCommunity = styled.div`
   display: flex;
-  max-width: 250px;
+  color: #6a6a6a;
+  max-width: 300px;
   padding: 5px 10px;
   align-items: center;
   background-color: white;
@@ -108,6 +109,7 @@ export const StyledChooseCommunity = styled.div`
 
   svg {
     font-size: 24px;
+    stroke-width: 1.5;
   }
 `;
 
