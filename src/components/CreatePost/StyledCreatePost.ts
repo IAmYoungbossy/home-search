@@ -245,3 +245,47 @@ export const StyledPost = styled.div`
   background-color: white;
   border-bottom: 1px solid var(--social-border-color);
 `;
+
+export const StyledWarning = styled.div`
+  margin: 0;
+  width: 312px;
+  font-size: 12px;
+  color: #7c7c7c;
+  font-weight: 500;
+  padding: 10px 62px 0 0;
+
+  span {
+    color: var(--social-secondary-font-color);
+  }
+`;
+
+export const StyledRedditRulesHeader = styled.div`
+  gap: 10px;
+  display: flex;
+  align-items: center;
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+export const StyledRedditRules = styled.div`
+  width: 312px;
+  padding: 12px;
+  margin: 40px 0 0;
+  border-radius: 5px;
+  background-color: white;
+
+  div {
+    font-size: 14px;
+    padding: 10px 5px;
+    color: #1c1c1c;
+    font-family: "IBMPlexSans", Arial, sans-serif;
+    border-bottom: 1px solid var(--social-border-color);
+  }
+
+  & ~ div:last-child {
+    margin-left: 24px;
+  }
+`;

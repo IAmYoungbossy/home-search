@@ -2,15 +2,18 @@ import {
   StyledPost,
   StyledDraft,
   StyledCheck,
+  StyledWarning,
   StyledMarkdown,
   StyledCreatePost,
   StyledButtonTags,
   StyledPostOptions,
   StyledTitleHeader,
+  StyledRedditRules,
   StyledPostTextArea,
   StyleActionButtons,
   StyledChooseCommunity,
   StyledPostInputFields,
+  StyledRedditRulesHeader,
 } from "./StyledCreatePost";
 import { GrAdd } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
@@ -23,7 +26,6 @@ import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
-import styled from "styled-components";
 
 export default function CreatePost() {
   return (
@@ -64,26 +66,6 @@ function RedditRules() {
   );
 }
 
-const StyledRedditRules = styled.div`
-  width: 312px;
-  padding: 12px;
-  margin: 40px 0 0;
-  border-radius: 5px;
-  background-color: white;
-
-  div {
-    font-size: 14px;
-    padding: 10px 5px;
-    color: #1c1c1c;
-    font-family: "IBMPlexSans", Arial, sans-serif;
-    border-bottom: 1px solid var(--social-border-color);
-  }
-
-  & ~ div:last-child {
-    margin-left: 24px;
-  }
-`;
-
 function RedditRulesHeader() {
   return (
     <StyledRedditRulesHeader>
@@ -103,30 +85,6 @@ function Warning() {
     </div>
   );
 }
-
-const StyledWarning = styled.div`
-  margin: 0;
-  width: 312px;
-  font-size: 12px;
-  color: #7c7c7c;
-  font-weight: 500;
-  padding: 10px 62px 0 0;
-
-  span {
-    color: var(--social-secondary-font-color);
-  }
-`;
-
-const StyledRedditRulesHeader = styled.div`
-  gap: 10px;
-  display: flex;
-  align-items: center;
-
-  svg {
-    width: 40px;
-    height: 40px;
-  }
-`;
 
 const buttonTagsArray = [
   { svg: <GrAdd />, name: "OC" },
