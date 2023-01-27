@@ -235,8 +235,9 @@ export const StyledPostInputFields = styled.div`
 
 export const StyledCreatePost = styled.div`
   width: 100%;
-  max-width: 740px;
-  margin: 50px auto;
+  display: flex;
+  max-width: 1076px;
+  margin: 20px auto 50px;
 `;
 
 export const StyledPost = styled.div`
