@@ -18,14 +18,14 @@ export default function Comment() {
     <StyledComment>
       <ClientCard secondary="none" />
       <TextArea />
-      <ComentCard />
-      <ComentCard />
-      <ComentCard />
+      <CommentCard />
+      <CommentCard />
+      <CommentCard />
     </StyledComment>
   );
 }
 
-function ComentCard() {
+function CommentCard() {
   return (
     <StyledcommentCard>
       <OriginalPoster />
