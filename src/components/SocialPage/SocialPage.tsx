@@ -1,9 +1,11 @@
-import FilterBar from "./FilterBar";
-import CreatePost from "../CreatePost/CreatePost";
-import AgentCard from "../PostCards/AgentCard";
-import { ClientCard } from "../PostCards/ClientCard";
+// import FilterBar from "./FilterBar";
+// import AgentCard from "../PostCards/AgentCard";
+// import { ClientCard } from "../PostCards/ClientCard";
 import { HeaderSocial } from "../App/HeaderSocialPage/HeaderSocialPage";
 import { StyledSocialPage } from "../App/HeaderSocialPage/StyledHeaderSocialPage";
+import Comment from "../Comment/Comment";
+// import CreatePostPage from "../CreatePost/CreatePost";
+// import CreatePost from "./CreatePost";
 
 export default function SocialPage() {
   return (
@@ -18,7 +20,8 @@ export default function SocialPage() {
         <AgentCard />
         <ClientCard />
         <AgentCard /> */}
-        <CreatePost />
+        {/* <CreatePostPage /> */}
+        <Comment />
       </main>
     </StyledSocialPage>
   );

@@ -233,11 +233,16 @@ export const StyledPostInputFields = styled.div`
   }
 `;
 
-export const StyledCreatePost = styled.div`
+export const StyledCreatePostPage = styled.div`
+  gap: 25px;
   width: 100%;
   display: flex;
   max-width: 1076px;
   margin: 20px auto 50px;
+
+  & > div:first-of-type {
+    flex: 1;
+  }
 `;
 
 export const StyledPost = styled.div`
@@ -283,9 +288,5 @@ export const StyledRedditRules = styled.div`
     color: #1c1c1c;
     font-family: "IBMPlexSans", Arial, sans-serif;
     border-bottom: 1px solid var(--social-border-color);
-  }
-
-  & ~ div:last-child {
-    margin-left: 24px;
   }
 `;

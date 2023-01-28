@@ -112,5 +112,5 @@ export const StyledComment = styled.div`
   background-color: white;
   max-width: 600px;
   width: 100%;
-  margin: -10px auto 0 auto;
+  margin: 24px auto 24px auto;
 `;

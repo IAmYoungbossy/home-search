@@ -4,13 +4,13 @@ import {
   StyledCheck,
   StyledWarning,
   StyledMarkdown,
-  StyledCreatePost,
   StyledButtonTags,
   StyledPostOptions,
   StyledTitleHeader,
   StyledRedditRules,
   StyledPostTextArea,
   StyleActionButtons,
+  StyledCreatePostPage,
   StyledChooseCommunity,
   StyledPostInputFields,
   StyledRedditRulesHeader,
@@ -27,9 +27,9 @@ import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 
-export default function CreatePost() {
+export default function CreatePostPage() {
   return (
-    <StyledCreatePost>
+    <StyledCreatePostPage>
       <div>
         <TitleHeader />
         <ChooseCommunity />
@@ -41,7 +41,7 @@ export default function CreatePost() {
         <RedditRules />
         <Warning />
       </div>
-    </StyledCreatePost>
+    </StyledCreatePostPage>
   );
 }
 

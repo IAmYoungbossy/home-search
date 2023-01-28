@@ -19,6 +19,10 @@ export default function Comment() {
       <TextArea />
       <OriginalPoster />
       <CommentBox />
+      <OriginalPoster />
+      <CommentBox />
+      <OriginalPoster />
+      <CommentBox />
     </StyledComment>
   );
 }
