@@ -91,7 +91,7 @@ export const StyledPostCard = styled.div`
   width: 100%;
   display: flex;
   max-width: var(--social-max-width);
-  margin: 10px auto;
+  margin: 10px 0;
   background-color: white;
   border: 1px solid #eff1f2;
 `;

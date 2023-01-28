@@ -53,7 +53,7 @@ const redditRulesArr = [
   "Read the community's rules",
 ];
 
-function RedditRules() {
+export function RedditRules() {
   return (
     <StyledRedditRules>
       <RedditRulesHeader />
@@ -74,7 +74,7 @@ function RedditRulesHeader() {
   );
 }
 
-function Warning() {
+export function Warning() {
   return (
     <div>
       <StyledWarning>

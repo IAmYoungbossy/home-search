@@ -12,15 +12,24 @@ import { TfiComment } from "react-icons/tfi";
 import { AiFillCaretDown } from "react-icons/ai";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { ClientCard, OriginalPoster, VoteArrow } from "../PostCards/ClientCard";
+import { RedditRules, Warning } from "../CreatePost/CreatePost";
 
 export default function Comment() {
   return (
     <StyledComment>
-      <ClientCard secondary="none" />
-      <TextArea />
-      <CommentCard />
-      <CommentCard />
-      <CommentCard />
+      <div>
+        <ClientCard secondary="none" />
+        <TextArea />
+        <CommentCard />
+        <CommentCard />
+        <CommentCard />
+      </div>
+      <div>
+        <div>
+          <RedditRules />
+          <Warning />
+        </div>
+      </div>
     </StyledComment>
   );
 }

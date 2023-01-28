@@ -4,7 +4,7 @@ export const StyledRichTextEditor = styled.div`
   width: 100%;
   padding: 5px;
   display: flex;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   font-size: 12px;
   max-width: var(--social-max-width);
   align-items: center;
@@ -70,7 +70,7 @@ export const StyledCommentAs = styled.div`
 
 export const StyledTextArea = styled.div`
   display: flex;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   max-width: var(--social-max-width);
   margin-top: -11px;
   flex-direction: column;
@@ -110,14 +110,37 @@ export const StyledCommentBox = styled.div`
 `;
 
 export const StyledComment = styled.div`
-  background-color: white;
-  /* max-width: 600px; */
+  gap: 24px;
   width: 100%;
+  max-width: fit-content;
   margin: 24px auto 24px auto;
+  display: flex;
+
+  & > div:first-of-type {
+    flex: 1;
+
+    & > div:first-of-type {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    & > div:last-of-type {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+  }
+
+  & > div:last-of-type {
+    margin-top: -30px;
+    & > div {
+      top: 10px;
+      position: sticky;
+    }
+  }
 `;
 
 export const StyledcommentCard = styled.div`
-  max-width: var(--social-max-width);
   width: 100%;
-  margin: 0 auto;
+  background-color: white;
+  max-width: var(--social-max-width);
 `;

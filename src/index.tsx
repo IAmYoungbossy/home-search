@@ -24,6 +24,7 @@ const GlobalCSS = createGlobalStyle`
 
   body {
     min-height: 100vh;
+    position: relative;
     font-family: Roboto, san-serif;
   }
 `;
