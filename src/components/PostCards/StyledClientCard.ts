@@ -90,7 +90,7 @@ export const StyledOriginalPoster = styled.div`
 export const StyledPostCard = styled.div`
   width: 100%;
   display: flex;
-  max-width: 600px;
+  max-width: var(--social-max-width);
   margin: 10px auto;
   background-color: white;
   border: 1px solid #eff1f2;

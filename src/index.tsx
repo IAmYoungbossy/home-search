@@ -16,6 +16,7 @@ const GlobalCSS = createGlobalStyle`
   }
 
   :root {
+    --social-max-width: 740px;
     --social-font-color: #878A8C;
     --social-border-color: #EDEFF1;
     --social-secondary-font-color: #1181d4;

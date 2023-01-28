@@ -6,6 +6,7 @@ import {
   StyledCommentBox,
   StyledRichTextEditor,
   StyledReactionButtons,
+  StyledcommentCard,
 } from "./StyledComment";
 import { TfiComment } from "react-icons/tfi";
 import { AiFillCaretDown } from "react-icons/ai";
@@ -17,13 +18,19 @@ export default function Comment() {
     <StyledComment>
       <ClientCard secondary="none" />
       <TextArea />
-      <OriginalPoster />
-      <CommentBox />
-      <OriginalPoster />
-      <CommentBox />
-      <OriginalPoster />
-      <CommentBox />
+      <ComentCard />
+      <ComentCard />
+      <ComentCard />
     </StyledComment>
+  );
+}
+
+function ComentCard() {
+  return (
+    <StyledcommentCard>
+      <OriginalPoster />
+      <CommentBox />
+    </StyledcommentCard>
   );
 }
 
