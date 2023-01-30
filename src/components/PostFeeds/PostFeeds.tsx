@@ -17,22 +17,42 @@ import HomeBanner from "../assets/socialPage/home-banner.png";
 export default function PostFeeds() {
   return (
     <StyledPostFeeds>
-      <div>
-        <CreatePost />
-        <FilterBar />
-        <ClientCard />
-        <AgentCard />
-        <ClientCard />
-        <AgentCard />
-        <ClientCard />
-        <AgentCard />
-      </div>
-      <div>
-        <RedditPremium />
-        <CreateCard />
-        <RedditPolicies />
-      </div>
+      <Feeds />
+      <SideBar />
     </StyledPostFeeds>
+  );
+}
+
+function Feeds() {
+  return (
+    <div>
+      <CreatePost />
+      <FilterBar />
+      <PostCards />
+    </div>
+  );
+}
+
+function SideBar() {
+  return (
+    <div>
+      <RedditPremium />
+      <CreateCard />
+      <RedditPolicies />
+    </div>
+  );
+}
+
+function PostCards() {
+  return (
+    <>
+      <ClientCard />
+      <AgentCard />
+      <ClientCard />
+      <AgentCard />
+      <ClientCard />
+      <AgentCard />
+    </>
   );
 }
 
@@ -43,62 +63,104 @@ function RedditPremium() {
         <div>
           <ShieldSVG />
         </div>
-        <div>
-          <p>Reddit Premium</p>
-          <p>The best Reddit experience, with monthly Coins</p>
-        </div>
+        <PremiumText />
       </div>
       <button>Try Now</button>
     </StyledRedditPremium>
   );
 }
 
+function PremiumText() {
+  return (
+    <div>
+      <p>Reddit Premium</p>
+      <p>The best Reddit experience, with monthly Coins</p>
+    </div>
+  );
+}
+
 function CreateCard() {
   return (
     <StyledCreateCard>
-      <div>
-        <img src={HomeBanner} alt="home-banner" />
-      </div>
-      <div>
-        <div>
-          <img src={SnooBanner} alt="snoo-banner" />
-        </div>
-        <div>Home</div>
-      </div>
-      <div>
-        <p>
-          Your personal Reddit frontpage. Come here to check in with your
-          favorite communities.
-        </p>
-      </div>
-      <div>
-        <StyledButton>Create Post</StyledButton>
-        <StyledCommunityButton>Create Community</StyledCommunityButton>
-      </div>
+      <HomeBannerImage />
+      <SnooBannerImage />
+      <PromoText />
+      <Buttons />
     </StyledCreateCard>
+  );
+}
+
+function HomeBannerImage() {
+  return (
+    <div>
+      <img src={HomeBanner} alt="home-banner" />
+    </div>
+  );
+}
+
+function SnooBannerImage() {
+  return (
+    <div>
+      <div>
+        <img src={SnooBanner} alt="snoo-banner" />
+      </div>
+      <div>Home</div>
+    </div>
+  );
+}
+
+function PromoText() {
+  return (
+    <div>
+      <p>
+        Your personal Reddit frontpage. Come here to check in with your favorite
+        communities.
+      </p>
+    </div>
+  );
+}
+
+function Buttons() {
+  return (
+    <div>
+      <StyledButton>Create Post</StyledButton>
+      <StyledCommunityButton>Create Community</StyledCommunityButton>
+    </div>
   );
 }
 
 const userPoliciesAndLang = {
   policy: ["User Agreement", "Privacy Policy"],
-  moderation: ["Content Policy", "Moderator Code Of Conduct"],
   language1: ["English", "Français", "Italiano"],
   language2: ["Deutsch", "Español", "Português"],
+  moderation: ["Content Policy", "Moderator Code Of Conduct"],
 };
 
 function RedditPolicies() {
   return (
     <StyledRedditPolicies>
-      <div>
-        <PolicyList array={userPoliciesAndLang.policy} />
-        <PolicyList array={userPoliciesAndLang.moderation} />
-      </div>
-      <div>
-        <PolicyList array={userPoliciesAndLang.language1} />
-        <PolicyList array={userPoliciesAndLang.language2} />
-      </div>
+      <PoliciesAndAgreemeents />
+      <ChooseLanguage />
       <p>Reddit Inc © 2023. All rights reserved</p>
     </StyledRedditPolicies>
+  );
+}
+
+function PoliciesAndAgreemeents() {
+  return (
+    <div>
+      <PolicyList array={userPoliciesAndLang.policy} />
+      <PolicyList array={userPoliciesAndLang.moderation} />
+    </div>
+  );
+}
+
+function ChooseLanguage() {
+  return (
+    <div>
+      <PolicyList array={userPoliciesAndLang.language1} />
+      <PolicyList array={userPoliciesAndLang.language2} />
+    </div>
   );
 }
 
