@@ -1,12 +1,12 @@
-import { FaUserCircle } from "react-icons/fa";
+import styled from "styled-components";
 import { SlPicture } from "react-icons/sl";
 import { BsLink45Deg } from "react-icons/bs";
-import styled from "styled-components";
+import { AvatarSVG } from "../assets/Svg/SocialSVG";
 
 export default function CreatePost() {
   return (
     <StyledCreatePost>
-      <FaUserCircle />
+      <AvatarSVG />
       <input type="text" name="post" placeholder="Create Post" />
       <SlPicture />
       <BsLink45Deg />
@@ -34,8 +34,17 @@ const StyledCreatePost = styled.div`
     outline: 1px solid #eff1f2;
   }
 
+  & > svg:first-child {
+    width: 42px;
+    height: 32px;
+    fill: #fff;
+    border-radius: 100px;
+    background: #d7dfe2;
+  }
+
   svg {
     width: 25px;
     height: 25px;
+    fill: #9ea0a2;
   }
 `;
