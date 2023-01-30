@@ -61,8 +61,7 @@ const StyledPageView = styled(StyledFilterIcons)`
 `;
 
 const StyledFilterBar = styled(StyledFilterIcons)`
-  max-width: 600px;
-  margin: 10px auto;
+  max-width: 740px;
   padding: 12px 7px;
   background-color: white;
   border: 1px solid #d0d2d4;

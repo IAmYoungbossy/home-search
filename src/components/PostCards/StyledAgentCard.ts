@@ -18,7 +18,7 @@ export const StyledHouseDetails = styled.div`
 
 export const ImageContainer = styled.div<{ bgImage: string }>`
   height: 300px;
-  max-width: 500px;
+  max-width: 625px;
   border-radius: 0;
   background-size: cover;
   background-position: center;
