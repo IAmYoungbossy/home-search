@@ -6,7 +6,7 @@ export default function AgentCard() {
   return (
     <PostCard>
       <>
-        <h4>Furnished 2bdrm Bungalow in Pentcity Estate, Lokogoma for Sale</h4>
+        <h3>Furnished 2bdrm Bungalow in Pentcity Estate, Lokogoma for Sale</h3>
         <ImageContainer bgImage={house} />
         <HouseDetails />
       </>

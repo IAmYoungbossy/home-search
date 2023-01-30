@@ -87,7 +87,7 @@ const houseInfo = {
 };
 
 export function HouseSpec() {
-  return <h4>Looking for a {houseInfo.house} appartment.</h4>;
+  return <h3>Looking for a {houseInfo.house} appartment.</h3>;
 }
 
 export function Description() {

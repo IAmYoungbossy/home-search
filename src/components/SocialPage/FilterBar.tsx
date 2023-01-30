@@ -79,5 +79,15 @@ const StyledFilterBar = styled(StyledFilterIcons)`
   svg {
     width: 22px;
     height: 22px;
+    fill: #878a8c;
+  }
+
+  & > div:first-child > div:nth-child(2) > svg {
+    fill: none;
+    stroke-opacity: 0.5;
+  }
+
+  & > div:last-child > svg:first-child {
+    fill-opacity: 0.4;
   }
 `;

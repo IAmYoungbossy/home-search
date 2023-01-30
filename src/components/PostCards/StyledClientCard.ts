@@ -40,7 +40,7 @@ export const StyledDescription = styled.div`
 
   p {
     color: #1c1c1c;
-    font-size: 14px;
+    font-size: 13px;
     font-family: "Noto Sans", sans-serif;
   }
 `;
@@ -56,9 +56,10 @@ export const StyledHouseSpec = styled.div`
     padding: 3px 0px;
   }
 
-  h4 {
-    padding: 5px 0;
-    color: #1a1a1b;
+  h3 {
+    color: #222;
+    font-size: 15px;
+    padding: 0px 0 5px;
     font-family: "IBM Plex Sans", Arial, sans-serif;
   }
 
@@ -84,9 +85,11 @@ export const StyledOriginalPoster = styled.div`
   }
 
   svg {
-    display: block;
     width: 24px;
     height: 24px;
+    fill: #c7cdcf;
+    display: block;
+    margin-left: 1px;
   }
 `;
 
