@@ -107,6 +107,12 @@ export const StyledCommentBox = styled.div`
   margin: -5px 21px 0;
   border-left: 1px solid darkgray;
   max-width: var(--social-max-width);
+
+  p {
+    color: #1c1c1c;
+    font-size: 14px;
+    font-family: "Noto Sans", Arial, sans-serif;
+  }
 `;
 
 export const StyledComment = styled.div`

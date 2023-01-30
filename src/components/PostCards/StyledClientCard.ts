@@ -34,12 +34,13 @@ export const StyledDescription = styled.div`
   z-index: 2;
   border-top: none;
   position: relative;
+  border: 1px solid #d6d6d6;
   padding: 2px 19px 2px 22px;
   margin: -1px 31px 2px 22px;
-  border: 1px solid #d6d6d6;
 
   p {
-    font-size: 0.9rem;
+    color: #1c1c1c;
+    font-size: 14px;
     font-family: "Noto Sans", sans-serif;
   }
 `;
@@ -57,6 +58,8 @@ export const StyledHouseSpec = styled.div`
 
   h4 {
     padding: 5px 0;
+    color: #1a1a1b;
+    font-family: "IBM Plex Sans", Arial, sans-serif;
   }
 
   & > div > p {
