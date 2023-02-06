@@ -53,8 +53,8 @@ export const StyleActionButtons = styled.div`
   & > button:last-child {
     outline: none;
     padding: 5px 9px;
-    background-color: #848484;
     color: var(--social-border-color);
+    background-color: var(--social-disabled-button-bg-color);
   }
 `;
 
@@ -63,14 +63,14 @@ export const StyledTitleHeader = styled.div`
   padding: 4px 0;
   margin: 16px 0;
   align-items: center;
-  border-bottom: 1px solid white;
   justify-content: space-between;
+  border-bottom: 1px solid var(--social-light-secondary-bg-color);
 
   h2 {
     color: #4b4c4e;
     font-size: 18px;
     padding-bottom: 10px;
-    font-family: "IBMPlexsans";
+    font-family: var(--social-ibm-plex-sans-font-family);
   }
 `;
 
@@ -84,7 +84,7 @@ export const StyledDraft = styled.div`
   font-family: var(--social-noto-sans-font-family);
 
   &:hover {
-    background-color: #cbd0d6;
+    background-color: var(--social-draft-hover-bg-color);
   }
 
   span {
@@ -286,7 +286,7 @@ export const StyledRedditRules = styled.div`
     font-size: 14px;
     padding: 10px 5px;
     color: #1c1c1c;
-    font-family: "IBMPlexSans", Arial, sans-serif;
     border-bottom: 1px solid var(--social-border-color);
+    font-family: var(--social-ibm-plex-sans-font-family);
   }
 `;
