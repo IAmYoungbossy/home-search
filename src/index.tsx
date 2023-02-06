@@ -21,6 +21,7 @@ const GlobalCSS = createGlobalStyle`
     --rich-text-border-color: grey;
     --social-border-color: #EDEFF1;
     --social-secondary-font-color: #1181d4;
+    --social-comment-purple-color: #ff66ac;
     --social-light-secondary-bg-color: #f6f7f8;
   }
 

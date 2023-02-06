@@ -22,7 +22,7 @@ export const StyledRichTextEditor = styled.div`
 
   p {
     cursor: no-drop;
-    color: #ff66ac;
+    color: var(--social-comment-purple-color);
   }
 
   button {
@@ -39,9 +39,9 @@ export const StyledRichTextEditor = styled.div`
 export const StyledSortBy = styled.div`
   h6 {
     display: flex;
-    color: #ff66ac;
     align-items: center;
     padding: 20px 0 10px;
+    color: var(--social-comment-purple-color);
   }
 
   svg {
@@ -58,7 +58,7 @@ export const StyledCommentAs = styled.div`
   }
 
   span {
-    color: #ff66ac;
+    color: var(--social-comment-purple-color);
 
     &:hover {
       cursor: pointer;
