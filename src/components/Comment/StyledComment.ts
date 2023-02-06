@@ -54,7 +54,7 @@ export const StyledCommentAs = styled.div`
   p {
     padding: 5px 0;
     font-size: 11px;
-    font-family: "Noto sans", Arial, sans-serif;
+    font-family: var(--social-noto-sans-font-family);
   }
 
   span {
@@ -110,7 +110,7 @@ export const StyledCommentBox = styled.div`
   p {
     color: #1c1c1c;
     font-size: 14px;
-    font-family: "Noto Sans", Arial, sans-serif;
+    font-family: var(--social-noto-sans-font-family);
   }
 `;
 

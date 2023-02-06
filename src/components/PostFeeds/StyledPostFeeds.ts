@@ -10,7 +10,7 @@ export const StyledRedditPolicies = styled.div`
   border-radius: 5px;
   padding: 0 12px 12px;
   background-color: white;
-  font-family: "Noto Sans", Arial, sans-serif;
+  font-family: var(--social-noto-sans-font-family);
 
   & > div {
     display: flex;
@@ -91,7 +91,7 @@ export const StyledCreateCard = styled.div`
       font-size: 14px;
       color: #1c1c1c;
       padding-bottom: 15px;
-      font-family: "Noto Sans", Arial, sans-serif;
+      font-family: var(--social-noto-sans-font-family);
       border-bottom: 1px solid var(--social-border-color);
     }
   }

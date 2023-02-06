@@ -81,7 +81,7 @@ export const StyledDraft = styled.div`
   padding: 4px 8px;
   padding: 6px 16px;
   border-radius: 20px;
-  font-family: "Noto sans", Arial, sans-serif;
+  font-family: var(--social-noto-sans-font-family);
 
   &:hover {
     background-color: #cbd0d6;
