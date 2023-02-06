@@ -15,7 +15,7 @@ const StyledListingStatistics = styled.div`
   max-width: 1280px;
 
   h2 {
-    color: #2b2b2b;
+    color: var(--footer-bg-color);
   }
 
   p {

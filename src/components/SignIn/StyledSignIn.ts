@@ -6,13 +6,13 @@ export const StyledSignInFields = styled.form`
     outline: none;
     padding: 10px 20px;
     border-radius: 20px;
-    border: 1px solid #dde1e8;
+    border: 1px solid var(--social-sign-in-border-color);
   }
 
   p {
     font-size: 11px;
-    color: #1a1a1b;
     font-family: "Noto Sans", sans-serif;
+    color: var(--social-font-color-primary);
   }
 
   span {
@@ -44,16 +44,16 @@ export const StyledSignInFields = styled.form`
 export const StyledLoginAgreement = styled.div`
   h2 {
     font-size: 20px;
-    color: #1a1a1b;
     margin-top: 24px;
+    color: var(--social-font-color-primary);
     font-family: var(--social-ibm-plex-sans-font-family);
   }
 
   p {
     margin-top: 8px;
     font-size: 11px;
-    color: #1a1a1b;
-    font-family: "Noto Sans", sans-serif;
+    color: var(--social-font-color-primary);
+    font-family: var(--social-noto-sans-font-family);
 
     span {
       color: var(--social-secondary-font-color);
@@ -97,13 +97,13 @@ export const StyledSignIn = styled.div`
       display: flex;
       border-radius: 20px;
       background-color: inherit;
-      border: 1px solid #dde1e8;
       padding: 10px 5px 10px 40px;
+      border: 1px solid var(--social-sign-in-border-color);
     }
 
     hr {
       border-top: none;
-      border-color: #dde1e8;
+      border-color: var(--social-sign-in-border-color);
     }
 
     svg {

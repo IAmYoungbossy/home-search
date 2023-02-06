@@ -48,7 +48,7 @@ export const StyledDetails = styled.div`
     font-size: 16px;
     padding: 10px 24px;
     border-radius: 20px;
-    background-color: #d92228;
+    background-color: var(--heart-hover-color);
     color: var(--social-light-font-color-primary);
   }
 

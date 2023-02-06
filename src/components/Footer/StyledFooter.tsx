@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledFooter = styled.footer`
-  background-color: #2b2b2b;
+  background-color: var(--footer-bg-color);
   color: var(--social-light-font-color-primary);
 
   & > div {
@@ -16,8 +16,8 @@ export const StyledFooter = styled.footer`
 
 export const StyledDisclosures = styled.div`
   padding: 20px 0;
-  background-color: #f7f7f7;
-  border-top: 1px solid #2b2b2b30;
+  background-color: var(--disclosure-bg-color);
+  border-top: 1px solid var(--disclosure-border-top-color);
 
   small {
     width: 100%;
@@ -26,8 +26,8 @@ export const StyledDisclosures = styled.div`
     max-width: 1280px;
   }
   h5 {
-    color: blue;
     text-decoration: underline;
+    color: var(--social-secondary-font-color);
   }
 `;
 
@@ -45,10 +45,10 @@ export const StyledSocialIcons = styled.div`
     height: 40px;
     display: flex;
     list-style: none;
-    color: #2b2b2b;
     border-radius: 5px;
     align-items: center;
-    background-color: #f7f7f7;
+    color: var(--footer-bg-color);
+    background-color: var(--disclosure-bg-color);
   }
 
   svg {
@@ -76,7 +76,8 @@ export const StyledFooterLinks = styled.div`
 `;
 
 export const StyledGetTheApp = styled.div`
-  color: #2b2b2b;
+  color: var(--footer-bg-color);
+
   div {
     display: flex;
   }
@@ -92,9 +93,9 @@ export const StyledGetTheApp = styled.div`
   }
 
   h5 {
-    color: #f7f7f7;
     margin-bottom: 30px;
     margin-bottom: 30px;
     text-shadow: 1px 1px 10px black;
+    color: var(--disclosure-bg-color);
   }
 `;

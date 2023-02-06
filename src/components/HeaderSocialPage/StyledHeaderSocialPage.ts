@@ -18,7 +18,7 @@ export const StyledSocialPage = styled.div`
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #dae0e6;
+  background-color: var(--social-page-bg-color-secondary);
 `;
 
 export const StyledSearchBarSocial = styled.div`
@@ -41,7 +41,7 @@ export const StyledSearchBarSocial = styled.div`
     outline: none;
     padding: 9.7px 35px;
     border-radius: 20px;
-    outline: 1px solid #eff1f2;
+    outline: 1px solid var(--social-page-outline-color);
     background-color: var(--social-light-secondary-bg-color);
   }
 `;

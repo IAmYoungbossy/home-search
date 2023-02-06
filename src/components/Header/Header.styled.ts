@@ -8,7 +8,7 @@ export const StyledHeader = styled.header`
     max-width: 1280px;
     align-items: center;
     justify-content: space-between;
-    font-family: Roboto, sans-serif;
+    font-family: var(--body-font-family);
 
     sup {
       font-size: 10px;
@@ -58,7 +58,8 @@ export const StyledNavLinks = styled.nav`
 
       &:hover {
         padding: 13px 8px 10px;
-        border-bottom: 3px solid #d92228;
+        border-bottom: 3px solid var(--heart-hover-color);
+
         & > div:last-of-type {
           display: flex;
           border-top: 1px solid #cacaca;
@@ -111,6 +112,7 @@ export const StyledUserButton = styled(Button)`
   align-items: center;
   border-radius: 20px;
   justify-content: space-evenly;
+
   &:hover {
     background: none;
     svg {
@@ -138,6 +140,7 @@ export const DropDown = styled.div`
     max-width: 1280px;
     justify-content: space-between;
     margin: 0 auto;
+
     section {
       flex: 0 0 33.33%;
       padding: 0px 16px 0 5px;

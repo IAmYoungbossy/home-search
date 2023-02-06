@@ -8,8 +8,8 @@ export const StyledNewListingContainer = styled.div`
 
     & > div:first-child {
       display: flex;
-      line-height: 1.5;
       color: #2b2b4c;
+      line-height: 1.5;
       flex-direction: column;
 
       p {
@@ -28,8 +28,8 @@ export const StyledNewListingContainer = styled.div`
 `;
 
 export const StyledNewListing = styled.div`
-  color: #2b2b2b;
   width: max-content;
+  color: var(--footer-bg-color);
   box-shadow: 0px 0px 8px rgb(0 0 0 / 15%);
 `;
 
@@ -63,9 +63,11 @@ export const StyledImageContainer = styled.div`
 export const StyledHouseDetails = styled.div`
   line-height: 1.3;
   padding: 5px 15px 5px;
+
   span {
-    margin-left: 20px;
     font-weight: 900;
+    margin-left: 20px;
+
     &:first-of-type {
       margin-left: 0;
     }

@@ -30,7 +30,7 @@ const StyledCreatePost = styled.div`
     border: none;
     padding: 8px;
     border-radius: 5px;
-    outline: 1px solid #eff1f2;
+    outline: 1px solid var(--social-page-outline-color);
     background-color: var(--social-light-secondary-bg-color);
   }
 

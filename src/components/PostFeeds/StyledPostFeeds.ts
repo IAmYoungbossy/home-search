@@ -4,11 +4,11 @@ export const StyledRedditPolicies = styled.div`
   top: 8px;
   width: 100%;
   font-size: 12px;
-  color: #1a1a1b;
   margin-top: 15px;
   position: sticky;
   border-radius: 5px;
   padding: 0 12px 12px;
+  color: var(--social-font-color-primary);
   background-color: var(--light-bg-color-primary);
   font-family: var(--social-noto-sans-font-family);
 
@@ -124,8 +124,8 @@ export const StyledRedditPremium = styled.div`
 
     p {
       font-size: 12px;
-      color: #1a1a1b;
       font-weight: 600;
+      color: var(--social-font-color-primary);
       font-family: var(--social-ibm-plex-sans-font-family);
     }
 

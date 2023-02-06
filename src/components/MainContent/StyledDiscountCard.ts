@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const StyledDiscountCard = styled.div`
   padding: 70px 0;
   margin-top: -40px;
-  background-color: #f7f7f7;
+  background-color: var(--disclosure-bg-color);
+
   & > div {
     gap: 10px;
     display: flex;
@@ -18,7 +19,7 @@ export const StyledDiscountCard = styled.div`
       display: flex;
       border-radius: 5px;
       flex-direction: column;
-      box-shadow: 0px 1px 6px 1px #00000042;
+      box-shadow: 0px 1px 6px 1px var(--discount-card-box-shadow-color);
     }
 
     p {

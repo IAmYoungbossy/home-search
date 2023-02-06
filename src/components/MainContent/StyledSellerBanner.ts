@@ -4,7 +4,7 @@ export const StyledSellerBanner = styled.div`
   display: flex;
   max-width: 1280px;
   margin: 50px auto;
-  background-color: #f7f7f7;
+  background-color: var(--disclosure-bg-color);
 
   h2 {
     font-size: 34px;
@@ -16,8 +16,8 @@ export const StyledSellerBanner = styled.div`
 
   & > div:first-child {
     display: flex;
-    align-items: flex-start;
     flex-direction: column;
+    align-items: flex-start;
     padding: 40px 0 40px 50px;
     justify-content: space-between;
   }
@@ -33,7 +33,7 @@ export const StyledSellerBanner = styled.div`
     margin-top: 5px;
     padding: 15px 20px;
     border-radius: 30px;
-    background-color: #d92228;
+    background-color: var(--heart-hover-color);
     color: var(--social-light-font-color-primary);
   }
 `;

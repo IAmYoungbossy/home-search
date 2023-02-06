@@ -37,12 +37,13 @@ export const StyledHeroText = styled.div`
     text-align: center;
     width: max-content;
     margin-bottom: 35px;
+
     ul {
       gap: 10px;
       display: flex;
       padding: 0 25px;
-      margin-bottom: 25px;
       text-align: center;
+      margin-bottom: 25px;
       justify-content: space-evenly;
     }
 
@@ -55,7 +56,7 @@ export const StyledHeroText = styled.div`
 
       &:hover {
         padding: 0 0 4px;
-        border-bottom: 3px solid #d92228;
+        border-bottom: 3px solid var(--heart-hover-color);
       }
     }
   }
@@ -63,8 +64,8 @@ export const StyledHeroText = styled.div`
 
 export const StyledSearchInputField = styled.div`
   width: 100%;
-  height: fit-content;
   position: relative;
+  height: fit-content;
 
   button {
     top: 8px;
@@ -77,11 +78,11 @@ export const StyledSearchInputField = styled.div`
     border-radius: 50%;
     align-items: center;
     justify-content: center;
-    background-color: #d92228;
+    background-color: var(--heart-hover-color);
 
     &:hover {
-      background-color: rgb(184, 29, 34);
       border-color: rgb(184, 29, 34);
+      background-color: rgb(184, 29, 34);
     }
   }
 
@@ -98,9 +99,9 @@ export const StyledSearchInputField = styled.div`
     padding: 20px 50px 20px 13px;
 
     &::placeholder {
-      color: #470000;
       font-weight: 200;
       font-size: 1.2rem;
+      color: var(--hero-placeholder-color);
     }
   }
 `;

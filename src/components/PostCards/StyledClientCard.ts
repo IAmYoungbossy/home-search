@@ -7,7 +7,7 @@ export const StyledInteractWithPostIcons = styled.div`
   margin: -3px 31px 0 23px;
   padding: 5px 14px 6px 0px;
   border-top-left-radius: 5px;
-  border-top: 1px solid #d6d6d6;
+  border-top: 1px solid var(--interact-with-post-border-color);
 
   svg {
     width: 15px;
@@ -34,22 +34,22 @@ export const StyledDescription = styled.div`
   z-index: 2;
   border-top: none;
   position: relative;
-  border: 1px solid #d6d6d6;
   padding: 2px 19px 2px 22px;
   margin: -1px 31px 2px 22px;
+  border: 1px solid var(--interact-with-post-border-color);
 
   p {
     font-size: 13px;
     color: var(--social-dark-font-color);
-    font-family: "Noto Sans", sans-serif;
+    font-family: var(--social-noto-sans-font-family);
   }
 `;
 
 export const StyledHouseSpec = styled.div`
   padding: 5px 0px 0 20px;
   margin: -7px 31px 0 22px;
-  border-left: 1px solid #ddc8c8;
-  border-bottom: 1px solid #ddc8c8;
+  border-left: 1px solid var(--house-spec-border-color);
+  border-bottom: 1px solid var(--house-spec-border-color);
 
   & > div {
     flex: 1;
@@ -97,9 +97,9 @@ export const StyledPostCard = styled.div`
   width: 100%;
   display: flex;
   margin: 10px 0;
-  border: 1px solid #eff1f2;
   max-width: var(--social-max-width);
   background-color: var(--light-bg-color-primary);
+  border: 1px solid var(--social-page-outline-color);
 `;
 
 export const StyledPostDetails = styled.div`

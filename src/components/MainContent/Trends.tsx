@@ -4,6 +4,7 @@ import TrendsImage from "../assets/trends.jpg";
 const StyledTrends = styled.div<{ bgImage: string }>`
   line-height: 1.5;
   position: relative;
+
   & > div:first-child {
     width: 100%;
     display: flex;
