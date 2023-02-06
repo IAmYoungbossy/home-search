@@ -93,7 +93,7 @@ export const StyledDraft = styled.div`
     font-weight: 500;
     text-align: center;
     border-radius: 2px;
-    background-color: #878a8c;
+    background-color: var(--social-font-color);
   }
 `;
 
@@ -103,8 +103,8 @@ export const StyledPostOptions = styled.div`
   font-size: 14px;
   overflow-x: auto;
   margin-top: 10px;
-  font-family: "IBMPlanSans", Arial, sans-serif;
   background-color: var(--light-bg-color-primary);
+  font-family: var(--social-ibm-plex-sans-font-family);
 
   button {
     flex: 1;
@@ -189,6 +189,7 @@ export const StyledMarkdown = styled.div`
     font-weight: bold;
     border-radius: 20px;
     color: var(--social-secondary-font-color);
+
     &:hover {
       background-color: #1c1c1c24;
     }
@@ -285,7 +286,7 @@ export const StyledRedditRules = styled.div`
   div {
     font-size: 14px;
     padding: 10px 5px;
-    color: #1c1c1c;
+    color: var(--social-dark-font-color);
     border-bottom: 1px solid var(--social-border-color);
     font-family: var(--social-ibm-plex-sans-font-family);
   }

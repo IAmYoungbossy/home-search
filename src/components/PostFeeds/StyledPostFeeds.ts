@@ -76,9 +76,9 @@ export const StyledCreateCard = styled.div`
 
     & > div:last-child {
       font-size: 16px;
-      color: #1c1c1c;
       font-weight: 600;
       padding: 33px 0 0 10px;
+      color: var(--social-dark-font-color);
       font-family: var(--social-ibm-plex-sans-font-family);
     }
   }
@@ -89,8 +89,8 @@ export const StyledCreateCard = styled.div`
 
     p {
       font-size: 14px;
-      color: #1c1c1c;
       padding-bottom: 15px;
+      color: var(--social-dark-font-color);
       font-family: var(--social-noto-sans-font-family);
       border-bottom: 1px solid var(--social-border-color);
     }

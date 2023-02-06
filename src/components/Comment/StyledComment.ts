@@ -107,8 +107,8 @@ export const StyledCommentBox = styled.div`
   border-left: 1px solid var(--social-border-left-darkgrey);
 
   p {
-    color: #1c1c1c;
     font-size: 14px;
+    color: var(--social-dark-font-color);
     font-family: var(--social-noto-sans-font-family);
   }
 `;

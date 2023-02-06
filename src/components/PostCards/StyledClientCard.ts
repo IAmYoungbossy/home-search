@@ -39,8 +39,8 @@ export const StyledDescription = styled.div`
   margin: -1px 31px 2px 22px;
 
   p {
-    color: #1c1c1c;
     font-size: 13px;
+    color: var(--social-dark-font-color);
     font-family: "Noto Sans", sans-serif;
   }
 `;

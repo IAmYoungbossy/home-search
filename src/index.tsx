@@ -20,6 +20,7 @@ const GlobalCSS = createGlobalStyle`
     --social-font-color: #878A8C;
     --rich-text-border-color: grey;
     --social-border-color: #EDEFF1;
+    --social-dark-font-color: #1c1c1c;
     --social-button-outline: #878a8c4f;
     --social-draft-hover-bg-color: #cbd0d6;
     --social-secondary-font-color: #1181d4;
