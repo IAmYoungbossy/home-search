@@ -45,9 +45,9 @@ export const StyleActionButtons = styled.div`
     padding: 4px 8px;
     font-weight: bold;
     border-radius: 20px;
-    outline: 2px solid #878a8c4f;
     background-color: transparent;
     color: var(--social-font-color);
+    outline: 2px solid var(--social-button-outline);
   }
 
   & > button:last-child {
@@ -164,9 +164,9 @@ export const StyledButtonTags = styled.div`
     padding: 5px 12px;
     font-weight: bold;
     border-radius: 20px;
-    outline: 2px solid #878a8c4f;
     background-color: transparent;
     color: var(--social-font-color);
+    outline: 2px solid var(--social-button-outline);
   }
 `;
 
