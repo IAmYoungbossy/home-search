@@ -5,8 +5,8 @@ export const StyledCheck = styled.div`
   font-size: 12px;
   line-height: 2.5;
   padding: 20px 10px;
+  font-family: var(--social-ibm-plex-sans-font-family);
   background-color: var(--social-light-secondary-bg-color);
-  font-family: "IBMPlexSans", Arial, Helvetica, sans-serif;
 
   label {
     font-weight: bold;

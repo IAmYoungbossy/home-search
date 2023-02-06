@@ -60,11 +60,11 @@ export const StyledHouseSpec = styled.div`
     color: #222;
     font-size: 15px;
     padding: 0px 0 5px;
-    font-family: "IBM Plex Sans", Arial, sans-serif;
+    font-family: var(--social-ibm-plex-sans-font-family);
   }
 
   & > div > p {
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: var(--social-ibm-plex-sans-font-family);
   }
 `;
 

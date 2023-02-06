@@ -79,7 +79,7 @@ export const StyledCreateCard = styled.div`
       color: #1c1c1c;
       font-weight: 600;
       padding: 33px 0 0 10px;
-      font-family: "IBM Plex Sans", Arial, sans-serif;
+      font-family: var(--social-ibm-plex-sans-font-family);
     }
   }
 
@@ -126,7 +126,7 @@ export const StyledRedditPremium = styled.div`
       font-size: 12px;
       color: #1a1a1b;
       font-weight: 600;
-      font-family: "IBM Plex Sans", Arial, sans-serif;
+      font-family: var(--social-ibm-plex-sans-font-family);
     }
 
     & > div:first-of-type {

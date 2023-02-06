@@ -46,7 +46,7 @@ export const StyledLoginAgreement = styled.div`
     font-size: 20px;
     color: #1a1a1b;
     margin-top: 24px;
-    font-family: "IBM Plex Sans", Arial, sans-serif;
+    font-family: var(--social-ibm-plex-sans-font-family);
   }
 
   p {
