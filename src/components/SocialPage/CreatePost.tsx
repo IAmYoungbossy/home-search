@@ -22,8 +22,8 @@ const StyledCreatePost = styled.div`
   padding: 8px 10px;
   margin: 20px 0 10px;
   align-items: center;
-  background-color: white;
   justify-content: space-between;
+  background-color: var(--light-bg-color-primary);
 
   input {
     width: 100%;

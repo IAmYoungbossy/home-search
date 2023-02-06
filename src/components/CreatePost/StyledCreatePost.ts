@@ -37,8 +37,8 @@ export const StyleActionButtons = styled.div`
   display: flex;
   padding: 15px 0;
   align-items: center;
-  background-color: white;
   justify-content: flex-end;
+  background-color: var(--light-bg-color-primary);
 
   button {
     border: none;
@@ -103,8 +103,8 @@ export const StyledPostOptions = styled.div`
   font-size: 14px;
   overflow-x: auto;
   margin-top: 10px;
-  background-color: white;
   font-family: "IBMPlanSans", Arial, sans-serif;
+  background-color: var(--light-bg-color-primary);
 
   button {
     flex: 1;
@@ -133,9 +133,9 @@ export const StyledChooseCommunity = styled.div`
   padding: 5px 10px;
   border-radius: 4px;
   align-items: center;
-  background-color: white;
   justify-content: space-between;
   color: var(--social-font-color);
+  background-color: var(--light-bg-color-primary);
 
   & > div {
     gap: 10px;
@@ -154,7 +154,7 @@ export const StyledButtonTags = styled.div`
   width: 100%;
   display: flex;
   padding: 15px 10px 15px;
-  background-color: white;
+  background-color: var(--light-bg-color-primary);
   border-bottom: 1px solid var(--social-border-color);
 
   button {
@@ -247,7 +247,7 @@ export const StyledCreatePostPage = styled.div`
 
 export const StyledPost = styled.div`
   padding: 15px 15px 0;
-  background-color: white;
+  background-color: var(--light-bg-color-primary);
   border-bottom: 1px solid var(--social-border-color);
 `;
 
@@ -280,7 +280,7 @@ export const StyledRedditRules = styled.div`
   padding: 12px;
   margin: 40px 0 0;
   border-radius: 5px;
-  background-color: white;
+  background-color: var(--light-bg-color-primary);
 
   div {
     font-size: 14px;

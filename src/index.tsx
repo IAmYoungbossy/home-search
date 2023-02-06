@@ -22,10 +22,13 @@ const GlobalCSS = createGlobalStyle`
     --social-border-color: #EDEFF1;
     --social-secondary-font-color: #1181d4;
     --social-comment-purple-color: #ff66ac;
+    --social-border-left-darkgrey: darkgray;
     --social-disabled-button-color: #bebebe;
     --social-disabled-button-bg-color: #a1a1a1;
     --social-light-secondary-bg-color: #f6f7f8;
     --social-noto-sans-font-family: "Noto sans", Arial, sans-serif;
+
+    --light-bg-color-primary: white;
   }
 
   body {

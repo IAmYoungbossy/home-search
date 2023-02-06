@@ -129,9 +129,9 @@ export const DropDown = styled.div`
   top: 46px;
   z-index: 1;
   width: 100%;
-  /* padding: 15px 0; */
   position: absolute;
-  background-color: white;
+  background-color: var(--light-bg-color-primary);
+
   & > div {
     width: 100%;
     display: flex;

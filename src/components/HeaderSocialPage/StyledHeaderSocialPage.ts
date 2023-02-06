@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledHeaderSocial = styled.header`
-  background-color: white;
+  background-color: var(--light-bg-color-primary);
 
   & > div {
     gap: 10px;

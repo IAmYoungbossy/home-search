@@ -9,7 +9,7 @@ export const StyledRedditPolicies = styled.div`
   position: sticky;
   border-radius: 5px;
   padding: 0 12px 12px;
-  background-color: white;
+  background-color: var(--light-bg-color-primary);
   font-family: var(--social-noto-sans-font-family);
 
   & > div {
@@ -53,7 +53,7 @@ export const StyledCreateCard = styled.div`
   margin-top: 15px;
   border-radius: 5px;
   padding-bottom: 5px;
-  background-color: white;
+  background-color: var(--light-bg-color-primary);
 
   & > div:first-child {
     display: flex;
@@ -106,7 +106,7 @@ export const StyledRedditPremium = styled.div`
   margin-top: 20px;
   border-radius: 5px;
   padding: 8px 12px 10px;
-  background-color: white;
+  background-color: var(--light-bg-color-primary);
 
   button {
     width: 100%;

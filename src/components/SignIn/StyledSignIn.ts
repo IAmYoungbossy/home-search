@@ -77,13 +77,13 @@ export const StyledSignIn = styled.div`
   margin: auto;
   border-radius: 20px;
   max-width: max-content;
-  background-color: white;
   box-shadow: 2px 10px 20px 0px #0000006e;
+  background-color: var(--light-bg-color-primary);
 
   & > div {
     margin: 40px;
     max-width: 280px;
-    background-color: white;
+    background-color: var(--light-bg-color-primary);
   }
 
   & > div > div:nth-child(2) {
@@ -127,7 +127,7 @@ export const StyledSignIn = styled.div`
 
     p {
       padding: 5px 10px;
-      background-color: white;
+      background-color: var(--light-bg-color-primary);
     }
   }
 `;

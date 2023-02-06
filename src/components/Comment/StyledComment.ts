@@ -69,12 +69,11 @@ export const StyledCommentAs = styled.div`
 
 export const StyledTextArea = styled.div`
   display: flex;
-  /* margin: 0 auto; */
-  max-width: var(--social-max-width);
   margin-top: -11px;
   flex-direction: column;
-  background-color: white;
   padding: 30px 32px 40px 61px;
+  max-width: var(--social-max-width);
+  background-color: var(--light-bg-color-primary);
 
   textarea {
     width: 100%;
@@ -104,8 +103,8 @@ export const StyledReactionButtons = styled.div`
 export const StyledCommentBox = styled.div`
   padding-left: 20px;
   margin: -5px 21px 0;
-  border-left: 1px solid darkgray;
   max-width: var(--social-max-width);
+  border-left: 1px solid var(--social-border-left-darkgrey);
 
   p {
     color: #1c1c1c;
@@ -117,9 +116,9 @@ export const StyledCommentBox = styled.div`
 export const StyledComment = styled.div`
   gap: 24px;
   width: 100%;
+  display: flex;
   max-width: fit-content;
   margin: 24px auto 24px auto;
-  display: flex;
 
   & > div:first-of-type {
     flex: 1;
@@ -137,6 +136,7 @@ export const StyledComment = styled.div`
 
   & > div:last-of-type {
     margin-top: -30px;
+
     & > div {
       top: 10px;
       position: sticky;
@@ -146,6 +146,6 @@ export const StyledComment = styled.div`
 
 export const StyledcommentCard = styled.div`
   width: 100%;
-  background-color: white;
   max-width: var(--social-max-width);
+  background-color: var(--light-bg-color-primary);
 `;
