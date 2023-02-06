@@ -2,8 +2,8 @@
 import PostFeeds from "../PostFeeds/PostFeeds";
 import SignInContainer from "../SignIn/SignIn";
 // import CreatePostPage from "../CreatePost/CreatePost";
-import { HeaderSocial } from "../App/HeaderSocialPage/HeaderSocialPage";
-import { StyledSocialPage } from "../App/HeaderSocialPage/StyledHeaderSocialPage";
+import { HeaderSocial } from "../HeaderSocialPage/HeaderSocialPage";
+import { StyledSocialPage } from "../HeaderSocialPage/StyledHeaderSocialPage";
 
 export default function SocialPage() {
   return (

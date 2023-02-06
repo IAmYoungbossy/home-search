@@ -7,7 +7,7 @@ import { CiSearch } from "react-icons/ci";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineOutbond } from "react-icons/md";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { CTAButtons, HeaderLogo, UserIcon } from "../../Header/Header";
+import { CTAButtons, HeaderLogo, UserIcon } from "../Header/Header";
 
 export function HeaderSocial() {
   return (
