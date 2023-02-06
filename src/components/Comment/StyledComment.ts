@@ -5,13 +5,13 @@ export const StyledRichTextEditor = styled.div`
   padding: 5px;
   display: flex;
   font-size: 12px;
-  align-items: center;
-  border: 1px solid grey;
   border-top: none;
+  align-items: center;
   justify-content: space-between;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   max-width: var(--social-max-width);
+  border: 1px solid var(--rich-text-border-color);
   background-color: var(--social-light-secondary-bg-color);
 
   div {
