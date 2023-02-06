@@ -22,6 +22,7 @@ const GlobalCSS = createGlobalStyle`
     --social-border-color: #EDEFF1;
     --social-secondary-font-color: #1181d4;
     --social-comment-purple-color: #ff66ac;
+    --social-disabled-button-color: #bebebe;
     --social-light-secondary-bg-color: #f6f7f8;
   }
 
