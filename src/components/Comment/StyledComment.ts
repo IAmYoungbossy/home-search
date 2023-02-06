@@ -31,8 +31,8 @@ export const StyledRichTextEditor = styled.div`
     padding: 3px 10px;
     font-weight: bold;
     border-radius: 20px;
-    background-color: #a1a1a1;
     color: var(--social-disabled-button-color);
+    background-color: var(--social-disabled-button-bg-color);
   }
 `;
 
