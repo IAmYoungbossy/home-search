@@ -30,8 +30,8 @@ const StyledCreatePost = styled.div`
     border: none;
     padding: 8px;
     border-radius: 5px;
-    background-color: #f6f7f8;
     outline: 1px solid #eff1f2;
+    background-color: var(--social-light-secondary-bg-color);
   }
 
   & > svg:first-child {

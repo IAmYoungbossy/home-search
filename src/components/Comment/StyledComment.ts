@@ -4,16 +4,15 @@ export const StyledRichTextEditor = styled.div`
   width: 100%;
   padding: 5px;
   display: flex;
-  /* margin: 0 auto; */
   font-size: 12px;
-  max-width: var(--social-max-width);
   align-items: center;
   border: 1px solid grey;
   border-top: none;
   justify-content: space-between;
-  background-color: #f6f7f8;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  max-width: var(--social-max-width);
+  background-color: var(--social-light-secondary-bg-color);
 
   div {
     gap: 5px;

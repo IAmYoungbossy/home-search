@@ -41,8 +41,8 @@ export const StyledSearchBarSocial = styled.div`
     outline: none;
     padding: 9.7px 35px;
     border-radius: 20px;
-    background-color: #f6f7f8;
     outline: 1px solid #eff1f2;
+    background-color: var(--social-light-secondary-bg-color);
   }
 `;
 

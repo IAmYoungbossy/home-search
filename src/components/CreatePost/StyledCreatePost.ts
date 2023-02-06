@@ -5,7 +5,7 @@ export const StyledCheck = styled.div`
   font-size: 12px;
   line-height: 2.5;
   padding: 20px 10px;
-  background-color: #f6f7f8;
+  background-color: var(--social-light-secondary-bg-color);
   font-family: "IBMPlexSans", Arial, Helvetica, sans-serif;
 
   label {
@@ -177,12 +177,12 @@ export const StyledMarkdown = styled.div`
   padding: 8px 16px;
   border-radius: 5px;
   align-items: center;
-  background-color: #f6f7f8;
   justify-content: space-between;
   border: 1px solid var(--social-border-color);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom: none;
+  background-color: var(--social-light-secondary-bg-color);
 
   p {
     padding: 4px 8px;
