@@ -9,13 +9,13 @@ const StyledTrends = styled.div<{ bgImage: string }>`
     display: flex;
     height: 500px;
     margin: 40px 0;
-    color: white;
     align-items: center;
     background-size: cover;
     filter: brightness(0.5);
     justify-content: center;
     background-position: center;
     background-repeat: no-repeat;
+    color: var(--social-light-font-color-primary);
     background-image: url(${({ bgImage }) => bgImage});
   }
 
@@ -24,11 +24,11 @@ const StyledTrends = styled.div<{ bgImage: string }>`
     width: 100%;
     height: 100%;
     display: flex;
-    color: white;
     position: absolute;
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    color: var(--social-light-font-color-primary);
   }
 
   p {
@@ -47,13 +47,13 @@ const StyledTrends = styled.div<{ bgImage: string }>`
   }
 
   button {
-    color: white;
     font-size: 1rem;
     cursor: pointer;
     border: 2px solid;
     padding: 10px 24px;
     border-radius: 20px;
     background-color: transparent;
+    color: var(--social-light-font-color-primary);
 
     &:hover {
       background-color: #ff000053;

@@ -27,7 +27,6 @@ export const StyledSellerBanner = styled.div`
   }
 
   button {
-    color: white;
     border: none;
     font-weight: 200;
     font-size: 1rem;
@@ -35,5 +34,6 @@ export const StyledSellerBanner = styled.div`
     padding: 15px 20px;
     border-radius: 30px;
     background-color: #d92228;
+    color: var(--social-light-font-color-primary);
   }
 `;

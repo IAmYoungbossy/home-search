@@ -45,11 +45,11 @@ export const StyledDetails = styled.div`
 
   & > div > button {
     border: none;
-    color: white;
     font-size: 16px;
     padding: 10px 24px;
     border-radius: 20px;
     background-color: #d92228;
+    color: var(--social-light-font-color-primary);
   }
 
   small {

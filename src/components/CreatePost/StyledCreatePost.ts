@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const StyledCheck = styled.div`
-  color: #1c1c1d;
   font-size: 12px;
   line-height: 2.5;
   padding: 20px 10px;
+  color: var(--social-check-font-color);
   font-family: var(--social-ibm-plex-sans-font-family);
   background-color: var(--social-light-secondary-bg-color);
 
@@ -67,20 +67,20 @@ export const StyledTitleHeader = styled.div`
   border-bottom: 1px solid var(--social-light-secondary-bg-color);
 
   h2 {
-    color: #4b4c4e;
     font-size: 18px;
     padding-bottom: 10px;
+    color: var(--social-disabled-button-bg-color);
     font-family: var(--social-ibm-plex-sans-font-family);
   }
 `;
 
 export const StyledDraft = styled.div`
-  color: #1181d4;
   font-size: 12px;
   font-weight: 600;
   padding: 4px 8px;
   padding: 6px 16px;
   border-radius: 20px;
+  color: var(--social-secondary-font-color);
   font-family: var(--social-noto-sans-font-family);
 
   &:hover {
@@ -88,12 +88,12 @@ export const StyledDraft = styled.div`
   }
 
   span {
-    color: white;
     padding: 0px 3px;
     font-weight: 500;
     text-align: center;
     border-radius: 2px;
     background-color: var(--social-font-color);
+    color: var(--social-light-font-color-primary);
   }
 `;
 
@@ -256,9 +256,9 @@ export const StyledWarning = styled.div`
   margin: 0;
   width: 312px;
   font-size: 12px;
-  color: #7c7c7c;
   font-weight: 500;
   padding: 10px 62px 0 0;
+  color: var(--social-warning-font-color);
 
   span {
     color: var(--social-secondary-font-color);

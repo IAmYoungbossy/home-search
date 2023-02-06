@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const StyledHero = styled.div<{ bgImage: string }>`
   width: 100%;
-  color: white;
   height: 440px;
   position: relative;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  color: var(--social-light-font-color-primary);
   background-image: url(${({ bgImage }) => bgImage});
 `;
 

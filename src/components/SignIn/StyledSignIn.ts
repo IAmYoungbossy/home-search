@@ -25,11 +25,11 @@ export const StyledSignInFields = styled.form`
     width: 100%;
     border: none;
     padding: 12px;
-    color: white;
     margin: 20px 0 15px;
     border-radius: 20px;
     font-weight: bolder;
     background-color: #d93a00;
+    color: var(--social-light-font-color-primary);
   }
 
   & > div:first-child {

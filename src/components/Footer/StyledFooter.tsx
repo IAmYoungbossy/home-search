@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const StyledFooter = styled.footer`
-  color: white;
   background-color: #2b2b2b;
+  color: var(--social-light-font-color-primary);
+
   & > div {
     gap: 50px;
     display: flex;

@@ -22,11 +22,15 @@ const GlobalCSS = createGlobalStyle`
     --social-border-color: #EDEFF1;
     --social-dark-font-color: #1c1c1c;
     --social-button-outline: #878a8c4f;
+    --social-check-font-color: #1c1c1d;
+    --social-warning-font-color: #7c7c7c;
     --social-draft-hover-bg-color: #cbd0d6;
     --social-secondary-font-color: #1181d4;
     --social-comment-purple-color: #ff66ac;
     --social-border-left-darkgrey: darkgray;
     --social-disabled-button-color: #bebebe;
+    --social-light-font-color-primary: white;
+    --social-title-header-font-color: #4b4c4e;
     --social-disabled-button-bg-color: #a1a1a1;
     --social-light-secondary-bg-color: #f6f7f8;
     --social-noto-sans-font-family: "Noto sans", Arial, sans-serif;

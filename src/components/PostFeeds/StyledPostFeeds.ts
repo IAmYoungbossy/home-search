@@ -36,11 +36,11 @@ export const StyledButton = styled.button`
   padding: 8px;
   border: none;
   margin: 10px;
-  color: white;
   font-weight: 700;
   border-radius: 20px;
   border: 1px solid #0079d3;
   background-color: #0079d3;
+  color: var(--social-light-font-color-primary);
 `;
 
 export const StyledCommunityButton = styled(StyledButton)`
@@ -112,10 +112,10 @@ export const StyledRedditPremium = styled.div`
     width: 100%;
     border: none;
     padding: 8px;
-    color: white;
     font-weight: 700;
     border-radius: 20px;
     background-color: #ff4500;
+    color: var(--social-light-font-color-primary);
   }
 
   & > div {
