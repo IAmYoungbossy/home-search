@@ -154,6 +154,18 @@ function listItems(list: string, index: number) {
   );
 }
 
+export function splitWords(string: string) {
+  return string.split(" ");
+}
+
+export function searchWord(array: string[]) {
+  return [...array].filter((word, index) => {
+    const searchedWord =
+      word.toLowerCase() === "realtor" || word.toLowerCase() === "realtors";
+    return searchedWord ? { word, index } : false;
+  });
+}
+
 export function Registered({ string }: { string: string }) {
   const wordArr: { word: string; index: number }[] = [];
   if (string === "hr") return <hr />;
