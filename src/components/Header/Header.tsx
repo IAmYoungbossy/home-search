@@ -176,6 +176,18 @@ export function addSuperScript({ array }: addSuperScriptProps) {
   return array.map((word) => ({ word: `${word.word}®`, index: word.index }));
 }
 
+type supScrptType = { word: string; index: number }[];
+
+export function getEditedWords(supScrpt: supScrptType, splitWords: string[]) {
+  const splitWordsCopy = [...splitWords];
+  if (supScrpt.length > 0) {
+    supScrpt.forEach((item) => {
+      splitWordsCopy.splice(item.index, 1, `${item.word}`);
+    });
+  }
+  return splitWordsCopy;
+}
+
 export function Registered({ string }: { string: string }) {
   const wordArr: { word: string; index: number }[] = [];
   if (string === "hr") return <hr />;

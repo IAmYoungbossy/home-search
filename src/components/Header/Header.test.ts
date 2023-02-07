@@ -1,4 +1,9 @@
-import { addSuperScript, searchWord, splitWords } from "./Header";
+import {
+  addSuperScript,
+  getEditedWords,
+  searchWord,
+  splitWords,
+} from "./Header";
 
 describe("Header Component", () => {
   describe("Split words into array items", () => {
@@ -38,6 +43,24 @@ describe("Header Component", () => {
         { word: "Realtor®", index: 1 },
         { word: "realtos®", index: 3 },
       ]);
+    });
+  });
+
+  describe("getEditedWords returns array of strings", () => {
+    it("replaces splitWords array item with object property from supScript array both passed as arguements to getEditedWords", () => {
+      const supScript = [
+        { word: "Realtor®", index: 3 },
+        { word: "realtors®", index: 0 },
+      ];
+      const splitWords = ["realtors", "Bossman", "Barinua", "Realtor"];
+      const result = getEditedWords(supScript, splitWords);
+      expect(result).toEqual(["realtors®", "Bossman", "Barinua", "Realtor®"]);
+    });
+
+    it("returns splitWords array if supScript array is empty", () => {
+      const splitWords = ["realtors", "Bossman", "Barinua", "Realtor"];
+      const result = getEditedWords([], splitWords);
+      expect(result).toEqual(["realtors", "Bossman", "Barinua", "Realtor"]);
     });
   });
 });
