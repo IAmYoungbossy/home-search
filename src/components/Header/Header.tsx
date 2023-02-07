@@ -159,11 +159,13 @@ export function splitWords(string: string) {
 }
 
 export function searchWord(array: string[]) {
-  return [...array].filter((word, index) => {
-    const searchedWord =
-      word.toLowerCase() === "realtor" || word.toLowerCase() === "realtors";
-    return searchedWord ? { word, index } : false;
-  });
+  return array
+    .map((word, index) => ({ word: word, index: index }))
+    .filter(
+      (obj) =>
+        obj.word.toLowerCase() === "realtor" ||
+        obj.word.toLowerCase() === "realtors"
+    );
 }
 
 export function Registered({ string }: { string: string }) {
