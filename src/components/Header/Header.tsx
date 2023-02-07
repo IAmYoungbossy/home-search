@@ -168,6 +168,14 @@ export function searchWord(array: string[]) {
     );
 }
 
+interface addSuperScriptProps {
+  array: { word: string; index: number }[];
+}
+
+export function addSuperScript({ array }: addSuperScriptProps) {
+  return array.map((word) => ({ word: `${word.word}®`, index: word.index }));
+}
+
 export function Registered({ string }: { string: string }) {
   const wordArr: { word: string; index: number }[] = [];
   if (string === "hr") return <hr />;

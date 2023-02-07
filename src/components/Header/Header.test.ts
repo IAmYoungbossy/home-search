@@ -1,4 +1,4 @@
-import { searchWord, splitWords } from "./Header";
+import { addSuperScript, searchWord, splitWords } from "./Header";
 
 describe("Header Component", () => {
   describe("Split words into array items", () => {
@@ -8,7 +8,7 @@ describe("Header Component", () => {
     });
   });
 
-  describe("tests if array has Realtor or Realtors and returns each instances of the words along with its index", () => {
+  describe("If searchWord function has Realtor or Realtors it returns array of object containing word and its index", () => {
     it("tests if Realtor exists", () => {
       const result = searchWord(["My", "Bossman", "Barinua", "Realtor"]);
       expect(result).toEqual([{ word: "Realtor", index: 3 }]);
@@ -22,6 +22,22 @@ describe("Header Component", () => {
     it("tests if no word like realtor or realtors and return empty array", () => {
       const result = searchWord(["My", "Bossman", "Barinua"]);
       expect(result).toEqual([]);
+    });
+  });
+
+  describe("AddSuperScript function return JSX Element", () => {
+    it("returns array of JSX Elements for each item in array passed as arguement", () => {
+      const array = [
+        { word: "Realtor", index: 1 },
+        { word: "realtos", index: 3 },
+      ];
+
+      const result = addSuperScript({ array });
+
+      expect(result).toEqual([
+        { word: "Realtor®", index: 1 },
+        { word: "realtos®", index: 3 },
+      ]);
     });
   });
 });
