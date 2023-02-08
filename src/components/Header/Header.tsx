@@ -109,7 +109,7 @@ function List({ children, link }: ListType) {
   return (
     <li key={link}>
       <div>
-        <Registered string={link} />
+        <AddRegisteredTradeMark string={link} />
       </div>
       {children}
     </li>
@@ -139,7 +139,7 @@ function displaySectionList(sectionList: sectionListType) {
   return (
     <section key={header}>
       <h4>
-        <Registered string={header} />
+        <AddRegisteredTradeMark string={header} />
       </h4>
       <ul>{lists}</ul>
     </section>
@@ -149,12 +149,12 @@ function displaySectionList(sectionList: sectionListType) {
 function listItems(list: string, index: number) {
   return (
     <li key={index}>
-      <Registered string={list} />
+      <AddRegisteredTradeMark string={list} />
     </li>
   );
 }
 
-export function Registered({ string }: { string: string }) {
+export function AddRegisteredTradeMark({ string }: { string: string }) {
   if (string === "hr") return <hr />;
   const wordsToArrayItems = splitWords(string);
   const wordsToEdit = searchWord(wordsToArrayItems);
