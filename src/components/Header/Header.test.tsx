@@ -32,37 +32,78 @@ describe("Header Component", () => {
     });
   });
 
-  describe("AddSuperScript function return JSX Element", () => {
-    it("returns array of JSX Elements for each item in array passed as arguement", () => {
-      const array = [
-        { word: "Realtor", index: 1 },
-        { word: "realtos", index: 3 },
-      ];
-
-      const result = addSuperScript(array);
-
-      expect(result).toEqual([
-        { word: "Realtor®", index: 1 },
-        { word: "realtos®", index: 3 },
-      ]);
-    });
-  });
-
   describe("replaceWithEditedWords returns array of strings", () => {
     it("replaces splitWords array item with object property from supScript array both passed as arguements to replaceWithEditedWords", () => {
       const supScript = [
-        { word: "Realtor®", index: 3 },
-        { word: "realtors®", index: 0 },
+        {
+          word: (
+            <>
+              Realtor<sup>&reg;</sup>
+            </>
+          ),
+          index: 3,
+        },
+        {
+          word: (
+            <>
+              realtors<sup>&reg;</sup>
+            </>
+          ),
+          index: 0,
+        },
       ];
       const splitWords = ["realtors", "Bossman", "Barinua", "Realtor"];
       const result = replaceWithEditedWords(supScript, splitWords);
-      expect(result).toEqual(["realtors®", "Bossman", "Barinua", "Realtor®"]);
+      expect(result).toEqual([
+        <>
+          realtors
+          <sup>&reg;</sup>
+        </>,
+        "Bossman",
+        "Barinua",
+        <>
+          Realtor
+          <sup>&reg;</sup>
+        </>,
+      ]);
     });
 
     it("returns splitWords array if supScript array is empty", () => {
       const splitWords = ["realtors", "Bossman", "Barinua", "Realtor"];
       const result = replaceWithEditedWords([], splitWords);
       expect(result).toEqual(["realtors", "Bossman", "Barinua", "Realtor"]);
+    });
+  });
+
+  describe("addSuperScript", () => {
+    it("adds a superscript to the word", () => {
+      const array = [
+        { word: "hello", index: 1 },
+        { word: "world", index: 2 },
+      ];
+
+      const result = addSuperScript(array);
+
+      expect(result).toEqual([
+        {
+          word: (
+            <>
+              hello
+              <sup>&reg;</sup>
+            </>
+          ),
+          index: 1,
+        },
+        {
+          word: (
+            <>
+              world
+              <sup>&reg;</sup>
+            </>
+          ),
+          index: 2,
+        },
+      ]);
     });
   });
 
@@ -74,6 +115,17 @@ describe("Header Component", () => {
 
       const headerElement = screen.getByText(/Letam Bossman Barinua/);
       expect(headerElement).toBeInTheDocument();
+    });
+
+    it("renders JSX elements", () => {
+      const stringArray = [
+        <p key={1}>JSX element 1</p>,
+        <p key={2}>JSX element 2</p>,
+      ];
+      render(<StringToJSX stringArray={stringArray} />);
+
+      expect(screen.getByText("JSX element 1")).toBeInTheDocument();
+      expect(screen.getByText("JSX element 2")).toBeInTheDocument();
     });
   });
 });

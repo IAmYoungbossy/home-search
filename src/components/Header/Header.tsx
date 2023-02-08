@@ -154,6 +154,18 @@ function listItems(list: string, index: number) {
   );
 }
 
+export function Registered({ string }: { string: string }) {
+  if (string === "hr") return <hr />;
+  const wordsToArrayItems = splitWords(string);
+  const wordsToEdit = searchWord(wordsToArrayItems);
+  const supScript = addSuperScript(wordsToEdit);
+  const replaceWithEdited = replaceWithEditedWords(
+    supScript,
+    wordsToArrayItems
+  );
+  return <StringToJSX stringArray={replaceWithEdited} />;
+}
+
 export function splitWords(string: string) {
   return string.split(" ");
 }
@@ -171,44 +183,40 @@ export function searchWord(array: string[]) {
 type addSuperScriptProps = { word: string; index: number }[];
 
 export function addSuperScript(array: addSuperScriptProps) {
-  return array.map((word) => ({ word: `${word.word}®`, index: word.index }));
+  return array.map((word) => ({
+    word: (
+      <>
+        {word.word}
+        <sup>&reg;</sup>
+      </>
+    ),
+    index: word.index,
+  }));
 }
 
-type supScrptType = { word: string; index: number }[];
+type supScrptType = { word: JSX.Element; index: number }[];
 
 export function replaceWithEditedWords(
   supScrpt: supScrptType,
   splitWords: string[]
 ) {
-  const splitWordsCopy = [...splitWords];
+  const splitWordsCopy: (string | JSX.Element)[] = [...splitWords];
   if (supScrpt.length > 0) {
     supScrpt.forEach((item) => {
-      splitWordsCopy.splice(item.index, 1, `${item.word}`);
+      splitWordsCopy.splice(item.index, 1, item.word);
     });
   }
   return splitWordsCopy;
 }
 
 interface DisplayStringsProps {
-  stringArray: string[];
+  stringArray: (string | JSX.Element)[];
 }
 
 export function StringToJSX({ stringArray }: DisplayStringsProps) {
-  const getStringsToJSX = (item: string, index: number) => (
+  const getStringsToJSX = (item: string | JSX.Element, index: number) => (
     <Fragment key={index}> {item} </Fragment>
   );
 
   return <>{stringArray.map(getStringsToJSX)}</>;
-}
-
-export function Registered({ string }: { string: string }) {
-  if (string === "hr") return <hr />;
-  const wordsToArrayItems = splitWords(string);
-  const wordsToEdit = searchWord(wordsToArrayItems);
-  const supScript = addSuperScript(wordsToEdit);
-  const replaceWithEdited = replaceWithEditedWords(
-    supScript,
-    wordsToArrayItems
-  );
-  return <StringToJSX stringArray={replaceWithEdited} />;
 }
