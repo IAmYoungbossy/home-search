@@ -1,9 +1,11 @@
 import {
-  addSuperScript,
-  replaceWithEditedWords,
   searchWord,
   splitWords,
+  StringToJSX,
+  addSuperScript,
+  replaceWithEditedWords,
 } from "./Header";
+import { render, screen } from "@testing-library/react";
 
 describe("Header Component", () => {
   describe("Split words into array items", () => {
@@ -37,7 +39,7 @@ describe("Header Component", () => {
         { word: "realtos", index: 3 },
       ];
 
-      const result = addSuperScript({ array });
+      const result = addSuperScript(array);
 
       expect(result).toEqual([
         { word: "Realtor®", index: 1 },
@@ -61,6 +63,17 @@ describe("Header Component", () => {
       const splitWords = ["realtors", "Bossman", "Barinua", "Realtor"];
       const result = replaceWithEditedWords([], splitWords);
       expect(result).toEqual(["realtors", "Bossman", "Barinua", "Realtor"]);
+    });
+  });
+
+  describe("StringToJSX", () => {
+    it("displays all string items in array", () => {
+      const stringArray = ["Letam", "Bossman", "Barinua"];
+
+      render(<StringToJSX stringArray={stringArray} />);
+
+      const headerElement = screen.getByText(/Letam Bossman Barinua/);
+      expect(headerElement).toBeInTheDocument();
     });
   });
 });

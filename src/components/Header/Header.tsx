@@ -168,11 +168,9 @@ export function searchWord(array: string[]) {
     );
 }
 
-interface addSuperScriptProps {
-  array: { word: string; index: number }[];
-}
+type addSuperScriptProps = { word: string; index: number }[];
 
-export function addSuperScript({ array }: addSuperScriptProps) {
+export function addSuperScript(array: addSuperScriptProps) {
   return array.map((word) => ({ word: `${word.word}®`, index: word.index }));
 }
 
@@ -191,7 +189,11 @@ export function replaceWithEditedWords(
   return splitWordsCopy;
 }
 
-export function DisplayStrings(stringArray: string[]) {
+interface DisplayStringsProps {
+  stringArray: string[];
+}
+
+export function StringToJSX({ stringArray }: DisplayStringsProps) {
   const getStringsToJSX = (item: string, index: number) => (
     <Fragment key={index}> {item} </Fragment>
   );
@@ -200,42 +202,13 @@ export function DisplayStrings(stringArray: string[]) {
 }
 
 export function Registered({ string }: { string: string }) {
-  const wordArr: { word: string; index: number }[] = [];
   if (string === "hr") return <hr />;
-  const stringArr = string.split(" ");
-  const stringArrCopy: (string | JSX.Element)[] = [...stringArr];
-  stringArrCopy.forEach((word, index) => {
-    if (
-      typeof word === "string" &&
-      (word.toLowerCase() === "realtor" || word.toLowerCase() === "realtors")
-    ) {
-      wordArr.push({ word, index });
-    }
-  });
-  if (wordArr.length > 0) {
-    wordArr.forEach((item) => {
-      stringArrCopy.splice(
-        item.index,
-        1,
-        <>
-          {item.word}
-          <sup>&reg;</sup>
-        </>
-      );
-    });
-    return (
-      <>
-        {stringArrCopy.map((item, index) => {
-          return <Fragment key={index}> {item} </Fragment>;
-        })}
-      </>
-    );
-  }
-  return (
-    <>
-      {stringArrCopy.map((item, index) => {
-        return <Fragment key={index}> {item} </Fragment>;
-      })}
-    </>
+  const wordsToArrayItems = splitWords(string);
+  const wordsToEdit = searchWord(wordsToArrayItems);
+  const supScript = addSuperScript(wordsToEdit);
+  const replaceWithEdited = replaceWithEditedWords(
+    supScript,
+    wordsToArrayItems
   );
+  return <StringToJSX stringArray={replaceWithEdited} />;
 }
