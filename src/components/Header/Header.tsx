@@ -178,7 +178,10 @@ export function addSuperScript({ array }: addSuperScriptProps) {
 
 type supScrptType = { word: string; index: number }[];
 
-export function getEditedWords(supScrpt: supScrptType, splitWords: string[]) {
+export function replaceWithEditedWords(
+  supScrpt: supScrptType,
+  splitWords: string[]
+) {
   const splitWordsCopy = [...splitWords];
   if (supScrpt.length > 0) {
     supScrpt.forEach((item) => {
@@ -186,6 +189,14 @@ export function getEditedWords(supScrpt: supScrptType, splitWords: string[]) {
     });
   }
   return splitWordsCopy;
+}
+
+export function DisplayStrings(stringArray: string[]) {
+  const getStringsToJSX = (item: string, index: number) => (
+    <Fragment key={index}> {item} </Fragment>
+  );
+
+  return <>{stringArray.map(getStringsToJSX)}</>;
 }
 
 export function Registered({ string }: { string: string }) {
