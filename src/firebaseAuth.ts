@@ -1,14 +1,9 @@
 import {
-  query,
-  where,
-  addDoc,
-  getDocs,
-  collection,
-  DocumentData,
-  QuerySnapshot,
-} from "firebase/firestore";
+  addNewUserData,
+  checkIfOldUser,
+  createNewUserData,
+} from "./firebaseCRUD";
 import {
-  User,
   signOut,
   updateProfile,
   UserCredential,
@@ -19,7 +14,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, db } from "./firebaseConfig";
+import { auth } from "./firebaseConfig";
 
 // Google Auth
 const googleProvider = new GoogleAuthProvider();
@@ -28,35 +23,6 @@ const googleSignIn = async () => {
   const response = await signInWithPopup(auth, googleProvider);
   const user = response.user;
   return { user };
-};
-
-const checkIfOldUser = async (user: User) => {
-  const q = query(collection(db, "USERS"), where("userId", "==", user.uid));
-  const documents = await getDocs(q);
-  return { documents };
-};
-
-const addNewUserData = async (
-  user: User,
-  authProvider: string,
-  email = user.email,
-  name = user.displayName
-) => {
-  await addDoc(collection(db, "USERS"), {
-    name: name,
-    email: email,
-    userId: user.uid,
-    avatar: user.photoURL,
-    authProvider: authProvider,
-  });
-};
-
-const createNewUserData = async (
-  documents: QuerySnapshot<DocumentData>,
-  user: User,
-  authProvider: string
-) => {
-  if (documents.docs.length === 0) await addNewUserData(user, authProvider);
 };
 
 const signInWithGoogle = async () => {
@@ -107,7 +73,7 @@ const signInWithFacebook = async () => {
   }
 };
 
-// Email/Password Auth
+// Email/Password creation
 const createNewEmailAndPassword = async (email: string, password: string) => {
   const response = await createUserWithEmailAndPassword(auth, email, password);
   const user = response.user;
@@ -128,6 +94,7 @@ const registerWithEmailAndPassword = async (
   }
 };
 
+// Email/Password Auth
 const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
