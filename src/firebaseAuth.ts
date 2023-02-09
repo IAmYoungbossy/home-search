@@ -70,7 +70,7 @@ const signInWithGoogle = async () => {
   }
 };
 
-// Facebook
+// Facebook Auth
 const facebookProvider = new FacebookAuthProvider();
 
 const facebookSignIn = async () => {
@@ -86,9 +86,11 @@ const getFacebookPhotoUrl = (response: UserCredential) => {
   return { photoUrl };
 };
 
-const updatePhotoURL = async (photoUrl: string) => {
+type updatePropsObjType = { photoURL?: string; displayName?: string };
+
+const updateUserCredentials = async (updatePropsObj: updatePropsObjType) => {
   if (auth.currentUser) {
-    await updateProfile(auth.currentUser, { photoURL: photoUrl });
+    await updateProfile(auth.currentUser, { ...updatePropsObj });
   }
 };
 
@@ -98,35 +100,28 @@ const signInWithFacebook = async () => {
     const { documents } = await checkIfOldUser(user);
     const { photoUrl } = getFacebookPhotoUrl(response);
 
-    await updatePhotoURL(photoUrl);
+    await updateUserCredentials({ photoURL: photoUrl });
     createNewUserData(documents, user, "Facebook");
   } catch (err) {
     console.error(err);
   }
 };
 
-// Email and Password
-const createNewEmailAndPasswordUser = async (
-  email: string,
-  password: string
-) => {
+// Email/Password Auth
+const createNewEmailAndPassword = async (email: string, password: string) => {
   const response = await createUserWithEmailAndPassword(auth, email, password);
   const user = response.user;
   return { user };
 };
+
 const registerWithEmailAndPassword = async (
   name: string,
   email: string,
   password: string
 ) => {
   try {
-    const { user } = await createNewEmailAndPasswordUser(email, password);
-    if (auth.currentUser) {
-      await updateProfile(auth.currentUser, {
-        photoURL: "photoUrl",
-        displayName: name,
-      });
-    }
+    const { user } = await createNewEmailAndPassword(email, password);
+    await updateUserCredentials({ photoURL: "photoUrl", displayName: name });
     await addNewUserData(user, "Email/Password", email, name);
   } catch (err) {
     console.error(err);
@@ -152,6 +147,7 @@ const sendPasswordReset = async (email: string) => {
   }
 };
 
+// Logs out from all auth providers
 const logout = () => {
   signOut(auth);
 };
