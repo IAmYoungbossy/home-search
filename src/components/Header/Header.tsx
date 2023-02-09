@@ -1,4 +1,8 @@
 import {
+  SocialPageContext,
+  SocialPageContextProps,
+} from "../../context/socialPageContext";
+import {
   Button,
   StyledHeader,
   StyledNavLinks,
@@ -9,7 +13,7 @@ import {
   StyledHeaderLogoAndNav,
   DropDown,
 } from "./Header.styled";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import Logo from "../assets/header/Logo.svg";
 import { dropdownList } from "./dropdownList";
 import { ArrowDownSVG, HeartSVG, UserSVG } from "../assets/header/SvgMarkUp";
@@ -48,8 +52,12 @@ export function CTAButtons() {
 }
 
 export function UserIcon() {
+  const { handlerToggleSignInPage } = useContext(
+    SocialPageContext
+  ) as SocialPageContextProps;
+
   return (
-    <StyledUserIcon>
+    <StyledUserIcon onClick={handlerToggleSignInPage}>
       <HeartSVG />
       <UserButton />
     </StyledUserIcon>

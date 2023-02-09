@@ -1,4 +1,8 @@
 import {
+  SocialPageContext,
+  SocialPageContextProps,
+} from "../../context/socialPageContext";
+import {
   StyledSignIn,
   StyledSignInFields,
   StyledLoginAgreement,
@@ -6,18 +10,29 @@ import {
 } from "./StyledSignIn";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import { SyntheticEvent, useContext } from "react";
 
 export default function SignInContainer() {
+  const { showSignInPage, handlerToggleSignInPage } = useContext(
+    SocialPageContext
+  ) as SocialPageContextProps;
+
   return (
-    <StyledSignInContainer>
-      <SignIn />
-    </StyledSignInContainer>
+    <>
+      {showSignInPage && (
+        <StyledSignInContainer onClick={handlerToggleSignInPage}>
+          <SignIn />
+        </StyledSignInContainer>
+      )}
+    </>
   );
 }
 
 export function SignIn() {
+  const handleOnClick = (e: SyntheticEvent<HTMLElement>) => e.stopPropagation();
+
   return (
-    <StyledSignIn>
+    <StyledSignIn onClick={handleOnClick}>
       <div>
         <LoginAgreement />
         <div>
