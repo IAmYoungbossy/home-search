@@ -11,6 +11,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { SyntheticEvent, useContext } from "react";
+import { signInWithFacebook, signInWithGoogle } from "../../firebaseAuth";
 
 export default function SignInContainer() {
   const { showSignInPage, handlerToggleSignInPage } = useContext(
@@ -36,10 +37,10 @@ export function SignIn() {
       <div>
         <LoginAgreement />
         <div>
-          <ProviderButton providerName="Google">
+          <ProviderButton signIn={signInWithGoogle} providerName="Google">
             <FcGoogle />
           </ProviderButton>
-          <ProviderButton providerName="Facebook">
+          <ProviderButton signIn={signInWithFacebook} providerName="Facebook">
             <FaFacebook />
           </ProviderButton>
           <div>
@@ -70,11 +71,16 @@ function LoginAgreement() {
 interface ProviderButtonProps {
   providerName: string;
   children: JSX.Element;
+  signIn: () => Promise<void>;
 }
 
-function ProviderButton({ providerName, children }: ProviderButtonProps) {
+function ProviderButton({
+  signIn,
+  providerName,
+  children,
+}: ProviderButtonProps) {
   return (
-    <button>
+    <button onClick={signIn}>
       {children}
       <div>Continue with {providerName}</div>
     </button>
