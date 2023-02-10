@@ -1,7 +1,4 @@
-import {
-  SocialPageContext,
-  SocialPageContextProps,
-} from "../../context/socialPageContext";
+import { AppContext, AppContextProps } from "../../context/AppContext";
 import {
   Button,
   StyledHeader,
@@ -52,9 +49,7 @@ export function CTAButtons() {
 }
 
 export function UserIcon() {
-  const { handleSignInPageToggle } = useContext(
-    SocialPageContext
-  ) as SocialPageContextProps;
+  const { handleSignInPageToggle } = useContext(AppContext) as AppContextProps;
 
   return (
     <StyledUserIcon onClick={handleSignInPageToggle}>

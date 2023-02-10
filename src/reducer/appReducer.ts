@@ -1,9 +1,9 @@
-export const ACTION_TYPES = {
+export const APP_ACTION_TYPES = {
   TRUE: "TRUE",
   FALSE: "FALSE",
 };
 
-export type stateType = {
+export type appStateType = {
   showSignInpage: boolean;
 };
 
@@ -12,18 +12,18 @@ type actionType = {
   payload: boolean;
 };
 
-export const INITIAL_STATE = {
+export const APP_INITIAL_STATE = {
   showSignInpage: false,
 };
 
-export const socialPageReducer = (state: stateType, action: actionType) => {
+export const appReducer = (state: appStateType, action: actionType) => {
   switch (action.type) {
-    case ACTION_TYPES.FALSE:
+    case APP_ACTION_TYPES.FALSE:
       return {
         ...state,
         showSignInpage: action.payload,
       };
-    case ACTION_TYPES.TRUE:
+    case APP_ACTION_TYPES.TRUE:
       return {
         ...state,
         showSignInpage: action.payload,

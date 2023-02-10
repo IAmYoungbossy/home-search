@@ -1,7 +1,4 @@
-import {
-  SocialPageContext,
-  SocialPageContextProps,
-} from "../../context/socialPageContext";
+import { AppContext, AppContextProps } from "../../context/AppContext";
 import {
   StyledSignIn,
   StyledSignInFields,
@@ -15,8 +12,8 @@ import { signInWithFacebook, signInWithGoogle } from "../../firebaseAuth";
 
 export default function SignInContainer() {
   const { state, handleSignInPageToggle } = useContext(
-    SocialPageContext
-  ) as SocialPageContextProps;
+    AppContext
+  ) as AppContextProps;
 
   return (
     <>
