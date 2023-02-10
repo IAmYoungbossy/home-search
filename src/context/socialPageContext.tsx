@@ -1,8 +1,14 @@
-import { createContext, useState } from "react";
+import {
+  stateType,
+  ACTION_TYPES,
+  INITIAL_STATE,
+  socialPageReducer,
+} from "../reducer/socialPageReducer";
+import { createContext, useReducer } from "react";
 
 export interface SocialPageContextProps {
-  showSignInPage: boolean;
-  handlerToggleSignInPage: () => void;
+  state: stateType;
+  handleSignInPageToggle: () => void;
 }
 
 export const SocialPageContext = createContext<SocialPageContextProps | null>(
@@ -13,16 +19,19 @@ interface PageProps {
 }
 
 const SocialPageDataProvider = ({ children }: PageProps) => {
-  const [showSignInPage, setShowSignInPage] = useState(false);
+  const [state, dispatch] = useReducer(socialPageReducer, INITIAL_STATE);
 
-  const handlerToggleSignInPage = () => {
-    setShowSignInPage(showSignInPage ? false : true);
+  const handleSignInPageToggle = () => {
+    dispatch({
+      type: state.showSignInpage ? ACTION_TYPES.FALSE : ACTION_TYPES.TRUE,
+      payload: state.showSignInpage ? false : true,
+    });
   };
 
+  const value = { handleSignInPageToggle, state };
+
   return (
-    <SocialPageContext.Provider
-      value={{ handlerToggleSignInPage, showSignInPage }}
-    >
+    <SocialPageContext.Provider value={value}>
       {children}
     </SocialPageContext.Provider>
   );

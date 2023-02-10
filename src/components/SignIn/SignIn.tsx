@@ -14,14 +14,14 @@ import { SyntheticEvent, useContext } from "react";
 import { signInWithFacebook, signInWithGoogle } from "../../firebaseAuth";
 
 export default function SignInContainer() {
-  const { showSignInPage, handlerToggleSignInPage } = useContext(
+  const { state, handleSignInPageToggle } = useContext(
     SocialPageContext
   ) as SocialPageContextProps;
 
   return (
     <>
-      {showSignInPage && (
-        <StyledSignInContainer onClick={handlerToggleSignInPage}>
+      {state.showSignInpage && (
+        <StyledSignInContainer onClick={handleSignInPageToggle}>
           <SignIn />
         </StyledSignInContainer>
       )}

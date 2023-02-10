@@ -52,12 +52,12 @@ export function CTAButtons() {
 }
 
 export function UserIcon() {
-  const { handlerToggleSignInPage } = useContext(
+  const { handleSignInPageToggle } = useContext(
     SocialPageContext
   ) as SocialPageContextProps;
 
   return (
-    <StyledUserIcon onClick={handlerToggleSignInPage}>
+    <StyledUserIcon onClick={handleSignInPageToggle}>
       <HeartSVG />
       <UserButton />
     </StyledUserIcon>
