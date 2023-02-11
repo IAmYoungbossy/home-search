@@ -291,3 +291,11 @@ export const StyledRedditRules = styled.div`
     font-family: var(--social-ibm-plex-sans-font-family);
   }
 `;
+
+export const StyledPostAs = styled.select`
+  flex: 1;
+  border: none;
+  color: #878a8c;
+  font-size: 16px;
+  font-family: var(--body-font-family);
+`;

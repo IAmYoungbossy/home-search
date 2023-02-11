@@ -10,7 +10,6 @@ function App() {
     <div>
       <AppDataProvider>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
           <Route index element={<LandingPage />} />
           <Route path="social" element={<SocialPage />}>
             <Route index element={<PostPage />} />

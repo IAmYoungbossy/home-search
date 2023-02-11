@@ -2,6 +2,7 @@ import {
   StyledPost,
   StyledDraft,
   StyledCheck,
+  StyledPostAs,
   StyledWarning,
   StyledMarkdown,
   StyledButtonTags,
@@ -20,7 +21,6 @@ import { BsMic } from "react-icons/bs";
 import { BiPoll } from "react-icons/bi";
 import { FiLink } from "react-icons/fi";
 import { AiOutlineTag } from "react-icons/ai";
-import { FiChevronDown } from "react-icons/fi";
 import { TbCircleDotted } from "react-icons/tb";
 import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
@@ -180,14 +180,19 @@ function ChooseCommunity() {
     <StyledChooseCommunity>
       <div>
         <TbCircleDotted />
-        <p>Posting as</p>
-        <select name="cars" id="cars">
-          <option value="client">Client</option>
-          <option value="saab">Agent</option>
-        </select>
+        <label htmlFor="post-as">Posting as</label>
       </div>
-      <FiChevronDown />
+      <PostAs />
     </StyledChooseCommunity>
+  );
+}
+
+function PostAs() {
+  return (
+    <StyledPostAs name="post-as" id="post-as">
+      <option value="client">a Client</option>
+      <option value="agent">an Agent</option>
+    </StyledPostAs>
   );
 }
 

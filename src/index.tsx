@@ -63,7 +63,7 @@ const GlobalCSS = createGlobalStyle`
 root.render(
   <React.StrictMode>
     <GlobalCSS />
-    <BrowserRouter basename="home-search">
+    <BrowserRouter basename="/">
       <App />
     </BrowserRouter>
   </React.StrictMode>
