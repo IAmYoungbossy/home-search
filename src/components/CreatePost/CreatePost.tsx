@@ -87,10 +87,10 @@ export function Warning() {
 }
 
 const buttonTagsArray = [
-  { svg: <GrAdd />, name: "OC" },
-  { svg: <GrAdd />, name: "Spoiler" },
-  { svg: <GrAdd />, name: "NSFW" },
-  { svg: <AiOutlineTag />, name: "Flair" },
+  { svg: <GrAdd />, name: "Budget" },
+  { svg: <GrAdd />, name: "Location" },
+  { svg: <GrAdd />, name: "Apartment Size" },
+  { svg: <AiOutlineTag />, name: "Deal Status" },
 ];
 
 function ButtonTags() {
@@ -180,7 +180,11 @@ function ChooseCommunity() {
     <StyledChooseCommunity>
       <div>
         <TbCircleDotted />
-        <p>Choose a community</p>
+        <p>Posting as</p>
+        <select name="cars" id="cars">
+          <option value="client">Client</option>
+          <option value="saab">Agent</option>
+        </select>
       </div>
       <FiChevronDown />
     </StyledChooseCommunity>

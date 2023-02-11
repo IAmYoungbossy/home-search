@@ -1,7 +1,9 @@
+import Comment from "../Comment/Comment";
 import { Route, Routes } from "react-router-dom";
-import SocialPage from "../SocialPage/SocialPage";
 import LandingPage from "../LandingPage/LandingPage";
+import CreatePostPage from "../CreatePost/CreatePost";
 import AppDataProvider from "../../context/AppContext";
+import SocialPage, { PostPage } from "../SocialPage/SocialPage";
 
 function App() {
   return (
@@ -9,7 +11,12 @@ function App() {
       <AppDataProvider>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/social" element={<SocialPage />} />
+          <Route index element={<LandingPage />} />
+          <Route path="social" element={<SocialPage />}>
+            <Route index element={<PostPage />} />
+            <Route path="comment" element={<Comment />} />
+            <Route path="post" element={<CreatePostPage />} />
+          </Route>
         </Routes>
       </AppDataProvider>
     </div>
