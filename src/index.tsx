@@ -28,7 +28,7 @@ const GlobalCSS = createGlobalStyle`
     --social-warning-font-color: #7c7c7c;
     --social-page-outline-color: #eff1f2;
     --social-draft-hover-bg-color: #cbd0d6;
-    --social-secondary-font-color: #1181d4;
+    --social-secondary-font-color: #0f74be;
     --social-comment-purple-color: #ff66ac;
     --social-sign-in-border-color: #dde1e8;
     --social-border-left-darkgrey: darkgray;

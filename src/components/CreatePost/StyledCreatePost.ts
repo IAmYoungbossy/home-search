@@ -149,9 +149,12 @@ export const StyledChooseCommunity = styled.div`
   }
 `;
 
-export const StyledButtonTags = styled.div`
-  gap: 10px;
-  width: 100%;
+export const StyledButtonTagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const StyledButtonTags = styled.div<{ disabled: boolean }>`
   display: flex;
   padding: 15px 10px 15px;
   background-color: var(--light-bg-color-primary);
@@ -165,8 +168,15 @@ export const StyledButtonTags = styled.div`
     font-weight: bold;
     border-radius: 20px;
     background-color: transparent;
-    color: var(--social-font-color);
-    outline: 2px solid var(--social-button-outline);
+    color: ${({ disabled }) =>
+      disabled
+        ? "var(--social-font-color)"
+        : "var(--social-secondary-font-color)"};
+    box-shadow: ${({ disabled }) =>
+      disabled ? "none" : "3px 1px 7px #0000006b"};
+    cursor: ${({ disabled }) => (disabled ? "no-drop" : "pointer")};
+    outline: 2px solid
+      ${({ disabled }) => (disabled ? "var(--social-font-color)" : "#008eed94")};
   }
 `;
 

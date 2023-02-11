@@ -42,11 +42,11 @@ export const appReducer = (state: appStateType, action: actionType) => {
         ...state,
         showSignInPage: action.payload,
       };
-    // case APP_ACTION_TYPES.POST.POST_AS_AGENT:
-    //   return {
-    //     ...state,
-    //     post: { ...APP_INITIAL_STATE.post, postAsAgent: action.payload },
-    //   };
+    case APP_ACTION_TYPES.POST.POST_AS_AGENT:
+      return {
+        ...state,
+        post: { ...APP_INITIAL_STATE.post, postAsAgent: action.payload },
+      };
     // case APP_ACTION_TYPES.POST.POST_TITLE:
     //   return {
     //     ...state,

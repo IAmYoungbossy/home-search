@@ -15,7 +15,9 @@ import {
   StyledChooseCommunity,
   StyledPostInputFields,
   StyledRedditRulesHeader,
+  StyledButtonTagsContainer,
 } from "./StyledCreatePost";
+import { useContext } from "react";
 import { GrAdd } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
 import { BiPoll } from "react-icons/bi";
@@ -27,9 +29,8 @@ import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
-import { useContext } from "react";
-import { AppContext, AppContextProps } from "../../context/AppContext";
 import { APP_ACTION_TYPES } from "../../reducer/appReducer";
+import { AppContext, AppContextProps } from "../../context/AppContext";
 
 export default function CreatePostPage() {
   return (
@@ -93,6 +94,11 @@ export function Warning() {
   );
 }
 
+type buttonTagsType = {
+  svg: JSX.Element;
+  name: string;
+};
+
 const buttonTagsArray = [
   { svg: <GrAdd />, name: "Budget" },
   { svg: <GrAdd />, name: "Location" },
@@ -101,14 +107,21 @@ const buttonTagsArray = [
 ];
 
 function ButtonTags() {
+  const { state } = useContext(AppContext) as AppContextProps;
+  const buttonState = () => (state.post.postAsAgent ? false : true);
+  const makeButtonAlwaysActive = (item: buttonTagsType) =>
+    item["name"] === "Budget" ? false : buttonState();
+
   return (
-    <StyledButtonTags>
+    <StyledButtonTagsContainer>
       {buttonTagsArray.map((item, index) => (
-        <button key={index} disabled>
-          {item.svg} <span>{item.name}</span>
-        </button>
+        <StyledButtonTags disabled={makeButtonAlwaysActive(item)}>
+          <button key={index} disabled={makeButtonAlwaysActive(item)}>
+            {item.svg} <span>{item.name}</span>
+          </button>
+        </StyledButtonTags>
       ))}
-    </StyledButtonTags>
+    </StyledButtonTagsContainer>
   );
 }
 
