@@ -27,6 +27,9 @@ import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
+import { useContext } from "react";
+import { AppContext, AppContextProps } from "../../context/AppContext";
+import { APP_ACTION_TYPES } from "../../reducer/appReducer";
 
 export default function CreatePostPage() {
   return (
@@ -192,8 +195,18 @@ function ChooseCommunity() {
 }
 
 function PostAs() {
+  const { dispatch } = useContext(AppContext) as AppContextProps;
+
+  const onChangeSetPostAs = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const postAsValue = {
+      type: APP_ACTION_TYPES.POST.POST_AS_AGENT,
+      payload: e.target.value === "client" ? false : true,
+    };
+    dispatch(postAsValue);
+  };
+
   return (
-    <StyledPostAs name="post-as" id="post-as">
+    <StyledPostAs name="post-as" id="post-as" onChange={onChangeSetPostAs}>
       <option value="client">a Client</option>
       <option value="agent">an Agent</option>
     </StyledPostAs>

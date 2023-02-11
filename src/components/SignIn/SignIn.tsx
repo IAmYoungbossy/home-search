@@ -9,11 +9,12 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { SyntheticEvent, useContext } from "react";
 import { signInWithFacebook, signInWithGoogle } from "../../firebaseAuth";
+import { appStateType, APP_ACTION_TYPES } from "../../reducer/appReducer";
 
 export default function SignInContainer() {
-  const { state, handleSignInPageToggle } = useContext(
-    AppContext
-  ) as AppContextProps;
+  const { state, dispatch } = useContext(AppContext) as AppContextProps;
+  const { signInToggle } = signInObj(state);
+  const handleSignInPageToggle = () => dispatch(signInToggle);
 
   return (
     <>
@@ -24,6 +25,14 @@ export default function SignInContainer() {
       )}
     </>
   );
+}
+
+export function signInObj(state: appStateType) {
+  const signInToggle = {
+    type: APP_ACTION_TYPES.SHOW_SIGN_IN_PAGE,
+    payload: state["showSignInPage"] ? false : true,
+  };
+  return { signInToggle };
 }
 
 export function SignIn() {

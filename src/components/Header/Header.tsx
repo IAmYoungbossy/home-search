@@ -1,6 +1,7 @@
 import { AppContext, AppContextProps } from "../../context/AppContext";
 import {
   Button,
+  DropDown,
   StyledHeader,
   StyledNavLinks,
   StyledUserIcon,
@@ -8,10 +9,10 @@ import {
   StyledUserButton,
   StyledHeaderLogo,
   StyledHeaderLogoAndNav,
-  DropDown,
 } from "./Header.styled";
 import { Fragment, useContext } from "react";
 import Logo from "../assets/header/Logo.svg";
+import { signInObj } from "../SignIn/SignIn";
 import { dropdownList } from "./dropdownList";
 import { ArrowDownSVG, HeartSVG, UserSVG } from "../assets/header/SvgMarkUp";
 
@@ -49,7 +50,9 @@ export function CTAButtons() {
 }
 
 export function UserIcon() {
-  const { handleSignInPageToggle } = useContext(AppContext) as AppContextProps;
+  const { dispatch, state } = useContext(AppContext) as AppContextProps;
+  const { signInToggle } = signInObj(state);
+  const handleSignInPageToggle = () => dispatch(signInToggle);
 
   return (
     <StyledUserIcon onClick={handleSignInPageToggle}>
