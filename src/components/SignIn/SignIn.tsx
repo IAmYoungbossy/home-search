@@ -17,7 +17,7 @@ export default function SignInContainer() {
 
   return (
     <>
-      {state.showSignInpage && (
+      {state.showSignInPage && (
         <StyledSignInContainer onClick={handleSignInPageToggle}>
           <SignIn />
         </StyledSignInContainer>

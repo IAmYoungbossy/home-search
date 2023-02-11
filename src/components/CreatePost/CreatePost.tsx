@@ -21,6 +21,7 @@ import { BsMic } from "react-icons/bs";
 import { BiPoll } from "react-icons/bi";
 import { FiLink } from "react-icons/fi";
 import { AiOutlineTag } from "react-icons/ai";
+import SignInContainer from "../SignIn/SignIn";
 import { TbCircleDotted } from "react-icons/tb";
 import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
@@ -29,19 +30,22 @@ import { RuleSVG } from "../assets/socialPage/SocialSVG";
 
 export default function CreatePostPage() {
   return (
-    <StyledCreatePostPage>
-      <div>
-        <TitleHeader />
-        <ChooseCommunity />
-        <PostOptions />
-        <Post />
-        <Check />
-      </div>
-      <div>
-        <RedditRules />
-        <Warning />
-      </div>
-    </StyledCreatePostPage>
+    <>
+      <StyledCreatePostPage>
+        <div>
+          <TitleHeader />
+          <ChooseCommunity />
+          <PostOptions />
+          <Post />
+          <Check />
+        </div>
+        <div>
+          <RedditRules />
+          <Warning />
+        </div>
+      </StyledCreatePostPage>
+      <SignInContainer />
+    </>
   );
 }
 

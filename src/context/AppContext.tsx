@@ -1,8 +1,8 @@
 import {
+  appReducer,
   appStateType,
   APP_ACTION_TYPES,
   APP_INITIAL_STATE,
-  appReducer,
 } from "../reducer/appReducer";
 import { createContext, useReducer } from "react";
 
@@ -21,10 +21,8 @@ const AppDataProvider = ({ children }: PageProps) => {
 
   const handleSignInPageToggle = () => {
     dispatch({
-      type: state.showSignInpage
-        ? APP_ACTION_TYPES.FALSE
-        : APP_ACTION_TYPES.TRUE,
-      payload: state.showSignInpage ? false : true,
+      type: APP_ACTION_TYPES.SHOW_SIGN_IN_PAGE,
+      payload: state.showSignInPage ? false : true,
     });
   };
 

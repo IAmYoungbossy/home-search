@@ -1,10 +1,23 @@
 export const APP_ACTION_TYPES = {
-  TRUE: "TRUE",
-  FALSE: "FALSE",
+  POST: {
+    IMAGE: "IMAGE TRUE",
+    POST_BODY: "POST BODY",
+    POST_TITLE: "POST TITLE",
+    POST_AS_AGENT_TRUE: "POST AS AGENT TRUE",
+  },
+  SHOW_SIGN_IN_PAGE: "SHOW SIGN IN PAGE",
 };
 
+interface postInterface {
+  image: boolean;
+  postBody: string;
+  postTitle: string;
+  postAsAgent: boolean;
+}
+
 export type appStateType = {
-  showSignInpage: boolean;
+  post: postInterface;
+  showSignInPage: boolean;
 };
 
 type actionType = {
@@ -13,20 +26,21 @@ type actionType = {
 };
 
 export const APP_INITIAL_STATE = {
-  showSignInpage: false,
+  post: {
+    image: false,
+    postBody: "",
+    postTitle: "",
+    postAsAgent: false,
+  },
+  showSignInPage: false,
 };
 
 export const appReducer = (state: appStateType, action: actionType) => {
   switch (action.type) {
-    case APP_ACTION_TYPES.FALSE:
+    case APP_ACTION_TYPES.SHOW_SIGN_IN_PAGE:
       return {
         ...state,
-        showSignInpage: action.payload,
-      };
-    case APP_ACTION_TYPES.TRUE:
-      return {
-        ...state,
-        showSignInpage: action.payload,
+        showSignInPage: action.payload,
       };
     default:
       return state;
