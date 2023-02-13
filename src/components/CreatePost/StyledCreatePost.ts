@@ -97,6 +97,13 @@ export const StyledDraft = styled.div`
   }
 `;
 
+export const Button = styled.button<{ disabled: boolean }>`
+  color: ${({ disabled }) =>
+    disabled
+      ? "var(--social-font-color) !important"
+      : "var(--social-secondary-font-color) !important"};
+`;
+
 export const StyledPostOptions = styled.div`
   width: 100%;
   display: flex;
@@ -124,6 +131,14 @@ export const StyledPostOptions = styled.div`
   svg {
     width: 20px;
     height: 20px;
+  }
+
+  & > button:first-child {
+    color: var(--social-secondary-font-color) !important;
+
+    svg {
+      fill: var(--social-secondary-font-color) !important;
+    }
   }
 `;
 

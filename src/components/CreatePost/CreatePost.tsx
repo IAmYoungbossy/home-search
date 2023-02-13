@@ -16,6 +16,7 @@ import {
   StyledPostInputFields,
   StyledRedditRulesHeader,
   StyledButtonTagsContainer,
+  Button,
 } from "./StyledCreatePost";
 import { useContext } from "react";
 import { GrAdd } from "react-icons/gr";
@@ -29,7 +30,7 @@ import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
-import { APP_ACTION_TYPES } from "../../reducer/appReducer";
+import { appStateType, APP_ACTION_TYPES } from "../../reducer/appReducer";
 import { AppContext, AppContextProps } from "../../context/AppContext";
 
 export default function CreatePostPage() {
@@ -106,11 +107,13 @@ const buttonTagsArray = [
   { svg: <AiOutlineTag />, name: "Deal Status" },
 ];
 
+const buttonState = (state: appStateType) =>
+  state["post"].postAsAgent ? false : true;
+
 function ButtonTags() {
   const { state } = useContext(AppContext) as AppContextProps;
-  const buttonState = () => (state.post.postAsAgent ? false : true);
   const makeButtonAlwaysActive = (item: buttonTagsType) =>
-    item["name"] === "Budget" ? false : buttonState();
+    item["name"] === "Budget" ? false : buttonState(state);
 
   return (
     <StyledButtonTagsContainer>
@@ -183,13 +186,18 @@ const postOptionsArray = [
 ];
 
 function PostOptions() {
+  const { state } = useContext(AppContext) as AppContextProps;
+
   return (
     <StyledPostOptions>
       {postOptionsArray.map((item, index) => (
-        <button key={index}>
+        <Button
+          disabled={item.name === "Images & Video" ? buttonState(state) : true}
+          key={index}
+        >
           {item.svg}
           <p>{item.name}</p>
-        </button>
+        </Button>
       ))}
     </StyledPostOptions>
   );
