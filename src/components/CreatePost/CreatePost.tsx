@@ -118,8 +118,8 @@ function ButtonTags() {
   return (
     <StyledButtonTagsContainer>
       {buttonTagsArray.map((item, index) => (
-        <StyledButtonTags disabled={makeButtonAlwaysActive(item)}>
-          <button key={index} disabled={makeButtonAlwaysActive(item)}>
+        <StyledButtonTags disabled={makeButtonAlwaysActive(item)} key={index}>
+          <button disabled={makeButtonAlwaysActive(item)}>
             {item.svg} <span>{item.name}</span>
           </button>
         </StyledButtonTags>
@@ -174,7 +174,25 @@ function PostTextArea() {
 }
 
 function TitleInput() {
-  return <input type="text" name="title" placeholder="Title" />;
+  const { state, dispatch } = useContext(AppContext) as AppContextProps;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const updateObj = {
+      type: APP_ACTION_TYPES.POST.POST_TITLE,
+      payload: e.target.value,
+    };
+    dispatch(updateObj);
+  };
+
+  return (
+    <input
+      type="text"
+      name="title"
+      placeholder="Title"
+      value={state.post.postTitle}
+      onChange={handleInputChange}
+    />
+  );
 }
 
 const postOptionsArray = [

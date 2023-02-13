@@ -22,7 +22,7 @@ export type appStateType = {
 
 export type actionType = {
   type: string;
-  payload: boolean;
+  payload: boolean | string;
 };
 
 export const APP_INITIAL_STATE = {
@@ -35,33 +35,52 @@ export const APP_INITIAL_STATE = {
   showSignInPage: false,
 };
 
-export const appReducer = (state: appStateType, action: actionType) => {
+export const appReducer = (
+  state: appStateType,
+  action: actionType
+): appStateType => {
   switch (action.type) {
     case APP_ACTION_TYPES.SHOW_SIGN_IN_PAGE:
       return {
         ...state,
-        showSignInPage: action.payload,
+        showSignInPage: action.payload as boolean,
       };
+
     case APP_ACTION_TYPES.POST.POST_AS_AGENT:
       return {
         ...state,
-        post: { ...APP_INITIAL_STATE.post, postAsAgent: action.payload },
+        post: {
+          ...APP_INITIAL_STATE.post,
+          postAsAgent: action.payload as boolean,
+        },
       };
-    // case APP_ACTION_TYPES.POST.POST_TITLE:
-    //   return {
-    //     ...state,
-    //     post: { ...APP_INITIAL_STATE.post, postTitle: action.payload },
-    //   };
-    // case APP_ACTION_TYPES.POST.POST_BODY:
-    //   return {
-    //     ...state,
-    //     post: { ...APP_INITIAL_STATE.post, postBody: action.payload },
-    //   };
-    // case APP_ACTION_TYPES.POST.IMAGE:
-    //   return {
-    //     ...state,
-    //     post: { ...APP_INITIAL_STATE.post, image: action.payload },
-    //   };
+
+    case APP_ACTION_TYPES.POST.POST_TITLE:
+      return {
+        ...state,
+        post: {
+          ...APP_INITIAL_STATE.post,
+          postTitle: action.payload as string,
+        },
+      };
+
+    case APP_ACTION_TYPES.POST.POST_BODY:
+      return {
+        ...state,
+        post: {
+          ...APP_INITIAL_STATE.post,
+          postBody: action.payload as string,
+        },
+      };
+
+    case APP_ACTION_TYPES.POST.IMAGE:
+      return {
+        ...state,
+        post: {
+          ...APP_INITIAL_STATE.post,
+          image: action.payload as boolean,
+        },
+      };
     default:
       return state;
   }
