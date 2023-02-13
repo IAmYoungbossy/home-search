@@ -6,12 +6,12 @@ import {
 } from "../reducer/appReducer";
 import { createContext, useReducer } from "react";
 
-export interface AppContextProps {
+export interface contextProps {
   state: appStateType;
   dispatch: React.Dispatch<actionType>;
 }
 
-export const AppContext = createContext<AppContextProps | null>(null);
+export const AppContext = createContext<contextProps | null>(null);
 interface PageProps {
   children: React.ReactNode;
 }

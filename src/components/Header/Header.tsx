@@ -1,4 +1,4 @@
-import { AppContext, AppContextProps } from "../../context/AppContext";
+import { AppContext, contextProps } from "../../context/AppContext";
 import {
   Button,
   DropDown,
@@ -50,7 +50,7 @@ export function CTAButtons() {
 }
 
 export function UserIcon() {
-  const { dispatch, state } = useContext(AppContext) as AppContextProps;
+  const { dispatch, state } = useContext(AppContext) as contextProps;
   const { signInToggle } = signInObj(state);
   const handleSignInPageToggle = () => dispatch(signInToggle);
 

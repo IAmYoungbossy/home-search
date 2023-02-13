@@ -1,4 +1,5 @@
 import {
+  Button,
   StyledPost,
   StyledDraft,
   StyledCheck,
@@ -16,22 +17,25 @@ import {
   StyledPostInputFields,
   StyledRedditRulesHeader,
   StyledButtonTagsContainer,
-  Button,
 } from "./StyledCreatePost";
-import { useContext } from "react";
 import { GrAdd } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
 import { BiPoll } from "react-icons/bi";
 import { FiLink } from "react-icons/fi";
 import { AiOutlineTag } from "react-icons/ai";
+import { useContext, useReducer } from "react";
 import SignInContainer from "../SignIn/SignIn";
 import { TbCircleDotted } from "react-icons/tb";
 import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
+import { AppContext, contextProps } from "../../context/AppContext";
 import { appStateType, APP_ACTION_TYPES } from "../../reducer/appReducer";
-import { AppContext, AppContextProps } from "../../context/AppContext";
+import {
+  buttonTagsReducer,
+  BUTTON_TAGS_INITIAL_STATE,
+} from "../../reducer/buttonTagsReducer";
 
 export default function CreatePostPage() {
   return (
@@ -111,14 +115,25 @@ const buttonState = (state: appStateType) =>
   state["post"].postAsAgent ? false : true;
 
 function ButtonTags() {
-  const { state } = useContext(AppContext) as AppContextProps;
+  const { state } = useContext(AppContext) as contextProps;
+  const [buttonTagsState, dispatch] = useReducer(
+    buttonTagsReducer,
+    BUTTON_TAGS_INITIAL_STATE
+  );
+
   const makeButtonAlwaysActive = (item: buttonTagsType) =>
     item["name"] === "Budget" ? false : buttonState(state);
+
+  const inputField = (name: string) => console.log(name);
 
   return (
     <StyledButtonTagsContainer>
       {buttonTagsArray.map((item, index) => (
-        <StyledButtonTags disabled={makeButtonAlwaysActive(item)} key={index}>
+        <StyledButtonTags
+          disabled={makeButtonAlwaysActive(item)}
+          key={index}
+          onClick={() => inputField(item.name)}
+        >
           <button disabled={makeButtonAlwaysActive(item)}>
             {item.svg} <span>{item.name}</span>
           </button>
@@ -160,7 +175,7 @@ function Markdown() {
 }
 
 function TitleInput() {
-  const { state, dispatch } = useContext(AppContext) as AppContextProps;
+  const { state, dispatch } = useContext(AppContext) as contextProps;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updateObj = {
@@ -182,7 +197,7 @@ function TitleInput() {
 }
 
 function PostTextArea() {
-  const { state, dispatch } = useContext(AppContext) as AppContextProps;
+  const { state, dispatch } = useContext(AppContext) as contextProps;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const updateObj = {
@@ -216,7 +231,7 @@ const postOptionsArray = [
 ];
 
 function PostOptions() {
-  const { state } = useContext(AppContext) as AppContextProps;
+  const { state } = useContext(AppContext) as contextProps;
 
   return (
     <StyledPostOptions>
@@ -246,7 +261,7 @@ function ChooseCommunity() {
 }
 
 function PostAs() {
-  const { dispatch } = useContext(AppContext) as AppContextProps;
+  const { dispatch } = useContext(AppContext) as contextProps;
 
   const onChangeSetPostAs = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const postAsValue = {
@@ -284,11 +299,15 @@ function Draft() {
 }
 
 function ActionButtons() {
-  const { state } = useContext(AppContext) as AppContextProps;
+  const { state } = useContext(AppContext) as contextProps;
 
+  const postBody = state.post.postBody;
+  const postTitle = state.post.postTitle;
   const postTitleAndPostBodyFilled =
-    state.post.postBody.split("").length > 0 &&
-    state.post.postTitle.split("").length > 0;
+    postBody.length > 0 &&
+    postTitle.length > 0 &&
+    postBody.trim() !== "" &&
+    postTitle.trim() !== "";
 
   return (
     <StyleActionButtons bg={postTitleAndPostBodyFilled}>

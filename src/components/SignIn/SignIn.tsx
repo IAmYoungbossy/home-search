@@ -1,4 +1,4 @@
-import { AppContext, AppContextProps } from "../../context/AppContext";
+import { AppContext, contextProps } from "../../context/AppContext";
 import {
   StyledSignIn,
   StyledSignInFields,
@@ -12,7 +12,7 @@ import { signInWithFacebook, signInWithGoogle } from "../../firebaseAuth";
 import { appStateType, APP_ACTION_TYPES } from "../../reducer/appReducer";
 
 export default function SignInContainer() {
-  const { state, dispatch } = useContext(AppContext) as AppContextProps;
+  const { state, dispatch } = useContext(AppContext) as contextProps;
   const { signInToggle } = signInObj(state);
   const handleSignInPageToggle = () => dispatch(signInToggle);
 
