@@ -32,7 +32,7 @@ export const StyledCheck = styled.div`
   }
 `;
 
-export const StyleActionButtons = styled.div`
+export const StyleActionButtons = styled.div<{ bg: boolean }>`
   gap: 10px;
   display: flex;
   padding: 15px 0;
@@ -51,10 +51,19 @@ export const StyleActionButtons = styled.div`
   }
 
   & > button:last-child {
-    outline: none;
     padding: 5px 9px;
     color: var(--social-border-color);
-    background-color: var(--social-disabled-button-bg-color);
+    outline: var(--social-secondary-font-color);
+    background-color: ${({ bg }) =>
+      bg
+        ? "var(--social-secondary-font-color)"
+        : "var(--social-disabled-button-bg-color)"};
+    border: 1px solid
+      ${({ bg }) =>
+        bg
+          ? "var(--social-secondary-font-color)"
+          : "var(--social-disabled-button-bg-color)"};
+    box-shadow: ${({ bg }) => (bg ? "3px 1px 7px #00000038" : "none")};
   }
 `;
 

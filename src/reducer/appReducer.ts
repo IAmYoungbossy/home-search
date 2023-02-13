@@ -57,7 +57,7 @@ export const appReducer = (
       return {
         ...state,
         post: {
-          ...APP_INITIAL_STATE.post,
+          ...state.post,
           postAsAgent: action.payload as boolean,
         },
       };
@@ -66,7 +66,7 @@ export const appReducer = (
       return {
         ...state,
         post: {
-          ...APP_INITIAL_STATE.post,
+          ...state.post,
           postTitle: action.payload as string,
         },
       };
@@ -75,7 +75,7 @@ export const appReducer = (
       return {
         ...state,
         post: {
-          ...APP_INITIAL_STATE.post,
+          ...state.post,
           postBody: action.payload as string,
         },
       };
@@ -84,7 +84,7 @@ export const appReducer = (
       return {
         ...state,
         post: {
-          ...APP_INITIAL_STATE.post,
+          ...state.post,
           image: action.payload as boolean,
         },
       };

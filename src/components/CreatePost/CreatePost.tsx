@@ -284,10 +284,16 @@ function Draft() {
 }
 
 function ActionButtons() {
+  const { state } = useContext(AppContext) as AppContextProps;
+
+  const postTitleAndPostBodyFilled =
+    state.post.postBody.split("").length > 0 &&
+    state.post.postTitle.split("").length > 0;
+
   return (
-    <StyleActionButtons>
+    <StyleActionButtons bg={postTitleAndPostBodyFilled}>
       <button>Save Draft</button>
-      <button>Post</button>
+      <button onClick={() => console.log(state.post)}>Post</button>
     </StyleActionButtons>
   );
 }
