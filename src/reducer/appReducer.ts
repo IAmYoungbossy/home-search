@@ -1,3 +1,10 @@
+export interface appActionPostType {
+  IMAGE: string;
+  POST_BODY: string;
+  POST_TITLE: string;
+  POST_AS_AGENT: string;
+}
+
 export const APP_ACTION_TYPES = {
   POST: {
     IMAGE: "IMAGE TRUE",

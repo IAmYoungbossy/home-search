@@ -159,20 +159,6 @@ function Markdown() {
   );
 }
 
-function PostTextArea() {
-  return (
-    <StyledPostTextArea>
-      <textarea
-        name="text"
-        id=""
-        cols={10}
-        rows={10}
-        placeholder="Text (Optional)"
-      ></textarea>
-    </StyledPostTextArea>
-  );
-}
-
 function TitleInput() {
   const { state, dispatch } = useContext(AppContext) as AppContextProps;
 
@@ -188,10 +174,36 @@ function TitleInput() {
     <input
       type="text"
       name="title"
+      onChange={handleInputChange}
       placeholder="Title"
       value={state.post.postTitle}
-      onChange={handleInputChange}
     />
+  );
+}
+
+function PostTextArea() {
+  const { state, dispatch } = useContext(AppContext) as AppContextProps;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const updateObj = {
+      type: APP_ACTION_TYPES.POST.POST_BODY,
+      payload: e.target.value,
+    };
+    dispatch(updateObj);
+  };
+
+  return (
+    <StyledPostTextArea>
+      <textarea
+        id=""
+        cols={10}
+        rows={10}
+        name="text"
+        value={state.post.postBody}
+        onChange={handleInputChange}
+        placeholder="Text (Optional)"
+      ></textarea>
+    </StyledPostTextArea>
   );
 }
 
