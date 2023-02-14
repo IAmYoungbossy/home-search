@@ -204,6 +204,44 @@ export const StyledButtonTags = styled.div<{ disabled: boolean }>`
   }
 `;
 
+export const StyledInputTag = styled.div`
+  display: flex;
+  padding: 15px 10px;
+  position: relative;
+  align-items: center;
+  border-bottom: 1px solid var(--social-border-color);
+
+  button {
+    top: 15px;
+    right: 10px;
+    border: none;
+    display: flex;
+    position: absolute;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 7px 6px 3px;
+    outline: 2px solid green;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background-color: ghostwhite;
+
+    svg {
+      fill: green;
+    }
+  }
+
+  input {
+    height: 25px;
+    border: none;
+    width: 150px;
+    border-radius: 20px;
+    padding: 0 25px 0 10px;
+    outline: 2px solid #008eed94;
+    box-shadow: 3px 1px 7px #0000006b;
+  }
+`;
+
 export const StyledMarkdown = styled.div`
   display: flex;
   font-size: 12px;

@@ -20,28 +20,28 @@ export const toggleBtnAndInputField = (
 
 export const btnTagsOnClick = (
   btnName: string,
-  btnTagsState: buttonTagsStateType,
+  boolean: boolean,
   dispatch: React.Dispatch<buttonTagsActionType>
 ) => {
   if (btnName === "Budget") {
     dispatch({
       type: BUTTON_TAGS_ACTION_TYPE.BUDGET,
-      payload: btnTagsState["budget"] ? false : true,
+      payload: boolean,
     });
   } else if (btnName === "Location") {
     dispatch({
       type: BUTTON_TAGS_ACTION_TYPE.LOCATION,
-      payload: btnTagsState["location"] ? false : true,
+      payload: boolean,
     });
   } else if (btnName === "Apartment Size") {
     dispatch({
       type: BUTTON_TAGS_ACTION_TYPE.APARTMENT,
-      payload: btnTagsState["apartment"] ? false : true,
+      payload: boolean,
     });
   } else if (btnName === "Deal Status") {
     dispatch({
       type: BUTTON_TAGS_ACTION_TYPE.DEAL_STATUS,
-      payload: btnTagsState["dealStatus"] ? false : true,
+      payload: boolean,
     });
   }
 };

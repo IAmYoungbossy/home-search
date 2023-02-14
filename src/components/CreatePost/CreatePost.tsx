@@ -6,6 +6,7 @@ import {
   StyledPostAs,
   StyledWarning,
   StyledMarkdown,
+  StyledInputTag,
   StyledButtonTags,
   StyledPostOptions,
   StyledTitleHeader,
@@ -22,20 +23,20 @@ import { GrAdd } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
 import { BiPoll } from "react-icons/bi";
 import { FiLink } from "react-icons/fi";
+import { GiCheckMark } from "react-icons/gi";
 import { AiOutlineTag } from "react-icons/ai";
-import { Fragment, useContext, useReducer } from "react";
 import SignInContainer from "../SignIn/SignIn";
 import { TbCircleDotted } from "react-icons/tb";
 import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
+import { Fragment, useContext, useReducer } from "react";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import { APP_ACTION_TYPES } from "../../reducer/appReducer";
 import { AppContext, contextProps } from "../../context/AppContext";
 import {
   buttonTagsActionType,
   buttonTagsReducer as btnTagsReducer,
-  buttonTagsStateType,
   BUTTON_TAGS_INITIAL_STATE as initialState,
 } from "../../reducer/buttonTagsReducer";
 import {
@@ -125,12 +126,7 @@ function ButtonTags() {
           {toggleBtnAndInputField(item.name, btnTagsState) && (
             <StyledButtonTags
               disabled={makeBudgetBtnAlwaysActive(item, state)}
-              onClick={btnTagsOnClick.bind(
-                null,
-                item.name,
-                btnTagsState,
-                dispatch
-              )}
+              onClick={btnTagsOnClick.bind(null, item.name, true, dispatch)}
             >
               <button disabled={makeBudgetBtnAlwaysActive(item, state)}>
                 {item.svg} <span>{item.name}</span>
@@ -138,11 +134,7 @@ function ButtonTags() {
             </StyledButtonTags>
           )}
           {!toggleBtnAndInputField(item.name, btnTagsState) && (
-            <InputTag
-              name={item.name}
-              btnTagsState={btnTagsState}
-              dispatch={dispatch}
-            />
+            <InputTag name={item.name} dispatch={dispatch} />
           )}
         </Fragment>
       ))}
@@ -152,13 +144,17 @@ function ButtonTags() {
 
 interface InputTagProps {
   name: string;
-  btnTagsState: buttonTagsStateType;
   dispatch: React.Dispatch<buttonTagsActionType>;
 }
 
-function InputTag({ name, btnTagsState, dispatch }: InputTagProps) {
+function InputTag({ name, dispatch }: InputTagProps) {
   return (
-    <input onClick={btnTagsOnClick.bind(null, name, btnTagsState, dispatch)} />
+    <StyledInputTag>
+      <input placeholder={name} />
+      <button onClick={btnTagsOnClick.bind(null, name, false, dispatch)}>
+        <GiCheckMark />
+      </button>
+    </StyledInputTag>
   );
 }
 

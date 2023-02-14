@@ -32,13 +32,13 @@ export const buttonTagsReducer = (
 ): buttonTagsStateType => {
   switch (action.type) {
     case BUTTON_TAGS_ACTION_TYPE.BUDGET:
-      return { ...state, budget: action.payload };
+      return { ...BUTTON_TAGS_INITIAL_STATE, budget: action.payload };
     case BUTTON_TAGS_ACTION_TYPE.LOCATION:
-      return { ...state, location: action.payload };
+      return { ...BUTTON_TAGS_INITIAL_STATE, location: action.payload };
     case BUTTON_TAGS_ACTION_TYPE.APARTMENT:
-      return { ...state, apartment: action.payload };
+      return { ...BUTTON_TAGS_INITIAL_STATE, apartment: action.payload };
     case BUTTON_TAGS_ACTION_TYPE.DEAL_STATUS:
-      return { ...state, dealStatus: action.payload };
+      return { ...BUTTON_TAGS_INITIAL_STATE, dealStatus: action.payload };
     default:
       return state;
   }
