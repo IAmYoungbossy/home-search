@@ -23,19 +23,27 @@ import { BsMic } from "react-icons/bs";
 import { BiPoll } from "react-icons/bi";
 import { FiLink } from "react-icons/fi";
 import { AiOutlineTag } from "react-icons/ai";
-import { useContext, useReducer } from "react";
+import { Fragment, useContext, useReducer } from "react";
 import SignInContainer from "../SignIn/SignIn";
 import { TbCircleDotted } from "react-icons/tb";
 import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
+import { APP_ACTION_TYPES } from "../../reducer/appReducer";
 import { AppContext, contextProps } from "../../context/AppContext";
-import { appStateType, APP_ACTION_TYPES } from "../../reducer/appReducer";
 import {
-  buttonTagsReducer,
-  BUTTON_TAGS_INITIAL_STATE,
+  buttonTagsActionType,
+  buttonTagsReducer as btnTagsReducer,
+  buttonTagsStateType,
+  BUTTON_TAGS_INITIAL_STATE as initialState,
 } from "../../reducer/buttonTagsReducer";
+import {
+  buttonState,
+  btnTagsOnClick,
+  toggleBtnAndInputField,
+  makeBudgetBtnAlwaysActive,
+} from "../../utilities/createPostHelperFn";
 
 export default function CreatePostPage() {
   return (
@@ -99,11 +107,6 @@ export function Warning() {
   );
 }
 
-type buttonTagsType = {
-  svg: JSX.Element;
-  name: string;
-};
-
 const buttonTagsArray = [
   { svg: <GrAdd />, name: "Budget" },
   { svg: <GrAdd />, name: "Location" },
@@ -111,35 +114,51 @@ const buttonTagsArray = [
   { svg: <AiOutlineTag />, name: "Deal Status" },
 ];
 
-const buttonState = (state: appStateType) =>
-  state["post"].postAsAgent ? false : true;
-
 function ButtonTags() {
   const { state } = useContext(AppContext) as contextProps;
-  const [buttonTagsState, dispatch] = useReducer(
-    buttonTagsReducer,
-    BUTTON_TAGS_INITIAL_STATE
-  );
-
-  const makeButtonAlwaysActive = (item: buttonTagsType) =>
-    item["name"] === "Budget" ? false : buttonState(state);
-
-  const inputField = (name: string) => console.log(name);
+  const [btnTagsState, dispatch] = useReducer(btnTagsReducer, initialState);
 
   return (
     <StyledButtonTagsContainer>
-      {buttonTagsArray.map((item, index) => (
-        <StyledButtonTags
-          disabled={makeButtonAlwaysActive(item)}
-          key={index}
-          onClick={() => inputField(item.name)}
-        >
-          <button disabled={makeButtonAlwaysActive(item)}>
-            {item.svg} <span>{item.name}</span>
-          </button>
-        </StyledButtonTags>
+      {buttonTagsArray.map((item) => (
+        <Fragment key={item.name}>
+          {toggleBtnAndInputField(item.name, btnTagsState) && (
+            <StyledButtonTags
+              disabled={makeBudgetBtnAlwaysActive(item, state)}
+              onClick={btnTagsOnClick.bind(
+                null,
+                item.name,
+                btnTagsState,
+                dispatch
+              )}
+            >
+              <button disabled={makeBudgetBtnAlwaysActive(item, state)}>
+                {item.svg} <span>{item.name}</span>
+              </button>
+            </StyledButtonTags>
+          )}
+          {!toggleBtnAndInputField(item.name, btnTagsState) && (
+            <InputTag
+              name={item.name}
+              btnTagsState={btnTagsState}
+              dispatch={dispatch}
+            />
+          )}
+        </Fragment>
       ))}
     </StyledButtonTagsContainer>
+  );
+}
+
+interface InputTagProps {
+  name: string;
+  btnTagsState: buttonTagsStateType;
+  dispatch: React.Dispatch<buttonTagsActionType>;
+}
+
+function InputTag({ name, btnTagsState, dispatch }: InputTagProps) {
+  return (
+    <input onClick={btnTagsOnClick.bind(null, name, btnTagsState, dispatch)} />
   );
 }
 

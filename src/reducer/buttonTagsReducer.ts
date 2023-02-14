@@ -8,22 +8,22 @@ export const BUTTON_TAGS_ACTION_TYPE = {
 };
 
 export const BUTTON_TAGS_INITIAL_STATE = {
-  budget: 0,
-  location: "",
-  apartment: "",
+  budget: false,
+  location: false,
+  apartment: false,
   dealStatus: false,
 };
 
-type buttonTagsStateType = {
-  budget: number;
-  location: string;
-  apartment: string;
+export type buttonTagsStateType = {
+  budget: boolean;
+  location: boolean;
+  apartment: boolean;
   dealStatus: boolean;
 };
 
-type buttonTagsActionType = {
+export type buttonTagsActionType = {
   type: string;
-  payload: string | number | boolean;
+  payload: boolean;
 };
 
 export const buttonTagsReducer = (
@@ -32,28 +32,13 @@ export const buttonTagsReducer = (
 ): buttonTagsStateType => {
   switch (action.type) {
     case BUTTON_TAGS_ACTION_TYPE.BUDGET:
-      return {
-        ...state,
-        budget: action.payload as number,
-      };
-
+      return { ...state, budget: action.payload };
     case BUTTON_TAGS_ACTION_TYPE.LOCATION:
-      return {
-        ...state,
-        location: action.payload as string,
-      };
-
+      return { ...state, location: action.payload };
     case BUTTON_TAGS_ACTION_TYPE.APARTMENT:
-      return {
-        ...state,
-        apartment: action.payload as string,
-      };
-
+      return { ...state, apartment: action.payload };
     case BUTTON_TAGS_ACTION_TYPE.DEAL_STATUS:
-      return {
-        ...state,
-        dealStatus: action.payload as boolean,
-      };
+      return { ...state, dealStatus: action.payload };
     default:
       return state;
   }
