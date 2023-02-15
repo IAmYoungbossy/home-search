@@ -1,5 +1,3 @@
-import { createContext } from "react";
-
 export const BUTTON_TAGS_ACTION_TYPE = {
   BUDGET: "BUDGET",
   LOCATION: "LOCATION",
@@ -43,12 +41,3 @@ export const buttonTagsReducer = (
       return state;
   }
 };
-
-export interface ButtonTagsContextProps {
-  state: buttonTagsStateType;
-  dispatch: React.Dispatch<buttonTagsActionType>;
-}
-
-export const ButtonTagsContext = createContext<ButtonTagsContextProps | null>(
-  null
-);
