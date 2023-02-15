@@ -30,9 +30,9 @@ import { TbCircleDotted } from "react-icons/tb";
 import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
-import { Fragment, useContext, useReducer } from "react";
+import { Fragment, useContext, useReducer, useState } from "react";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
-import { APP_ACTION_TYPES } from "../../reducer/appReducer";
+import { appStateType, APP_ACTION_TYPES } from "../../reducer/appReducer";
 import { AppContext, contextProps } from "../../context/AppContext";
 import {
   buttonTagsActionType,
@@ -40,10 +40,12 @@ import {
   BUTTON_TAGS_INITIAL_STATE as initialState,
 } from "../../reducer/buttonTagsReducer";
 import {
-  buttonState,
+  setButtonState,
   btnTagsOnClick,
   toggleBtnAndInputField,
   makeBudgetBtnAlwaysActive,
+  toggleDealStatus,
+  setInputType,
 } from "../../utilities/createPostHelperFn";
 
 export default function CreatePostPage() {
@@ -116,6 +118,7 @@ const buttonTagsArray = [
 ];
 
 function ButtonTags() {
+  const [dealStatus, setDealStatus] = useState("Deal Status");
   const { state } = useContext(AppContext) as contextProps;
   const [btnTagsState, dispatch] = useReducer(btnTagsReducer, initialState);
 
@@ -124,17 +127,20 @@ function ButtonTags() {
       {buttonTagsArray.map((item) => (
         <Fragment key={item.name}>
           {toggleBtnAndInputField(item.name, btnTagsState) && (
-            <StyledButtonTags
-              disabled={makeBudgetBtnAlwaysActive(item, state)}
-              onClick={btnTagsOnClick.bind(null, item.name, true, dispatch)}
-            >
-              <button disabled={makeBudgetBtnAlwaysActive(item, state)}>
-                {item.svg} <span>{item.name}</span>
-              </button>
-            </StyledButtonTags>
+            <ButtonTag
+              item={item}
+              state={state}
+              dispatch={dispatch}
+              dealStatus={dealStatus}
+              setDealStatus={setDealStatus}
+            />
           )}
           {!toggleBtnAndInputField(item.name, btnTagsState) && (
-            <InputTag name={item.name} dispatch={dispatch} />
+            <InputTag
+              type={setInputType(item.name)}
+              name={item.name}
+              dispatch={dispatch}
+            />
           )}
         </Fragment>
       ))}
@@ -142,15 +148,49 @@ function ButtonTags() {
   );
 }
 
+function ButtonTag({
+  item,
+  state,
+  dispatch,
+  dealStatus,
+  setDealStatus,
+}: {
+  item: {
+    svg: JSX.Element;
+    name: string;
+  };
+  dealStatus: string;
+  state: appStateType;
+  dispatch: React.Dispatch<buttonTagsActionType>;
+  setDealStatus: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  return (
+    <StyledButtonTags
+      disabled={makeBudgetBtnAlwaysActive(item, state)}
+      onClick={btnTagsOnClick.bind(null, item.name, true, dispatch)}
+    >
+      <input type="button" value="" />
+      <button
+        disabled={makeBudgetBtnAlwaysActive(item, state)}
+        onClick={(e) => toggleDealStatus(e, dealStatus, setDealStatus)}
+      >
+        {item.svg}{" "}
+        <span>{item.name !== "Deal Status" ? item.name : dealStatus}</span>
+      </button>
+    </StyledButtonTags>
+  );
+}
+
 interface InputTagProps {
   name: string;
+  type: string;
   dispatch: React.Dispatch<buttonTagsActionType>;
 }
 
-function InputTag({ name, dispatch }: InputTagProps) {
+function InputTag({ type, name, dispatch }: InputTagProps) {
   return (
     <StyledInputTag>
-      <input placeholder={name} />
+      <input placeholder={name} type={type} />
       <button onClick={btnTagsOnClick.bind(null, name, false, dispatch)}>
         <GiCheckMark />
       </button>
@@ -252,7 +292,9 @@ function PostOptions() {
     <StyledPostOptions>
       {postOptionsArray.map((item, index) => (
         <Button
-          disabled={item.name === "Images & Video" ? buttonState(state) : true}
+          disabled={
+            item.name === "Images & Video" ? setButtonState(state) : true
+          }
           key={index}
         >
           {item.svg}

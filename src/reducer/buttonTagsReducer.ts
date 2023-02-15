@@ -38,7 +38,7 @@ export const buttonTagsReducer = (
     case BUTTON_TAGS_ACTION_TYPE.APARTMENT:
       return { ...BUTTON_TAGS_INITIAL_STATE, apartment: action.payload };
     case BUTTON_TAGS_ACTION_TYPE.DEAL_STATUS:
-      return { ...BUTTON_TAGS_INITIAL_STATE, dealStatus: action.payload };
+      return { ...BUTTON_TAGS_INITIAL_STATE, dealStatus: false };
     default:
       return state;
   }

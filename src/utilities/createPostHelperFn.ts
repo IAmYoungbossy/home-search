@@ -51,10 +51,30 @@ type buttonTagsType = {
   name: string;
 };
 
-export const buttonState = (state: appStateType) =>
+export const setButtonState = (state: appStateType) =>
   state["post"].postAsAgent ? false : true;
 
 export const makeBudgetBtnAlwaysActive = (
   item: buttonTagsType,
   state: appStateType
-) => (item["name"] === "Budget" ? false : buttonState(state));
+) => (item["name"] === "Budget" ? false : setButtonState(state));
+
+export const toggleDealStatus = (
+  e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  dealStatus: string,
+  setDealStatus: React.Dispatch<React.SetStateAction<string>>
+) => {
+  if (
+    e.currentTarget.children[1].textContent === "Deal Status" &&
+    dealStatus === "Deal Status"
+  )
+    setDealStatus("Deal Open");
+  else if (
+    e.currentTarget.children[1].textContent === "Deal Open" &&
+    dealStatus === "Deal Open"
+  )
+    setDealStatus("Deal Status");
+};
+
+export const setInputType = (btn: string) =>
+  btn === "Budget" ? "number" : "text";
