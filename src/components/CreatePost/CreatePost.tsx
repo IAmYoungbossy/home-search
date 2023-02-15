@@ -32,21 +32,27 @@ import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { Fragment, useContext, useReducer, useState } from "react";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
-import { appStateType, APP_ACTION_TYPES } from "../../reducer/appReducer";
-import { AppContext, contextProps } from "../../context/AppContext";
+import {
+  actionType,
+  appStateType,
+  APP_ACTION_TYPES,
+} from "../../reducer/appReducer";
 import {
   buttonTagsActionType,
   buttonTagsReducer as btnTagsReducer,
   BUTTON_TAGS_INITIAL_STATE as initialState,
 } from "../../reducer/buttonTagsReducer";
 import {
+  inputValue,
+  setInputType,
+  dispatchType,
   setButtonState,
   btnTagsOnClick,
+  toggleDealStatus,
   toggleBtnAndInputField,
   makeBudgetBtnAlwaysActive,
-  toggleDealStatus,
-  setInputType,
 } from "../../utilities/createPostHelperFn";
+import { AppContext, contextProps } from "../../context/AppContext";
 
 export default function CreatePostPage() {
   return (
@@ -119,8 +125,8 @@ const buttonTagsArray = [
 
 function ButtonTags() {
   const [dealStatus, setDealStatus] = useState("Deal Status");
-  const { state } = useContext(AppContext) as contextProps;
-  const [btnTagsState, dispatch] = useReducer(btnTagsReducer, initialState);
+  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const [btnTagsState, BtnDispatch] = useReducer(btnTagsReducer, initialState);
 
   return (
     <StyledButtonTagsContainer>
@@ -130,16 +136,17 @@ function ButtonTags() {
             <ButtonTag
               item={item}
               state={state}
-              dispatch={dispatch}
+              dispatch={BtnDispatch}
               dealStatus={dealStatus}
               setDealStatus={setDealStatus}
             />
           )}
           {!toggleBtnAndInputField(item.name, btnTagsState) && (
             <InputTag
-              type={setInputType(item.name)}
               name={item.name}
               dispatch={dispatch}
+              BtnDispatch={BtnDispatch}
+              type={setInputType(item.name)}
             />
           )}
         </Fragment>
@@ -165,14 +172,14 @@ function ButtonTag({
   setDealStatus: React.Dispatch<React.SetStateAction<string>>;
 }) {
   return (
-    <StyledButtonTags
-      disabled={makeBudgetBtnAlwaysActive(item, state)}
-      onClick={btnTagsOnClick.bind(null, item.name, true, dispatch)}
-    >
+    <StyledButtonTags disabled={makeBudgetBtnAlwaysActive(item, state)}>
       <input type="button" value="" />
       <button
         disabled={makeBudgetBtnAlwaysActive(item, state)}
-        onClick={(e) => toggleDealStatus(e, dealStatus, setDealStatus)}
+        onClick={(e) => {
+          btnTagsOnClick(item.name, true, dispatch);
+          toggleDealStatus(e, dealStatus, setDealStatus);
+        }}
       >
         {item.svg}{" "}
         <span>{item.name !== "Deal Status" ? item.name : dealStatus}</span>
@@ -184,14 +191,32 @@ function ButtonTag({
 interface InputTagProps {
   name: string;
   type: string;
-  dispatch: React.Dispatch<buttonTagsActionType>;
+  dispatch: React.Dispatch<actionType>;
+  BtnDispatch: React.Dispatch<buttonTagsActionType>;
 }
 
-function InputTag({ type, name, dispatch }: InputTagProps) {
+function InputTag({ type, name, dispatch, BtnDispatch }: InputTagProps) {
+  const { state } = useContext(AppContext) as contextProps;
+  const updateStateObj = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    name: string
+  ) => {
+    const updatedObj = {
+      payload: e.target.value,
+      type: dispatchType(APP_ACTION_TYPES, name) as string,
+    };
+    dispatch(updatedObj);
+  };
+
   return (
     <StyledInputTag>
-      <input placeholder={name} type={type} />
-      <button onClick={btnTagsOnClick.bind(null, name, false, dispatch)}>
+      <input
+        type={type}
+        placeholder={name}
+        onChange={(e) => updateStateObj(e, name)}
+        value={inputValue(state, name) as string | number}
+      />
+      <button onClick={btnTagsOnClick.bind(null, name, false, BtnDispatch)}>
         <GiCheckMark />
       </button>
     </StyledInputTag>
@@ -369,7 +394,7 @@ function ActionButtons() {
   return (
     <StyleActionButtons bg={postTitleAndPostBodyFilled}>
       <button>Save Draft</button>
-      <button onClick={() => console.log(state.post)}>Post</button>
+      <button onClick={() => console.log(state)}>Post</button>
     </StyleActionButtons>
   );
 }

@@ -5,12 +5,34 @@ export interface appActionPostType {
   POST_AS_AGENT: string;
 }
 
-export const APP_ACTION_TYPES = {
+export type IAppActionTypes = {
+  POST: {
+    IMAGE: string;
+    POST_BODY: string;
+    POST_TITLE: string;
+    POST_AS_AGENT: string;
+  };
+  tagButton: {
+    Budget: string;
+    Location: string;
+    "Deal Status": string;
+    "Apartment Size": string;
+  };
+  SHOW_SIGN_IN_PAGE: string;
+};
+
+export const APP_ACTION_TYPES: IAppActionTypes = {
   POST: {
     IMAGE: "IMAGE TRUE",
     POST_BODY: "POST BODY",
     POST_TITLE: "POST TITLE",
     POST_AS_AGENT: "POST AS AGENT",
+  },
+  tagButton: {
+    Budget: "Budget",
+    Location: "Location",
+    "Deal Status": "Deal Open",
+    "Apartment Size": "Apartment Size",
   },
   SHOW_SIGN_IN_PAGE: "SHOW SIGN IN PAGE",
 };
@@ -22,14 +44,22 @@ interface postInterface {
   postAsAgent: boolean;
 }
 
+export type tagButtonType = {
+  Location: string;
+  "Deal Status": string;
+  Budget: number | string;
+  "Apartment Size": string;
+};
+
 export type appStateType = {
   post: postInterface;
   showSignInPage: boolean;
+  tagButton: tagButtonType;
 };
 
 export type actionType = {
   type: string;
-  payload: boolean | string;
+  payload: boolean | string | number;
 };
 
 export const APP_INITIAL_STATE = {
@@ -38,6 +68,12 @@ export const APP_INITIAL_STATE = {
     postBody: "",
     postTitle: "",
     postAsAgent: false,
+  },
+  tagButton: {
+    Budget: "",
+    Location: "",
+    "Apartment Size": "",
+    "Deal Status": "Deal Open",
   },
   showSignInPage: false,
 };
@@ -64,7 +100,7 @@ export const appReducer = (
 
     case APP_ACTION_TYPES.POST.POST_TITLE:
       return {
-        ...state,
+        ...JSON.parse(JSON.stringify(state)),
         post: {
           ...state.post,
           postTitle: action.payload as string,
@@ -73,7 +109,7 @@ export const appReducer = (
 
     case APP_ACTION_TYPES.POST.POST_BODY:
       return {
-        ...state,
+        ...JSON.parse(JSON.stringify(state)),
         post: {
           ...state.post,
           postBody: action.payload as string,
@@ -82,10 +118,37 @@ export const appReducer = (
 
     case APP_ACTION_TYPES.POST.IMAGE:
       return {
-        ...state,
+        ...JSON.parse(JSON.stringify(state)),
         post: {
           ...state.post,
           image: action.payload as boolean,
+        },
+      };
+
+    case APP_ACTION_TYPES.tagButton.Budget:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        tagButton: {
+          ...state.tagButton,
+          Budget: action.payload as number,
+        },
+      };
+
+    case APP_ACTION_TYPES.tagButton.Location:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        tagButton: {
+          ...state.tagButton,
+          Location: action.payload as string,
+        },
+      };
+
+    case APP_ACTION_TYPES.tagButton["Apartment Size"]:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        tagButton: {
+          ...state.tagButton,
+          "Apartment Size": action.payload as string,
         },
       };
     default:

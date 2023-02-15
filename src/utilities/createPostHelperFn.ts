@@ -1,4 +1,4 @@
-import { appStateType } from "../reducer/appReducer";
+import { appStateType, IAppActionTypes } from "../reducer/appReducer";
 import {
   buttonTagsActionType,
   buttonTagsStateType,
@@ -78,3 +78,24 @@ export const toggleDealStatus = (
 
 export const setInputType = (btn: string) =>
   btn === "Budget" ? "number" : "text";
+
+export const dispatchType = (
+  obj: IAppActionTypes | appStateType,
+  name: string
+): string | number => {
+  if (obj.tagButton.Budget === name) return obj.tagButton.Budget;
+  if (obj.tagButton.Location === name) return obj.tagButton.Location;
+  if (obj.tagButton["Apartment Size"] === name)
+    return obj.tagButton["Apartment Size"];
+  return "Error";
+};
+
+export const inputValue = (
+  actionType: appStateType,
+  name: string
+): string | number => {
+  if (name === "Location") return actionType.tagButton.Location;
+  if (name === "Budget") return actionType.tagButton.Budget as number;
+  if (name === "Apartment Size") return actionType.tagButton["Apartment Size"];
+  return "Error";
+};
