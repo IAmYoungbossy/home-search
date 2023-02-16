@@ -73,9 +73,14 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
 export const StyledTag = styled.div`
   gap: 10px;
   display: flex;
-  padding: 3px 5px;
-  border-radius: 20px;
-  border: 1px solid var(--social-border-color);
+
+  div {
+    color: #9c27b0;
+    padding: 5px 10px;
+    border-radius: 20px;
+    outline: 1px solid #9c27b04a;
+    background-color: var(--social-border-color);
+  }
 `;
 
 export const StyledTitleHeader = styled.div`
