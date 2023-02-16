@@ -52,6 +52,7 @@ export type IAppActionTypes = {
     "Apartment Size": string;
   };
   buttonTagsToggle: {
+    APP: string;
     BUDGET: string;
     LOCATION: string;
     APARTMENT: string;
@@ -74,6 +75,7 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
     "Apartment Size": "Apartment Size",
   },
   buttonTagsToggle: {
+    APP: "APP",
     BUDGET: "BUDGET",
     LOCATION: "LOCATION",
     APARTMENT: "APARTMENT",

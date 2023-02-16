@@ -70,7 +70,9 @@ export const btnTagsOnClick = (
 ) => {
   const BUTTON_TAGS_TYPES = APP_ACTION_TYPES.buttonTagsToggle;
   const updateStateObj = (type: string) => dispatch({ type, payload: boolean });
-  if (btnName === "Budget") {
+  if (btnName === "App") {
+    updateStateObj(BUTTON_TAGS_TYPES.APP);
+  } else if (btnName === "Budget") {
     updateStateObj(BUTTON_TAGS_TYPES.BUDGET);
   } else if (btnName === "Location") {
     updateStateObj(BUTTON_TAGS_TYPES.LOCATION);

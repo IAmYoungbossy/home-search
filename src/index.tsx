@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import AppDataProvider from "./context/AppContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -64,7 +65,9 @@ root.render(
   <React.StrictMode>
     <GlobalCSS />
     <BrowserRouter basename="/">
-      <App />
+      <AppDataProvider>
+        <App />
+      </AppDataProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

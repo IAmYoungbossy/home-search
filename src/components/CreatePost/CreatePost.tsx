@@ -156,6 +156,7 @@ function ButtonTag({ item }: IButtonTag) {
       <button
         disabled={makeBudgetBtnAlwaysActive(item, state)}
         onClick={(e) => {
+          e.stopPropagation();
           btnTagsOnClick(item.name, true, dispatch);
           toggleDealStatus({ e, dealStatus, dispatch });
         }}
@@ -185,10 +186,16 @@ function InputTag({ name }: { name: string }) {
       <input
         placeholder={name}
         type={setInputType(name)}
+        onClick={(e) => e.stopPropagation()}
         onChange={(e) => updateStateObj(e, name)}
         value={inputValue(state, name) as string | number}
       />
-      <button onClick={btnTagsOnClick.bind(null, name, false, dispatch)}>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          btnTagsOnClick(name, false, dispatch);
+        }}
+      >
         <GiCheckMark />
       </button>
     </StyledInputTag>

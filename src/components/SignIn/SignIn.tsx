@@ -1,4 +1,8 @@
-import { AppContext, contextProps } from "../../context/AppContext";
+import {
+  appStateType,
+  contextProps,
+  APP_ACTION_TYPES,
+} from "../../utilities/typesAndInitialStateObj";
 import {
   StyledSignIn,
   StyledSignInFields,
@@ -8,8 +12,8 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { SyntheticEvent, useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import { signInWithFacebook, signInWithGoogle } from "../../firebaseAuth";
-import { appStateType, APP_ACTION_TYPES } from "../../reducer/appReducer";
 
 export default function SignInContainer() {
   const { state, dispatch } = useContext(AppContext) as contextProps;

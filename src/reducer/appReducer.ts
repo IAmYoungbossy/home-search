@@ -106,11 +106,19 @@ export const appReducer = (
           apartment: action.payload,
         },
       };
+    // Closses any opened input tag field
+    case APP_ACTION_TYPES.buttonTagsToggle.APP:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        buttonTagsToggle: {
+          ...APP_INITIAL_STATE.buttonTagsToggle,
+        },
+      };
 
-    /**
+    /*************************************************
      * dealStatus is always set to false so it doesn't
      * toggle between input and button
-     */
+     ************************************************/
     case APP_ACTION_TYPES.buttonTagsToggle.DEAL_STATUS:
       return {
         ...JSON.parse(JSON.stringify(state)),

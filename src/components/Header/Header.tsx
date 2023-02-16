@@ -1,4 +1,3 @@
-import { AppContext, contextProps } from "../../context/AppContext";
 import {
   Button,
   DropDown,
@@ -14,6 +13,8 @@ import { Fragment, useContext } from "react";
 import Logo from "../assets/header/Logo.svg";
 import { signInObj } from "../SignIn/SignIn";
 import { dropdownList } from "./dropdownList";
+import { AppContext } from "../../context/AppContext";
+import { contextProps } from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, HeartSVG, UserSVG } from "../assets/header/SvgMarkUp";
 
 export default function Header() {
