@@ -76,7 +76,7 @@ export const StyledTag = styled.div`
 
   div {
     color: #9c27b0;
-    padding: 5px 10px;
+    padding: 3px 10px;
     border-radius: 20px;
     outline: 1px solid #9c27b04a;
     background-color: var(--social-border-color);
