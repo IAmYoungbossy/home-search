@@ -19,6 +19,7 @@ import {
   StyledRedditRulesHeader,
   StyledButtonTagsContainer,
 } from "./StyledCreatePost";
+import { useContext } from "react";
 import { GrAdd } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
 import { BiPoll } from "react-icons/bi";
@@ -30,18 +31,8 @@ import { TbCircleDotted } from "react-icons/tb";
 import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
-import { Fragment, useContext, useReducer, useState } from "react";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
-import {
-  actionType,
-  appStateType,
-  APP_ACTION_TYPES,
-} from "../../reducer/appReducer";
-import {
-  buttonTagsActionType,
-  buttonTagsReducer as btnTagsReducer,
-  BUTTON_TAGS_INITIAL_STATE as initialState,
-} from "../../reducer/buttonTagsReducer";
+import { APP_ACTION_TYPES } from "../../reducer/appReducer";
 import {
   inputValue,
   setInputType,
@@ -116,61 +107,46 @@ export function Warning() {
   );
 }
 
-const buttonTagsArray = [
+const tagsContent = [
   { svg: <GrAdd />, name: "Budget" },
   { svg: <GrAdd />, name: "Location" },
   { svg: <GrAdd />, name: "Apartment Size" },
   { svg: <AiOutlineTag />, name: "Deal Status" },
 ];
 
-function ButtonTags() {
-  const [dealStatus, setDealStatus] = useState("Deal Status");
-  const { state, dispatch } = useContext(AppContext) as contextProps;
-  const [btnTagsState, BtnDispatch] = useReducer(btnTagsReducer, initialState);
-
-  return (
-    <StyledButtonTagsContainer>
-      {buttonTagsArray.map((item) => (
-        <Fragment key={item.name}>
-          {toggleBtnAndInputField(item.name, btnTagsState) && (
-            <ButtonTag
-              item={item}
-              state={state}
-              dispatch={BtnDispatch}
-              dealStatus={dealStatus}
-              setDealStatus={setDealStatus}
-            />
-          )}
-          {!toggleBtnAndInputField(item.name, btnTagsState) && (
-            <InputTag
-              name={item.name}
-              dispatch={dispatch}
-              BtnDispatch={BtnDispatch}
-              type={setInputType(item.name)}
-            />
-          )}
-        </Fragment>
-      ))}
-    </StyledButtonTagsContainer>
-  );
-}
-
-function ButtonTag({
-  item,
-  state,
-  dispatch,
-  dealStatus,
-  setDealStatus,
-}: {
+interface IButtonTag {
   item: {
     svg: JSX.Element;
     name: string;
   };
-  dealStatus: string;
-  state: appStateType;
-  dispatch: React.Dispatch<buttonTagsActionType>;
-  setDealStatus: React.Dispatch<React.SetStateAction<string>>;
-}) {
+}
+
+const tagsArray = tagsContent.map((item) => (
+  <BtnAndInput key={item.name} item={item} />
+));
+
+function ButtonTags() {
+  return <StyledButtonTagsContainer>{tagsArray}</StyledButtonTagsContainer>;
+}
+
+function BtnAndInput({ item }: IButtonTag) {
+  const { state } = useContext(AppContext) as contextProps;
+  return (
+    <>
+      {toggleBtnAndInputField(item.name, state.buttonTagsToggle) && (
+        <ButtonTag item={item} />
+      )}
+      {!toggleBtnAndInputField(item.name, state.buttonTagsToggle) && (
+        <InputTag name={item.name} />
+      )}
+    </>
+  );
+}
+
+function ButtonTag({ item }: IButtonTag) {
+  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const dealStatus = state.tagButton["Deal Status"];
+
   return (
     <StyledButtonTags disabled={makeBudgetBtnAlwaysActive(item, state)}>
       <input type="button" value="" />
@@ -178,7 +154,7 @@ function ButtonTag({
         disabled={makeBudgetBtnAlwaysActive(item, state)}
         onClick={(e) => {
           btnTagsOnClick(item.name, true, dispatch);
-          toggleDealStatus(e, dealStatus, setDealStatus);
+          toggleDealStatus({ e, dealStatus, dispatch });
         }}
       >
         {item.svg}{" "}
@@ -188,15 +164,8 @@ function ButtonTag({
   );
 }
 
-interface InputTagProps {
-  name: string;
-  type: string;
-  dispatch: React.Dispatch<actionType>;
-  BtnDispatch: React.Dispatch<buttonTagsActionType>;
-}
-
-function InputTag({ type, name, dispatch, BtnDispatch }: InputTagProps) {
-  const { state } = useContext(AppContext) as contextProps;
+function InputTag({ name }: { name: string }) {
+  const { state, dispatch } = useContext(AppContext) as contextProps;
   const updateStateObj = (
     e: React.ChangeEvent<HTMLInputElement>,
     name: string
@@ -211,12 +180,12 @@ function InputTag({ type, name, dispatch, BtnDispatch }: InputTagProps) {
   return (
     <StyledInputTag>
       <input
-        type={type}
         placeholder={name}
+        type={setInputType(name)}
         onChange={(e) => updateStateObj(e, name)}
         value={inputValue(state, name) as string | number}
       />
-      <button onClick={btnTagsOnClick.bind(null, name, false, BtnDispatch)}>
+      <button onClick={btnTagsOnClick.bind(null, name, false, dispatch)}>
         <GiCheckMark />
       </button>
     </StyledInputTag>
