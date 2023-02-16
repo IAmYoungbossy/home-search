@@ -4,7 +4,7 @@ import {
   IAppActionTypes,
   APP_ACTION_TYPES,
   IButtonTagsToggle,
-} from "../reducer/appReducer";
+} from "./typesAndInitialStateObj";
 
 type buttonTagsType = {
   svg: JSX.Element;

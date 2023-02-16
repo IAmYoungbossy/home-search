@@ -1,4 +1,8 @@
 import {
+  contextProps,
+  APP_ACTION_TYPES,
+} from "../../utilities/typesAndInitialStateObj";
+import {
   Button,
   StyledPost,
   StyledDraft,
@@ -32,7 +36,6 @@ import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
-import { APP_ACTION_TYPES } from "../../reducer/appReducer";
 import {
   inputValue,
   setInputType,
@@ -43,7 +46,7 @@ import {
   toggleBtnAndInputField,
   makeBudgetBtnAlwaysActive,
 } from "../../utilities/createPostHelperFn";
-import { AppContext, contextProps } from "../../context/AppContext";
+import { AppContext } from "../../context/AppContext";
 
 export default function CreatePostPage() {
   return (

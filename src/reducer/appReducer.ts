@@ -1,108 +1,9 @@
-export interface appActionPostType {
-  IMAGE: string;
-  POST_BODY: string;
-  POST_TITLE: string;
-  POST_AS_AGENT: string;
-}
-
-export interface IButtonTagsToggle {
-  budget: boolean;
-  location: boolean;
-  apartment: boolean;
-  dealStatus: boolean;
-}
-
-interface postInterface {
-  image: boolean;
-  postBody: string;
-  postTitle: string;
-  postAsAgent: boolean;
-}
-
-export type tagButtonType = {
-  Location: string;
-  "Deal Status": string;
-  Budget: number | string;
-  "Apartment Size": string;
-};
-
-export type appStateType = {
-  post: postInterface;
-  showSignInPage: boolean;
-  tagButton: tagButtonType;
-  buttonTagsToggle: IButtonTagsToggle;
-};
-
-export type actionType = {
-  type: string;
-  payload: boolean | string | number;
-};
-
-export type IAppActionTypes = {
-  POST: {
-    IMAGE: string;
-    POST_BODY: string;
-    POST_TITLE: string;
-    POST_AS_AGENT: string;
-  };
-  tagButton: {
-    Budget: string;
-    Location: string;
-    "Deal Status": string;
-    "Apartment Size": string;
-  };
-  buttonTagsToggle: {
-    BUDGET: string;
-    LOCATION: string;
-    APARTMENT: string;
-    DEAL_STATUS: string;
-  };
-  SHOW_SIGN_IN_PAGE: string;
-};
-
-export const APP_ACTION_TYPES: IAppActionTypes = {
-  POST: {
-    IMAGE: "IMAGE TRUE",
-    POST_BODY: "POST BODY",
-    POST_TITLE: "POST TITLE",
-    POST_AS_AGENT: "POST AS AGENT",
-  },
-  tagButton: {
-    Budget: "Budget",
-    Location: "Location",
-    "Deal Status": "Deal Open",
-    "Apartment Size": "Apartment Size",
-  },
-  buttonTagsToggle: {
-    BUDGET: "BUDGET",
-    LOCATION: "LOCATION",
-    APARTMENT: "APARTMENT",
-    DEAL_STATUS: "DEAL STATUS",
-  },
-  SHOW_SIGN_IN_PAGE: "SHOW SIGN IN PAGE",
-};
-
-export const APP_INITIAL_STATE = {
-  post: {
-    image: false,
-    postBody: "",
-    postTitle: "",
-    postAsAgent: false,
-  },
-  tagButton: {
-    Budget: "",
-    Location: "",
-    "Apartment Size": "",
-    "Deal Status": "Deal Status",
-  },
-  buttonTagsToggle: {
-    budget: false,
-    location: false,
-    apartment: false,
-    dealStatus: false,
-  },
-  showSignInPage: false,
-};
+import {
+  actionType,
+  appStateType,
+  APP_ACTION_TYPES,
+  APP_INITIAL_STATE,
+} from "../utilities/typesAndInitialStateObj";
 
 export const appReducer = (
   state: appStateType,
@@ -205,8 +106,11 @@ export const appReducer = (
           apartment: action.payload,
         },
       };
-    // dealStatus is always set to false so it doesn't
-    // toggle between input and button
+
+    /**
+     * dealStatus is always set to false so it doesn't
+     * toggle between input and button
+     */
     case APP_ACTION_TYPES.buttonTagsToggle.DEAL_STATUS:
       return {
         ...JSON.parse(JSON.stringify(state)),

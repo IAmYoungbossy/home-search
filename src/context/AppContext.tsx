@@ -1,20 +1,12 @@
 import {
-  actionType,
-  appReducer,
-  appStateType,
+  PageProps,
+  contextProps,
   APP_INITIAL_STATE,
-} from "../reducer/appReducer";
+} from "../utilities/typesAndInitialStateObj";
 import { createContext, useReducer } from "react";
-
-export interface contextProps {
-  state: appStateType;
-  dispatch: React.Dispatch<actionType>;
-}
+import { appReducer } from "../reducer/appReducer";
 
 export const AppContext = createContext<contextProps | null>(null);
-interface PageProps {
-  children: React.ReactNode;
-}
 
 const AppDataProvider = ({ children }: PageProps) => {
   const [state, dispatch] = useReducer(appReducer, APP_INITIAL_STATE);
