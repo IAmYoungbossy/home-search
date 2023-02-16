@@ -36,11 +36,13 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
   gap: 10px;
   display: flex;
   padding: 15px 0;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   background-color: var(--light-bg-color-primary);
 
   button {
+    margin: 5px;
     border: none;
     padding: 4px 8px;
     font-weight: bold;
@@ -50,7 +52,8 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
     outline: 2px solid var(--social-button-outline);
   }
 
-  & > button:last-child {
+  & > div > button:last-child {
+    margin-right: 0;
     padding: 5px 9px;
     color: var(--social-border-color);
     outline: var(--social-secondary-font-color);
@@ -65,6 +68,14 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
           : "var(--social-disabled-button-bg-color)"};
     box-shadow: ${({ bg }) => (bg ? "3px 1px 7px #00000038" : "none")};
   }
+`;
+
+export const StyledTag = styled.div`
+  gap: 10px;
+  display: flex;
+  padding: 3px 5px;
+  border-radius: 20px;
+  border: 1px solid var(--social-border-color);
 `;
 
 export const StyledTitleHeader = styled.div`

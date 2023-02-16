@@ -4,6 +4,7 @@ import {
 } from "../../utilities/typesAndInitialStateObj";
 import {
   Button,
+  StyledTag,
   StyledPost,
   StyledDraft,
   StyledCheck,
@@ -152,7 +153,6 @@ function ButtonTag({ item }: IButtonTag) {
 
   return (
     <StyledButtonTags disabled={makeBudgetBtnAlwaysActive(item, state)}>
-      <input type="button" value="" />
       <button
         disabled={makeBudgetBtnAlwaysActive(item, state)}
         onClick={(e) => {
@@ -248,10 +248,25 @@ function TitleInput() {
     <input
       type="text"
       name="title"
-      onChange={handleInputChange}
       placeholder="Title"
+      onChange={handleInputChange}
       value={state.post.postTitle}
     />
+  );
+}
+
+function Tags() {
+  const { state } = useContext(AppContext) as contextProps;
+  const tagButton = state.tagButton;
+  const buttonTagsToggle = state.buttonTagsToggle;
+
+  return (
+    <StyledTag>
+      {!buttonTagsToggle.dealStatus && <div>Deal Open</div>}
+      {!buttonTagsToggle.budget && <div>${tagButton.Budget}</div>}
+      {!buttonTagsToggle.location && <div>{tagButton.Location}</div>}
+      {!buttonTagsToggle.apartment && <div>{tagButton["Apartment Size"]}</div>}
+    </StyledTag>
   );
 }
 
@@ -372,8 +387,11 @@ function ActionButtons() {
 
   return (
     <StyleActionButtons bg={postTitleAndPostBodyFilled}>
-      <button>Save Draft</button>
-      <button onClick={() => console.log(state)}>Post</button>
+      <Tags />
+      <div>
+        <button>Save Draft</button>
+        <button onClick={() => console.log(state)}>Post</button>
+      </div>
     </StyleActionButtons>
   );
 }
