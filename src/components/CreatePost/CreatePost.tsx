@@ -9,6 +9,7 @@ import {
   StyledMarkdown,
   StyledInputTag,
   StyledButtonTags,
+  StyledUplaodImage,
   StyledPostOptions,
   StyledTitleHeader,
   StyledRedditRules,
@@ -198,8 +199,9 @@ function Post() {
   return (
     <StyledPost>
       <PostInputFields />
-      <Markdown />
-      <PostTextArea />
+      {/* <Markdown /> */}
+      {/* <PostTextArea /> */}
+      <UploadImage />
       <ButtonTags />
       <ActionButtons />
     </StyledPost>
@@ -270,10 +272,21 @@ function PostTextArea() {
         rows={10}
         name="text"
         value={state.post.postBody}
-        placeholder="Text (Optional)"
+        placeholder="Enter description here."
         onChange={(e) => handleInputChange(e, dispatch)}
       ></textarea>
     </StyledPostTextArea>
+  );
+}
+
+function UploadImage() {
+  return (
+    <StyledUplaodImage>
+      <div>
+        <label htmlFor="image">Click to upload image</label>
+        <input type="file" name="image" id="image" accept="image/*" />
+      </div>
+    </StyledUplaodImage>
   );
 }
 

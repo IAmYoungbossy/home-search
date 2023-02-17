@@ -311,6 +311,57 @@ export const StyledPostTextArea = styled.div`
   }
 `;
 
+export const StyledUplaodImage = styled.div`
+  width: 100%;
+  display: flex;
+  margin-top: 15px;
+  min-height: 200px;
+  align-items: center;
+  justify-content: center;
+  border: 1px dotted var(--social-border-color);
+
+  div {
+    width: 100%;
+    display: flex;
+    font-weight: 600;
+    justify-content: center;
+    font-family: var(--social-ibm-plex-sans-font-family);
+
+    input {
+      opacity: 0;
+      width: 0.1px;
+      height: 0.1px;
+      position: absolute;
+    }
+
+    label {
+      display: flex;
+      display: block;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 5px 10px;
+      font-weight: bold;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      transition: transform .2s ease-out;
+      color: var(--social-secondary-font-color);
+      font-family: var(--social-ibm-plex-sans-font-family);
+      border: 1px solid var(--social-secondary-font-color);
+    }
+
+    label:hover,
+    label:focus {
+      transform: scale(1.01);
+    }
+
+    label:focus {
+      outline: 1px solid #000;
+      outline: -webkit-focus-ring-color auto 2px;
+    }
+}
+`;
+
 export const StyledPostInputFields = styled.div`
   width: 100%;
 
