@@ -114,3 +114,79 @@ export const inputValue = (
   }
   return "Error";
 };
+
+export const preventEmptyFieldSubmition = (state: appStateType) => {
+  const postBody = state.post.postBody;
+  const postTitle = state.post.postTitle;
+  return (
+    postBody.length > 0 &&
+    postTitle.length > 0 &&
+    postBody.trim() !== "" &&
+    postTitle.trim() !== ""
+  );
+};
+
+export const onChangeSetPostAs = (
+  e: React.ChangeEvent<HTMLSelectElement>,
+  dispatch: React.Dispatch<actionType>
+) => {
+  const postAsValue = {
+    type: APP_ACTION_TYPES.POST.POST_AS_AGENT,
+    payload: e.target.value === "client" ? false : true,
+  };
+  dispatch(postAsValue);
+};
+
+export const handleInputChange = (
+  e: React.ChangeEvent<HTMLTextAreaElement>,
+  dispatch: React.Dispatch<actionType>
+) => {
+  const updateObj = {
+    type: APP_ACTION_TYPES.POST.POST_BODY,
+    payload: e.target.value,
+  };
+  dispatch(updateObj);
+};
+
+export const showTags = (state: appStateType) => {
+  const tagButton = state.tagButton;
+  const postAsAgent = state.post.postAsAgent;
+  const buttonTagsToggle = state.buttonTagsToggle;
+  const showBudget = !buttonTagsToggle.budget && tagButton.Budget !== "";
+  const showLocation =
+    !buttonTagsToggle.location && postAsAgent && tagButton.Location !== "";
+  const showApartment =
+    !buttonTagsToggle.apartment &&
+    postAsAgent &&
+    tagButton["Apartment Size"] !== "";
+  return {
+    showBudget,
+    showLocation,
+    showApartment,
+    buttonTagsToggle,
+    tagButton,
+  };
+};
+
+export const handleInput = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  dispatch: React.Dispatch<actionType>
+) => {
+  const updateObj = {
+    type: APP_ACTION_TYPES.POST.POST_TITLE,
+    payload: e.target.value,
+  };
+  dispatch(updateObj);
+};
+
+export const updateStateObj = (
+  e: React.ChangeEvent<HTMLInputElement>,
+  name: string,
+  dispatch: React.Dispatch<actionType>
+) => {
+  const updatedObj = {
+    payload: e.target.value,
+    type: dispatchType(APP_ACTION_TYPES, name) as string,
+  };
+  dispatch(updatedObj);
+};

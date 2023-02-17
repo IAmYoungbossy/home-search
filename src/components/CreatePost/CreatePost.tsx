@@ -1,8 +1,4 @@
 import {
-  contextProps,
-  APP_ACTION_TYPES,
-} from "../../utilities/typesAndInitialStateObj";
-import {
   Button,
   StyledTag,
   StyledPost,
@@ -38,16 +34,22 @@ import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import {
+  showTags,
   inputValue,
+  handleInput,
   setInputType,
-  dispatchType,
   setButtonState,
+  updateStateObj,
   btnTagsOnClick,
   toggleDealStatus,
+  onChangeSetPostAs,
+  handleInputChange,
   toggleBtnAndInputField,
   makeBudgetBtnAlwaysActive,
+  preventEmptyFieldSubmition,
 } from "../../utilities/createPostHelperFn";
 import { AppContext } from "../../context/AppContext";
+import { contextProps } from "../../utilities/typesAndInitialStateObj";
 
 export default function CreatePostPage() {
   return (
@@ -170,16 +172,6 @@ function ButtonTag({ item }: IButtonTag) {
 
 function InputTag({ name }: { name: string }) {
   const { state, dispatch } = useContext(AppContext) as contextProps;
-  const updateStateObj = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    name: string
-  ) => {
-    const updatedObj = {
-      payload: e.target.value,
-      type: dispatchType(APP_ACTION_TYPES, name) as string,
-    };
-    dispatch(updatedObj);
-  };
 
   return (
     <StyledInputTag>
@@ -187,8 +179,8 @@ function InputTag({ name }: { name: string }) {
         placeholder={name}
         type={setInputType(name)}
         onClick={(e) => e.stopPropagation()}
-        onChange={(e) => updateStateObj(e, name)}
         value={inputValue(state, name) as string | number}
+        onChange={(e) => updateStateObj(e, name, dispatch)}
       />
       <button
         onClick={(e) => {
@@ -236,33 +228,26 @@ function Markdown() {
 function TitleInput() {
   const { state, dispatch } = useContext(AppContext) as contextProps;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const updateObj = {
-      type: APP_ACTION_TYPES.POST.POST_TITLE,
-      payload: e.target.value,
-    };
-    dispatch(updateObj);
-  };
-
   return (
     <input
       type="text"
       name="title"
       placeholder="Title"
-      onChange={handleInputChange}
       value={state.post.postTitle}
+      onChange={(e) => handleInput(e, dispatch)}
     />
   );
 }
 
 function Tags() {
   const { state } = useContext(AppContext) as contextProps;
-  const tagButton = state.tagButton;
-  const buttonTagsToggle = state.buttonTagsToggle;
-  const showBudget = !buttonTagsToggle.budget && tagButton.Budget !== "";
-  const showLocation = !buttonTagsToggle.location && tagButton.Location !== "";
-  const showApartment =
-    !buttonTagsToggle.apartment && tagButton["Apartment Size"] !== "";
+  const {
+    showBudget,
+    showLocation,
+    showApartment,
+    buttonTagsToggle,
+    tagButton,
+  } = showTags(state);
 
   return (
     <StyledTag>
@@ -277,14 +262,6 @@ function Tags() {
 function PostTextArea() {
   const { state, dispatch } = useContext(AppContext) as contextProps;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const updateObj = {
-      type: APP_ACTION_TYPES.POST.POST_BODY,
-      payload: e.target.value,
-    };
-    dispatch(updateObj);
-  };
-
   return (
     <StyledPostTextArea>
       <textarea
@@ -293,8 +270,8 @@ function PostTextArea() {
         rows={10}
         name="text"
         value={state.post.postBody}
-        onChange={handleInputChange}
         placeholder="Text (Optional)"
+        onChange={(e) => handleInputChange(e, dispatch)}
       ></textarea>
     </StyledPostTextArea>
   );
@@ -343,16 +320,12 @@ function ChooseCommunity() {
 function PostAs() {
   const { dispatch } = useContext(AppContext) as contextProps;
 
-  const onChangeSetPostAs = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const postAsValue = {
-      type: APP_ACTION_TYPES.POST.POST_AS_AGENT,
-      payload: e.target.value === "client" ? false : true,
-    };
-    dispatch(postAsValue);
-  };
-
   return (
-    <StyledPostAs name="post-as" id="post-as" onChange={onChangeSetPostAs}>
+    <StyledPostAs
+      id="post-as"
+      name="post-as"
+      onChange={(e) => onChangeSetPostAs(e, dispatch)}
+    >
       <option value="client">a Client</option>
       <option value="agent">an Agent</option>
     </StyledPostAs>
@@ -380,17 +353,10 @@ function Draft() {
 
 function ActionButtons() {
   const { state } = useContext(AppContext) as contextProps;
-
-  const postBody = state.post.postBody;
-  const postTitle = state.post.postTitle;
-  const postTitleAndPostBodyFilled =
-    postBody.length > 0 &&
-    postTitle.length > 0 &&
-    postBody.trim() !== "" &&
-    postTitle.trim() !== "";
+  const allFieldsFilled = preventEmptyFieldSubmition(state);
 
   return (
-    <StyleActionButtons bg={postTitleAndPostBodyFilled}>
+    <StyleActionButtons bg={allFieldsFilled}>
       <Tags />
       <div>
         <button>Save Draft</button>
