@@ -259,10 +259,10 @@ function Tags() {
   const { state } = useContext(AppContext) as contextProps;
   const tagButton = state.tagButton;
   const buttonTagsToggle = state.buttonTagsToggle;
-  const showBudget = !buttonTagsToggle.budget || tagButton.Budget !== "";
-  const showLocation = !buttonTagsToggle.location || tagButton.Location !== "";
+  const showBudget = !buttonTagsToggle.budget && tagButton.Budget !== "";
+  const showLocation = !buttonTagsToggle.location && tagButton.Location !== "";
   const showApartment =
-    !buttonTagsToggle.apartment || tagButton["Apartment Size"] !== "";
+    !buttonTagsToggle.apartment && tagButton["Apartment Size"] !== "";
 
   return (
     <StyledTag>
