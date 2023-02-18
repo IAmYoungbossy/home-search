@@ -1,5 +1,4 @@
 import {
-  Button,
   StyledTag,
   StyledPost,
   StyledDraft,
@@ -32,6 +31,7 @@ import SignInContainer from "../SignIn/SignIn";
 import { TbCircleDotted } from "react-icons/tb";
 import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
+import { BsFillCameraFill } from "react-icons/bs";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import {
@@ -39,7 +39,7 @@ import {
   inputValue,
   handleInput,
   setInputType,
-  setButtonState,
+  // setButtonState,
   updateStateObj,
   btnTagsOnClick,
   toggleDealStatus,
@@ -48,6 +48,8 @@ import {
   toggleBtnAndInputField,
   makeBudgetBtnAlwaysActive,
   preventEmptyFieldSubmition,
+  disableButton,
+  toggleTextarea,
 } from "../../utilities/createPostHelperFn";
 import { AppContext } from "../../context/AppContext";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
@@ -196,12 +198,14 @@ function InputTag({ name }: { name: string }) {
 }
 
 function Post() {
+  const { state } = useContext(AppContext) as contextProps;
+
   return (
     <StyledPost>
       <PostInputFields />
-      {/* <Markdown /> */}
-      {/* <PostTextArea /> */}
-      <UploadImage />
+      {!state.uploadImage && <Markdown />}
+      {!state.uploadImage && <PostTextArea />}
+      {state.uploadImage && <UploadImage />}
       <ButtonTags />
       <ActionButtons />
     </StyledPost>
@@ -283,7 +287,9 @@ function UploadImage() {
   return (
     <StyledUplaodImage>
       <div>
-        <label htmlFor="image">Click to upload image</label>
+        <label htmlFor="image">
+          <BsFillCameraFill /> <p>Click to upload image</p>
+        </label>
         <input type="file" name="image" id="image" accept="image/*" />
       </div>
     </StyledUplaodImage>
@@ -299,20 +305,19 @@ const postOptionsArray = [
 ];
 
 function PostOptions() {
-  const { state } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(AppContext) as contextProps;
 
   return (
-    <StyledPostOptions>
+    <StyledPostOptions post={state.uploadImage}>
       {postOptionsArray.map((item, index) => (
-        <Button
-          disabled={
-            item.name === "Images & Video" ? setButtonState(state) : true
-          }
+        <button
           key={index}
+          disabled={disableButton(item.name, state)}
+          onClick={toggleTextarea.bind(null, item.name, state, dispatch)}
         >
           {item.svg}
           <p>{item.name}</p>
-        </Button>
+        </button>
       ))}
     </StyledPostOptions>
   );

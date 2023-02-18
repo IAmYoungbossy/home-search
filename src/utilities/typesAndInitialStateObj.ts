@@ -28,6 +28,7 @@ export type tagButtonType = {
 
 export type appStateType = {
   post: postInterface;
+  uploadImage: boolean;
   showSignInPage: boolean;
   tagButton: tagButtonType;
   buttonTagsToggle: IButtonTagsToggle;
@@ -39,6 +40,7 @@ export type actionType = {
 };
 
 export type IAppActionTypes = {
+  uploadImage: string;
   POST: {
     IMAGE: string;
     POST_BODY: string;
@@ -62,6 +64,7 @@ export type IAppActionTypes = {
 };
 
 export const APP_ACTION_TYPES: IAppActionTypes = {
+  uploadImage: "UPLOAD IMAGE",
   POST: {
     IMAGE: "IMAGE TRUE",
     POST_BODY: "POST BODY",
@@ -103,6 +106,7 @@ export const APP_INITIAL_STATE = {
     apartment: false,
     dealStatus: false,
   },
+  uploadImage: false,
   showSignInPage: false,
 };
 

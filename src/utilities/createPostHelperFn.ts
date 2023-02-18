@@ -190,3 +190,28 @@ export const updateStateObj = (
   };
   dispatch(updatedObj);
 };
+
+export const disableButton = (btnName: string, state: appStateType) =>
+  btnName === "Post" ||
+    (btnName === "Images & Video" && state.post.postAsAgent)
+    ? false
+    : true;
+
+export const toggleTextarea = (
+  name: string,
+  state: appStateType,
+  dispatch: React.Dispatch<actionType>
+) => {
+  if (name === "Images & Video" && state.post.postAsAgent) {
+    dispatch({
+      type: APP_ACTION_TYPES.uploadImage,
+      payload: true,
+    });
+  }
+  if (name === "Post") {
+    dispatch({
+      payload: false,
+      type: APP_ACTION_TYPES.uploadImage,
+    });
+  }
+};

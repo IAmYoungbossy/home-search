@@ -122,14 +122,7 @@ export const StyledDraft = styled.div`
   }
 `;
 
-export const Button = styled.button<{ disabled: boolean }>`
-  color: ${({ disabled }) =>
-    disabled
-      ? "var(--social-font-color) !important"
-      : "var(--social-secondary-font-color) !important"};
-`;
-
-export const StyledPostOptions = styled.div`
+export const StyledPostOptions = styled.div<{ post: boolean }>`
   width: 100%;
   display: flex;
   font-size: 14px;
@@ -153,16 +146,37 @@ export const StyledPostOptions = styled.div`
     border-right: none;
   }
 
+  button:disabled {
+    color: #b7b7b7 !important;
+  }
+
   svg {
     width: 20px;
     height: 20px;
   }
 
   & > button:first-child {
-    color: var(--social-secondary-font-color) !important;
-
+    color: ${({ post }) =>
+    post
+      ? "var(--social-font-color)"
+      : "var(--social-secondary-font-color) !important"};
     svg {
-      fill: var(--social-secondary-font-color) !important;
+      fill: ${({ post }) =>
+    post
+      ? "var(--social-font-color)"
+      : "var(--social-secondary-font-color) !important"};
+    }
+  }
+  & > button:nth-child(2) {
+    color: ${({ post }) =>
+    post
+      ? "var(--social-secondary-font-color) !important"
+      : "var(--social-font-color)"};
+    svg {
+      fill: ${({ post }) =>
+    post
+      ? "var(--social-secondary-font-color) !important"
+      : "var(--social-font-color)"};
     }
   }
 `;
@@ -335,16 +349,18 @@ export const StyledUplaodImage = styled.div`
     }
 
     label {
+      gap: 5px;
       display: flex;
-      display: block;
       cursor: pointer;
       font-size: 14px;
       padding: 5px 10px;
       font-weight: bold;
       position: relative;
       align-items: center;
+      min-width: max-content;
       justify-content: center;
-      transition: transform .2s ease-out;
+      background-color: white;
+      transition: background-color 0.2s ease-out;
       color: var(--social-secondary-font-color);
       font-family: var(--social-ibm-plex-sans-font-family);
       border: 1px solid var(--social-secondary-font-color);
@@ -352,14 +368,14 @@ export const StyledUplaodImage = styled.div`
 
     label:hover,
     label:focus {
-      transform: scale(1.01);
+      background-color: var(--social-light-secondary-bg-color);
     }
 
     label:focus {
       outline: 1px solid #000;
       outline: -webkit-focus-ring-color auto 2px;
     }
-}
+  }
 `;
 
 export const StyledPostInputFields = styled.div`

@@ -127,6 +127,17 @@ export const appReducer = (
           dealStatus: false,
         },
       };
+
+    /*************************************************
+     * Toggles textarea and uplaod image buttons in 
+     * PostOptions component in createPost module 
+     *************************************************/
+    case APP_ACTION_TYPES.uploadImage:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        uploadImage: action.payload as boolean,
+      };
+
     default:
       return state;
   }
