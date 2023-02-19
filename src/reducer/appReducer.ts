@@ -3,6 +3,7 @@ import {
   appStateType,
   APP_ACTION_TYPES,
   APP_INITIAL_STATE,
+  userType,
 } from "../utilities/typesAndInitialStateObj";
 
 export const appReducer = (
@@ -136,6 +137,12 @@ export const appReducer = (
       return {
         ...JSON.parse(JSON.stringify(state)),
         uploadImage: action.payload as boolean,
+      };
+
+    case APP_ACTION_TYPES.user:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        user: action.payload as userType,
       };
 
     default:

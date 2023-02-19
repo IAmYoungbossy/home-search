@@ -1,3 +1,5 @@
+import { DocumentData, QuerySnapshot } from "firebase/firestore";
+
 export interface appActionPostType {
   IMAGE: string;
   POST_BODY: string;
@@ -26,7 +28,12 @@ export type tagButtonType = {
   "Apartment Size": string;
 };
 
+export type userType = {
+  documents: QuerySnapshot<DocumentData>;
+} | null
+
 export type appStateType = {
+  user: userType;
   post: postInterface;
   uploadImage: boolean;
   showSignInPage: boolean;
@@ -36,10 +43,11 @@ export type appStateType = {
 
 export type actionType = {
   type: string;
-  payload: boolean | string | number;
+  payload: boolean | string | number | userType;
 };
 
 export type IAppActionTypes = {
+  user: string;
   uploadImage: string;
   POST: {
     IMAGE: string;
@@ -64,6 +72,7 @@ export type IAppActionTypes = {
 };
 
 export const APP_ACTION_TYPES: IAppActionTypes = {
+  user: "USER",
   uploadImage: "UPLOAD IMAGE",
   POST: {
     IMAGE: "IMAGE TRUE",
@@ -87,7 +96,8 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
   SHOW_SIGN_IN_PAGE: "SHOW SIGN IN PAGE",
 };
 
-export const APP_INITIAL_STATE = {
+export const APP_INITIAL_STATE: appStateType = {
+  user: null,
   post: {
     image: false,
     postBody: "",

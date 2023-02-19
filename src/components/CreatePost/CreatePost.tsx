@@ -1,9 +1,12 @@
+import { useEffect } from "react";
 import { useContext } from "react";
+import { User } from "firebase/auth";
 import { GrAdd } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
 import { BiPoll } from "react-icons/bi";
 import { FiLink } from "react-icons/fi";
 import * as SC from "./StyledCreatePost";
+import { auth } from "../../firebaseConfig";
 import { GiCheckMark } from "react-icons/gi";
 import { AiOutlineTag } from "react-icons/ai";
 import SignInContainer from "../SignIn/SignIn";
@@ -12,10 +15,15 @@ import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { BsFillCameraFill } from "react-icons/bs";
 import { RiErrorWarningLine } from "react-icons/ri";
+import { checkIfOldUser } from "../../firebaseCRUD";
 import { AppContext } from "../../context/AppContext";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import * as Helper from "../../utilities/createPostHelperFn";
-import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import {
+  APP_ACTION_TYPES,
+  contextProps,
+} from "../../utilities/typesAndInitialStateObj";
 
 export default function CreatePostPage() {
   return (
@@ -224,7 +232,9 @@ function Tags() {
 
   return (
     <SC.StyledTag>
-      {!buttonTagsToggle.dealStatus && <div>Deal Open</div>}
+      {!buttonTagsToggle.dealStatus && state.post.postAsAgent && (
+        <div>Deal Open</div>
+      )}
       {showBudget && <div>${tagButton.Budget}</div>}
       {showLocation && <div>{tagButton.Location}</div>}
       {showApartment && <div>{tagButton["Apartment Size"]}</div>}
@@ -337,15 +347,29 @@ function Draft() {
 }
 
 function ActionButtons() {
-  const { state } = useContext(AppContext) as contextProps;
+  const [user, loading, error] = useAuthState(auth);
+  const { state, dispatch } = useContext(AppContext) as contextProps;
   const allFieldsFilled = Helper.preventEmptyFieldSubmition(state);
+
+  useEffect(() => {
+    const getUserID = async (user: User | null | undefined) => {
+      if (user) {
+        const document = await checkIfOldUser(user);
+        dispatch({
+          type: APP_ACTION_TYPES.user,
+          payload: document,
+        });
+      }
+    };
+    getUserID(user);
+  }, [user]);
 
   return (
     <SC.StyleActionButtons bg={allFieldsFilled}>
       <Tags />
       <div>
         <button>Save Draft</button>
-        <button onClick={() => console.log(state)}>Post</button>
+        <button onClick={() => console.log(state.user)}>Post</button>
       </div>
     </SC.StyleActionButtons>
   );

@@ -162,7 +162,7 @@ export const StyledPostOptions = styled.div<{ post: boolean }>`
     ? "var(--social-font-color)"
     : "var(--social-secondary-font-color) !important"};
     border-bottom-color: ${({ post }) =>
-    post ? "var(--social-secondary-font-color) !important" : "none"};
+    post ? "none" : "var(--social-secondary-font-color) !important"};
     svg {
       fill: ${({ post }) =>
   post
