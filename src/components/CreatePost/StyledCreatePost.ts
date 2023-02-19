@@ -147,6 +147,7 @@ export const StyledPostOptions = styled.div<{ post: boolean }>`
   }
 
   button:disabled {
+    cursor: no-drop;
     color: #b7b7b7 !important;
   }
 
@@ -157,26 +158,30 @@ export const StyledPostOptions = styled.div<{ post: boolean }>`
 
   & > button:first-child {
     color: ${({ post }) =>
-    post
-      ? "var(--social-font-color)"
-      : "var(--social-secondary-font-color) !important"};
+  post
+    ? "var(--social-font-color)"
+    : "var(--social-secondary-font-color) !important"};
+    border-bottom-color: ${({ post }) =>
+    post ? "var(--social-secondary-font-color) !important" : "none"};
     svg {
       fill: ${({ post }) =>
-    post
-      ? "var(--social-font-color)"
-      : "var(--social-secondary-font-color) !important"};
+  post
+    ? "var(--social-font-color)"
+    : "var(--social-secondary-font-color) !important"};
     }
   }
   & > button:nth-child(2) {
     color: ${({ post }) =>
-    post
-      ? "var(--social-secondary-font-color) !important"
-      : "var(--social-font-color)"};
+  post
+    ? "var(--social-secondary-font-color) !important"
+    : "var(--social-font-color)"};
+    border-bottom-color: ${({ post }) =>
+    post ? "var(--social-secondary-font-color) !important" : "none"};
     svg {
       fill: ${({ post }) =>
-    post
-      ? "var(--social-secondary-font-color) !important"
-      : "var(--social-font-color)"};
+  post
+    ? "var(--social-secondary-font-color) !important"
+    : "var(--social-font-color)"};
     }
   }
 `;

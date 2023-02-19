@@ -1,30 +1,9 @@
-import {
-  StyledTag,
-  StyledPost,
-  StyledDraft,
-  StyledCheck,
-  StyledPostAs,
-  StyledWarning,
-  StyledMarkdown,
-  StyledInputTag,
-  StyledButtonTags,
-  StyledUplaodImage,
-  StyledPostOptions,
-  StyledTitleHeader,
-  StyledRedditRules,
-  StyledPostTextArea,
-  StyleActionButtons,
-  StyledCreatePostPage,
-  StyledChooseCommunity,
-  StyledPostInputFields,
-  StyledRedditRulesHeader,
-  StyledButtonTagsContainer,
-} from "./StyledCreatePost";
 import { useContext } from "react";
 import { GrAdd } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
 import { BiPoll } from "react-icons/bi";
 import { FiLink } from "react-icons/fi";
+import * as SC from "./StyledCreatePost";
 import { GiCheckMark } from "react-icons/gi";
 import { AiOutlineTag } from "react-icons/ai";
 import SignInContainer from "../SignIn/SignIn";
@@ -33,31 +12,15 @@ import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { BsFillCameraFill } from "react-icons/bs";
 import { RiErrorWarningLine } from "react-icons/ri";
-import { RuleSVG } from "../assets/socialPage/SocialSVG";
-import {
-  showTags,
-  inputValue,
-  handleInput,
-  setInputType,
-  // setButtonState,
-  updateStateObj,
-  btnTagsOnClick,
-  toggleDealStatus,
-  onChangeSetPostAs,
-  handleInputChange,
-  toggleBtnAndInputField,
-  makeBudgetBtnAlwaysActive,
-  preventEmptyFieldSubmition,
-  disableButton,
-  toggleTextarea,
-} from "../../utilities/createPostHelperFn";
 import { AppContext } from "../../context/AppContext";
+import { RuleSVG } from "../assets/socialPage/SocialSVG";
+import * as Helper from "../../utilities/createPostHelperFn";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
 
 export default function CreatePostPage() {
   return (
     <>
-      <StyledCreatePostPage>
+      <SC.StyledCreatePostPage>
         <div>
           <TitleHeader />
           <ChooseCommunity />
@@ -69,7 +32,7 @@ export default function CreatePostPage() {
           <RedditRules />
           <Warning />
         </div>
-      </StyledCreatePostPage>
+      </SC.StyledCreatePostPage>
       <SignInContainer />
     </>
   );
@@ -85,33 +48,33 @@ const redditRulesArr = [
 
 export function RedditRules() {
   return (
-    <StyledRedditRules>
+    <SC.StyledRedditRules>
       <RedditRulesHeader />
       {redditRulesArr.map((rule, index) => (
         <div key={index}>
           {index + 1} {rule}
         </div>
       ))}
-    </StyledRedditRules>
+    </SC.StyledRedditRules>
   );
 }
 
 function RedditRulesHeader() {
   return (
-    <StyledRedditRulesHeader>
+    <SC.StyledRedditRulesHeader>
       <RuleSVG /> <h4>Posting to Reddit</h4>
-    </StyledRedditRulesHeader>
+    </SC.StyledRedditRulesHeader>
   );
 }
 
 export function Warning() {
   return (
     <div>
-      <StyledWarning>
+      <SC.StyledWarning>
         Please be mindful of reddit's <span>content policy</span> and practice
         good
         <span>reddiquette</span>.
-      </StyledWarning>
+      </SC.StyledWarning>
     </div>
   );
 }
@@ -135,17 +98,19 @@ const tagsArray = tagsContent.map((item) => (
 ));
 
 function ButtonTags() {
-  return <StyledButtonTagsContainer>{tagsArray}</StyledButtonTagsContainer>;
+  return (
+    <SC.StyledButtonTagsContainer>{tagsArray}</SC.StyledButtonTagsContainer>
+  );
 }
 
 function BtnAndInput({ item }: IButtonTag) {
   const { state } = useContext(AppContext) as contextProps;
   return (
     <>
-      {toggleBtnAndInputField(item.name, state.buttonTagsToggle) && (
+      {Helper.toggleBtnAndInputField(item.name, state.buttonTagsToggle) && (
         <ButtonTag item={item} />
       )}
-      {!toggleBtnAndInputField(item.name, state.buttonTagsToggle) && (
+      {!Helper.toggleBtnAndInputField(item.name, state.buttonTagsToggle) && (
         <InputTag name={item.name} />
       )}
     </>
@@ -157,19 +122,21 @@ function ButtonTag({ item }: IButtonTag) {
   const dealStatus = state.tagButton["Deal Status"];
 
   return (
-    <StyledButtonTags disabled={makeBudgetBtnAlwaysActive(item, state)}>
+    <SC.StyledButtonTags
+      disabled={Helper.makeBudgetBtnAlwaysActive(item, state)}
+    >
       <button
-        disabled={makeBudgetBtnAlwaysActive(item, state)}
+        disabled={Helper.makeBudgetBtnAlwaysActive(item, state)}
         onClick={(e) => {
           e.stopPropagation();
-          btnTagsOnClick(item.name, true, dispatch);
-          toggleDealStatus({ e, dealStatus, dispatch });
+          Helper.btnTagsOnClick(item.name, true, dispatch);
+          Helper.toggleDealStatus({ e, dealStatus, dispatch });
         }}
       >
         {item.svg}{" "}
         <span>{item.name !== "Deal Status" ? item.name : dealStatus}</span>
       </button>
-    </StyledButtonTags>
+    </SC.StyledButtonTags>
   );
 }
 
@@ -177,23 +144,23 @@ function InputTag({ name }: { name: string }) {
   const { state, dispatch } = useContext(AppContext) as contextProps;
 
   return (
-    <StyledInputTag>
+    <SC.StyledInputTag>
       <input
         placeholder={name}
-        type={setInputType(name)}
+        type={Helper.setInputType(name)}
         onClick={(e) => e.stopPropagation()}
-        value={inputValue(state, name) as string | number}
-        onChange={(e) => updateStateObj(e, name, dispatch)}
+        value={Helper.inputValue(state, name) as string | number}
+        onChange={(e) => Helper.updateStateObj(e, name, dispatch)}
       />
       <button
         onClick={(e) => {
           e.stopPropagation();
-          btnTagsOnClick(name, false, dispatch);
+          Helper.btnTagsOnClick(name, false, dispatch);
         }}
       >
         <GiCheckMark />
       </button>
-    </StyledInputTag>
+    </SC.StyledInputTag>
   );
 }
 
@@ -201,33 +168,33 @@ function Post() {
   const { state } = useContext(AppContext) as contextProps;
 
   return (
-    <StyledPost>
+    <SC.StyledPost>
       <PostInputFields />
       {!state.uploadImage && <Markdown />}
       {!state.uploadImage && <PostTextArea />}
       {state.uploadImage && <UploadImage />}
       <ButtonTags />
       <ActionButtons />
-    </StyledPost>
+    </SC.StyledPost>
   );
 }
 
 function PostInputFields() {
   return (
-    <StyledPostInputFields>
+    <SC.StyledPostInputFields>
       <TitleInput />
-    </StyledPostInputFields>
+    </SC.StyledPostInputFields>
   );
 }
 
 function Markdown() {
   return (
-    <StyledMarkdown>
+    <SC.StyledMarkdown>
       <h3>
         Markdown <RiErrorWarningLine />
       </h3>
       <p>Switch to Fancy Paint Editor</p>
-    </StyledMarkdown>
+    </SC.StyledMarkdown>
   );
 }
 
@@ -240,7 +207,7 @@ function TitleInput() {
       name="title"
       placeholder="Title"
       value={state.post.postTitle}
-      onChange={(e) => handleInput(e, dispatch)}
+      onChange={(e) => Helper.handleInput(e, dispatch)}
     />
   );
 }
@@ -253,15 +220,15 @@ function Tags() {
     showApartment,
     buttonTagsToggle,
     tagButton,
-  } = showTags(state);
+  } = Helper.showTags(state);
 
   return (
-    <StyledTag>
+    <SC.StyledTag>
       {!buttonTagsToggle.dealStatus && <div>Deal Open</div>}
       {showBudget && <div>${tagButton.Budget}</div>}
       {showLocation && <div>{tagButton.Location}</div>}
       {showApartment && <div>{tagButton["Apartment Size"]}</div>}
-    </StyledTag>
+    </SC.StyledTag>
   );
 }
 
@@ -269,7 +236,7 @@ function PostTextArea() {
   const { state, dispatch } = useContext(AppContext) as contextProps;
 
   return (
-    <StyledPostTextArea>
+    <SC.StyledPostTextArea>
       <textarea
         id=""
         cols={10}
@@ -277,22 +244,22 @@ function PostTextArea() {
         name="text"
         value={state.post.postBody}
         placeholder="Enter description here."
-        onChange={(e) => handleInputChange(e, dispatch)}
+        onChange={(e) => Helper.handleInputChange(e, dispatch)}
       ></textarea>
-    </StyledPostTextArea>
+    </SC.StyledPostTextArea>
   );
 }
 
 function UploadImage() {
   return (
-    <StyledUplaodImage>
+    <SC.StyledUplaodImage>
       <div>
         <label htmlFor="image">
           <BsFillCameraFill /> <p>Click to upload image</p>
         </label>
         <input type="file" name="image" id="image" accept="image/*" />
       </div>
-    </StyledUplaodImage>
+    </SC.StyledUplaodImage>
   );
 }
 
@@ -308,30 +275,30 @@ function PostOptions() {
   const { state, dispatch } = useContext(AppContext) as contextProps;
 
   return (
-    <StyledPostOptions post={state.uploadImage}>
+    <SC.StyledPostOptions post={state.uploadImage}>
       {postOptionsArray.map((item, index) => (
         <button
           key={index}
-          disabled={disableButton(item.name, state)}
-          onClick={toggleTextarea.bind(null, item.name, state, dispatch)}
+          disabled={Helper.disableButton(item.name, state)}
+          onClick={Helper.toggleTextarea.bind(null, item.name, state, dispatch)}
         >
           {item.svg}
           <p>{item.name}</p>
         </button>
       ))}
-    </StyledPostOptions>
+    </SC.StyledPostOptions>
   );
 }
 
 function ChooseCommunity() {
   return (
-    <StyledChooseCommunity>
+    <SC.StyledChooseCommunity>
       <div>
         <TbCircleDotted />
         <label htmlFor="post-as">Posting as</label>
       </div>
       <PostAs />
-    </StyledChooseCommunity>
+    </SC.StyledChooseCommunity>
   );
 }
 
@@ -339,54 +306,54 @@ function PostAs() {
   const { dispatch } = useContext(AppContext) as contextProps;
 
   return (
-    <StyledPostAs
+    <SC.StyledPostAs
       id="post-as"
       name="post-as"
-      onChange={(e) => onChangeSetPostAs(e, dispatch)}
+      onChange={(e) => Helper.onChangeSetPostAs(e, dispatch)}
     >
       <option value="client">a Client</option>
       <option value="agent">an Agent</option>
-    </StyledPostAs>
+    </SC.StyledPostAs>
   );
 }
 
 function TitleHeader() {
   return (
-    <StyledTitleHeader>
+    <SC.StyledTitleHeader>
       <h2>Create a post</h2>
       <Draft />
-    </StyledTitleHeader>
+    </SC.StyledTitleHeader>
   );
 }
 
 function Draft() {
   return (
-    <StyledDraft>
+    <SC.StyledDraft>
       <p>
         DRAFTS <span>0</span>
       </p>
-    </StyledDraft>
+    </SC.StyledDraft>
   );
 }
 
 function ActionButtons() {
   const { state } = useContext(AppContext) as contextProps;
-  const allFieldsFilled = preventEmptyFieldSubmition(state);
+  const allFieldsFilled = Helper.preventEmptyFieldSubmition(state);
 
   return (
-    <StyleActionButtons bg={allFieldsFilled}>
+    <SC.StyleActionButtons bg={allFieldsFilled}>
       <Tags />
       <div>
         <button>Save Draft</button>
         <button onClick={() => console.log(state)}>Post</button>
       </div>
-    </StyleActionButtons>
+    </SC.StyleActionButtons>
   );
 }
 
 function Check() {
   return (
-    <StyledCheck>
+    <SC.StyledCheck>
       <div>
         <input type="checkbox" name="check" id="check" />
         <label htmlFor="check">Send me post reply notifications</label>
@@ -394,6 +361,6 @@ function Check() {
       <p>
         Connect accounts to share your post <RiErrorWarningLine />
       </p>
-    </StyledCheck>
+    </SC.StyledCheck>
   );
 }
