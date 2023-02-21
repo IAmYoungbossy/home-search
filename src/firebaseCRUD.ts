@@ -9,6 +9,7 @@ import {
   DocumentData,
   QuerySnapshot,
   DocumentReference,
+  Firestore,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 import { db } from "./firebaseConfig";
@@ -53,20 +54,63 @@ interface IaddPostToFirestore {
   postTitle: string;
   userDocId: string | null;
   postAsAgent: boolean;
+  apartmentSize?: string;
+  dealStatus?: string;
+  location?: string;
 }
 
 export const addPostToFirestore = async ({
   budget,
   postDesc,
+  location,
   postTitle,
   userDocId,
+  dealStatus,
   postAsAgent,
+  apartmentSize,
 }: IaddPostToFirestore) => {
-  await addDoc(collection(db, "USERS", userDocId as string, "POSTS"), {
-    budget,
-    postDesc,
-    postTitle,
-    userDocId,
-    postAsAgent,
-  });
+  if (!postAsAgent) {
+    const document = await addDoc(
+      collection(db, "USERS", userDocId as string, "POSTS"),
+      {
+        budget,
+        postDesc,
+        postTitle,
+        userDocId,
+        postAsAgent,
+      }
+    );
+    const postId = document.id;
+    addPostId({ db, userDocId, postId });
+  }
+  if (postAsAgent) {
+    const document = await addDoc(
+      collection(db, "USERS", userDocId as string, "POSTS"),
+      {
+        budget,
+        postDesc,
+        location,
+        postTitle,
+        userDocId,
+        dealStatus,
+        postAsAgent,
+        apartmentSize,
+      }
+    );
+    const postId = document.id;
+    addPostId({ db, userDocId, postId });
+  }
 };
+
+interface IAddPostId {
+  db: Firestore;
+  userDocId: string | null;
+  postId: string;
+}
+
+async function addPostId({ db, userDocId, postId }: IAddPostId) {
+  const docRef = doc(db, "USERS", userDocId as string, "POSTS", postId);
+  await updateDoc(docRef, {
+    postId: postId,
+  });
+}

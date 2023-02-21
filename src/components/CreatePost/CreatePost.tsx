@@ -375,13 +375,20 @@ function ActionButtons() {
             const postDesc = state.post.postBody;
             const budget = state.tagButton.Budget;
             const postTitle = state.post.postTitle;
+            const location = state.tagButton.Location;
             const postAsAgent = state.post.postAsAgent;
+            const dealStatus = state.tagButton["Deal Status"];
+            const apartmentSize = state.tagButton["Apartment Size"];
+
             addPostToFirestore({
               budget,
               postDesc,
+              location,
               postTitle,
               userDocId,
+              dealStatus,
               postAsAgent,
+              apartmentSize,
             });
           }}
         >
