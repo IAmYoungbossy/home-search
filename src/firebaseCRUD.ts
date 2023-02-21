@@ -46,3 +46,27 @@ export const createNewUserData = async (
 ) => {
   if (documents.docs.length === 0) await addNewUserData(user, authProvider);
 };
+
+interface IaddPostToFirestore {
+  budget: string | number;
+  postDesc: string;
+  postTitle: string;
+  userDocId: string | null;
+  postAsAgent: boolean;
+}
+
+export const addPostToFirestore = async ({
+  budget,
+  postDesc,
+  postTitle,
+  userDocId,
+  postAsAgent,
+}: IaddPostToFirestore) => {
+  await addDoc(collection(db, "USERS", userDocId as string, "POSTS"), {
+    budget,
+    postDesc,
+    postTitle,
+    userDocId,
+    postAsAgent,
+  });
+};

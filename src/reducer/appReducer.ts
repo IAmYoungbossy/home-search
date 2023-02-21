@@ -130,8 +130,8 @@ export const appReducer = (
       };
 
     /*************************************************
-     * Toggles textarea and uplaod image buttons in 
-     * PostOptions component in createPost module 
+     * Toggles textarea and uplaod image buttons in
+     * PostOptions component in createPost module
      *************************************************/
     case APP_ACTION_TYPES.uploadImage:
       return {
@@ -139,10 +139,10 @@ export const appReducer = (
         uploadImage: action.payload as boolean,
       };
 
-    case APP_ACTION_TYPES.user:
+    case APP_ACTION_TYPES.userDocId:
       return {
         ...JSON.parse(JSON.stringify(state)),
-        user: action.payload as userType,
+        userDocId: action.payload as userType,
       };
 
     default:

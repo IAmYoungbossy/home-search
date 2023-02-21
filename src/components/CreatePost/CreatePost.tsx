@@ -15,11 +15,11 @@ import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { BsFillCameraFill } from "react-icons/bs";
 import { RiErrorWarningLine } from "react-icons/ri";
-import { checkIfOldUser } from "../../firebaseCRUD";
 import { AppContext } from "../../context/AppContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import * as Helper from "../../utilities/createPostHelperFn";
+import { addPostToFirestore, checkIfOldUser } from "../../firebaseCRUD";
 import {
   APP_ACTION_TYPES,
   contextProps,
@@ -356,8 +356,8 @@ function ActionButtons() {
       if (user) {
         const document = await checkIfOldUser(user);
         dispatch({
-          type: APP_ACTION_TYPES.user,
-          payload: document,
+          type: APP_ACTION_TYPES.userDocId,
+          payload: document.documents.docs[0].id,
         });
       }
     };
@@ -369,7 +369,24 @@ function ActionButtons() {
       <Tags />
       <div>
         <button>Save Draft</button>
-        <button onClick={() => console.log(state.user)}>Post</button>
+        <button
+          onClick={() => {
+            const userDocId = state.userDocId;
+            const postDesc = state.post.postBody;
+            const budget = state.tagButton.Budget;
+            const postTitle = state.post.postTitle;
+            const postAsAgent = state.post.postAsAgent;
+            addPostToFirestore({
+              budget,
+              postDesc,
+              postTitle,
+              userDocId,
+              postAsAgent,
+            });
+          }}
+        >
+          Post
+        </button>
       </div>
     </SC.StyleActionButtons>
   );

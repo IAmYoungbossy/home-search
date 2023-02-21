@@ -28,12 +28,10 @@ export type tagButtonType = {
   "Apartment Size": string;
 };
 
-export type userType = {
-  documents: QuerySnapshot<DocumentData>;
-} | null
+export type userType = string | null;
 
 export type appStateType = {
-  user: userType;
+  userDocId: userType;
   post: postInterface;
   uploadImage: boolean;
   showSignInPage: boolean;
@@ -47,7 +45,7 @@ export type actionType = {
 };
 
 export type IAppActionTypes = {
-  user: string;
+  userDocId: string;
   uploadImage: string;
   POST: {
     IMAGE: string;
@@ -72,7 +70,7 @@ export type IAppActionTypes = {
 };
 
 export const APP_ACTION_TYPES: IAppActionTypes = {
-  user: "USER",
+  userDocId: "USER",
   uploadImage: "UPLOAD IMAGE",
   POST: {
     IMAGE: "IMAGE TRUE",
@@ -97,7 +95,7 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
 };
 
 export const APP_INITIAL_STATE: appStateType = {
-  user: null,
+  userDocId: null,
   post: {
     image: false,
     postBody: "",
