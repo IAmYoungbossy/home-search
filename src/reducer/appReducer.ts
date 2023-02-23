@@ -48,7 +48,14 @@ export const appReducer = (
           image: action.payload as boolean,
         },
       };
-
+    case APP_ACTION_TYPES.POST.imageURL:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        post: {
+          ...state.post,
+          imageURL: action.payload as string,
+        },
+      };
     case APP_ACTION_TYPES.tagButton.Budget:
       return {
         ...JSON.parse(JSON.stringify(state)),
@@ -143,6 +150,11 @@ export const appReducer = (
       return {
         ...JSON.parse(JSON.stringify(state)),
         userDocId: action.payload as userType,
+      };
+    case APP_ACTION_TYPES.uploadProgress:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        uploadProgress: action.payload as number,
       };
 
     default:

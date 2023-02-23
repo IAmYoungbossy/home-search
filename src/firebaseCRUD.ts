@@ -12,7 +12,21 @@ import {
   Firestore,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
-import { db } from "./firebaseConfig";
+import { db, storage } from "./firebaseConfig";
+import {
+  getDownloadURL,
+  ref,
+  StorageError,
+  StorageReference,
+  uploadBytes,
+  uploadBytesResumable,
+  UploadTask,
+  UploadTaskSnapshot,
+} from "firebase/storage";
+import {
+  actionType,
+  APP_ACTION_TYPES,
+} from "./utilities/typesAndInitialStateObj";
 
 export const checkIfOldUser = async (user: User) => {
   const q = query(collection(db, "USERS"), where("userId", "==", user.uid));
@@ -113,4 +127,53 @@ async function addPostId({ db, userDocId, postId }: IAddPostId) {
   await updateDoc(docRef, {
     postId: postId,
   });
+}
+
+interface IUploadFileToStorage {
+  file: File;
+  dispatch: React.Dispatch<actionType>;
+}
+
+export async function uploadFileToStorage({
+  file,
+  dispatch,
+}: IUploadFileToStorage) {
+  const storageRef = ref(storage, `PostImages/${file.name}`);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      dispatch({
+        payload: progress,
+        type: APP_ACTION_TYPES.uploadProgress,
+      });
+    },
+    alertError,
+    setImageUrl.bind(null, { uploadTask, dispatch })
+  );
+}
+
+function alertError(error: StorageError) {
+  alert(error);
+}
+
+interface ISetImageUrl {
+  uploadTask: UploadTask;
+  dispatch: React.Dispatch<actionType>;
+}
+
+function setImageUrl({ uploadTask, dispatch }: ISetImageUrl) {
+  (async () => {
+    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+    dispatch({
+      type: APP_ACTION_TYPES.POST.imageURL,
+      payload: downloadURL,
+    });
+    dispatch({
+      payload: 0,
+      type: APP_ACTION_TYPES.uploadProgress,
+    });
+  })();
 }

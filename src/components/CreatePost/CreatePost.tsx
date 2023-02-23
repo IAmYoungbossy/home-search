@@ -19,7 +19,11 @@ import { AppContext } from "../../context/AppContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import * as Helper from "../../utilities/createPostHelperFn";
-import { addPostToFirestore, checkIfOldUser } from "../../firebaseCRUD";
+import {
+  addPostToFirestore,
+  checkIfOldUser,
+  uploadFileToStorage,
+} from "../../firebaseCRUD";
 import {
   APP_ACTION_TYPES,
   contextProps,
@@ -261,16 +265,37 @@ function PostTextArea() {
 }
 
 function UploadImage() {
+  const { dispatch } = useContext(AppContext) as contextProps;
+  const fileTypes = ["image/png", "image/jpeg"];
+
+  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let file = e.target.files?.item(0);
+    if (file && fileTypes.includes(file.type)) {
+      uploadFileToStorage({ file, dispatch });
+    }
+  };
   return (
     <SC.StyledUplaodImage>
       <div>
         <label htmlFor="image">
           <BsFillCameraFill /> <p>Click to upload image</p>
         </label>
-        <input type="file" name="image" id="image" accept="image/*" />
+        <input
+          onChange={uploadImage}
+          type="file"
+          name="image"
+          id="image"
+          accept="image/*"
+        />
       </div>
+      <ProgressBar />
     </SC.StyledUplaodImage>
   );
+}
+
+function ProgressBar() {
+  const { state } = useContext(AppContext) as contextProps;
+  return <SC.StyledProgressBar width={state.uploadProgress} />;
 }
 
 const postOptionsArray = [

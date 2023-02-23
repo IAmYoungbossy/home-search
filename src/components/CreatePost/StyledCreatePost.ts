@@ -158,30 +158,30 @@ export const StyledPostOptions = styled.div<{ post: boolean }>`
 
   & > button:first-child {
     color: ${({ post }) =>
-  post
-    ? "var(--social-font-color)"
-    : "var(--social-secondary-font-color) !important"};
+      post
+        ? "var(--social-font-color)"
+        : "var(--social-secondary-font-color) !important"};
     border-bottom-color: ${({ post }) =>
-    post ? "none" : "var(--social-secondary-font-color) !important"};
+      post ? "none" : "var(--social-secondary-font-color) !important"};
     svg {
       fill: ${({ post }) =>
-  post
-    ? "var(--social-font-color)"
-    : "var(--social-secondary-font-color) !important"};
+        post
+          ? "var(--social-font-color)"
+          : "var(--social-secondary-font-color) !important"};
     }
   }
   & > button:nth-child(2) {
     color: ${({ post }) =>
-  post
-    ? "var(--social-secondary-font-color) !important"
-    : "var(--social-font-color)"};
+      post
+        ? "var(--social-secondary-font-color) !important"
+        : "var(--social-font-color)"};
     border-bottom-color: ${({ post }) =>
-    post ? "var(--social-secondary-font-color) !important" : "none"};
+      post ? "var(--social-secondary-font-color) !important" : "none"};
     svg {
       fill: ${({ post }) =>
-  post
-    ? "var(--social-secondary-font-color) !important"
-    : "var(--social-font-color)"};
+        post
+          ? "var(--social-secondary-font-color) !important"
+          : "var(--social-font-color)"};
     }
   }
 `;
@@ -331,15 +331,17 @@ export const StyledPostTextArea = styled.div`
 `;
 
 export const StyledUplaodImage = styled.div`
+  gap: 10px;
   width: 100%;
   display: flex;
   margin-top: 15px;
   min-height: 200px;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   border: 1px dotted var(--social-border-color);
 
-  div {
+  & > div:first-of-type {
     width: 100%;
     display: flex;
     font-weight: 600;
@@ -458,4 +460,11 @@ export const StyledPostAs = styled.select`
   color: #878a8c;
   font-size: 16px;
   font-family: var(--body-font-family);
+`;
+
+export const StyledProgressBar = styled.div<{ width: number }>`
+  height: 20px;
+  align-self: flex-start;
+  background-color: green;
+  width: ${({ width }) => `${width}%`};
 `;

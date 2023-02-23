@@ -17,6 +17,7 @@ export interface IButtonTagsToggle {
 export interface postInterface {
   image: boolean;
   postBody: string;
+  imageURL: string;
   postTitle: string;
   postAsAgent: boolean;
 }
@@ -34,6 +35,7 @@ export type appStateType = {
   userDocId: userType;
   post: postInterface;
   uploadImage: boolean;
+  uploadProgress: number;
   showSignInPage: boolean;
   tagButton: tagButtonType;
   buttonTagsToggle: IButtonTagsToggle;
@@ -47,8 +49,10 @@ export type actionType = {
 export type IAppActionTypes = {
   userDocId: string;
   uploadImage: string;
+  uploadProgress: string;
   POST: {
     IMAGE: string;
+    imageURL: string;
     POST_BODY: string;
     POST_TITLE: string;
     POST_AS_AGENT: string;
@@ -72,9 +76,11 @@ export type IAppActionTypes = {
 export const APP_ACTION_TYPES: IAppActionTypes = {
   userDocId: "USER",
   uploadImage: "UPLOAD IMAGE",
+  uploadProgress: "UPLOAD PROGRESS",
   POST: {
     IMAGE: "IMAGE TRUE",
     POST_BODY: "POST BODY",
+    imageURL: "IMAGE URL",
     POST_TITLE: "POST TITLE",
     POST_AS_AGENT: "POST AS AGENT",
   },
@@ -99,6 +105,7 @@ export const APP_INITIAL_STATE: appStateType = {
   post: {
     image: false,
     postBody: "",
+    imageURL: "",
     postTitle: "",
     postAsAgent: false,
   },
@@ -116,6 +123,7 @@ export const APP_INITIAL_STATE: appStateType = {
   },
   uploadImage: false,
   showSignInPage: false,
+  uploadProgress: 0,
 };
 
 export interface contextProps {
