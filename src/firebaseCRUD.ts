@@ -143,13 +143,7 @@ export async function uploadFileToStorage({
 
   uploadTask.on(
     "state_changed",
-    (snapshot) => {
-      let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      dispatch({
-        payload: progress,
-        type: APP_ACTION_TYPES.uploadProgress,
-      });
-    },
+    (snapshot) => updateProgressBar({ snapshot, dispatch }),
     alertError,
     setImageUrl.bind(null, { uploadTask, dispatch })
   );
@@ -162,6 +156,19 @@ function alertError(error: StorageError) {
 interface ISetImageUrl {
   uploadTask: UploadTask;
   dispatch: React.Dispatch<actionType>;
+}
+
+interface IUpdateProgressBar {
+  snapshot: UploadTaskSnapshot;
+  dispatch: React.Dispatch<actionType>;
+}
+
+function updateProgressBar({ snapshot, dispatch }: IUpdateProgressBar) {
+  let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  dispatch({
+    payload: progress,
+    type: APP_ACTION_TYPES.uploadProgress,
+  });
 }
 
 function setImageUrl({ uploadTask, dispatch }: ISetImageUrl) {
