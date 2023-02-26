@@ -88,11 +88,13 @@ interface IaddPostToFirestore {
   apartmentSize?: string;
   dealStatus?: string;
   location?: string;
+  imageUrl?: string;
 }
 
 export const addPostToFirestore = async ({
   budget,
   postDesc,
+  imageUrl,
   location,
   postTitle,
   userDocId,
@@ -106,6 +108,7 @@ export const addPostToFirestore = async ({
       {
         budget,
         postDesc,
+        imageUrl,
         location,
         postTitle,
         userDocId,
