@@ -14,33 +14,48 @@ import {
 import { User } from "firebase/auth";
 import { db, storage } from "./firebaseConfig";
 import {
-  getDownloadURL,
   ref,
-  StorageError,
-  StorageReference,
-  uploadBytes,
-  uploadBytesResumable,
   UploadTask,
+  StorageError,
+  getDownloadURL,
   UploadTaskSnapshot,
+  uploadBytesResumable,
 } from "firebase/storage";
 import {
   actionType,
   APP_ACTION_TYPES,
 } from "./utilities/typesAndInitialStateObj";
 
-export const checkIfOldUser = async (user: User) => {
+export const checkIfOldUser = async (
+  user: User,
+  dispatch: React.Dispatch<actionType>
+) => {
   const q = query(collection(db, "USERS"), where("userId", "==", user.uid));
   const documents = await getDocs(q);
+  if (documents.docs.length > 0) {
+    dispatch({
+      type: APP_ACTION_TYPES.userDocId,
+      payload: documents.docs[0].id,
+    });
+  }
   return { documents };
 };
 
-const updateDocument = async (docRef: DocumentReference<DocumentData>) => {
+const updateDocument = async (
+  docRef: DocumentReference<DocumentData>,
+  dispatch: React.Dispatch<actionType>
+) => {
   await updateDoc(doc(db, "USERS", docRef["id"]), { docId: docRef["id"] });
+  dispatch({
+    type: APP_ACTION_TYPES.userDocId,
+    payload: docRef.id,
+  });
 };
 
 export const addNewUserData = async (
   user: User,
   authProvider: string,
+  dispatch: React.Dispatch<actionType>,
   email = user.email,
   name = user.displayName
 ) => {
@@ -51,15 +66,17 @@ export const addNewUserData = async (
     avatar: user.photoURL,
     authProvider: authProvider,
   });
-  await updateDocument(docRef);
+  await updateDocument(docRef, dispatch);
 };
 
 export const createNewUserData = async (
   documents: QuerySnapshot<DocumentData>,
   user: User,
-  authProvider: string
+  authProvider: string,
+  dispatch: React.Dispatch<actionType>
 ) => {
-  if (documents.docs.length === 0) await addNewUserData(user, authProvider);
+  if (documents.docs.length === 0)
+    await addNewUserData(user, authProvider, dispatch);
 };
 
 interface IaddPostToFirestore {
@@ -83,20 +100,6 @@ export const addPostToFirestore = async ({
   postAsAgent,
   apartmentSize,
 }: IaddPostToFirestore) => {
-  if (!postAsAgent) {
-    const document = await addDoc(
-      collection(db, "USERS", userDocId as string, "POSTS"),
-      {
-        budget,
-        postDesc,
-        postTitle,
-        userDocId,
-        postAsAgent,
-      }
-    );
-    const postId = document.id;
-    addPostId({ db, userDocId, postId });
-  }
   if (postAsAgent) {
     const document = await addDoc(
       collection(db, "USERS", userDocId as string, "POSTS"),
@@ -109,6 +112,20 @@ export const addPostToFirestore = async ({
         dealStatus,
         postAsAgent,
         apartmentSize,
+      }
+    );
+    const postId = document.id;
+    addPostId({ db, userDocId, postId });
+  }
+  if (!postAsAgent) {
+    const document = await addDoc(
+      collection(db, "USERS", userDocId as string, "POSTS"),
+      {
+        budget,
+        postDesc,
+        postTitle,
+        userDocId,
+        postAsAgent,
       }
     );
     const postId = document.id;

@@ -40,6 +40,7 @@ export function signInObj(state: appStateType) {
 }
 
 export function SignIn() {
+  const { dispatch } = useContext(AppContext) as contextProps;
   const handleOnClick = (e: SyntheticEvent<HTMLElement>) => e.stopPropagation();
 
   return (
@@ -47,10 +48,16 @@ export function SignIn() {
       <div>
         <LoginAgreement />
         <div>
-          <ProviderButton signIn={signInWithGoogle} providerName="Google">
+          <ProviderButton
+            signIn={signInWithGoogle.bind(null, dispatch)}
+            providerName="Google"
+          >
             <FcGoogle />
           </ProviderButton>
-          <ProviderButton signIn={signInWithFacebook} providerName="Facebook">
+          <ProviderButton
+            signIn={signInWithFacebook.bind(null, dispatch)}
+            providerName="Facebook"
+          >
             <FaFacebook />
           </ProviderButton>
           <div>

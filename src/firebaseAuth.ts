@@ -15,6 +15,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "./firebaseConfig";
+import { actionType } from "./utilities/typesAndInitialStateObj";
 
 // Google Auth
 const googleProvider = new GoogleAuthProvider();
@@ -25,11 +26,11 @@ const googleSignIn = async () => {
   return { user };
 };
 
-const signInWithGoogle = async () => {
+const signInWithGoogle = async (dispatch: React.Dispatch<actionType>) => {
   try {
     const { user } = await googleSignIn();
-    const { documents } = await checkIfOldUser(user);
-    createNewUserData(documents, user, "Google");
+    const { documents } = await checkIfOldUser(user, dispatch);
+    createNewUserData(documents, user, "Google", dispatch);
   } catch (err) {
     console.error(err);
     alert(err);
@@ -60,14 +61,14 @@ const updateUserCredentials = async (updatePropsObj: updatePropsObjType) => {
   }
 };
 
-const signInWithFacebook = async () => {
+const signInWithFacebook = async (dispatch: React.Dispatch<actionType>) => {
   try {
     const { user, response } = await facebookSignIn();
-    const { documents } = await checkIfOldUser(user);
+    const { documents } = await checkIfOldUser(user, dispatch);
     const { photoUrl } = getFacebookPhotoUrl(response);
 
     await updateUserCredentials({ photoURL: photoUrl });
-    createNewUserData(documents, user, "Facebook");
+    createNewUserData(documents, user, "Facebook", dispatch);
   } catch (err) {
     console.error(err);
   }
@@ -83,12 +84,13 @@ const createNewEmailAndPassword = async (email: string, password: string) => {
 const registerWithEmailAndPassword = async (
   name: string,
   email: string,
-  password: string
+  password: string,
+  dispatch: React.Dispatch<actionType>
 ) => {
   try {
     const { user } = await createNewEmailAndPassword(email, password);
     await updateUserCredentials({ photoURL: "photoUrl", displayName: name });
-    await addNewUserData(user, "Email/Password", email, name);
+    await addNewUserData(user, "Email/Password", dispatch, email, name);
   } catch (err) {
     console.error(err);
   }

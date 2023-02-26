@@ -373,21 +373,8 @@ function Draft() {
 
 function ActionButtons() {
   const [user, loading, error] = useAuthState(auth);
-  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const { state } = useContext(AppContext) as contextProps;
   const allFieldsFilled = Helper.preventEmptyFieldSubmition(state);
-
-  useEffect(() => {
-    const getUserID = async (user: User | null | undefined) => {
-      if (user) {
-        const document = await checkIfOldUser(user);
-        dispatch({
-          type: APP_ACTION_TYPES.userDocId,
-          payload: document.documents.docs[0].id,
-        });
-      }
-    };
-    getUserID(user);
-  }, [user]);
 
   return (
     <SC.StyleActionButtons bg={allFieldsFilled}>
