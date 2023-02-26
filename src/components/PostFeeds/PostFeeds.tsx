@@ -13,8 +13,14 @@ import { ShieldSVG } from "../assets/Svg/SocialSVG";
 import { ClientCard } from "../PostCards/ClientCard";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
+import { getAllUserDocs } from "../../firebaseCRUD";
 
 export default function PostFeeds() {
+  const g = async () => {
+    const userDocs = await getAllUserDocs();
+    console.log(userDocs);
+  };
+  g();
   return (
     <StyledPostFeeds>
       <Feeds />

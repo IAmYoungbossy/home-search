@@ -204,3 +204,21 @@ function setImageUrl({ uploadTask, dispatch }: ISetImageUrl) {
     });
   })();
 }
+
+export const getAllUserDocs = async () => {
+  const users = collection(db, "USERS");
+  const userDocs = await getDocs(users);
+  const postList = await Promise.all(
+    userDocs.docs.map((doc) => (async () => await getPostFromUserDoc(doc.id))())
+  );
+  return postList.flat();
+};
+
+async function getPostFromUserDoc(docId: string) {
+  const posts = collection(db, "USERS", docId, "POSTS");
+  const userDocs = await getDocs(posts);
+  return userDocs.docs.map((doc) => ({
+    data: doc.data(),
+    id: doc.id,
+  }));
+}
