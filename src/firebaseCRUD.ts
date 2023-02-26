@@ -80,15 +80,15 @@ export const createNewUserData = async (
 };
 
 interface IaddPostToFirestore {
-  budget: string | number;
   postDesc: string;
   postTitle: string;
-  userDocId: string | null;
-  postAsAgent: boolean;
-  apartmentSize?: string;
-  dealStatus?: string;
   location?: string;
   imageUrl?: string;
+  dealStatus?: string;
+  postAsAgent: boolean;
+  apartmentSize?: string;
+  budget: string | number;
+  userDocId: string | null;
 }
 
 export const addPostToFirestore = async ({
@@ -129,6 +129,7 @@ export const addPostToFirestore = async ({
         postTitle,
         userDocId,
         postAsAgent,
+        apartmentSize,
       }
     );
     const postId = document.id;

@@ -23,7 +23,10 @@ export const setButtonState = (state: appStateType) =>
 export const makeBudgetBtnAlwaysActive = (
   item: buttonTagsType,
   state: appStateType
-) => (item["name"] === "Budget" ? false : setButtonState(state));
+) =>
+  item["name"] === "Budget" || item["name"] === "Apartment Size"
+    ? false
+    : setButtonState(state);
 
 export const toggleDealStatus = ({
   e,
@@ -192,8 +195,7 @@ export const updateStateObj = (
 };
 
 export const disableButton = (btnName: string, state: appStateType) =>
-  btnName === "Post" ||
-    (btnName === "Images & Video" && state.post.postAsAgent)
+  btnName === "Post" || (btnName === "Images & Video" && state.post.postAsAgent)
     ? false
     : true;
 

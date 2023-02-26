@@ -82,8 +82,8 @@ export function Warning() {
 
 const tagsContent = [
   { svg: <GrAdd />, name: "Budget" },
-  { svg: <GrAdd />, name: "Location" },
   { svg: <GrAdd />, name: "Apartment Size" },
+  { svg: <GrAdd />, name: "Location" },
   { svg: <AiOutlineTag />, name: "Deal Status" },
 ];
 
