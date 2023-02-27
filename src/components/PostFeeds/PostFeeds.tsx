@@ -1,14 +1,9 @@
-import {
-  StyledButton,
-  StyledPostFeeds,
-  StyledCreateCard,
-  StyledRedditPremium,
-  StyledRedditPolicies,
-  StyledCommunityButton,
-} from "./StyledPostFeeds";
+import * as SC from "./StyledPostFeeds";
+import { useEffect, useState } from "react";
 import AgentCard from "../PostCards/AgentCard";
 import FilterBar from "../SocialPage/FilterBar";
 import CreatePost from "../SocialPage/CreatePost";
+import { DocumentData } from "firebase/firestore";
 import { ShieldSVG } from "../assets/Svg/SocialSVG";
 import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
@@ -16,16 +11,11 @@ import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
 
 export default function PostFeeds() {
-  const g = async () => {
-    const userDocs = await getAllUserDocs();
-    console.log(userDocs);
-  };
-  g();
   return (
-    <StyledPostFeeds>
+    <SC.StyledPostFeeds>
       <Feeds />
       <SideBar />
-    </StyledPostFeeds>
+    </SC.StyledPostFeeds>
   );
 }
 
@@ -49,22 +39,36 @@ function SideBar() {
   );
 }
 
+type postListType =
+  | {
+      data: DocumentData;
+      id: string;
+    }[]
+  | [];
+
 function PostCards() {
+  const [postList, setPostList] = useState<postListType>([]);
+  useEffect(() => {
+    (async () => setPostList(await getAllUserDocs()))();
+  });
   return (
     <>
+      {/* {postList.length > 0 && (postList.map((post)=>{
+      return ({data: post.data})
+    }))}
       <ClientCard />
       <AgentCard />
       <ClientCard />
       <AgentCard />
       <ClientCard />
-      <AgentCard />
+      <AgentCard /> */}
     </>
   );
 }
 
 function RedditPremium() {
   return (
-    <StyledRedditPremium>
+    <SC.StyledRedditPremium>
       <div>
         <div>
           <ShieldSVG />
@@ -72,7 +76,7 @@ function RedditPremium() {
         <PremiumText />
       </div>
       <button>Try Now</button>
-    </StyledRedditPremium>
+    </SC.StyledRedditPremium>
   );
 }
 
@@ -87,12 +91,12 @@ function PremiumText() {
 
 function CreateCard() {
   return (
-    <StyledCreateCard>
+    <SC.StyledCreateCard>
       <HomeBannerImage />
       <SnooBannerImage />
       <PromoText />
       <Buttons />
-    </StyledCreateCard>
+    </SC.StyledCreateCard>
   );
 }
 
@@ -129,8 +133,8 @@ function PromoText() {
 function Buttons() {
   return (
     <div>
-      <StyledButton>Create Post</StyledButton>
-      <StyledCommunityButton>Create Community</StyledCommunityButton>
+      <SC.StyledButton>Create Post</SC.StyledButton>
+      <SC.StyledCommunityButton>Create Community</SC.StyledCommunityButton>
     </div>
   );
 }
@@ -144,11 +148,11 @@ const userPoliciesAndLang = {
 
 function RedditPolicies() {
   return (
-    <StyledRedditPolicies>
+    <SC.StyledRedditPolicies>
       <PoliciesAndAgreemeents />
       <ChooseLanguage />
       <p>Reddit Inc © 2023. All rights reserved</p>
-    </StyledRedditPolicies>
+    </SC.StyledRedditPolicies>
   );
 }
 
