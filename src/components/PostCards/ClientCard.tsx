@@ -1,12 +1,4 @@
-import {
-  StyledPostCard,
-  StyledHouseSpec,
-  StyledVoteArrow,
-  StyledDescription,
-  StyledPostDetails,
-  StyledOriginalPoster,
-  StyledInteractWithPostIcons,
-} from "./StyledClientCard";
+import * as SC from "./StyledClientCard";
 import { TfiComment } from "react-icons/tfi";
 import { FaUserCircle } from "react-icons/fa";
 import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
@@ -27,25 +19,25 @@ export function ClientCard({ secondary }: { secondary?: string }) {
 
 export default function PostCard({ children, secondary }: PostCardProps) {
   return (
-    <StyledPostCard>
+    <SC.StyledPostCard>
       <VoteArrow primary="#f8f9fa" secondary={secondary} />
       <PostDetails>
-        <StyledHouseSpec>{children}</StyledHouseSpec>
+        <SC.StyledHouseSpec>{children}</SC.StyledHouseSpec>
       </PostDetails>
-    </StyledPostCard>
+    </SC.StyledPostCard>
   );
 }
 
 function PostDetails({ children }: PostCardProps) {
   return (
-    <StyledPostDetails>
+    <SC.StyledPostDetails>
       <OriginalPoster>
         <p>Budget N600,000 || 23 minutes ago</p>
       </OriginalPoster>
       {children}
       <Description />
       <InteractWithPostIcons />
-    </StyledPostDetails>
+    </SC.StyledPostDetails>
   );
 }
 
@@ -56,11 +48,11 @@ interface VoteArrowProps {
 
 export function VoteArrow({ primary, secondary }: VoteArrowProps) {
   return (
-    <StyledVoteArrow primary={primary} secondary={secondary}>
+    <SC.StyledVoteArrow primary={primary} secondary={secondary}>
       <ArrowUpSVG />
       <p>Vote</p>
       <ArrowDownSVG />
-    </StyledVoteArrow>
+    </SC.StyledVoteArrow>
   );
 }
 
@@ -70,13 +62,13 @@ interface OriginalPosterProps {
 
 export function OriginalPoster({ children }: OriginalPosterProps) {
   return (
-    <StyledOriginalPoster>
+    <SC.StyledOriginalPoster>
       <FaUserCircle />
       <div>
         <p>Letam Bossman Barinua</p>
         {children}
       </div>
-    </StyledOriginalPoster>
+    </SC.StyledOriginalPoster>
   );
 }
 
@@ -92,25 +84,25 @@ export function HouseSpec() {
 
 export function Description() {
   return (
-    <StyledDescription>
+    <SC.StyledDescription>
       <p>
         Hello guys, it'll be nice if I can get an apartment around Ada George
         area where there is federal light or Apara link road off NTA Road
         Mgboaba. Thanks.
       </p>
-    </StyledDescription>
+    </SC.StyledDescription>
   );
 }
 
 function InteractWithPostIcons() {
   return (
-    <StyledInteractWithPostIcons>
+    <SC.StyledInteractWithPostIcons>
       <div>
         <TfiComment /> 1 Comment
       </div>
       <div>
         <HeartSaveSVG /> Save
       </div>
-    </StyledInteractWithPostIcons>
+    </SC.StyledInteractWithPostIcons>
   );
 }

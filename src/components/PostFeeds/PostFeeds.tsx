@@ -10,10 +10,10 @@ import AgentCard from "../PostCards/AgentCard";
 import FilterBar from "../SocialPage/FilterBar";
 import CreatePost from "../SocialPage/CreatePost";
 import { ShieldSVG } from "../assets/Svg/SocialSVG";
+import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
-import { getAllUserDocs } from "../../firebaseCRUD";
 
 export default function PostFeeds() {
   const g = async () => {
