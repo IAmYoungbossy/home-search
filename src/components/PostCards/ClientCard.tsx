@@ -4,41 +4,52 @@ import { FaUserCircle } from "react-icons/fa";
 import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
-interface PostCardProps {
+interface IPost {
   children: JSX.Element;
   secondary?: string;
 }
+interface IPostDetails extends IPost {
+  postDesc?: string;
+  budget?: number;
+}
+interface IClientCard extends IPost, IPostDetails {
+  secondary?: string;
+  apartmentSize: string;
+}
 
-export function ClientCard({ secondary }: { secondary?: string }) {
+export function ClientCard({
+  budget,
+  postDesc,
+  secondary,
+  apartmentSize,
+}: IClientCard) {
   return (
-    <PostCard secondary={secondary}>
-      <HouseSpec />
+    <PostCard secondary={secondary} postDesc={postDesc} budget={budget}>
+      <HouseSpec apartmentSize={apartmentSize} />
     </PostCard>
   );
 }
 
-export default function PostCard({ children, secondary }: PostCardProps) {
+interface IPostCard extends IPost, IPostDetails {}
+
+export default function PostCard({
+  budget,
+  children,
+  postDesc,
+  secondary,
+}: IPostCard) {
   return (
     <SC.StyledPostCard>
       <VoteArrow primary="#f8f9fa" secondary={secondary} />
-      <PostDetails>
+      <PostDetails postDesc={postDesc} budget={budget}>
         <SC.StyledHouseSpec>{children}</SC.StyledHouseSpec>
       </PostDetails>
     </SC.StyledPostCard>
   );
 }
 
-function PostDetails({ children }: PostCardProps) {
-  return (
-    <SC.StyledPostDetails>
-      <OriginalPoster>
-        <p>Budget N600,000 || 23 minutes ago</p>
-      </OriginalPoster>
-      {children}
-      <Description />
-      <InteractWithPostIcons />
-    </SC.StyledPostDetails>
-  );
+export function HouseSpec({ apartmentSize }: { apartmentSize: string }) {
+  return <h3>Looking for {apartmentSize}.</h3>;
 }
 
 interface VoteArrowProps {
@@ -53,6 +64,19 @@ export function VoteArrow({ primary, secondary }: VoteArrowProps) {
       <p>Vote</p>
       <ArrowDownSVG />
     </SC.StyledVoteArrow>
+  );
+}
+
+function PostDetails({ children, postDesc, budget }: IPostDetails) {
+  return (
+    <SC.StyledPostDetails>
+      <OriginalPoster>
+        <p>{budget} || 23 minutes ago</p>
+      </OriginalPoster>
+      {children}
+      <Description postDesc={postDesc} />
+      <InteractWithPostIcons />
+    </SC.StyledPostDetails>
   );
 }
 
@@ -72,24 +96,10 @@ export function OriginalPoster({ children }: OriginalPosterProps) {
   );
 }
 
-const houseInfo = {
-  budget: "N600,000",
-  house: "2 Bedrooms",
-  location: "Port Harcourt",
-};
-
-export function HouseSpec() {
-  return <h3>Looking for a {houseInfo.house} appartment.</h3>;
-}
-
-export function Description() {
+export function Description({ postDesc }: { postDesc?: string }) {
   return (
     <SC.StyledDescription>
-      <p>
-        Hello guys, it'll be nice if I can get an apartment around Ada George
-        area where there is federal light or Apara link road off NTA Road
-        Mgboaba. Thanks.
-      </p>
+      <p>{postDesc}</p>
     </SC.StyledDescription>
   );
 }

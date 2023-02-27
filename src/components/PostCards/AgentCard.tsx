@@ -1,33 +1,56 @@
 import PostCard from "./ClientCard";
-import house from "../assets/house.webp";
 import { ImageContainer, StyledHouseDetails } from "./StyledAgentCard";
 
-export default function AgentCard() {
+interface IHouseDetails {
+  budget: string;
+  location: string;
+  dealStatus: string;
+  apartmentSize: string;
+}
+interface IAgentCard extends IHouseDetails {
+  bgImage: string;
+  postDesc: string;
+  postTitle: string;
+}
+
+export default function AgentCard({
+  budget,
+  bgImage,
+  location,
+  postDesc,
+  postTitle,
+  dealStatus,
+  apartmentSize,
+}: IAgentCard) {
   return (
-    <PostCard>
+    <PostCard postDesc={postDesc}>
       <>
-        <h3>Furnished 2bdrm Bungalow in Pentcity Estate, Lokogoma for Sale</h3>
-        <ImageContainer bgImage={house} />
-        <HouseDetails />
+        <h3>{postTitle}</h3>
+        <ImageContainer bgImage={bgImage} />
+        <HouseDetails
+          budget={budget}
+          location={location}
+          dealStatus={dealStatus}
+          apartmentSize={apartmentSize}
+        />
       </>
     </PostCard>
   );
 }
 
-const houseDetailsArr = [
-  "4 Bedrooms",
-  "Port Harcourt",
-  "N850,000",
-  "Deal Open",
-];
-
-function HouseDetails() {
+function HouseDetails({
+  budget,
+  location,
+  dealStatus,
+  apartmentSize,
+}: IHouseDetails) {
   return (
     <StyledHouseDetails>
       <ul>
-        {houseDetailsArr.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
+        <li>{apartmentSize}</li>
+        <li>{location}</li>
+        <li>{budget}</li>
+        <li>{dealStatus}</li>
       </ul>
     </StyledHouseDetails>
   );
