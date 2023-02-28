@@ -71,7 +71,10 @@ function PostDetails({ children, postDesc, budget }: IPostDetails) {
   return (
     <SC.StyledPostDetails>
       <OriginalPoster>
-        <p>{budget} || 23 minutes ago</p>
+        <p>
+          <b>$</b>{" "}
+          {budget} || <b>23</b> minutes ago
+        </p>
       </OriginalPoster>
       {children}
       <Description postDesc={postDesc} />

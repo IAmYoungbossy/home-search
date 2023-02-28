@@ -2,7 +2,7 @@ import PostCard from "./ClientCard";
 import { ImageContainer, StyledHouseDetails } from "./StyledAgentCard";
 
 interface IHouseDetails {
-  budget: string;
+  budget: number;
   location: string;
   dealStatus: string;
   apartmentSize: string;
@@ -23,7 +23,7 @@ export default function AgentCard({
   apartmentSize,
 }: IAgentCard) {
   return (
-    <PostCard postDesc={postDesc}>
+    <PostCard postDesc={postDesc} budget={budget}>
       <>
         <h3>{postTitle}</h3>
         <ImageContainer bgImage={bgImage} />
