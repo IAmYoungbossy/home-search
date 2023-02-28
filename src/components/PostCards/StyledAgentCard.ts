@@ -8,11 +8,10 @@ export const StyledHouseDetails = styled.div`
   }
 
   li {
-    padding: 5px 0;
+    padding: 5px;
     font-size: 13px;
     list-style: none;
-    border-radius: 5px;
-    background-color: #f8f9fa;
+    background-color: #efefef;
   }
 `;
 

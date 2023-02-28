@@ -39,63 +39,58 @@ function SideBar() {
   );
 }
 
-type postListType =
-  | {
-      data:
-        | {
-            budget: string;
-            postId: string;
-            location: string;
-            postDesc: string;
-            imageUrl: string;
-            postTitle: string;
-            userDocId: string;
-            dealStatus: string;
-            postAsAgent: boolean;
-            apartmentSize: string;
-          }
-        | DocumentData;
-      id: string;
-    }[]
-  | [];
+interface ICardProps {
+  budget: string;
+  postId: string;
+  location: string;
+  postDesc: string;
+  imageUrl: string;
+  postTitle: string;
+  userDocId: string;
+  dealStatus: string;
+  postAsAgent: boolean;
+  apartmentSize: string;
+}
+
+interface IShowPostCard {
+  data: DocumentData | ICardProps;
+  id: string;
+}
+
+const showPostCard = (post: IShowPostCard) => {
+  const postData = post.data;
+  if (post.data.postAsAgent) {
+    return (
+      <AgentCard
+        key={postData.postId}
+        budget={postData.budget}
+        bgImage={postData.imageUrl}
+        location={postData.location}
+        postDesc={postData.postDesc}
+        postTitle={postData.postTitle}
+        dealStatus={postData.dealStatus}
+        apartmentSize={postData.apartmentSize}
+      />
+    );
+  } else {
+    return (
+      <ClientCard
+        secondary=""
+        key={postData.postId}
+        budget={postData.budget}
+        postDesc={postData.postDesc}
+        apartmentSize={postData.apartmentSize}
+      />
+    );
+  }
+};
 
 function PostCards() {
-  const [postList, setPostList] = useState<postListType>([]);
+  const [postList, setPostList] = useState<IShowPostCard[]>([]);
   useEffect(() => {
     (async () => setPostList(await getAllUserDocs()))();
   }, []);
-  return (
-    <>
-      {postList.length > 0 &&
-        postList.map((post) => {
-          const postData = post.data;
-          if (post.data.postAsAgent) {
-            return (
-              <AgentCard
-                key={postData.postId}
-                budget={postData.budget}
-                bgImage={postData.imageUrl}
-                location={postData.location}
-                postDesc={postData.postDesc}
-                postTitle={postData.postTitle}
-                dealStatus={postData.dealStatus}
-                apartmentSize={postData.apartmentSize}
-              />
-            );
-          } else {
-            return (
-              <ClientCard
-                secondary=""
-                key={postData.postId}
-                budget={postData.budget}
-                postDesc={postData.postDesc}
-                apartmentSize={postData.apartmentSize}
-              />
-            );
-          }
-        })}
-    </>
-  );
+  return <>{postList.length > 0 && postList.map(showPostCard)}</>;
 }
 
 function RedditPremium() {

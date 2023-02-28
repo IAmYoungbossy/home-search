@@ -49,7 +49,7 @@ function HouseDetails({
       <ul>
         <li>{apartmentSize}</li>
         <li>{location}</li>
-        <li>{budget}</li>
+        <li>$ {budget}</li>
         <li>{dealStatus}</li>
       </ul>
     </StyledHouseDetails>
