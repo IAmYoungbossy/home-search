@@ -5,7 +5,7 @@ import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
 interface IPost {
-  children: JSX.Element;
+  children?: JSX.Element;
   secondary?: string;
 }
 interface IPostDetails extends IPost {
@@ -14,7 +14,7 @@ interface IPostDetails extends IPost {
 }
 interface IClientCard extends IPost, IPostDetails {
   secondary?: string;
-  apartmentSize: string;
+  apartmentSize?: string;
 }
 
 export function ClientCard({
@@ -48,7 +48,7 @@ export default function PostCard({
   );
 }
 
-export function HouseSpec({ apartmentSize }: { apartmentSize: string }) {
+export function HouseSpec({ apartmentSize }: { apartmentSize?: string }) {
   return <h3>Looking for {apartmentSize}.</h3>;
 }
 

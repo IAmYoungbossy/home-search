@@ -41,7 +41,20 @@ function SideBar() {
 
 type postListType =
   | {
-      data: DocumentData;
+      data:
+        | {
+            budget: string;
+            postId: string;
+            location: string;
+            postDesc: string;
+            imageUrl: string;
+            postTitle: string;
+            userDocId: string;
+            dealStatus: string;
+            postAsAgent: boolean;
+            apartmentSize: string;
+          }
+        | DocumentData;
       id: string;
     }[]
   | [];
@@ -50,18 +63,37 @@ function PostCards() {
   const [postList, setPostList] = useState<postListType>([]);
   useEffect(() => {
     (async () => setPostList(await getAllUserDocs()))();
-  });
+  }, []);
   return (
     <>
-      {/* {postList.length > 0 && (postList.map((post)=>{
-      return ({data: post.data})
-    }))}
-      <ClientCard />
-      <AgentCard />
-      <ClientCard />
-      <AgentCard />
-      <ClientCard />
-      <AgentCard /> */}
+      {postList.length > 0 &&
+        postList.map((post) => {
+          const postData = post.data;
+          if (post.data.postAsAgent) {
+            return (
+              <AgentCard
+                key={postData.postId}
+                budget={postData.budget}
+                bgImage={postData.imageUrl}
+                location={postData.location}
+                postDesc={postData.postDesc}
+                postTitle={postData.postTitle}
+                dealStatus={postData.dealStatus}
+                apartmentSize={postData.apartmentSize}
+              />
+            );
+          } else {
+            return (
+              <ClientCard
+                secondary=""
+                key={postData.postId}
+                budget={postData.budget}
+                postDesc={postData.postDesc}
+                apartmentSize={postData.apartmentSize}
+              />
+            );
+          }
+        })}
     </>
   );
 }
