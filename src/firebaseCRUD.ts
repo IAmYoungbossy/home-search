@@ -19,6 +19,9 @@ import {
   DocumentData,
   QuerySnapshot,
   DocumentReference,
+  arrayRemove,
+  FieldValue,
+  getDoc,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 import {
@@ -227,4 +230,46 @@ async function getPostFromUserDoc(docId: string) {
     data: doc.data(),
     id: doc.id,
   }));
+}
+
+interface IDocRef {
+  postDocRef: DocumentReference<DocumentData>;
+}
+
+interface IUserId {
+  userId: string;
+}
+
+interface IAddLikes extends IUserId {
+  postId: string;
+}
+
+interface IUpdateLikeArray extends IDocRef {
+  value: FieldValue;
+}
+
+interface IAddLike extends IDocRef, IUserId {}
+
+interface IRemoveLike extends IAddLike {}
+
+export async function likeOrUnlike({ userId, postId }: IAddLikes) {
+  const postDocRef = doc(db, "USERS", userId, "POSTS", postId);
+  const postDocSnapshot = await getDoc(postDocRef);
+
+  if (postDocSnapshot.exists() && postDocSnapshot.data().Likes.includes(userId))
+    await addLike({ userId, postDocRef });
+  else await removeLike({ userId, postDocRef });
+}
+
+async function addLike({ userId, postDocRef }: IAddLike) {
+  await updateLikeArray({ value: arrayUnion(userId), postDocRef });
+}
+
+async function removeLike({ userId, postDocRef }: IRemoveLike) {
+  await updateLikeArray({ value: arrayRemove(userId), postDocRef });
+}
+
+async function updateLikeArray({ value, postDocRef }: IUpdateLikeArray) {
+  const addUserId = { Likes: value };
+  await updateDoc(postDocRef, addUserId);
 }

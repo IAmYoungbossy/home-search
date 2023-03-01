@@ -42,10 +42,12 @@ function SideBar() {
 interface ICardProps {
   budget: string;
   postId: string;
+  Likes: string[];
   location: string;
   postDesc: string;
   imageUrl: string;
   postTitle: string;
+  Upvotes: string[];
   userDocId: string;
   dealStatus: string;
   postAsAgent: boolean;
