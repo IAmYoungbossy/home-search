@@ -1,4 +1,4 @@
-import { DocumentData, QuerySnapshot } from "firebase/firestore";
+import { User } from "firebase/auth";
 
 export interface appActionPostType {
   IMAGE: string;
@@ -127,7 +127,10 @@ export const APP_INITIAL_STATE: appStateType = {
 };
 
 export interface contextProps {
+  loading: boolean;
   state: appStateType;
+  error: Error | undefined;
+  user: User | null | undefined;
   dispatch: React.Dispatch<actionType>;
 }
 

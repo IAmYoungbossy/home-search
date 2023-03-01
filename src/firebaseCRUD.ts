@@ -10,18 +10,18 @@ import {
   doc,
   query,
   where,
+  getDoc,
   addDoc,
   getDocs,
   Firestore,
   updateDoc,
   arrayUnion,
   collection,
+  FieldValue,
+  arrayRemove,
   DocumentData,
   QuerySnapshot,
   DocumentReference,
-  arrayRemove,
-  FieldValue,
-  getDoc,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 import {
@@ -237,36 +237,47 @@ interface IDocRef {
 }
 
 interface IUserId {
-  userId: string;
+  userId?: string;
 }
 
-interface IAddLikes extends IUserId {
-  postId: string;
+export interface ILikeOrUnlike extends IUserId {
+  user?: User;
+  postId?: string;
 }
 
 interface IUpdateLikeArray extends IDocRef {
   value: FieldValue;
 }
 
-interface IAddLike extends IDocRef, IUserId {}
+interface IAddLike extends IDocRef, IUserId {
+  currentUserId: string;
+}
 
 interface IRemoveLike extends IAddLike {}
 
-export async function likeOrUnlike({ userId, postId }: IAddLikes) {
-  const postDocRef = doc(db, "USERS", userId, "POSTS", postId);
+export async function likeOrUnlike({ user, userId, postId }: ILikeOrUnlike) {
+  const userID = userId as string;
+  const postID = postId as string;
+  const currentUserId = user?.uid as string;
+  const postDocRef = doc(db, "USERS", userID, "POSTS", postID);
   const postDocSnapshot = await getDoc(postDocRef);
 
-  if (postDocSnapshot.exists() && postDocSnapshot.data().Likes.includes(userId))
-    await addLike({ userId, postDocRef });
-  else await removeLike({ userId, postDocRef });
+  if (
+    postDocSnapshot.exists() &&
+    postDocSnapshot.data().Likes.includes(currentUserId)
+  ) {
+    await removeLike({ currentUserId, postDocRef });
+  } else {
+    await addLike({ currentUserId, postDocRef });
+  }
 }
 
-async function addLike({ userId, postDocRef }: IAddLike) {
-  await updateLikeArray({ value: arrayUnion(userId), postDocRef });
+async function addLike({ currentUserId, postDocRef }: IAddLike) {
+  await updateLikeArray({ value: arrayUnion(currentUserId), postDocRef });
 }
 
-async function removeLike({ userId, postDocRef }: IRemoveLike) {
-  await updateLikeArray({ value: arrayRemove(userId), postDocRef });
+async function removeLike({ currentUserId, postDocRef }: IRemoveLike) {
+  await updateLikeArray({ value: arrayRemove(currentUserId), postDocRef });
 }
 
 async function updateLikeArray({ value, postDocRef }: IUpdateLikeArray) {

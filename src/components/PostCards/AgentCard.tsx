@@ -1,3 +1,4 @@
+import { ILikeOrUnlike } from "../../firebaseCRUD";
 import PostCard from "./ClientCard";
 import { ImageContainer, StyledHouseDetails } from "./StyledAgentCard";
 
@@ -7,13 +8,15 @@ interface IHouseDetails {
   dealStatus: string;
   apartmentSize: string;
 }
-interface IAgentCard extends IHouseDetails {
+interface IAgentCard extends IHouseDetails, ILikeOrUnlike {
   bgImage: string;
   postDesc: string;
   postTitle: string;
 }
 
 export default function AgentCard({
+  userId,
+  postId,
   budget,
   bgImage,
   location,
@@ -23,7 +26,12 @@ export default function AgentCard({
   apartmentSize,
 }: IAgentCard) {
   return (
-    <PostCard postDesc={postDesc} budget={budget}>
+    <PostCard
+      postDesc={postDesc}
+      budget={budget}
+      userId={userId}
+      postId={postId}
+    >
       <>
         <h3>{postTitle}</h3>
         <ImageContainer bgImage={bgImage} />

@@ -1,8 +1,13 @@
+import { useContext } from "react";
 import * as SC from "./StyledClientCard";
 import { TfiComment } from "react-icons/tfi";
 import { FaUserCircle } from "react-icons/fa";
+import { AppContext } from "../../context/AppContext";
 import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
+import { ILikeOrUnlike, likeOrUnlike } from "../../firebaseCRUD";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
+import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import { User } from "firebase/auth";
 
 interface IPost {
   children?: JSX.Element;
@@ -12,27 +17,38 @@ interface IPostDetails extends IPost {
   postDesc?: string;
   budget?: number;
 }
-interface IClientCard extends IPost, IPostDetails {
+interface IClientCard extends IPost, IPostDetails, ILikeOrUnlike {
   secondary?: string;
   apartmentSize?: string;
 }
+interface IPostDetailsProps extends IPostDetails, ILikeOrUnlike {}
 
 export function ClientCard({
+  postId,
+  userId,
   budget,
   postDesc,
   secondary,
   apartmentSize,
 }: IClientCard) {
   return (
-    <PostCard secondary={secondary} postDesc={postDesc} budget={budget}>
+    <PostCard
+      budget={budget}
+      postId={postId}
+      userId={userId}
+      postDesc={postDesc}
+      secondary={secondary}
+    >
       <HouseSpec apartmentSize={apartmentSize} />
     </PostCard>
   );
 }
 
-interface IPostCard extends IPost, IPostDetails {}
+interface IPostCard extends IPost, IPostDetails, ILikeOrUnlike {}
 
 export default function PostCard({
+  postId,
+  userId,
   budget,
   children,
   postDesc,
@@ -41,7 +57,12 @@ export default function PostCard({
   return (
     <SC.StyledPostCard>
       <VoteArrow primary="#f8f9fa" secondary={secondary} />
-      <PostDetails postDesc={postDesc} budget={budget}>
+      <PostDetails
+        postDesc={postDesc}
+        budget={budget}
+        postId={postId}
+        userId={userId}
+      >
         <SC.StyledHouseSpec>{children}</SC.StyledHouseSpec>
       </PostDetails>
     </SC.StyledPostCard>
@@ -67,18 +88,23 @@ export function VoteArrow({ primary, secondary }: VoteArrowProps) {
   );
 }
 
-function PostDetails({ children, postDesc, budget }: IPostDetails) {
+function PostDetails({
+  budget,
+  userId,
+  postId,
+  children,
+  postDesc,
+}: IPostDetailsProps) {
   return (
     <SC.StyledPostDetails>
       <OriginalPoster>
         <p>
-          <b>$</b>{" "}
-          {budget} || <b>23</b> minutes ago
+          <b>$</b> {budget} || <b>23</b> minutes ago
         </p>
       </OriginalPoster>
       {children}
       <Description postDesc={postDesc} />
-      <InteractWithPostIcons />
+      <InteractWithPostIcons userId={userId} postId={postId} />
     </SC.StyledPostDetails>
   );
 }
@@ -107,13 +133,19 @@ export function Description({ postDesc }: { postDesc?: string }) {
   );
 }
 
-function InteractWithPostIcons() {
+function InteractWithPostIcons({ userId, postId }: ILikeOrUnlike) {
+  const { user } = useContext(AppContext) as contextProps;
   return (
     <SC.StyledInteractWithPostIcons>
       <div>
         <TfiComment /> 1 Comment
       </div>
-      <div>
+      <div
+        onClick={() => {
+          (async () =>
+            await likeOrUnlike({ user: user as User, userId, postId }))();
+        }}
+      >
         <HeartSaveSVG /> Save
       </div>
     </SC.StyledInteractWithPostIcons>

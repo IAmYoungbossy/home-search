@@ -65,8 +65,10 @@ const showPostCard = (post: IShowPostCard) => {
     return (
       <AgentCard
         key={postData.postId}
+        postId={postData.postId}
         budget={postData.budget}
         bgImage={postData.imageUrl}
+        userId={postData.userDocId}
         location={postData.location}
         postDesc={postData.postDesc}
         postTitle={postData.postTitle}
@@ -79,7 +81,9 @@ const showPostCard = (post: IShowPostCard) => {
       <ClientCard
         secondary=""
         key={postData.postId}
+        postId={postData.postId}
         budget={postData.budget}
+        userId={postData.userDocId}
         postDesc={postData.postDesc}
         apartmentSize={postData.apartmentSize}
       />
