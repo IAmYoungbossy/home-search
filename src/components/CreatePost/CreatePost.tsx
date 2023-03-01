@@ -255,7 +255,7 @@ function PostTextArea() {
 
 function UploadImage() {
   const { dispatch } = useContext(AppContext) as contextProps;
-  const fileTypes = ["image/png", "image/jpeg"];
+  const fileTypes = ["image/png", "image/jpeg", "image/webp", "image/jpeg"];
 
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     let file = e.target.files?.item(0);
@@ -270,11 +270,11 @@ function UploadImage() {
           <BsFillCameraFill /> <p>Click to upload image</p>
         </label>
         <input
-          onChange={uploadImage}
+          id="image"
           type="file"
           name="image"
-          id="image"
           accept="image/*"
+          onChange={uploadImage}
         />
       </div>
       <ProgressBar />

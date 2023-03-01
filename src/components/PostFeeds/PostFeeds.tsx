@@ -88,7 +88,11 @@ const showPostCard = (post: IShowPostCard) => {
 function PostCards() {
   const [postList, setPostList] = useState<IShowPostCard[]>([]);
   useEffect(() => {
-    (async () => setPostList(await getAllUserDocs()))();
+    (async () => {
+      const h = await getAllUserDocs();
+      setPostList(h);
+      console.log(postList);
+    })();
   }, []);
   return <>{postList.length > 0 && postList.map(showPostCard)}</>;
 }

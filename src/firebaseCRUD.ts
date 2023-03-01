@@ -1,19 +1,4 @@
 import {
-  doc,
-  query,
-  where,
-  addDoc,
-  getDocs,
-  updateDoc,
-  collection,
-  DocumentData,
-  QuerySnapshot,
-  DocumentReference,
-  Firestore,
-} from "firebase/firestore";
-import { User } from "firebase/auth";
-import { db, storage } from "./firebaseConfig";
-import {
   ref,
   UploadTask,
   StorageError,
@@ -22,9 +7,25 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import {
+  doc,
+  query,
+  where,
+  addDoc,
+  getDocs,
+  Firestore,
+  updateDoc,
+  arrayUnion,
+  collection,
+  DocumentData,
+  QuerySnapshot,
+  DocumentReference,
+} from "firebase/firestore";
+import { User } from "firebase/auth";
+import {
   actionType,
   APP_ACTION_TYPES,
 } from "./utilities/typesAndInitialStateObj";
+import { db, storage } from "./firebaseConfig";
 
 export const checkIfOldUser = async (
   user: User,
@@ -115,6 +116,8 @@ export const addPostToFirestore = async ({
         dealStatus,
         postAsAgent,
         apartmentSize,
+        Likes: arrayUnion(),
+        Upvotes: arrayUnion(),
       }
     );
     const postId = document.id;
@@ -130,6 +133,8 @@ export const addPostToFirestore = async ({
         userDocId,
         postAsAgent,
         apartmentSize,
+        Likes: arrayUnion(),
+        Upvotes: arrayUnion(),
       }
     );
     const postId = document.id;
