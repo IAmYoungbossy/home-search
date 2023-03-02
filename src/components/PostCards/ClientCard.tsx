@@ -99,6 +99,7 @@ export function VoteArrow({
   secondary,
 }: VoteArrowProps) {
   const { user } = useContext(AppContext) as contextProps;
+  const [downvotes, setDownvotes] = useState<string[]>([]);
   const [upvotes, setUpvotes] = useState<string[]>([]);
 
   useEffect(() => {
@@ -106,36 +107,46 @@ export function VoteArrow({
     const posterDocId = userId as string;
     const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
 
-    const unsub = onSnapshot(docRef, (snapshot) => {
+    const unsubUpvotes = onSnapshot(docRef, (snapshot) => {
       setUpvotes(snapshot.data()?.Upvotes);
     });
+    const unsubDownvotes = onSnapshot(docRef, (snapshot) => {
+      setDownvotes(snapshot.data()?.Downvotes);
+    });
 
-    return () => unsub();
+    return () => {
+      unsubUpvotes();
+      unsubDownvotes();
+    };
   }, [db]);
 
   return (
     <SC.StyledVoteArrow primary={primary} secondary={secondary}>
-      <ArrowUpSVG
-        onClick={() => {
-          (async () =>
-            await upvote({
-              user: user as User,
-              userId,
-              postId,
-            }))();
-        }}
-      />
-      <p>{upvotes.length < 1 ? "Vote" : upvotes.length}</p>
-      <ArrowDownSVG
-        onClick={() => {
-          (async () =>
-            await downvote({
-              user: user as User,
-              userId,
-              postId,
-            }))();
-        }}
-      />
+      <div>
+        <ArrowUpSVG
+          onClick={() => {
+            (async () =>
+              await upvote({
+                user: user as User,
+                userId,
+                postId,
+              }))();
+          }}
+        />
+      </div>
+      <p>{upvotes.length - downvotes.length}</p>
+      <div>
+        <ArrowDownSVG
+          onClick={() => {
+            (async () =>
+              await downvote({
+                user: user as User,
+                userId,
+                postId,
+              }))();
+          }}
+        />
+      </div>
     </SC.StyledVoteArrow>
   );
 }

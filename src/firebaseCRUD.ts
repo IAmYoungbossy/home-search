@@ -121,6 +121,7 @@ export const addPostToFirestore = async ({
         apartmentSize,
         Likes: arrayUnion(),
         Upvotes: arrayUnion(),
+        Downvotes: arrayUnion(),
       }
     );
     const postId = document.id;
@@ -138,6 +139,7 @@ export const addPostToFirestore = async ({
         apartmentSize,
         Likes: arrayUnion(),
         Upvotes: arrayUnion(),
+        Downvotes: arrayUnion(),
       }
     );
     const postId = document.id;
@@ -257,6 +259,7 @@ interface IAddPostReaction extends IDocRef, IUserId {
   updatedObj: {
     Likes?: FieldValue;
     Upvotes?: FieldValue;
+    Downvotes?: FieldValue;
   };
 }
 
@@ -294,27 +297,47 @@ export async function likeOrUnlike({ user, userId, postId }: IlikeOrUnlike) {
 }
 
 export async function upvote({ user, userId, postId }: IUpvoteOrDownvote) {
-  const { postDocRef, currentUserId } = await getPostDetails({
+  const { postDocRef, currentUserId, postDocSnapshot } = await getPostDetails({
     user,
     userId,
     postId,
   });
-  await postReaction({
-    updatedObj: { Upvotes: arrayUnion(currentUserId) },
-    postDocRef,
-  });
+  if (
+    postDocSnapshot.exists() &&
+    postDocSnapshot.data().Upvotes.includes(currentUserId)
+  ) {
+    await postReaction({
+      updatedObj: { Upvotes: arrayRemove(currentUserId) },
+      postDocRef,
+    });
+  } else {
+    await postReaction({
+      updatedObj: { Upvotes: arrayUnion(currentUserId) },
+      postDocRef,
+    });
+  }
 }
 
 export async function downvote({ user, userId, postId }: IUpvoteOrDownvote) {
-  const { postDocRef, currentUserId } = await getPostDetails({
+  const { postDocRef, currentUserId, postDocSnapshot } = await getPostDetails({
     user,
     userId,
     postId,
   });
-  await postReaction({
-    updatedObj: { Upvotes: arrayRemove(currentUserId) },
-    postDocRef,
-  });
+  if (
+    postDocSnapshot.exists() &&
+    postDocSnapshot.data().Downvotes.includes(currentUserId)
+  ) {
+    await postReaction({
+      updatedObj: { Downvotes: arrayRemove(currentUserId) },
+      postDocRef,
+    });
+  } else {
+    await postReaction({
+      updatedObj: { Downvotes: arrayUnion(currentUserId) },
+      postDocRef,
+    });
+  }
 }
 
 async function postReaction({ updatedObj, postDocRef }: IAddPostReaction) {
