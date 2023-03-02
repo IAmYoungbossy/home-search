@@ -7,7 +7,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
-import { IaddOrRemoveReaction, addOrRemoveReaction } from "../../firebaseCRUD";
+import { IlikeOrUnlike, likeOrUnlike } from "../../firebaseCRUD";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
@@ -19,11 +19,11 @@ interface IPostDetails extends IPost {
   postDesc?: string;
   budget?: number;
 }
-interface IClientCard extends IPost, IPostDetails, IaddOrRemoveReaction {
+interface IClientCard extends IPost, IPostDetails, IlikeOrUnlike {
   secondary?: string;
   apartmentSize?: string;
 }
-interface IPostDetailsProps extends IPostDetails, IaddOrRemoveReaction {}
+interface IPostDetailsProps extends IPostDetails, IlikeOrUnlike {}
 
 export function ClientCard({
   postId,
@@ -46,7 +46,7 @@ export function ClientCard({
   );
 }
 
-interface IPostCard extends IPost, IPostDetails, IaddOrRemoveReaction {}
+interface IPostCard extends IPost, IPostDetails, IlikeOrUnlike {}
 
 export default function PostCard({
   postId,
@@ -135,7 +135,7 @@ export function Description({ postDesc }: { postDesc?: string }) {
   );
 }
 
-function InteractWithPostIcons({ userId, postId }: IaddOrRemoveReaction) {
+function InteractWithPostIcons({ userId, postId }: IlikeOrUnlike) {
   const { user } = useContext(AppContext) as contextProps;
   const [likes, setLikes] = useState<string[]>([]);
 
@@ -159,7 +159,7 @@ function InteractWithPostIcons({ userId, postId }: IaddOrRemoveReaction) {
       <div
         onClick={() => {
           (async () =>
-            await addOrRemoveReaction({
+            await likeOrUnlike({
               user: user as User,
               userId,
               postId,

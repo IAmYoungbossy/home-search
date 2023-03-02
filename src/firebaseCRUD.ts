@@ -240,66 +240,89 @@ interface IUserId {
   userId?: string;
 }
 
-export interface IaddOrRemoveReaction extends IUserId {
+export interface IlikeOrUnlike extends IUserId {
   user?: User;
   postId?: string;
 }
+export interface IUpvoteOrDownvote extends IlikeOrUnlike {
+  addOrRemove: (currentUserId: string) => FieldValue;
+}
 
 interface IUpdatePostReactionArray extends IDocRef {
-  value: FieldValue;
+  updatedObj: {
+    Likes?: FieldValue;
+    Upvotes?: FieldValue;
+  };
 }
 
 interface IAddPostReaction extends IDocRef, IUserId {
-  currentUserId: string;
+  updatedObj: {
+    Likes?: FieldValue;
+    Upvotes?: FieldValue;
+  };
 }
 
-interface IRemovePostReaction extends IAddPostReaction {}
-
-export async function addOrRemoveReaction({
-  user,
-  userId,
-  postId,
-}: IaddOrRemoveReaction) {
+async function getPostDetails({ user, userId, postId }: IlikeOrUnlike) {
   const userID = userId as string;
   const postID = postId as string;
   const currentUserId = user?.uid as string;
   const postDocRef = doc(db, "USERS", userID, "POSTS", postID);
   const postDocSnapshot = await getDoc(postDocRef);
 
+  return { postDocRef, currentUserId, postDocSnapshot };
+}
+
+export async function likeOrUnlike({ user, userId, postId }: IlikeOrUnlike) {
+  const { postDocRef, currentUserId, postDocSnapshot } = await getPostDetails({
+    user,
+    userId,
+    postId,
+  });
+
   if (
     postDocSnapshot.exists() &&
     postDocSnapshot.data().Likes.includes(currentUserId)
   ) {
-    await removePostReaction({ currentUserId, postDocRef });
+    await postReaction({
+      updatedObj: { Likes: arrayRemove(currentUserId) },
+      postDocRef,
+    });
   } else {
-    await addPostReaction({ currentUserId, postDocRef });
+    await postReaction({
+      updatedObj: { Likes: arrayUnion(currentUserId) },
+      postDocRef,
+    });
   }
 }
 
-async function addPostReaction({
-  currentUserId,
-  postDocRef,
-}: IAddPostReaction) {
-  await updatePostReactionArray({
-    value: arrayUnion(currentUserId),
+export async function upvoteOrDownvote({
+  user,
+  userId,
+  postId,
+  addOrRemove,
+}: IUpvoteOrDownvote) {
+  const { postDocRef, currentUserId } = await getPostDetails({
+    user,
+    userId,
+    postId,
+  });
+  await postReaction({
+    updatedObj: { Upvotes: addOrRemove(currentUserId) },
     postDocRef,
   });
 }
 
-async function removePostReaction({
-  currentUserId,
-  postDocRef,
-}: IRemovePostReaction) {
+async function postReaction({ updatedObj, postDocRef }: IAddPostReaction) {
   await updatePostReactionArray({
-    value: arrayRemove(currentUserId),
+    updatedObj,
     postDocRef,
   });
 }
 
 async function updatePostReactionArray({
-  value,
+  updatedObj,
   postDocRef,
 }: IUpdatePostReactionArray) {
-  const addUserId = { Likes: value };
+  const addUserId = updatedObj;
   await updateDoc(postDocRef, addUserId);
 }
