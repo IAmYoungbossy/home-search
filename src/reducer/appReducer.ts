@@ -3,6 +3,7 @@ import {
   appStateType,
   APP_ACTION_TYPES,
   APP_INITIAL_STATE,
+  IShowPostCard,
   userType,
 } from "../utilities/typesAndInitialStateObj";
 
@@ -155,6 +156,13 @@ export const appReducer = (
       return {
         ...JSON.parse(JSON.stringify(state)),
         uploadProgress: action.payload as number,
+      };
+
+    // Post feed updating
+    case APP_ACTION_TYPES.postFeed:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        postFeed: action.payload as IShowPostCard[],
       };
 
     default:

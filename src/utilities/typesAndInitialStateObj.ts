@@ -1,4 +1,25 @@
 import { User } from "firebase/auth";
+import { DocumentData } from "firebase/firestore";
+
+export interface ICardProps {
+  budget: string;
+  postId: string;
+  Likes: string[];
+  location: string;
+  postDesc: string;
+  imageUrl: string;
+  postTitle: string;
+  Upvotes: string[];
+  userDocId: string;
+  dealStatus: string;
+  postAsAgent: boolean;
+  apartmentSize: string;
+}
+
+export interface IShowPostCard {
+  data: DocumentData | ICardProps;
+  id: string;
+}
 
 export interface appActionPostType {
   IMAGE: string;
@@ -38,15 +59,17 @@ export type appStateType = {
   uploadProgress: number;
   showSignInPage: boolean;
   tagButton: tagButtonType;
+  postFeed: IShowPostCard[] | [];
   buttonTagsToggle: IButtonTagsToggle;
 };
 
 export type actionType = {
   type: string;
-  payload: boolean | string | number | userType;
+  payload: boolean | string | number | userType | IShowPostCard[];
 };
 
 export type IAppActionTypes = {
+  postFeed: string;
   userDocId: string;
   uploadImage: string;
   uploadProgress: string;
@@ -75,6 +98,7 @@ export type IAppActionTypes = {
 
 export const APP_ACTION_TYPES: IAppActionTypes = {
   userDocId: "USER",
+  postFeed: "POSTFEED",
   uploadImage: "UPLOAD IMAGE",
   uploadProgress: "UPLOAD PROGRESS",
   POST: {
@@ -101,6 +125,7 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
 };
 
 export const APP_INITIAL_STATE: appStateType = {
+  postFeed: [],
   userDocId: null,
   post: {
     image: false,

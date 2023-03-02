@@ -1,13 +1,15 @@
-import { useContext } from "react";
+import { User } from "firebase/auth";
 import * as SC from "./StyledClientCard";
+import { db } from "../../firebaseConfig";
 import { TfiComment } from "react-icons/tfi";
 import { FaUserCircle } from "react-icons/fa";
+import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
+import { useContext, useEffect, useState } from "react";
 import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
 import { ILikeOrUnlike, likeOrUnlike } from "../../firebaseCRUD";
-import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
-import { User } from "firebase/auth";
+import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
 interface IPost {
   children?: JSX.Element;
@@ -134,7 +136,23 @@ export function Description({ postDesc }: { postDesc?: string }) {
 }
 
 function InteractWithPostIcons({ userId, postId }: ILikeOrUnlike) {
+  const [likes, setLikes] = useState<string[] | []>([]);
   const { user } = useContext(AppContext) as contextProps;
+
+  useEffect(() => {
+    const postDocId = postId as string;
+    const posterDocId = userId as string;
+    const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
+
+    const unsub = onSnapshot(docRef, (docSnapshot) => {
+      setLikes(docSnapshot.data()?.Likes);
+    });
+
+    return () => {
+      unsub();
+    };
+  }, [db]);
+
   return (
     <SC.StyledInteractWithPostIcons>
       <div>
@@ -146,7 +164,7 @@ function InteractWithPostIcons({ userId, postId }: ILikeOrUnlike) {
             await likeOrUnlike({ user: user as User, userId, postId }))();
         }}
       >
-        <HeartSaveSVG /> Save
+        <HeartSaveSVG /> {likes.length} Save
       </div>
     </SC.StyledInteractWithPostIcons>
   );

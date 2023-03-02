@@ -1,14 +1,20 @@
 import * as SC from "./StyledPostFeeds";
-import { useEffect, useState } from "react";
+import { db } from "../../firebaseConfig";
+import { useEffect, useContext } from "react";
 import AgentCard from "../PostCards/AgentCard";
 import FilterBar from "../SocialPage/FilterBar";
 import CreatePost from "../SocialPage/CreatePost";
-import { DocumentData } from "firebase/firestore";
 import { ShieldSVG } from "../assets/Svg/SocialSVG";
-import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
+import { AppContext } from "../../context/AppContext";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
+import { getAllUserDocs, getPostFromUserDoc } from "../../firebaseCRUD";
+import { collection, DocumentData, onSnapshot } from "firebase/firestore";
+import {
+  APP_ACTION_TYPES,
+  contextProps,
+} from "../../utilities/typesAndInitialStateObj";
 
 export default function PostFeeds() {
   return (
@@ -92,15 +98,20 @@ const showPostCard = (post: IShowPostCard) => {
 };
 
 function PostCards() {
-  const [postList, setPostList] = useState<IShowPostCard[]>([]);
+  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const postFeeds = state.postFeed;
+
   useEffect(() => {
     (async () => {
-      const h = await getAllUserDocs();
-      setPostList(h);
-      console.log(postList);
+      const listOfPosts = await getAllUserDocs();
+      dispatch({
+        payload: listOfPosts,
+        type: APP_ACTION_TYPES.postFeed,
+      });
     })();
   }, []);
-  return <>{postList.length > 0 && postList.map(showPostCard)}</>;
+
+  return <>{postFeeds.length > 0 && postFeeds.map(showPostCard)}</>;
 }
 
 function RedditPremium() {

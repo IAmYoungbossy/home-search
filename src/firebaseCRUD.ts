@@ -223,7 +223,7 @@ export const getAllUserDocs = async () => {
   return postList.flat();
 };
 
-async function getPostFromUserDoc(docId: string) {
+export async function getPostFromUserDoc(docId: string) {
   const posts = collection(db, "USERS", docId, "POSTS");
   const userDocs = await getDocs(posts);
   return userDocs.docs.map((doc) => ({
