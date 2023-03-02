@@ -1,4 +1,4 @@
-import { ILikeOrUnlike } from "../../firebaseCRUD";
+import { IaddOrRemoveReaction } from "../../firebaseCRUD";
 import PostCard from "./ClientCard";
 import { ImageContainer, StyledHouseDetails } from "./StyledAgentCard";
 
@@ -8,7 +8,7 @@ interface IHouseDetails {
   dealStatus: string;
   apartmentSize: string;
 }
-interface IAgentCard extends IHouseDetails, ILikeOrUnlike {
+interface IAgentCard extends IHouseDetails, IaddOrRemoveReaction {
   bgImage: string;
   postDesc: string;
   postTitle: string;

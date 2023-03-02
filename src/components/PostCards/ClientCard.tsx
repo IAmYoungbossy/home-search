@@ -7,7 +7,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
-import { ILikeOrUnlike, likeOrUnlike } from "../../firebaseCRUD";
+import { IaddOrRemoveReaction, addOrRemoveReaction } from "../../firebaseCRUD";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
@@ -19,11 +19,11 @@ interface IPostDetails extends IPost {
   postDesc?: string;
   budget?: number;
 }
-interface IClientCard extends IPost, IPostDetails, ILikeOrUnlike {
+interface IClientCard extends IPost, IPostDetails, IaddOrRemoveReaction {
   secondary?: string;
   apartmentSize?: string;
 }
-interface IPostDetailsProps extends IPostDetails, ILikeOrUnlike {}
+interface IPostDetailsProps extends IPostDetails, IaddOrRemoveReaction {}
 
 export function ClientCard({
   postId,
@@ -46,7 +46,7 @@ export function ClientCard({
   );
 }
 
-interface IPostCard extends IPost, IPostDetails, ILikeOrUnlike {}
+interface IPostCard extends IPost, IPostDetails, IaddOrRemoveReaction {}
 
 export default function PostCard({
   postId,
@@ -135,22 +135,20 @@ export function Description({ postDesc }: { postDesc?: string }) {
   );
 }
 
-function InteractWithPostIcons({ userId, postId }: ILikeOrUnlike) {
-  const [likes, setLikes] = useState<string[] | []>([]);
+function InteractWithPostIcons({ userId, postId }: IaddOrRemoveReaction) {
   const { user } = useContext(AppContext) as contextProps;
+  const [likes, setLikes] = useState<string[]>([]);
 
   useEffect(() => {
     const postDocId = postId as string;
     const posterDocId = userId as string;
     const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
 
-    const unsub = onSnapshot(docRef, (docSnapshot) => {
-      setLikes(docSnapshot.data()?.Likes);
+    const unsub = onSnapshot(docRef, (snapshot) => {
+      setLikes(snapshot.data()?.Likes);
     });
 
-    return () => {
-      unsub();
-    };
+    return () => unsub();
   }, [db]);
 
   return (
@@ -161,7 +159,11 @@ function InteractWithPostIcons({ userId, postId }: ILikeOrUnlike) {
       <div
         onClick={() => {
           (async () =>
-            await likeOrUnlike({ user: user as User, userId, postId }))();
+            await addOrRemoveReaction({
+              user: user as User,
+              userId,
+              postId,
+            }))();
         }}
       >
         <HeartSaveSVG /> {likes.length} Save

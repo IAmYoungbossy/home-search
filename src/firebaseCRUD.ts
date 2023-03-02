@@ -240,22 +240,26 @@ interface IUserId {
   userId?: string;
 }
 
-export interface ILikeOrUnlike extends IUserId {
+export interface IaddOrRemoveReaction extends IUserId {
   user?: User;
   postId?: string;
 }
 
-interface IUpdateLikeArray extends IDocRef {
+interface IUpdatePostReactionArray extends IDocRef {
   value: FieldValue;
 }
 
-interface IAddLike extends IDocRef, IUserId {
+interface IAddPostReaction extends IDocRef, IUserId {
   currentUserId: string;
 }
 
-interface IRemoveLike extends IAddLike {}
+interface IRemovePostReaction extends IAddPostReaction {}
 
-export async function likeOrUnlike({ user, userId, postId }: ILikeOrUnlike) {
+export async function addOrRemoveReaction({
+  user,
+  userId,
+  postId,
+}: IaddOrRemoveReaction) {
   const userID = userId as string;
   const postID = postId as string;
   const currentUserId = user?.uid as string;
@@ -266,21 +270,36 @@ export async function likeOrUnlike({ user, userId, postId }: ILikeOrUnlike) {
     postDocSnapshot.exists() &&
     postDocSnapshot.data().Likes.includes(currentUserId)
   ) {
-    await removeLike({ currentUserId, postDocRef });
+    await removePostReaction({ currentUserId, postDocRef });
   } else {
-    await addLike({ currentUserId, postDocRef });
+    await addPostReaction({ currentUserId, postDocRef });
   }
 }
 
-async function addLike({ currentUserId, postDocRef }: IAddLike) {
-  await updateLikeArray({ value: arrayUnion(currentUserId), postDocRef });
+async function addPostReaction({
+  currentUserId,
+  postDocRef,
+}: IAddPostReaction) {
+  await updatePostReactionArray({
+    value: arrayUnion(currentUserId),
+    postDocRef,
+  });
 }
 
-async function removeLike({ currentUserId, postDocRef }: IRemoveLike) {
-  await updateLikeArray({ value: arrayRemove(currentUserId), postDocRef });
+async function removePostReaction({
+  currentUserId,
+  postDocRef,
+}: IRemovePostReaction) {
+  await updatePostReactionArray({
+    value: arrayRemove(currentUserId),
+    postDocRef,
+  });
 }
 
-async function updateLikeArray({ value, postDocRef }: IUpdateLikeArray) {
+async function updatePostReactionArray({
+  value,
+  postDocRef,
+}: IUpdatePostReactionArray) {
   const addUserId = { Likes: value };
   await updateDoc(postDocRef, addUserId);
 }
