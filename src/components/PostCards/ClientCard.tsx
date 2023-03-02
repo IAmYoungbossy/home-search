@@ -1,12 +1,12 @@
 import { User } from "firebase/auth";
+import { SlLike } from "react-icons/sl";
 import * as SC from "./StyledClientCard";
 import { db } from "../../firebaseConfig";
-import { TfiComment } from "react-icons/tfi";
+import { BiComment } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
 import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
-import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
 import {
   downvote,
@@ -212,10 +212,15 @@ function InteractWithPostIcons({ userId, postId }: IlikeOrUnlike) {
     return () => unsub();
   }, [db]);
 
+  const toggleLikeColor = () => {
+    if (likes.includes(user?.uid as string)) return true;
+    return false;
+  };
+
   return (
-    <SC.StyledInteractWithPostIcons>
+    <SC.StyledInteractWithPostIcons liked={toggleLikeColor()}>
       <div>
-        <TfiComment /> 1 Comment
+        <BiComment /> 1 Comment
       </div>
       <div
         onClick={() => {
@@ -227,7 +232,7 @@ function InteractWithPostIcons({ userId, postId }: IlikeOrUnlike) {
             }))();
         }}
       >
-        <HeartSaveSVG /> {likes.length} Save
+        <SlLike /> {likes.length} Like
       </div>
     </SC.StyledInteractWithPostIcons>
   );

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledInteractWithPostIcons = styled.div`
+export const StyledInteractWithPostIcons = styled.div<{ liked: boolean }>`
   gap: 10px;
   display: flex;
   align-items: center;
@@ -10,9 +10,15 @@ export const StyledInteractWithPostIcons = styled.div`
   border-top: 1px solid var(--interact-with-post-border-color);
 
   svg {
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.6;
     cursor: pointer;
+  }
+
+  & > div:last-of-type > svg {
+    stroke-width: 20;
+    color: ${({ liked }) => (liked ? "red" : "black")};
   }
 
   & > div {
@@ -21,13 +27,13 @@ export const StyledInteractWithPostIcons = styled.div`
     align-items: center;
   }
 
-  & > div > svg:last-of-type > g > path:first-of-type {
-    fill: transparent;
-  }
+  // & > div > svg:last-of-type > g > path:first-of-type {
+  //   fill: transparent;
+  // }
 
-  & > div > svg:last-of-type > g > path:first-of-type:hover {
-    fill: #ff000021;
-  }
+  // & > div > svg:last-of-type > g > path:first-of-type:hover {
+  //   fill: #ff000021;
+  // }
 `;
 
 export const StyledDescription = styled.div`
@@ -121,9 +127,19 @@ export const StyledVoteArrow = styled.div<{
     display: block;
     width: 20px;
     height: 20px;
+    opacity: 0.6;
+    cursor: pointer;
   }
 
-  p {
-    font-size: 10px;
-  }
+  // & > div:first-of-type {
+
+  // }
+
+  // & > div:last-of-type {
+
+  // }
+
+  // p {
+  //   font-size: 10px;
+  // }
 `;
