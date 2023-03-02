@@ -244,9 +244,7 @@ export interface IlikeOrUnlike extends IUserId {
   user?: User;
   postId?: string;
 }
-export interface IUpvoteOrDownvote extends IlikeOrUnlike {
-  addOrRemove: (currentUserId: string) => FieldValue;
-}
+export interface IUpvoteOrDownvote extends IlikeOrUnlike {}
 
 interface IUpdatePostReactionArray extends IDocRef {
   updatedObj: {
@@ -295,19 +293,26 @@ export async function likeOrUnlike({ user, userId, postId }: IlikeOrUnlike) {
   }
 }
 
-export async function upvoteOrDownvote({
-  user,
-  userId,
-  postId,
-  addOrRemove,
-}: IUpvoteOrDownvote) {
+export async function upvote({ user, userId, postId }: IUpvoteOrDownvote) {
   const { postDocRef, currentUserId } = await getPostDetails({
     user,
     userId,
     postId,
   });
   await postReaction({
-    updatedObj: { Upvotes: addOrRemove(currentUserId) },
+    updatedObj: { Upvotes: arrayUnion(currentUserId) },
+    postDocRef,
+  });
+}
+
+export async function downvote({ user, userId, postId }: IUpvoteOrDownvote) {
+  const { postDocRef, currentUserId } = await getPostDetails({
+    user,
+    userId,
+    postId,
+  });
+  await postReaction({
+    updatedObj: { Upvotes: arrayRemove(currentUserId) },
     postDocRef,
   });
 }

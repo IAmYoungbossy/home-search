@@ -1,6 +1,14 @@
-export function ArrowUpSVG() {
+export function ArrowUpSVG({
+  onClick,
+}: {
+  onClick: React.MouseEventHandler<SVGSVGElement>;
+}) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+    <svg
+      onClick={onClick}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 256 256"
+    >
       <path fill="none" d="M0 0H256V256H0z"></path>
       <path
         fill="none"
@@ -14,9 +22,17 @@ export function ArrowUpSVG() {
   );
 }
 
-export function ArrowDownSVG() {
+export function ArrowDownSVG({
+  onClick,
+}: {
+  onClick: React.MouseEventHandler<SVGSVGElement>;
+}) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+    <svg
+      onClick={onClick}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 256 256"
+    >
       <path fill="none" d="M0 0H256V256H0z"></path>
       <path
         fill="none"

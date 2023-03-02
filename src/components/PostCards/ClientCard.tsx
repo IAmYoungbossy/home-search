@@ -7,8 +7,13 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { HeartSaveSVG } from "../assets/header/SvgMarkUp";
-import { IlikeOrUnlike, likeOrUnlike } from "../../firebaseCRUD";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import {
+  downvote,
+  IlikeOrUnlike,
+  likeOrUnlike,
+  upvote,
+} from "../../firebaseCRUD";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
 interface IPost {
@@ -58,7 +63,12 @@ export default function PostCard({
 }: IPostCard) {
   return (
     <SC.StyledPostCard>
-      <VoteArrow primary="#f8f9fa" secondary={secondary} />
+      <VoteArrow
+        primary="#f8f9fa"
+        secondary={secondary}
+        postId={postId}
+        userId={userId}
+      />
       <PostDetails
         postDesc={postDesc}
         budget={budget}
@@ -76,16 +86,56 @@ export function HouseSpec({ apartmentSize }: { apartmentSize?: string }) {
 }
 
 interface VoteArrowProps {
+  userId?: string;
+  postId?: string;
   primary?: string;
   secondary?: string;
 }
 
-export function VoteArrow({ primary, secondary }: VoteArrowProps) {
+export function VoteArrow({
+  userId,
+  postId,
+  primary,
+  secondary,
+}: VoteArrowProps) {
+  const { user } = useContext(AppContext) as contextProps;
+  const [upvotes, setUpvotes] = useState<string[]>([]);
+
+  useEffect(() => {
+    const postDocId = postId as string;
+    const posterDocId = userId as string;
+    const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
+
+    const unsub = onSnapshot(docRef, (snapshot) => {
+      setUpvotes(snapshot.data()?.Upvotes);
+    });
+
+    return () => unsub();
+  }, [db]);
+
   return (
     <SC.StyledVoteArrow primary={primary} secondary={secondary}>
-      <ArrowUpSVG />
-      <p>Vote</p>
-      <ArrowDownSVG />
+      <ArrowUpSVG
+        onClick={() => {
+          (async () =>
+            await upvote({
+              user: user as User,
+              userId,
+              postId,
+            }))();
+        }}
+      />
+      <p>{upvotes.length < 1 ? "Vote" : upvotes.length}</p>
+      <ArrowDownSVG
+        onClick={() => {
+          (async () =>
+            await downvote({
+              user: user as User,
+              userId,
+              postId,
+            }))();
+        }}
+      />
     </SC.StyledVoteArrow>
   );
 }
