@@ -15,6 +15,7 @@ import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
+import { Link } from "react-router-dom";
 
 interface IPost {
   children?: JSX.Element;
@@ -85,7 +86,7 @@ export function HouseSpec({ apartmentSize }: { apartmentSize?: string }) {
   return <h3>Looking for {apartmentSize}.</h3>;
 }
 
-interface VoteArrowProps {
+export interface VoteArrowProps {
   userId?: string;
   postId?: string;
   primary?: string;
@@ -230,7 +231,9 @@ function InteractWithPostIcons({ userId, postId }: IlikeOrUnlike) {
   return (
     <SC.StyledInteractWithPostIcons liked={toggleLikeColor()}>
       <div>
-        <BiComment /> 1 Comment
+        <Link to={`comment/${postId as string}`}>
+          <BiComment /> 1 Comment
+        </Link>
       </div>
       <div
         onClick={() => {

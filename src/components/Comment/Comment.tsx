@@ -9,20 +9,73 @@ import {
   StyledcommentCard,
 } from "./StyledComment";
 import { TfiComment } from "react-icons/tfi";
+import AgentCard from "../PostCards/AgentCard";
 import { AiFillCaretDown } from "react-icons/ai";
+import { getAllUserDocs } from "../../firebaseCRUD";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
-import { ClientCard, OriginalPoster, VoteArrow } from "../PostCards/ClientCard";
+import { useLoaderData, useParams } from "react-router-dom";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
+import { IShowPostCard } from "../../utilities/typesAndInitialStateObj";
+import {
+  ClientCard,
+  OriginalPoster,
+  VoteArrow,
+  VoteArrowProps,
+} from "../PostCards/ClientCard";
 
 export default function Comment() {
+  const { id } = useParams();
+  const posts = useLoaderData() as IShowPostCard[];
+  const postObj = posts.filter((post) => post.data.postId === id)[0];
+
   return (
     <StyledComment>
       <div>
-        {/* <ClientCard secondary="none" /> */}
+        {!postObj.data.postAsAgent && (
+          <ClientCard
+            secondary="white"
+            key={postObj.data.postId}
+            postId={postObj.data.postId}
+            budget={postObj.data.budget}
+            userId={postObj.data.userDocId}
+            postDesc={postObj.data.postDesc}
+            apartmentSize={postObj.data.apartmentSize}
+          />
+        )}
+        {postObj.data.postAsAgent && (
+          <AgentCard
+            secondary="white"
+            key={postObj.data.postId}
+            postId={postObj.data.postId}
+            budget={postObj.data.budget}
+            bgImage={postObj.data.imageUrl}
+            userId={postObj.data.userDocId}
+            location={postObj.data.location}
+            postDesc={postObj.data.postDesc}
+            postTitle={postObj.data.postTitle}
+            dealStatus={postObj.data.dealStatus}
+            apartmentSize={postObj.data.apartmentSize}
+          />
+        )}
         <TextArea />
-        {/* <CommentCard />
-        <CommentCard />
-        <CommentCard /> */}
+        <CommentCard
+          primary=""
+          secondary="white"
+          postId={postObj.data.postId}
+          userId={postObj.data.userDocId}
+        />
+        <CommentCard
+          primary=""
+          secondary="white"
+          postId={postObj.data.postId}
+          userId={postObj.data.userDocId}
+        />
+        <CommentCard
+          primary=""
+          secondary="white"
+          postId={postObj.data.postId}
+          userId={postObj.data.userDocId}
+        />
       </div>
       <div>
         <div>
@@ -34,16 +87,26 @@ export default function Comment() {
   );
 }
 
-function CommentCard() {
+export async function commentLoader() {
+  const listOfPosts = await getAllUserDocs();
+  return listOfPosts;
+}
+
+function CommentCard({ userId, postId, primary, secondary }: VoteArrowProps) {
   return (
     <StyledcommentCard>
       <OriginalPoster />
-      <CommentBox />
+      <CommentBox
+        userId={userId}
+        postId={postId}
+        primary={primary}
+        secondary={secondary}
+      />
     </StyledcommentCard>
   );
 }
 
-function CommentBox() {
+function CommentBox({ userId, postId, primary, secondary }: VoteArrowProps) {
   return (
     <StyledCommentBox>
       <p>
@@ -52,13 +115,17 @@ function CommentBox() {
         the float c is assigned to 0. You can tell the compiler to treat 5 or 7
         as a float and then 5/7 will also be treated as a float:
       </p>
-      <ReactionButtons />
+      <ReactionButtons
+        userId={userId}
+        postId={postId}
+        primary={primary}
+        secondary={secondary}
+      />
     </StyledCommentBox>
   );
 }
 
 const reactionBtnArray: (JSX.Element | string)[] = [
-  <VoteArrow />,
   <>
     <TfiComment /> Reply
   </>,
@@ -69,14 +136,29 @@ const reactionBtnArray: (JSX.Element | string)[] = [
   "Follow",
 ];
 
-function ReactionButtons() {
+function ReactionButtons({
+  userId,
+  postId,
+  primary,
+  secondary,
+}: VoteArrowProps) {
   const buttons = reactionBtnArray.map((item, index) => (
-    <li key={index}>{item}</li>
+    <li key={index + 2}>{item}</li>
   ));
 
   return (
     <StyledReactionButtons>
-      <ul>{buttons}</ul>
+      <ul>
+        <li>
+          <VoteArrow
+            userId={userId}
+            postId={postId}
+            primary={primary}
+            secondary={secondary}
+          />
+        </li>
+        {buttons}
+      </ul>
     </StyledReactionButtons>
   );
 }

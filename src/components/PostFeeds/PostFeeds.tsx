@@ -1,19 +1,14 @@
 import * as SC from "./StyledPostFeeds";
-import { useEffect, useContext } from "react";
 import AgentCard from "../PostCards/AgentCard";
 import FilterBar from "../SocialPage/FilterBar";
-import {
-  contextProps,
-  APP_ACTION_TYPES,
-} from "../../utilities/typesAndInitialStateObj";
+import { useLoaderData } from "react-router-dom";
 import CreatePost from "../SocialPage/CreatePost";
-import { DocumentData } from "firebase/firestore";
 import { ShieldSVG } from "../assets/Svg/SocialSVG";
 import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
-import { AppContext } from "../../context/AppContext";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
+import { IShowPostCard } from "../../utilities/typesAndInitialStateObj";
 
 export default function PostFeeds() {
   return (
@@ -44,33 +39,13 @@ function SideBar() {
   );
 }
 
-interface ICardProps {
-  budget: string;
-  postId: string;
-  Likes: string[];
-  location: string;
-  postDesc: string;
-  imageUrl: string;
-  postTitle: string;
-  Upvotes: string[];
-  userDocId: string;
-  dealStatus: string;
-  postAsAgent: boolean;
-  apartmentSize: string;
-}
-
-interface IShowPostCard {
-  data: DocumentData | ICardProps;
-  id: string;
-}
-
-const showPostCard = (post: IShowPostCard) => {
+function showPostCard(post: IShowPostCard) {
   const postData = post.data;
   if (post.data.postAsAgent) {
     return (
       <AgentCard
-        key={postData.postId}
-        postId={postData.postId}
+        key={post.id}
+        postId={post.id}
         budget={postData.budget}
         bgImage={postData.imageUrl}
         userId={postData.userDocId}
@@ -85,8 +60,8 @@ const showPostCard = (post: IShowPostCard) => {
     return (
       <ClientCard
         secondary=""
-        key={postData.postId}
-        postId={postData.postId}
+        key={post.id}
+        postId={post.id}
         budget={postData.budget}
         userId={postData.userDocId}
         postDesc={postData.postDesc}
@@ -94,23 +69,16 @@ const showPostCard = (post: IShowPostCard) => {
       />
     );
   }
-};
+}
 
 function PostCards() {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
-  const postFeeds = state.postFeed;
+  const posts = useLoaderData() as IShowPostCard[];
+  return <>{posts.length > 0 && posts.map(showPostCard)}</>;
+}
 
-  useEffect(() => {
-    (async () => {
-      const listOfPosts = await getAllUserDocs();
-      dispatch({
-        payload: listOfPosts,
-        type: APP_ACTION_TYPES.postFeed,
-      });
-    })();
-  }, []);
-
-  return <>{postFeeds.length > 0 && postFeeds.map(showPostCard)}</>;
+export async function postLoader() {
+  const listOfPosts = await getAllUserDocs();
+  return listOfPosts;
 }
 
 function RedditPremium() {

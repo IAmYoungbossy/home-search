@@ -155,4 +155,8 @@ export const StyledPostFeeds = styled.div`
   & > div:last-child {
     width: 312px;
   }
+
+  a {
+    text-decoration: none;
+  }
 `;

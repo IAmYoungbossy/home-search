@@ -12,6 +12,7 @@ interface IAgentCard extends IHouseDetails, IlikeOrUnlike {
   bgImage: string;
   postDesc: string;
   postTitle: string;
+  secondary?: string;
 }
 
 export default function AgentCard({
@@ -22,6 +23,7 @@ export default function AgentCard({
   location,
   postDesc,
   postTitle,
+  secondary,
   dealStatus,
   apartmentSize,
 }: IAgentCard) {
@@ -31,6 +33,7 @@ export default function AgentCard({
       budget={budget}
       userId={userId}
       postId={postId}
+      secondary={secondary}
     >
       <>
         <h3>{postTitle}</h3>

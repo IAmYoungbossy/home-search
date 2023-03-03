@@ -9,6 +9,12 @@ export const StyledInteractWithPostIcons = styled.div<{ liked: boolean }>`
   border-top-left-radius: 5px;
   border-top: 1px solid var(--interact-with-post-border-color);
 
+  a {
+    gap: 5px;
+    display: flex;
+    align-items: center;
+  }
+
   svg {
     width: 18px;
     height: 18px;
