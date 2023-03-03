@@ -18,11 +18,11 @@ export default function Comment() {
   return (
     <StyledComment>
       <div>
-        <ClientCard secondary="none" />
+        {/* <ClientCard secondary="none" /> */}
         <TextArea />
+        {/* <CommentCard />
         <CommentCard />
-        <CommentCard />
-        <CommentCard />
+        <CommentCard /> */}
       </div>
       <div>
         <div>

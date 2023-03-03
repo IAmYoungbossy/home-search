@@ -1,20 +1,19 @@
 import * as SC from "./StyledPostFeeds";
-import { db } from "../../firebaseConfig";
 import { useEffect, useContext } from "react";
 import AgentCard from "../PostCards/AgentCard";
 import FilterBar from "../SocialPage/FilterBar";
+import {
+  contextProps,
+  APP_ACTION_TYPES,
+} from "../../utilities/typesAndInitialStateObj";
 import CreatePost from "../SocialPage/CreatePost";
+import { DocumentData } from "firebase/firestore";
 import { ShieldSVG } from "../assets/Svg/SocialSVG";
+import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
 import { AppContext } from "../../context/AppContext";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
-import { getAllUserDocs, getPostFromUserDoc } from "../../firebaseCRUD";
-import { collection, DocumentData, onSnapshot } from "firebase/firestore";
-import {
-  APP_ACTION_TYPES,
-  contextProps,
-} from "../../utilities/typesAndInitialStateObj";
 
 export default function PostFeeds() {
   return (

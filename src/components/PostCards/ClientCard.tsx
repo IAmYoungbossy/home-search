@@ -1,3 +1,9 @@
+import {
+  upvote,
+  downvote,
+  likeOrUnlike,
+  IlikeOrUnlike,
+} from "../../firebaseCRUD";
 import { User } from "firebase/auth";
 import { SlLike } from "react-icons/sl";
 import * as SC from "./StyledClientCard";
@@ -8,12 +14,6 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
-import {
-  downvote,
-  IlikeOrUnlike,
-  likeOrUnlike,
-  upvote,
-} from "../../firebaseCRUD";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
 interface IPost {

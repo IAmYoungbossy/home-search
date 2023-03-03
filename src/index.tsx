@@ -2,9 +2,8 @@ import React from "react";
 import App from "./components/App/App";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
 import AppDataProvider from "./context/AppContext";
+import { createGlobalStyle } from "styled-components";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -64,11 +63,9 @@ const GlobalCSS = createGlobalStyle`
 root.render(
   <React.StrictMode>
     <GlobalCSS />
-    <BrowserRouter basename="/">
-      <AppDataProvider>
-        <App />
-      </AppDataProvider>
-    </BrowserRouter>
+    <AppDataProvider>
+      <App />
+    </AppDataProvider>
   </React.StrictMode>
 );
 
