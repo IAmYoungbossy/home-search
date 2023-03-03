@@ -115,6 +115,8 @@ export const StyledPostDetails = styled.div`
 export const StyledVoteArrow = styled.div<{
   primary?: string;
   secondary?: string;
+  upvoted?: boolean;
+  downvoted?: boolean;
 }>`
   display: flex;
   align-items: center;
@@ -131,15 +133,15 @@ export const StyledVoteArrow = styled.div<{
     cursor: pointer;
   }
 
-  // & > div:first-of-type {
+  & > div:first-of-type {
+    color: ${({ upvoted }) => (upvoted ? "red" : "black")};
+  }
 
-  // }
+  & > div:last-of-type {
+    color: ${({ downvoted }) => (downvoted ? "blue" : "black")};
+  }
 
-  // & > div:last-of-type {
-
-  // }
-
-  // p {
-  //   font-size: 10px;
-  // }
+  p {
+    font-size: 10px;
+  }
 `;

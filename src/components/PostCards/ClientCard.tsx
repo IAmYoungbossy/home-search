@@ -102,6 +102,11 @@ export function VoteArrow({
   const [downvotes, setDownvotes] = useState<string[]>([]);
   const [upvotes, setUpvotes] = useState<string[]>([]);
 
+  const togglevotesColor = (votes: string[]) => {
+    if (votes.includes(user?.uid as string)) return true;
+    return false;
+  };
+
   useEffect(() => {
     const postDocId = postId as string;
     const posterDocId = userId as string;
@@ -121,7 +126,12 @@ export function VoteArrow({
   }, [db]);
 
   return (
-    <SC.StyledVoteArrow primary={primary} secondary={secondary}>
+    <SC.StyledVoteArrow
+      primary={primary}
+      secondary={secondary}
+      upvoted={togglevotesColor(upvotes)}
+      downvoted={togglevotesColor(downvotes)}
+    >
       <div>
         <ArrowUpSVG
           onClick={() => {

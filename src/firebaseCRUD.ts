@@ -315,6 +315,10 @@ export async function upvote({ user, userId, postId }: IUpvoteOrDownvote) {
       updatedObj: { Upvotes: arrayUnion(currentUserId) },
       postDocRef,
     });
+    await postReaction({
+      updatedObj: { Downvotes: arrayRemove(currentUserId) },
+      postDocRef,
+    });
   }
 }
 
@@ -335,6 +339,10 @@ export async function downvote({ user, userId, postId }: IUpvoteOrDownvote) {
   } else {
     await postReaction({
       updatedObj: { Downvotes: arrayUnion(currentUserId) },
+      postDocRef,
+    });
+    await postReaction({
+      updatedObj: { Upvotes: arrayRemove(currentUserId) },
       postDocRef,
     });
   }
