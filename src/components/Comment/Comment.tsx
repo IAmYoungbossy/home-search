@@ -1,13 +1,10 @@
 import {
-  StyledSortBy,
-  StyledComment,
-  StyledTextArea,
-  StyledCommentAs,
-  StyledCommentBox,
-  StyledRichTextEditor,
-  StyledReactionButtons,
-  StyledcommentCard,
-} from "./StyledComment";
+  VoteArrow,
+  ClientCard,
+  VoteArrowProps,
+  OriginalPoster,
+} from "../PostCards/ClientCard";
+import * as SC from "./StyledComment";
 import { TfiComment } from "react-icons/tfi";
 import AgentCard from "../PostCards/AgentCard";
 import { AiFillCaretDown } from "react-icons/ai";
@@ -15,21 +12,21 @@ import { getAllUserDocs } from "../../firebaseCRUD";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useLoaderData, useParams } from "react-router-dom";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
-import { IShowPostCard } from "../../utilities/typesAndInitialStateObj";
 import {
-  ClientCard,
-  OriginalPoster,
-  VoteArrow,
-  VoteArrowProps,
-} from "../PostCards/ClientCard";
+  Icomment,
+  IShowPostCard,
+} from "../../utilities/typesAndInitialStateObj";
+import { Fragment } from "react";
 
 export default function Comment() {
   const { id } = useParams();
   const posts = useLoaderData() as IShowPostCard[];
   const postObj = posts.filter((post) => post.data.postId === id)[0];
+  const comments = postObj.data.Comments as Icomment[];
+  console.log(comments);
 
   return (
-    <StyledComment>
+    <SC.StyledComment>
       <div>
         {!postObj.data.postAsAgent && (
           <ClientCard
@@ -61,18 +58,7 @@ export default function Comment() {
         <CommentCard
           primary=""
           secondary="white"
-          postId={postObj.data.postId}
-          userId={postObj.data.userDocId}
-        />
-        <CommentCard
-          primary=""
-          secondary="white"
-          postId={postObj.data.postId}
-          userId={postObj.data.userDocId}
-        />
-        <CommentCard
-          primary=""
-          secondary="white"
+          comment={comments}
           postId={postObj.data.postId}
           userId={postObj.data.userDocId}
         />
@@ -83,7 +69,7 @@ export default function Comment() {
           <Warning />
         </div>
       </div>
-    </StyledComment>
+    </SC.StyledComment>
   );
 }
 
@@ -92,36 +78,52 @@ export async function commentLoader() {
   return listOfPosts;
 }
 
-function CommentCard({ userId, postId, primary, secondary }: VoteArrowProps) {
+interface ICommentCard extends VoteArrowProps {
+  comment: Icomment[];
+}
+
+function CommentCard({
+  userId,
+  postId,
+  primary,
+  secondary,
+  comment,
+}: ICommentCard) {
   return (
-    <StyledcommentCard>
+    <SC.StyledcommentCard>
       <OriginalPoster />
       <CommentBox
         userId={userId}
         postId={postId}
+        comment={comment}
         primary={primary}
         secondary={secondary}
       />
-    </StyledcommentCard>
+    </SC.StyledcommentCard>
   );
 }
 
-function CommentBox({ userId, postId, primary, secondary }: VoteArrowProps) {
+function CommentBox({
+  userId,
+  postId,
+  primary,
+  comment,
+  secondary,
+}: ICommentCard) {
   return (
-    <StyledCommentBox>
-      <p>
-        c is a float, but 5 and 7 are not. The compiler treats 5 and 7 as ints,
-        so the integer division 5/7 is done first, getting the answer 0 and then
-        the float c is assigned to 0. You can tell the compiler to treat 5 or 7
-        as a float and then 5/7 will also be treated as a float:
-      </p>
-      <ReactionButtons
-        userId={userId}
-        postId={postId}
-        primary={primary}
-        secondary={secondary}
-      />
-    </StyledCommentBox>
+    <SC.StyledCommentBox>
+      {comment.map((comment, index) => (
+        <Fragment key={index}>
+          <p>{comment.comment}</p>
+          <ReactionButtons
+            userId={userId}
+            postId={postId}
+            primary={primary}
+            secondary={secondary}
+          />
+        </Fragment>
+      ))}
+    </SC.StyledCommentBox>
   );
 }
 
@@ -129,11 +131,6 @@ const reactionBtnArray: (JSX.Element | string)[] = [
   <>
     <TfiComment /> Reply
   </>,
-  "Give award",
-  "Share",
-  "Report",
-  "Save",
-  "Follow",
 ];
 
 function ReactionButtons({
@@ -147,7 +144,7 @@ function ReactionButtons({
   ));
 
   return (
-    <StyledReactionButtons>
+    <SC.StyledReactionButtons>
       <ul>
         <li>
           <VoteArrow
@@ -159,13 +156,13 @@ function ReactionButtons({
         </li>
         {buttons}
       </ul>
-    </StyledReactionButtons>
+    </SC.StyledReactionButtons>
   );
 }
 
 export function TextArea() {
   return (
-    <StyledTextArea>
+    <SC.StyledTextArea>
       <CommentAs />
       <textarea
         name="textbox"
@@ -176,39 +173,39 @@ export function TextArea() {
       ></textarea>
       <RichTextEditor />
       <SortBy />
-    </StyledTextArea>
+    </SC.StyledTextArea>
   );
 }
 
 function CommentAs() {
   return (
-    <StyledCommentAs>
+    <SC.StyledCommentAs>
       <p>
         Comment as <span>Severe-Cheek2859</span>
       </p>
-    </StyledCommentAs>
+    </SC.StyledCommentAs>
   );
 }
 
 function SortBy() {
   return (
-    <StyledSortBy>
+    <SC.StyledSortBy>
       <h6>
         Sort By: Best <AiFillCaretDown />
       </h6>
       <hr />
-    </StyledSortBy>
+    </SC.StyledSortBy>
   );
 }
 
 function RichTextEditor() {
   return (
-    <StyledRichTextEditor>
+    <SC.StyledRichTextEditor>
       <div>
         <AiOutlineQuestionCircle />
         <p>Switch to Fancy Pants Editor</p>
       </div>
       <button>Comment</button>
-    </StyledRichTextEditor>
+    </SC.StyledRichTextEditor>
   );
 }

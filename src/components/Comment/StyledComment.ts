@@ -87,16 +87,18 @@ export const StyledReactionButtons = styled.div`
   padding: 5px 0;
   ul,
   li {
-    gap: 5px;
+    gap: 10px;
     display: flex;
     font-size: 12px;
     max-width: 400px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
   }
 
   li {
+    gap: 5px;
     list-style: none;
+    justify-content: space-between;
   }
 `;
 
@@ -146,6 +148,7 @@ export const StyledComment = styled.div`
 
 export const StyledcommentCard = styled.div`
   width: 100%;
+  padding-left: 37px;
   max-width: var(--social-max-width);
   background-color: var(--light-bg-color-primary);
 `;

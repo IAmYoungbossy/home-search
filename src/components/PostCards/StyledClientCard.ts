@@ -13,6 +13,7 @@ export const StyledInteractWithPostIcons = styled.div<{ liked: boolean }>`
     gap: 5px;
     display: flex;
     align-items: center;
+    text-decoration: none;
   }
 
   svg {

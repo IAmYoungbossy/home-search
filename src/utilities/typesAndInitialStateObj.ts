@@ -1,6 +1,14 @@
 import { User } from "firebase/auth";
 import { DocumentData } from "firebase/firestore";
 
+export interface Icomment {
+  name: string;
+  comment: string;
+  Likes: string[];
+  Upvotes: string[];
+  Downvotes: string[];
+}
+
 export interface ICardProps {
   budget: string;
   postId: string;
@@ -12,6 +20,7 @@ export interface ICardProps {
   Upvotes: string[];
   userDocId: string;
   dealStatus: string;
+  Comments: Icomment[];
   postAsAgent: boolean;
   apartmentSize: string;
 }
