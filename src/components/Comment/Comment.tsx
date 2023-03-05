@@ -5,6 +5,7 @@ import {
   OriginalPoster,
 } from "../PostCards/ClientCard";
 import * as SC from "./StyledComment";
+import { db } from "../../firebaseConfig";
 import { TfiComment } from "react-icons/tfi";
 import AgentCard from "../PostCards/AgentCard";
 import {
@@ -13,19 +14,32 @@ import {
   IShowPostCard,
 } from "../../utilities/typesAndInitialStateObj";
 import { AiFillCaretDown } from "react-icons/ai";
+import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
-import { useState, useContext, Fragment } from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useLoaderData, useParams } from "react-router-dom";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
 import { addComment, getAllUserDocs } from "../../firebaseCRUD";
+import { useState, useContext, Fragment, useEffect } from "react";
 
 export default function Comment() {
+  const [comments, setComments] = useState<Icomment[]>([]);
   const { id } = useParams();
   const posts = useLoaderData() as IShowPostCard[];
   const postObj = posts.filter((post) => post.data.postId === id)[0];
-  const comments = postObj.data.Comments as Icomment[];
-  console.log(comments);
+
+  useEffect(() => {
+    const postDocId = postObj.data.postId as string;
+    const posterDocId = postObj.data.userDocId as string;
+    const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
+
+    const unsub = onSnapshot(docRef, (snapshot) => {
+      const comments = snapshot.data()?.Comments as unknown as Icomment[];
+      setComments(comments);
+    });
+
+    return () => unsub();
+  }, [db]);
 
   return (
     <SC.StyledComment>
