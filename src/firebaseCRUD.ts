@@ -121,6 +121,7 @@ export const addPostToFirestore = async ({
         apartmentSize,
         Likes: arrayUnion(),
         Upvotes: arrayUnion(),
+        Comments: arrayUnion(),
         Downvotes: arrayUnion(),
       }
     );
@@ -139,6 +140,7 @@ export const addPostToFirestore = async ({
         apartmentSize,
         Likes: arrayUnion(),
         Upvotes: arrayUnion(),
+        Comments: arrayUnion(),
         Downvotes: arrayUnion(),
       }
     );
@@ -252,6 +254,7 @@ interface IUpdatePostReactionArray extends IDocRef {
   updatedObj: {
     Likes?: FieldValue;
     Upvotes?: FieldValue;
+    Comments?: FieldValue;
   };
 }
 
@@ -361,4 +364,34 @@ async function updatePostReactionArray({
 }: IUpdatePostReactionArray) {
   const addUserId = updatedObj;
   await updateDoc(postDocRef, addUserId);
+}
+
+interface IAddComment extends IlikeOrUnlike {
+  name: string;
+  comment: string;
+}
+
+export async function addComment({
+  user,
+  name,
+  userId,
+  postId,
+  comment,
+}: IAddComment) {
+  const commentList = {
+    name,
+    comment,
+    Likes: arrayUnion(),
+    Upvotes: arrayUnion(),
+    downvote: arrayUnion(),
+  };
+  const { postDocRef } = await getPostDetails({
+    user,
+    userId,
+    postId,
+  });
+  await updatePostReactionArray({
+    updatedObj: { Comments: arrayUnion(commentList) },
+    postDocRef,
+  });
 }
