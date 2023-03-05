@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledRichTextEditor = styled.div`
+export const StyledRichTextEditor = styled.div<{ bgColor: boolean }>`
   width: 100%;
   padding: 5px;
   display: flex;
@@ -32,7 +32,8 @@ export const StyledRichTextEditor = styled.div`
     font-weight: bold;
     border-radius: 20px;
     color: var(--social-disabled-button-color);
-    background-color: var(--social-disabled-button-bg-color);
+    background-color: ${({ bgColor }) =>
+      bgColor ? "blue" : "var(--social-disabled-button-bg-color)"};
   }
 `;
 

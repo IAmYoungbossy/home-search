@@ -372,7 +372,6 @@ interface IAddComment extends IlikeOrUnlike {
 }
 
 export async function addComment({
-  user,
   name,
   userId,
   postId,
@@ -381,15 +380,14 @@ export async function addComment({
   const commentList = {
     name,
     comment,
-    Likes: arrayUnion(),
-    Upvotes: arrayUnion(),
-    downvote: arrayUnion(),
+    Likes: [],
+    Upvotes: [],
+    Downvote: [],
   };
-  const { postDocRef } = await getPostDetails({
-    user,
-    userId,
-    postId,
-  });
+  const userID = userId as string;
+  const postID = postId as string;
+  const postDocRef = doc(db, "USERS", userID, "POSTS", postID);
+
   await updatePostReactionArray({
     updatedObj: { Comments: arrayUnion(commentList) },
     postDocRef,

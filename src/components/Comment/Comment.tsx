@@ -7,16 +7,18 @@ import {
 import * as SC from "./StyledComment";
 import { TfiComment } from "react-icons/tfi";
 import AgentCard from "../PostCards/AgentCard";
+import {
+  Icomment,
+  contextProps,
+  IShowPostCard,
+} from "../../utilities/typesAndInitialStateObj";
 import { AiFillCaretDown } from "react-icons/ai";
-import { getAllUserDocs } from "../../firebaseCRUD";
+import { AppContext } from "../../context/AppContext";
+import { useState, useContext, Fragment } from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useLoaderData, useParams } from "react-router-dom";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
-import {
-  Icomment,
-  IShowPostCard,
-} from "../../utilities/typesAndInitialStateObj";
-import { Fragment } from "react";
+import { addComment, getAllUserDocs } from "../../firebaseCRUD";
 
 export default function Comment() {
   const { id } = useParams();
@@ -54,14 +56,21 @@ export default function Comment() {
             apartmentSize={postObj.data.apartmentSize}
           />
         )}
-        <TextArea />
-        <CommentCard
-          primary=""
-          secondary="white"
-          comment={comments}
+        <TextArea
           postId={postObj.data.postId}
           userId={postObj.data.userDocId}
         />
+        {comments.map((comment, index) => (
+          <Fragment key={index}>
+            <CommentCard
+              primary=""
+              secondary="white"
+              comment={comment.comment}
+              postId={postObj.data.postId}
+              userId={postObj.data.userDocId}
+            />
+          </Fragment>
+        ))}
       </div>
       <div>
         <div>
@@ -79,7 +88,7 @@ export async function commentLoader() {
 }
 
 interface ICommentCard extends VoteArrowProps {
-  comment: Icomment[];
+  comment: string;
 }
 
 function CommentCard({
@@ -112,17 +121,13 @@ function CommentBox({
 }: ICommentCard) {
   return (
     <SC.StyledCommentBox>
-      {comment.map((comment, index) => (
-        <Fragment key={index}>
-          <p>{comment.comment}</p>
-          <ReactionButtons
-            userId={userId}
-            postId={postId}
-            primary={primary}
-            secondary={secondary}
-          />
-        </Fragment>
-      ))}
+      <p>{comment}</p>
+      <ReactionButtons
+        userId={userId}
+        postId={postId}
+        primary={primary}
+        secondary={secondary}
+      />
     </SC.StyledCommentBox>
   );
 }
@@ -160,18 +165,30 @@ function ReactionButtons({
   );
 }
 
-export function TextArea() {
+interface IRichTextEditor {
+  userId: string;
+  postId: string;
+  textValue?: string;
+}
+
+interface ITextArea extends IRichTextEditor {}
+
+export function TextArea({ postId, userId }: ITextArea) {
+  const [textValue, setTextValue] = useState("");
+
   return (
     <SC.StyledTextArea>
       <CommentAs />
       <textarea
-        name="textbox"
-        id="textbox"
         cols={30}
         rows={10}
+        id="textbox"
+        name="textbox"
+        value={textValue}
         placeholder="What are your thought?"
+        onChange={(e) => setTextValue(e.target.value)}
       ></textarea>
-      <RichTextEditor />
+      <RichTextEditor textValue={textValue} postId={postId} userId={userId} />
       <SortBy />
     </SC.StyledTextArea>
   );
@@ -198,14 +215,24 @@ function SortBy() {
   );
 }
 
-function RichTextEditor() {
+function RichTextEditor({ userId, postId, textValue }: IRichTextEditor) {
+  const { user } = useContext(AppContext) as contextProps;
+  const name = user?.displayName as string;
+  const textareaValue = textValue as string;
+  const handleAddComment = () => {
+    if (textareaValue.length < 1) return;
+    (async () => {
+      await addComment({ name, userId, postId, comment: textareaValue });
+    })();
+  };
+
   return (
-    <SC.StyledRichTextEditor>
+    <SC.StyledRichTextEditor bgColor={textareaValue.length > 0 ? true : false}>
       <div>
         <AiOutlineQuestionCircle />
         <p>Switch to Fancy Pants Editor</p>
       </div>
-      <button>Comment</button>
+      <button onClick={handleAddComment}>Comment</button>
     </SC.StyledRichTextEditor>
   );
 }
