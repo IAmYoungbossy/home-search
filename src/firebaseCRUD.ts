@@ -249,6 +249,8 @@ export interface IlikeOrUnlike extends IUserId {
   postId?: string;
 }
 export interface IVote extends IlikeOrUnlike {
+  commentIndex?: number;
+  commentId?: string;
   voteType: "upvote" | "downvote" | "like";
 }
 
@@ -270,7 +272,14 @@ async function getPostDetails({ user, userId, postId }: IlikeOrUnlike) {
   return { postDocRef, currentUserId, postDocSnapshot };
 }
 
-export async function postReaction({ user, userId, postId, voteType }: IVote) {
+export async function postReaction({
+  user,
+  userId,
+  postId,
+  voteType,
+  commentIndex,
+  commentId,
+}: IVote) {
   const props = { user, userId, postId };
   const { postDocRef, currentUserId, postDocSnapshot } = await getPostDetails(
     props
@@ -280,24 +289,59 @@ export async function postReaction({ user, userId, postId, voteType }: IVote) {
   let oppositeVotes = voteType === "upvote" ? "Downvotes" : "Upvotes";
   if (voteType === "like") votes = "Likes";
 
-  if (
-    postDocSnapshot.exists() &&
-    postDocSnapshot.data()[votes].includes(currentUserId)
-  ) {
-    await updatePostReactionArray({
-      updatedObj: { [votes]: arrayRemove(currentUserId) },
-      postDocRef,
-    });
-  } else {
-    await updatePostReactionArray({
-      updatedObj: { [votes]: arrayUnion(currentUserId) },
-      postDocRef,
-    });
-    if (voteType === "downvote" || voteType === "upvote") {
+  if (commentIndex !== undefined) {
+    const commentDocRef = doc(
+      db,
+      "USERS",
+      userId as string,
+      "POSTS",
+      postId as string,
+      "Comments",
+      commentId as string
+    );
+    const commentDocSnapshot = await getDoc(commentDocRef);
+    if (
+      commentDocSnapshot.exists() &&
+      commentDocSnapshot.data()[votes].includes(currentUserId)
+    ) {
       await updatePostReactionArray({
-        updatedObj: { [oppositeVotes]: arrayRemove(currentUserId) },
+        updatedObj: { [votes]: arrayRemove(currentUserId) },
+        postDocRef: commentDocRef,
+      });
+    } else {
+      await updatePostReactionArray({
+        updatedObj: { [votes]: arrayUnion(currentUserId) },
+        postDocRef: commentDocRef,
+      });
+      if (voteType === "downvote" || voteType === "upvote") {
+        await updatePostReactionArray({
+          updatedObj: { [oppositeVotes]: arrayRemove(currentUserId) },
+          postDocRef: commentDocRef,
+        });
+      }
+    }
+  }
+
+  if (commentIndex === undefined) {
+    if (
+      postDocSnapshot.exists() &&
+      postDocSnapshot.data()[votes].includes(currentUserId)
+    ) {
+      await updatePostReactionArray({
+        updatedObj: { [votes]: arrayRemove(currentUserId) },
         postDocRef,
       });
+    } else {
+      await updatePostReactionArray({
+        updatedObj: { [votes]: arrayUnion(currentUserId) },
+        postDocRef,
+      });
+      if (voteType === "downvote" || voteType === "upvote") {
+        await updatePostReactionArray({
+          updatedObj: { [oppositeVotes]: arrayRemove(currentUserId) },
+          postDocRef,
+        });
+      }
     }
   }
 }
@@ -321,19 +365,27 @@ export async function addComment({
   postId,
   comment,
 }: IAddComment) {
-  const commentList = {
-    name,
-    comment,
-    Likes: [],
-    Upvotes: [],
-    Downvote: [],
-  };
   const userID = userId as string;
   const postID = postId as string;
-  const postDocRef = doc(db, "USERS", userID, "POSTS", postID);
-
-  await updatePostReactionArray({
-    updatedObj: { Comments: arrayUnion(commentList) },
-    postDocRef,
+  const commentCollection = collection(
+    db,
+    "USERS",
+    userID,
+    "POSTS",
+    postID,
+    "Comments"
+  );
+  const commentFields = {
+    name,
+    Likes: arrayUnion(),
+    commentText: comment,
+    Upvotes: arrayUnion(),
+    Comments: arrayUnion(),
+    Downvotes: arrayUnion(),
+  };
+  const document = await addDoc(commentCollection, commentFields);
+  const commentId = document.id;
+  updateDoc(doc(db, "USERS", userID, "POSTS", postID, "Comments", commentId), {
+    commentId,
   });
 }

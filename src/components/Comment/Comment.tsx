@@ -13,17 +13,22 @@ import {
   IShowPostCard,
 } from "../../utilities/typesAndInitialStateObj";
 import { AiFillCaretDown } from "react-icons/ai";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useLoaderData, useParams } from "react-router-dom";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
-import { addComment, getAllUserDocs } from "../../firebaseCRUD";
+import { addComment, getAllUserDocs, postReaction } from "../../firebaseCRUD";
 import { useState, useContext, Fragment, useEffect } from "react";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
+import { User } from "firebase/auth";
 
 export default function Comment() {
-  const [comments, setComments] = useState<Icomment[]>([]);
+  const [comments, setComments] = useState<
+    {
+      data: DocumentData;
+    }[]
+  >([]);
   const { id } = useParams();
   const posts = useLoaderData() as IShowPostCard[];
   const postObj = posts.filter((post) => post.data.postId === id)[0];
@@ -31,10 +36,20 @@ export default function Comment() {
   useEffect(() => {
     const postDocId = postObj.data.postId as string;
     const posterDocId = postObj.data.userDocId as string;
-    const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
+    const docRef = collection(
+      db,
+      "USERS",
+      posterDocId,
+      "POSTS",
+      postDocId,
+      "Comments"
+    );
 
     const unsub = onSnapshot(docRef, (snapshot) => {
-      const comments = snapshot.data()?.Comments as unknown as Icomment[];
+      const comments = snapshot.docs.map((comment) => ({
+        data: comment.data(),
+      }));
+      console.log(comments);
       setComments(comments);
     });
 
@@ -74,14 +89,14 @@ export default function Comment() {
           postId={postObj.data.postId}
           userId={postObj.data.userDocId}
         />
-        {comments.reverse().map((comment, index) => (
+        {comments.map((comment, index) => (
           <Fragment key={index}>
             <CommentCard
-              primary=""
-              secondary="white"
-              comment={comment.comment}
+              commentIndex={index}
               postId={postObj.data.postId}
               userId={postObj.data.userDocId}
+              commentId={comment.data.commentId}
+              comment={comment.data.commentText}
             />
           </Fragment>
         ))}
@@ -101,16 +116,23 @@ export async function commentLoader() {
   return listOfPosts;
 }
 
-interface ICommentCard extends VoteArrowProps {
+interface ICommentVote {
+  userId: string;
+  postId: string;
+  commentId: string;
+  commentIndex: number;
+}
+
+interface ICommentCard extends ICommentVote {
   comment: string;
 }
 
 function CommentCard({
   userId,
   postId,
-  primary,
-  secondary,
   comment,
+  commentIndex,
+  commentId,
 }: ICommentCard) {
   return (
     <SC.StyledcommentCard>
@@ -119,8 +141,8 @@ function CommentCard({
         userId={userId}
         postId={postId}
         comment={comment}
-        primary={primary}
-        secondary={secondary}
+        commentId={commentId}
+        commentIndex={commentIndex}
       />
     </SC.StyledcommentCard>
   );
@@ -129,32 +151,114 @@ function CommentCard({
 function CommentBox({
   userId,
   postId,
-  primary,
   comment,
-  secondary,
+  commentIndex,
+  commentId,
 }: ICommentCard) {
   return (
     <SC.StyledCommentBox>
       <p>{comment}</p>
       <CommentVote
-        userId={userId}
         postId={postId}
-        primary={primary}
-        secondary={secondary}
+        userId={userId}
+        commentId={commentId}
+        commentIndex={commentIndex}
       />
     </SC.StyledCommentBox>
   );
 }
 
-function CommentVote({ userId, postId, primary }: VoteArrowProps) {
+function CommentVote({
+  userId,
+  postId,
+  commentIndex,
+  commentId,
+}: ICommentVote) {
+  const [downvotes, setDownvotes] = useState<string[]>([]);
+  const { user } = useContext(AppContext) as contextProps;
+  const [upvotes, setUpvotes] = useState<string[]>([]);
+  const [likes, setLikes] = useState<string[]>([]);
+
+  const togglevotesColor = (votes: string[]) => {
+    if (votes.includes(user?.uid as string)) return true;
+    return false;
+  };
+
+  useEffect(() => {
+    const postDocId = postId as string;
+    const posterDocId = userId as string;
+    const docRef = doc(
+      db,
+      "USERS",
+      posterDocId,
+      "POSTS",
+      postDocId,
+      "Comments",
+      commentId
+    );
+
+    const unsubUpvotes = onSnapshot(docRef, (snapshot) => {
+      setUpvotes(snapshot.data()?.Upvotes);
+    });
+    const unsubDownvotes = onSnapshot(docRef, (snapshot) => {
+      setDownvotes(snapshot.data()?.Downvotes);
+    });
+    const unsubLikes = onSnapshot(docRef, (snapshot) => {
+      setLikes(snapshot.data()?.Likes);
+    });
+
+    return () => {
+      unsubLikes();
+      unsubUpvotes();
+      unsubDownvotes();
+    };
+  }, [db]);
   return (
     <SC.StyledReactionButtons>
       <ul>
         <li>
-          <ArrowUpSVG onClick={() => ""} />
-          <ArrowDownSVG onClick={() => ""} />
+          <ArrowUpSVG
+            onClick={() => {
+              (async () =>
+                await postReaction({
+                  userId,
+                  postId,
+                  commentId,
+                  commentIndex,
+                  voteType: "upvote",
+                  user: user as User,
+                }))();
+            }}
+          />
+          <p>{upvotes.length - downvotes.length}</p>
+          <ArrowDownSVG
+            onClick={() => {
+              (async () =>
+                await postReaction({
+                  userId,
+                  postId,
+                  commentId,
+                  commentIndex,
+                  user: user as User,
+                  voteType: "downvote",
+                }))();
+            }}
+          />
         </li>
-        <SlLike /> Like
+        <SlLike
+          onClick={() => {
+            (async () =>
+              await postReaction({
+                userId,
+                postId,
+                commentId,
+                commentIndex,
+                voteType: "like",
+                user: user as User,
+              }))();
+          }}
+        />{" "}
+        {likes.length} Like
       </ul>
     </SC.StyledReactionButtons>
   );
