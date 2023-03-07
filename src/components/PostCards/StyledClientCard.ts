@@ -85,7 +85,7 @@ export const StyledOriginalPoster = styled.div`
   gap: 10px;
   display: flex;
   align-items: center;
-  padding: 10px 10px 5px;
+  padding: 0px 10px 5px 9px;
 
   p {
     font-size: 13px;

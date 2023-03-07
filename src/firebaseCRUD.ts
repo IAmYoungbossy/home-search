@@ -248,21 +248,15 @@ export interface IlikeOrUnlike extends IUserId {
   user?: User;
   postId?: string;
 }
-export interface IUpvoteOrDownvote extends IlikeOrUnlike {}
+export interface IVote extends IlikeOrUnlike {
+  voteType: "upvote" | "downvote" | "like";
+}
 
 interface IUpdatePostReactionArray extends IDocRef {
   updatedObj: {
     Likes?: FieldValue;
     Upvotes?: FieldValue;
     Comments?: FieldValue;
-  };
-}
-
-interface IAddPostReaction extends IDocRef, IUserId {
-  updatedObj: {
-    Likes?: FieldValue;
-    Upvotes?: FieldValue;
-    Downvotes?: FieldValue;
   };
 }
 
@@ -276,86 +270,36 @@ async function getPostDetails({ user, userId, postId }: IlikeOrUnlike) {
   return { postDocRef, currentUserId, postDocSnapshot };
 }
 
-export async function likeOrUnlike({ user, userId, postId }: IlikeOrUnlike) {
-  const { postDocRef, currentUserId, postDocSnapshot } = await getPostDetails({
-    user,
-    userId,
-    postId,
-  });
+export async function postReaction({ user, userId, postId, voteType }: IVote) {
+  const props = { user, userId, postId };
+  const { postDocRef, currentUserId, postDocSnapshot } = await getPostDetails(
+    props
+  );
+
+  let votes = voteType === "upvote" ? "Upvotes" : "Downvotes";
+  let oppositeVotes = voteType === "upvote" ? "Downvotes" : "Upvotes";
+  if (voteType === "like") votes = "Likes";
 
   if (
     postDocSnapshot.exists() &&
-    postDocSnapshot.data().Likes.includes(currentUserId)
+    postDocSnapshot.data()[votes].includes(currentUserId)
   ) {
-    await postReaction({
-      updatedObj: { Likes: arrayRemove(currentUserId) },
+    await updatePostReactionArray({
+      updatedObj: { [votes]: arrayRemove(currentUserId) },
       postDocRef,
     });
   } else {
-    await postReaction({
-      updatedObj: { Likes: arrayUnion(currentUserId) },
+    await updatePostReactionArray({
+      updatedObj: { [votes]: arrayUnion(currentUserId) },
       postDocRef,
     });
+    if (voteType === "downvote" || voteType === "upvote") {
+      await updatePostReactionArray({
+        updatedObj: { [oppositeVotes]: arrayRemove(currentUserId) },
+        postDocRef,
+      });
+    }
   }
-}
-
-export async function upvote({ user, userId, postId }: IUpvoteOrDownvote) {
-  const { postDocRef, currentUserId, postDocSnapshot } = await getPostDetails({
-    user,
-    userId,
-    postId,
-  });
-  if (
-    postDocSnapshot.exists() &&
-    postDocSnapshot.data().Upvotes.includes(currentUserId)
-  ) {
-    await postReaction({
-      updatedObj: { Upvotes: arrayRemove(currentUserId) },
-      postDocRef,
-    });
-  } else {
-    await postReaction({
-      updatedObj: { Upvotes: arrayUnion(currentUserId) },
-      postDocRef,
-    });
-    await postReaction({
-      updatedObj: { Downvotes: arrayRemove(currentUserId) },
-      postDocRef,
-    });
-  }
-}
-
-export async function downvote({ user, userId, postId }: IUpvoteOrDownvote) {
-  const { postDocRef, currentUserId, postDocSnapshot } = await getPostDetails({
-    user,
-    userId,
-    postId,
-  });
-  if (
-    postDocSnapshot.exists() &&
-    postDocSnapshot.data().Downvotes.includes(currentUserId)
-  ) {
-    await postReaction({
-      updatedObj: { Downvotes: arrayRemove(currentUserId) },
-      postDocRef,
-    });
-  } else {
-    await postReaction({
-      updatedObj: { Downvotes: arrayUnion(currentUserId) },
-      postDocRef,
-    });
-    await postReaction({
-      updatedObj: { Upvotes: arrayRemove(currentUserId) },
-      postDocRef,
-    });
-  }
-}
-
-async function postReaction({ updatedObj, postDocRef }: IAddPostReaction) {
-  await updatePostReactionArray({
-    updatedObj,
-    postDocRef,
-  });
 }
 
 async function updatePostReactionArray({

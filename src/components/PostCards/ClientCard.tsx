@@ -1,10 +1,5 @@
-import {
-  upvote,
-  downvote,
-  likeOrUnlike,
-  IlikeOrUnlike,
-} from "../../firebaseCRUD";
 import { User } from "firebase/auth";
+import { Link } from "react-router-dom";
 import { SlLike } from "react-icons/sl";
 import * as SC from "./StyledClientCard";
 import { db } from "../../firebaseConfig";
@@ -13,9 +8,9 @@ import { FaUserCircle } from "react-icons/fa";
 import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
+import { IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
-import { Link } from "react-router-dom";
 
 interface IPost {
   children?: JSX.Element;
@@ -137,10 +132,11 @@ export function VoteArrow({
         <ArrowUpSVG
           onClick={() => {
             (async () =>
-              await upvote({
-                user: user as User,
+              await postReaction({
                 userId,
                 postId,
+                voteType: "upvote",
+                user: user as User,
               }))();
           }}
         />
@@ -150,10 +146,11 @@ export function VoteArrow({
         <ArrowDownSVG
           onClick={() => {
             (async () =>
-              await downvote({
-                user: user as User,
+              await postReaction({
                 userId,
                 postId,
+                user: user as User,
+                voteType: "downvote",
               }))();
           }}
         />
@@ -238,10 +235,11 @@ function InteractWithPostIcons({ userId, postId }: IlikeOrUnlike) {
       <div
         onClick={() => {
           (async () =>
-            await likeOrUnlike({
-              user: user as User,
+            await postReaction({
               userId,
               postId,
+              voteType: "like",
+              user: user as User,
             }))();
         }}
       >

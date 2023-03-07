@@ -100,6 +100,11 @@ export const StyledReactionButtons = styled.div`
     gap: 5px;
     list-style: none;
     justify-content: space-between;
+
+    svg {
+      opacity: 0.7;
+      font-size: 18px;
+    }
   }
 `;
 

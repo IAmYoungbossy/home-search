@@ -1,12 +1,11 @@
 import {
-  VoteArrow,
   ClientCard,
   VoteArrowProps,
   OriginalPoster,
 } from "../PostCards/ClientCard";
 import * as SC from "./StyledComment";
+import { SlLike } from "react-icons/sl";
 import { db } from "../../firebaseConfig";
-import { TfiComment } from "react-icons/tfi";
 import AgentCard from "../PostCards/AgentCard";
 import {
   Icomment,
@@ -21,6 +20,7 @@ import { useLoaderData, useParams } from "react-router-dom";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
 import { addComment, getAllUserDocs } from "../../firebaseCRUD";
 import { useState, useContext, Fragment, useEffect } from "react";
+import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
 export default function Comment() {
   const [comments, setComments] = useState<Icomment[]>([]);
@@ -74,7 +74,7 @@ export default function Comment() {
           postId={postObj.data.postId}
           userId={postObj.data.userDocId}
         />
-        {comments.map((comment, index) => (
+        {comments.reverse().map((comment, index) => (
           <Fragment key={index}>
             <CommentCard
               primary=""
@@ -136,7 +136,7 @@ function CommentBox({
   return (
     <SC.StyledCommentBox>
       <p>{comment}</p>
-      <ReactionButtons
+      <CommentVote
         userId={userId}
         postId={postId}
         primary={primary}
@@ -146,34 +146,15 @@ function CommentBox({
   );
 }
 
-const reactionBtnArray: (JSX.Element | string)[] = [
-  <>
-    <TfiComment /> Reply
-  </>,
-];
-
-function ReactionButtons({
-  userId,
-  postId,
-  primary,
-  secondary,
-}: VoteArrowProps) {
-  const buttons = reactionBtnArray.map((item, index) => (
-    <li key={index + 2}>{item}</li>
-  ));
-
+function CommentVote({ userId, postId, primary }: VoteArrowProps) {
   return (
     <SC.StyledReactionButtons>
       <ul>
         <li>
-          <VoteArrow
-            userId={userId}
-            postId={postId}
-            primary={primary}
-            secondary={secondary}
-          />
+          <ArrowUpSVG onClick={() => ""} />
+          <ArrowDownSVG onClick={() => ""} />
         </li>
-        {buttons}
+        <SlLike /> Like
       </ul>
     </SC.StyledReactionButtons>
   );
