@@ -154,14 +154,63 @@ export const StyledVoteArrow = styled.div<{
   }
 `;
 
-export const StyledEditAndDeleteButton = styled.div`
+export const StyledPosterNameAndEditButtons = styled.div`
   gap: 10px;
   display: flex;
   width: max-content;
   align-items: center;
 
-  & > svg {
+  & > div {
+    position: relative;
+  }
+
+  & > div > svg {
     fill: red;
     margin-left: 0px;
+  }
+`;
+
+export const StyledEditAndDeleteButtons = styled.ul`
+  top: 17px;
+  z-index: 3;
+  left: -32px;
+  padding: 5px;
+  width: max-content;
+  border-radius: 5px;
+  position: absolute;
+  background-color: #f9f9f9;
+  box-shadow: 3px 3px 4px 0px #00000033;
+
+  button {
+    width: 100%;
+    border: none;
+    color: #00528f;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 5px;
+    outline: 1px solid #0079d3;
+    background-color: transparent;
+
+    &:hover {
+      color: white;
+      background-color: #0079d3;
+    }
+  }
+
+  li {
+    list-style: none;
+    margin: 5px 0;
+  }
+
+  & > li:last-of-type > button {
+    color: #962800;
+    border-radius: 5px;
+    outline: 1px solid #ff4500;
+
+    &:hover {
+      color: white;
+      background-color: #ff4500;
+    }
   }
 `;

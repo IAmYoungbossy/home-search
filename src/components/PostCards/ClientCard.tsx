@@ -190,18 +190,35 @@ export function OriginalPoster({ children }: OriginalPosterProps) {
     <SC.StyledOriginalPoster>
       <FaUserCircle />
       <div>
-        <EditAndDeleteButton />
+        <PosterNameAndEditButtons />
         {children}
       </div>
     </SC.StyledOriginalPoster>
   );
 }
 
-function EditAndDeleteButton() {
+function PosterNameAndEditButtons() {
   return (
-    <SC.StyledEditAndDeleteButton>
-      <p>Letam Bossman Barinua</p> <BsThreeDots />
-    </SC.StyledEditAndDeleteButton>
+    <SC.StyledPosterNameAndEditButtons>
+      <p>Letam Bossman Barinua</p>{" "}
+      <div>
+        <BsThreeDots />
+        <EditAndDeleteButtons />
+      </div>
+    </SC.StyledPosterNameAndEditButtons>
+  );
+}
+
+function EditAndDeleteButtons() {
+  return (
+    <SC.StyledEditAndDeleteButtons>
+      <li>
+        <button>Edit Post</button>
+      </li>
+      <li>
+        <button>Delete Post</button>
+      </li>
+    </SC.StyledEditAndDeleteButtons>
   );
 }
 
