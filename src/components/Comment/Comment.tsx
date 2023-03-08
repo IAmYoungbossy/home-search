@@ -1,27 +1,23 @@
-import {
-  ClientCard,
-  VoteArrowProps,
-  OriginalPoster,
-} from "../PostCards/ClientCard";
+import { User } from "firebase/auth";
 import * as SC from "./StyledComment";
 import { SlLike } from "react-icons/sl";
 import { db } from "../../firebaseConfig";
+import SignInContainer from "../SignIn/SignIn";
 import AgentCard from "../PostCards/AgentCard";
 import {
-  Icomment,
   contextProps,
   IShowPostCard,
 } from "../../utilities/typesAndInitialStateObj";
 import { AiFillCaretDown } from "react-icons/ai";
-import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useLoaderData, useParams } from "react-router-dom";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
-import { addComment, getAllUserDocs, postReaction } from "../../firebaseCRUD";
 import { useState, useContext, Fragment, useEffect } from "react";
+import { ClientCard, OriginalPoster } from "../PostCards/ClientCard";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
-import { User } from "firebase/auth";
+import { addComment, getAllUserDocs, postReaction } from "../../firebaseCRUD";
+import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 
 export default function Comment() {
   const [comments, setComments] = useState<
@@ -46,68 +42,74 @@ export default function Comment() {
     );
 
     const unsub = onSnapshot(docRef, (snapshot) => {
-      const comments = snapshot.docs.map((comment) => ({
-        data: comment.data(),
+      const comments = snapshot.docs?.map((comment) => ({
+        data: comment?.data(),
       }));
-      console.log(comments);
       setComments(comments);
     });
 
-    return () => unsub();
+    return () => {
+      unsub();
+    };
   }, [db]);
 
   return (
-    <SC.StyledComment>
-      <div>
-        {!postObj.data.postAsAgent && (
-          <ClientCard
-            secondary="white"
-            key={postObj.data.postId}
-            postId={postObj.data.postId}
-            budget={postObj.data.budget}
-            userId={postObj.data.userDocId}
-            postDesc={postObj.data.postDesc}
-            apartmentSize={postObj.data.apartmentSize}
-          />
-        )}
-        {postObj.data.postAsAgent && (
-          <AgentCard
-            secondary="white"
-            key={postObj.data.postId}
-            postId={postObj.data.postId}
-            budget={postObj.data.budget}
-            bgImage={postObj.data.imageUrl}
-            userId={postObj.data.userDocId}
-            location={postObj.data.location}
-            postDesc={postObj.data.postDesc}
-            postTitle={postObj.data.postTitle}
-            dealStatus={postObj.data.dealStatus}
-            apartmentSize={postObj.data.apartmentSize}
-          />
-        )}
-        <TextArea
-          postId={postObj.data.postId}
-          userId={postObj.data.userDocId}
-        />
-        {comments.map((comment, index) => (
-          <Fragment key={index}>
-            <CommentCard
-              commentIndex={index}
-              postId={postObj.data.postId}
-              userId={postObj.data.userDocId}
-              commentId={comment.data.commentId}
-              comment={comment.data.commentText}
-            />
-          </Fragment>
-        ))}
-      </div>
-      <div>
+    <>
+      <SC.StyledComment>
         <div>
-          <RedditRules />
-          <Warning />
+          {!postObj.data.postAsAgent && (
+            <ClientCard
+              secondary="white"
+              key={postObj.data.postId}
+              postId={postObj.data.postId}
+              budget={postObj.data.budget}
+              userId={postObj.data.userDocId}
+              postDesc={postObj.data.postDesc}
+              apartmentSize={postObj.data.apartmentSize}
+            />
+          )}
+          {postObj.data.postAsAgent && (
+            <AgentCard
+              secondary="white"
+              key={postObj.data.postId}
+              postId={postObj.data.postId}
+              budget={postObj.data.budget}
+              bgImage={postObj.data.imageUrl}
+              userId={postObj.data.userDocId}
+              location={postObj.data.location}
+              postDesc={postObj.data.postDesc}
+              postTitle={postObj.data.postTitle}
+              dealStatus={postObj.data.dealStatus}
+              apartmentSize={postObj.data.apartmentSize}
+            />
+          )}
+          <TextArea
+            postId={postObj.data.postId}
+            userId={postObj.data.userDocId}
+          />
+          {comments.map((comment, index) => (
+            <Fragment key={index}>
+              {comment.data.commentId && (
+                <CommentCard
+                  commentIndex={index}
+                  postId={postObj.data.postId}
+                  userId={postObj.data.userDocId}
+                  commentId={comment.data.commentId}
+                  comment={comment.data.commentText}
+                />
+              )}
+            </Fragment>
+          ))}
         </div>
-      </div>
-    </SC.StyledComment>
+        <div>
+          <div>
+            <RedditRules />
+            <Warning />
+          </div>
+        </div>
+      </SC.StyledComment>
+      <SignInContainer />
+    </>
   );
 }
 

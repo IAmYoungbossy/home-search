@@ -43,30 +43,38 @@ function showPostCard(post: IShowPostCard) {
   const postData = post.data;
   if (post.data.postAsAgent) {
     return (
-      <AgentCard
-        key={post.id}
-        postId={post.id}
-        budget={postData.budget}
-        bgImage={postData.imageUrl}
-        userId={postData.userDocId}
-        location={postData.location}
-        postDesc={postData.postDesc}
-        postTitle={postData.postTitle}
-        dealStatus={postData.dealStatus}
-        apartmentSize={postData.apartmentSize}
-      />
+      <>
+        {post.id && (
+          <AgentCard
+            key={post.id}
+            postId={post.id}
+            budget={postData.budget}
+            bgImage={postData.imageUrl}
+            userId={postData.userDocId}
+            location={postData.location}
+            postDesc={postData.postDesc}
+            postTitle={postData.postTitle}
+            dealStatus={postData.dealStatus}
+            apartmentSize={postData.apartmentSize}
+          />
+        )}
+      </>
     );
   } else {
     return (
-      <ClientCard
-        secondary=""
-        key={post.id}
-        postId={post.id}
-        budget={postData.budget}
-        userId={postData.userDocId}
-        postDesc={postData.postDesc}
-        apartmentSize={postData.apartmentSize}
-      />
+      <>
+        {post.id && (
+          <ClientCard
+            secondary=""
+            key={post.id}
+            postId={post.id}
+            budget={postData.budget}
+            userId={postData.userDocId}
+            postDesc={postData.postDesc}
+            apartmentSize={postData.apartmentSize}
+          />
+        )}
+      </>
     );
   }
 }

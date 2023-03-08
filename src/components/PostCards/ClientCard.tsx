@@ -5,12 +5,12 @@ import * as SC from "./StyledClientCard";
 import { db } from "../../firebaseConfig";
 import { BiComment } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
-import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
+import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 
 interface IPost {
   children?: JSX.Element;
@@ -207,17 +207,33 @@ export function Description({ postDesc }: { postDesc?: string }) {
 function InteractWithPostIcons({ userId, postId }: IlikeOrUnlike) {
   const { user } = useContext(AppContext) as contextProps;
   const [likes, setLikes] = useState<string[]>([]);
+  const [comments, setComments] = useState<DocumentData[]>([]);
 
   useEffect(() => {
     const postDocId = postId as string;
     const posterDocId = userId as string;
     const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
+    const collectionRef = collection(
+      db,
+      "USERS",
+      posterDocId,
+      "POSTS",
+      postDocId,
+      "Comments"
+    );
 
     const unsub = onSnapshot(docRef, (snapshot) => {
       setLikes(snapshot.data()?.Likes);
     });
+    const unSubCollectionRef = onSnapshot(collectionRef, (snapshot) => {
+      const comments = snapshot.docs.map((doc) => doc.data());
+      setComments(comments);
+    });
 
-    return () => unsub();
+    return () => {
+      unsub();
+      unSubCollectionRef();
+    };
   }, [db]);
 
   const toggleLikeColor = () => {
@@ -229,7 +245,7 @@ function InteractWithPostIcons({ userId, postId }: IlikeOrUnlike) {
     <SC.StyledInteractWithPostIcons liked={toggleLikeColor()}>
       <div>
         <Link to={`comment/${postId as string}`}>
-          <BiComment /> 1 Comment
+          <BiComment /> {comments.length} Comment
         </Link>
       </div>
       <div

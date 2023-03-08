@@ -16,6 +16,7 @@ import { dropdownList } from "./dropdownList";
 import { AppContext } from "../../context/AppContext";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, HeartSVG, UserSVG } from "../assets/header/SvgMarkUp";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -65,9 +66,11 @@ export function UserIcon() {
 
 export function HeaderLogo() {
   return (
-    <StyledHeaderLogo>
-      <img src={Logo} alt="Logo" />
-    </StyledHeaderLogo>
+    <Link to="/">
+      <StyledHeaderLogo>
+        <img src={Logo} alt="Logo" />
+      </StyledHeaderLogo>
+    </Link>
   );
 }
 
