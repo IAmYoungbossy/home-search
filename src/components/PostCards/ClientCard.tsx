@@ -8,7 +8,10 @@ import { FaUserCircle } from "react-icons/fa";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
-import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import {
+  APP_ACTION_TYPES,
+  contextProps,
+} from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 import { BsThreeDots } from "react-icons/bs";
@@ -198,12 +201,21 @@ export function OriginalPoster({ children }: OriginalPosterProps) {
 }
 
 function PosterNameAndEditButtons() {
+  const { state, dispatch } = useContext(AppContext) as contextProps;
   return (
     <SC.StyledPosterNameAndEditButtons>
       <p>Letam Bossman Barinua</p>{" "}
       <div>
-        <BsThreeDots />
-        <EditAndDeleteButtons />
+        <BsThreeDots
+          onClick={(e) => {
+            dispatch({
+              type: APP_ACTION_TYPES.EditAndDeleteButton,
+              payload: state.EditAndDeleteButton ? false : true,
+            });
+            e.stopPropagation();
+          }}
+        />
+        {state.EditAndDeleteButton && <EditAndDeleteButtons />}
       </div>
     </SC.StyledPosterNameAndEditButtons>
   );
@@ -211,7 +223,7 @@ function PosterNameAndEditButtons() {
 
 function EditAndDeleteButtons() {
   return (
-    <SC.StyledEditAndDeleteButtons>
+    <SC.StyledEditAndDeleteButtons onClick={(e) => e.stopPropagation()}>
       <li>
         <button>Edit Post</button>
       </li>

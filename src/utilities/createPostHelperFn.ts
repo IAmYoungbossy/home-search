@@ -224,4 +224,8 @@ export function onClickToggleButtonTags(
 ) {
   e.stopPropagation();
   btnTagsOnClick("App", false, dispatch);
+  dispatch({
+    payload: false,
+    type: APP_ACTION_TYPES.EditAndDeleteButton,
+  });
 }

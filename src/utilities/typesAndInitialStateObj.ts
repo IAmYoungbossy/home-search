@@ -68,6 +68,7 @@ export type appStateType = {
   uploadProgress: number;
   showSignInPage: boolean;
   tagButton: tagButtonType;
+  EditAndDeleteButton: boolean;
   postFeed: IShowPostCard[] | [];
   buttonTagsToggle: IButtonTagsToggle;
 };
@@ -102,6 +103,7 @@ export type IAppActionTypes = {
     APARTMENT: string;
     DEAL_STATUS: string;
   };
+  EditAndDeleteButton: string;
   SHOW_SIGN_IN_PAGE: string;
 };
 
@@ -130,6 +132,7 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
     APARTMENT: "APARTMENT",
     DEAL_STATUS: "DEAL STATUS",
   },
+  EditAndDeleteButton: "EDIT AND DELETE",
   SHOW_SIGN_IN_PAGE: "SHOW SIGN IN PAGE",
 };
 
@@ -158,6 +161,7 @@ export const APP_INITIAL_STATE: appStateType = {
   uploadImage: false,
   showSignInPage: false,
   uploadProgress: 0,
+  EditAndDeleteButton: false,
 };
 
 export interface contextProps {

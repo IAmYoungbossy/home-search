@@ -165,6 +165,12 @@ export const appReducer = (
         postFeed: action.payload as IShowPostCard[],
       };
 
+    case APP_ACTION_TYPES.EditAndDeleteButton:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        EditAndDeleteButton: action.payload as boolean,
+      };
+
     default:
       return state;
   }
