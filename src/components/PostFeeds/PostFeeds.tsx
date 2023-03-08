@@ -9,6 +9,7 @@ import { ClientCard } from "../PostCards/ClientCard";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
 import { IShowPostCard } from "../../utilities/typesAndInitialStateObj";
+import { Fragment } from "react";
 
 export default function PostFeeds() {
   return (
@@ -43,10 +44,9 @@ function showPostCard(post: IShowPostCard) {
   const postData = post.data;
   if (post.data.postAsAgent) {
     return (
-      <>
+      <Fragment key={post.id}>
         {post.id && (
           <AgentCard
-            key={post.id}
             postId={post.id}
             budget={postData.budget}
             bgImage={postData.imageUrl}
@@ -58,15 +58,14 @@ function showPostCard(post: IShowPostCard) {
             apartmentSize={postData.apartmentSize}
           />
         )}
-      </>
+      </Fragment>
     );
   } else {
     return (
-      <>
+      <Fragment key={post.id}>
         {post.id && (
           <ClientCard
             secondary=""
-            key={post.id}
             postId={post.id}
             budget={postData.budget}
             userId={postData.userDocId}
@@ -74,7 +73,7 @@ function showPostCard(post: IShowPostCard) {
             apartmentSize={postData.apartmentSize}
           />
         )}
-      </>
+      </Fragment>
     );
   }
 }

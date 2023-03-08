@@ -117,6 +117,7 @@ export const StyledPostCard = styled.div`
 
 export const StyledPostDetails = styled.div`
   flex: 1;
+  position: relative;
 `;
 
 export const StyledVoteArrow = styled.div<{
@@ -150,5 +151,17 @@ export const StyledVoteArrow = styled.div<{
 
   p {
     font-size: 10px;
+  }
+`;
+
+export const StyledEditAndDeleteButton = styled.div`
+  gap: 10px;
+  display: flex;
+  width: max-content;
+  align-items: center;
+
+  & > svg {
+    fill: red;
+    margin-left: 0px;
   }
 `;

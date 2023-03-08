@@ -13,6 +13,7 @@ export const StyledWrapper = styled.div`
   display: flex;
   & > div {
     flex: 1;
+    color: aliceblue;
   }
 
   input {

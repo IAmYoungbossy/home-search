@@ -11,6 +11,7 @@ import { IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
+import { BsThreeDots } from "react-icons/bs";
 
 interface IPost {
   children?: JSX.Element;
@@ -189,10 +190,18 @@ export function OriginalPoster({ children }: OriginalPosterProps) {
     <SC.StyledOriginalPoster>
       <FaUserCircle />
       <div>
-        <p>Letam Bossman Barinua</p>
+        <EditAndDeleteButton />
         {children}
       </div>
     </SC.StyledOriginalPoster>
+  );
+}
+
+function EditAndDeleteButton() {
+  return (
+    <SC.StyledEditAndDeleteButton>
+      <p>Letam Bossman Barinua</p> <BsThreeDots />
+    </SC.StyledEditAndDeleteButton>
   );
 }
 

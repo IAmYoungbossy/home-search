@@ -1,5 +1,5 @@
-import { IlikeOrUnlike } from "../../firebaseCRUD";
 import PostCard from "./ClientCard";
+import { IlikeOrUnlike } from "../../firebaseCRUD";
 import { ImageContainer, StyledHouseDetails } from "./StyledAgentCard";
 
 interface IHouseDetails {
