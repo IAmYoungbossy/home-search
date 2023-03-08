@@ -66,7 +66,7 @@ export function UserIcon() {
 
 export function HeaderLogo() {
   return (
-    <Link to="/">
+    <Link to="social">
       <StyledHeaderLogo>
         <img src={Logo} alt="Logo" />
       </StyledHeaderLogo>

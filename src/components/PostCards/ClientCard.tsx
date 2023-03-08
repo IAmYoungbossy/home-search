@@ -172,7 +172,7 @@ function PostDetails({
 }: IPostDetailsProps) {
   return (
     <SC.StyledPostDetails>
-      <OriginalPoster>
+      <OriginalPoster postId={postId}>
         <p>
           <b>$</b> {budget} || <b>23</b> minutes ago
         </p>
@@ -185,43 +185,67 @@ function PostDetails({
 }
 
 interface OriginalPosterProps {
+  postId?: string;
   children?: JSX.Element;
 }
 
-export function OriginalPoster({ children }: OriginalPosterProps) {
+export function OriginalPoster({ postId, children }: OriginalPosterProps) {
   return (
     <SC.StyledOriginalPoster>
       <FaUserCircle />
       <div>
-        <PosterNameAndEditButtons />
+        <PosterNameAndEditButtons postId={postId} />
         {children}
       </div>
     </SC.StyledOriginalPoster>
   );
 }
 
-function PosterNameAndEditButtons() {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
+function PosterNameAndEditButtons({ postId }: { postId?: string }) {
+  const [toggleButtons, setToggleButtons] = useState(false);
+
   return (
     <SC.StyledPosterNameAndEditButtons>
       <p>Letam Bossman Barinua</p>{" "}
       <div>
         <BsThreeDots
           onClick={(e) => {
-            dispatch({
-              type: APP_ACTION_TYPES.EditAndDeleteButton,
-              payload: state.EditAndDeleteButton ? false : true,
-            });
             e.stopPropagation();
+            setToggleButtons(toggleButtons ? false : true);
           }}
         />
-        {state.EditAndDeleteButton && <EditAndDeleteButtons />}
+        {toggleButtons && (
+          <EditAndDeleteButtons
+            postId={postId}
+            toggleButtons={toggleButtons}
+            setToggleButtons={setToggleButtons}
+          />
+        )}
       </div>
     </SC.StyledPosterNameAndEditButtons>
   );
 }
 
-function EditAndDeleteButtons() {
+interface IEditAndDeleteButtons {
+  postId?: string;
+  toggleButtons: boolean;
+  setToggleButtons: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function EditAndDeleteButtons({
+  postId,
+  toggleButtons,
+  setToggleButtons,
+}: IEditAndDeleteButtons) {
+  useEffect(() => {
+    const removeButtons = () => setToggleButtons(false);
+    document.addEventListener("click", removeButtons);
+
+    return () => {
+      document.removeEventListener("click", removeButtons);
+    };
+  }, [toggleButtons]);
+
   return (
     <SC.StyledEditAndDeleteButtons onClick={(e) => e.stopPropagation()}>
       <li>

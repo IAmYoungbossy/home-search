@@ -220,9 +220,9 @@ export const toggleTextarea = (
 
 export function onClickToggleButtonTags(
   dispatch: React.Dispatch<actionType>,
-  e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  e?: React.MouseEvent<HTMLDivElement, MouseEvent>
 ) {
-  e.stopPropagation();
+  if (e !== undefined) e.stopPropagation();
   btnTagsOnClick("App", false, dispatch);
   dispatch({
     payload: false,

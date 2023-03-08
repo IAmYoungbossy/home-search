@@ -35,7 +35,7 @@ function App() {
   const { dispatch } = useContext(AppContext) as contextProps;
 
   return (
-    <div onClick={(e) => onClickToggleButtonTags(dispatch, e)}>
+    <div onClick={() => onClickToggleButtonTags(dispatch)}>
       <RouterProvider router={router} />
     </div>
   );
