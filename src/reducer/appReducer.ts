@@ -170,6 +170,11 @@ export const appReducer = (
         ...JSON.parse(JSON.stringify(state)),
         EditAndDeleteButton: action.payload as boolean,
       };
+    case APP_ACTION_TYPES.postId:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        postId: action.payload as boolean,
+      };
 
     default:
       return state;

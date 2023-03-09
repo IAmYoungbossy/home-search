@@ -62,6 +62,7 @@ export type tagButtonType = {
 export type userType = string | null;
 
 export type appStateType = {
+  postId: string;
   userDocId: userType;
   post: postInterface;
   uploadImage: boolean;
@@ -79,6 +80,7 @@ export type actionType = {
 };
 
 export type IAppActionTypes = {
+  postId: string;
   postFeed: string;
   userDocId: string;
   uploadImage: string;
@@ -109,6 +111,7 @@ export type IAppActionTypes = {
 
 export const APP_ACTION_TYPES: IAppActionTypes = {
   userDocId: "USER",
+  postId: "POST_ID",
   postFeed: "POSTFEED",
   uploadImage: "UPLOAD IMAGE",
   uploadProgress: "UPLOAD PROGRESS",
@@ -139,6 +142,7 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
 export const APP_INITIAL_STATE: appStateType = {
   postFeed: [],
   userDocId: null,
+  postId: "",
   post: {
     image: false,
     postBody: "",

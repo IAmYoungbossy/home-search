@@ -15,10 +15,21 @@ import { RiErrorWarningLine } from "react-icons/ri";
 import { AppContext } from "../../context/AppContext";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import * as Helper from "../../utilities/createPostHelperFn";
-import { contextProps } from "../../utilities/typesAndInitialStateObj";
-import { addPostToFirestore, uploadFileToStorage } from "../../firebaseCRUD";
+import {
+  contextProps,
+  IShowPostCard,
+} from "../../utilities/typesAndInitialStateObj";
+import {
+  addPostToFirestore,
+  getAllUserDocs,
+  uploadFileToStorage,
+} from "../../firebaseCRUD";
+import { useLoaderData } from "react-router-dom";
 
 export default function CreatePostPage() {
+  // const posts = useLoaderData() as IShowPostCard[];
+  // const postObj = posts.filter((post) => post.data.postId === id)[0];
+  // console.log(posts);
   return (
     <>
       <SC.StyledCreatePostPage>
@@ -37,6 +48,11 @@ export default function CreatePostPage() {
       <SignInContainer />
     </>
   );
+}
+
+export async function editPostLoader() {
+  const listOfPosts = await getAllUserDocs();
+  return listOfPosts;
 }
 
 const redditRulesArr = [

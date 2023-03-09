@@ -7,10 +7,10 @@ import {
 import { useContext } from "react";
 import { postLoader } from "../PostFeeds/PostFeeds";
 import { AppContext } from "../../context/AppContext";
-import CreatePostPage from "../CreatePost/CreatePost";
 import Comment, { commentLoader } from "../Comment/Comment";
-import SocialPageLayout, { SocialPage } from "../SocialPage/SocialPage";
 import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import SocialPageLayout, { SocialPage } from "../SocialPage/SocialPage";
+import CreatePostPage, { editPostLoader } from "../CreatePost/CreatePost";
 import LandingPage, { LandingPageLayout } from "../LandingPage/LandingPage";
 import { onClickToggleButtonTags } from "../../utilities/createPostHelperFn";
 
@@ -20,7 +20,11 @@ const router = createBrowserRouter(
       <Route index element={<LandingPage />} />
       <Route path="social" element={<SocialPageLayout />}>
         <Route index element={<SocialPage />} loader={postLoader} />
-        <Route path="edit/:id" element={<CreatePostPage />} />
+        <Route
+          path="edit/:id"
+          element={<CreatePostPage />}
+          loader={editPostLoader}
+        />
         <Route path="post" element={<CreatePostPage />} />
         <Route
           path="comment/:id"
