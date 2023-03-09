@@ -4,77 +4,47 @@ import { SlLike } from "react-icons/sl";
 import * as SC from "./StyledClientCard";
 import { db } from "../../firebaseConfig";
 import { BiComment } from "react-icons/bi";
+import { BsThreeDots } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
 import {
-  APP_ACTION_TYPES,
   contextProps,
+  ShowPosterCardProps,
 } from "../../utilities/typesAndInitialStateObj";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
-import { BsThreeDots } from "react-icons/bs";
+import { ShowPostCardContext } from "../../context/ShowPostCard";
 
-interface IPost {
+interface IClientCard {
+  secondary?: string;
+}
+
+interface IPostDetailsProps {
   children?: JSX.Element;
-  secondary?: string;
 }
-interface IPostDetails extends IPost {
-  postDesc?: string;
-  budget?: number;
-}
-interface IClientCard extends IPost, IPostDetails, IlikeOrUnlike {
-  secondary?: string;
-  apartmentSize?: string;
-}
-interface IPostDetailsProps extends IPostDetails, IlikeOrUnlike {}
 
-export function ClientCard({
-  postId,
-  userId,
-  budget,
-  postDesc,
-  secondary,
-  apartmentSize,
-}: IClientCard) {
+interface IPost extends IClientCard, IPostDetailsProps {}
+
+export function ClientCard({ secondary }: IClientCard) {
+  const { apartmentSize } = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
   return (
-    <PostCard
-      budget={budget}
-      postId={postId}
-      userId={userId}
-      postDesc={postDesc}
-      secondary={secondary}
-    >
+    <PostCard secondary={secondary}>
       <HouseSpec apartmentSize={apartmentSize} />
     </PostCard>
   );
 }
 
-interface IPostCard extends IPost, IPostDetails, IlikeOrUnlike {}
+interface IPostCard extends IPost, IlikeOrUnlike {}
 
-export default function PostCard({
-  postId,
-  userId,
-  budget,
-  children,
-  postDesc,
-  secondary,
-}: IPostCard) {
+export default function PostCard({ children, secondary }: IPostCard) {
   return (
     <SC.StyledPostCard>
-      <VoteArrow
-        primary="#f8f9fa"
-        secondary={secondary}
-        postId={postId}
-        userId={userId}
-      />
-      <PostDetails
-        postDesc={postDesc}
-        budget={budget}
-        postId={postId}
-        userId={userId}
-      >
+      <VoteArrow primary="#f8f9fa" secondary={secondary} />
+      <PostDetails>
         <SC.StyledHouseSpec>{children}</SC.StyledHouseSpec>
       </PostDetails>
     </SC.StyledPostCard>
@@ -86,20 +56,16 @@ export function HouseSpec({ apartmentSize }: { apartmentSize?: string }) {
 }
 
 export interface VoteArrowProps {
-  userId?: string;
-  postId?: string;
   primary?: string;
   secondary?: string;
 }
 
-export function VoteArrow({
-  userId,
-  postId,
-  primary,
-  secondary,
-}: VoteArrowProps) {
-  const { user } = useContext(AppContext) as contextProps;
+export function VoteArrow({ primary, secondary }: VoteArrowProps) {
+  const { userId, postId } = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
   const [downvotes, setDownvotes] = useState<string[]>([]);
+  const { user } = useContext(AppContext) as contextProps;
   const [upvotes, setUpvotes] = useState<string[]>([]);
 
   const togglevotesColor = (votes: string[]) => {
@@ -163,45 +129,37 @@ export function VoteArrow({
   );
 }
 
-function PostDetails({
-  budget,
-  userId,
-  postId,
-  children,
-  postDesc,
-}: IPostDetailsProps) {
+function PostDetails({ children }: IPostDetailsProps) {
+  const { budget } = useContext(ShowPostCardContext) as ShowPosterCardProps;
   return (
     <SC.StyledPostDetails>
-      <OriginalPoster postId={postId}>
+      <OriginalPoster>
         <p>
           <b>$</b> {budget} || <b>23</b> minutes ago
         </p>
       </OriginalPoster>
       {children}
-      <Description postDesc={postDesc} />
-      <InteractWithPostIcons userId={userId} postId={postId} />
+      <Description />
+      <InteractWithPostIcons />
     </SC.StyledPostDetails>
   );
 }
 
-interface OriginalPosterProps {
-  postId?: string;
-  children?: JSX.Element;
-}
+interface OriginalPosterProps extends IPostDetailsProps {}
 
-export function OriginalPoster({ postId, children }: OriginalPosterProps) {
+export function OriginalPoster({ children }: OriginalPosterProps) {
   return (
     <SC.StyledOriginalPoster>
       <FaUserCircle />
       <div>
-        <PosterNameAndEditButtons postId={postId} />
+        <PosterNameAndEditButtons />
         {children}
       </div>
     </SC.StyledOriginalPoster>
   );
 }
 
-function PosterNameAndEditButtons({ postId }: { postId?: string }) {
+function PosterNameAndEditButtons() {
   const [toggleButtons, setToggleButtons] = useState(false);
 
   return (
@@ -216,7 +174,6 @@ function PosterNameAndEditButtons({ postId }: { postId?: string }) {
         />
         {toggleButtons && (
           <EditAndDeleteButtons
-            postId={postId}
             toggleButtons={toggleButtons}
             setToggleButtons={setToggleButtons}
           />
@@ -227,16 +184,16 @@ function PosterNameAndEditButtons({ postId }: { postId?: string }) {
 }
 
 interface IEditAndDeleteButtons {
-  postId?: string;
   toggleButtons: boolean;
   setToggleButtons: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function EditAndDeleteButtons({
-  postId,
   toggleButtons,
   setToggleButtons,
 }: IEditAndDeleteButtons) {
+  const { postId } = useContext(ShowPostCardContext) as ShowPosterCardProps;
+
   useEffect(() => {
     const removeButtons = () => setToggleButtons(false);
     document.addEventListener("click", removeButtons);
@@ -249,7 +206,9 @@ function EditAndDeleteButtons({
   return (
     <SC.StyledEditAndDeleteButtons onClick={(e) => e.stopPropagation()}>
       <li>
-        <button>Edit Post</button>
+        <button>
+          <Link to={`edit/${postId as string}`}>Edit Post</Link>
+        </button>
       </li>
       <li>
         <button>Delete Post</button>
@@ -258,7 +217,8 @@ function EditAndDeleteButtons({
   );
 }
 
-export function Description({ postDesc }: { postDesc?: string }) {
+export function Description() {
+  const { postDesc } = useContext(ShowPostCardContext) as ShowPosterCardProps;
   return (
     <SC.StyledDescription>
       <p>{postDesc}</p>
@@ -266,7 +226,10 @@ export function Description({ postDesc }: { postDesc?: string }) {
   );
 }
 
-function InteractWithPostIcons({ userId, postId }: IlikeOrUnlike) {
+function InteractWithPostIcons() {
+  const { userId, postId } = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
   const { user } = useContext(AppContext) as contextProps;
   const [likes, setLikes] = useState<string[]>([]);
   const [comments, setComments] = useState<DocumentData[]>([]);

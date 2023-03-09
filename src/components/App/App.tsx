@@ -20,12 +20,13 @@ const router = createBrowserRouter(
       <Route index element={<LandingPage />} />
       <Route path="social" element={<SocialPageLayout />}>
         <Route index element={<SocialPage />} loader={postLoader} />
+        <Route path="edit/:id" element={<CreatePostPage />} />
+        <Route path="post" element={<CreatePostPage />} />
         <Route
           path="comment/:id"
           element={<Comment />}
           loader={commentLoader}
         />
-        <Route path="post" element={<CreatePostPage />} />
       </Route>
     </Route>
   )

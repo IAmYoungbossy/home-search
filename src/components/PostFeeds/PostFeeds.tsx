@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import * as SC from "./StyledPostFeeds";
 import AgentCard from "../PostCards/AgentCard";
 import FilterBar from "../SocialPage/FilterBar";
@@ -8,8 +9,8 @@ import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
+import ShowPosterCardProvider from "../../context/ShowPostCard";
 import { IShowPostCard } from "../../utilities/typesAndInitialStateObj";
-import { Fragment } from "react";
 
 export default function PostFeeds() {
   return (
@@ -40,13 +41,13 @@ function SideBar() {
   );
 }
 
-function showPostCard(post: IShowPostCard) {
+function ShowPostCard(post: IShowPostCard) {
   const postData = post.data;
   if (post.data.postAsAgent) {
     return (
       <Fragment key={post.id}>
         {post.id && (
-          <AgentCard
+          <ShowPosterCardProvider
             postId={post.id}
             budget={postData.budget}
             bgImage={postData.imageUrl}
@@ -56,7 +57,9 @@ function showPostCard(post: IShowPostCard) {
             postTitle={postData.postTitle}
             dealStatus={postData.dealStatus}
             apartmentSize={postData.apartmentSize}
-          />
+          >
+            <AgentCard />
+          </ShowPosterCardProvider>
         )}
       </Fragment>
     );
@@ -64,14 +67,15 @@ function showPostCard(post: IShowPostCard) {
     return (
       <Fragment key={post.id}>
         {post.id && (
-          <ClientCard
-            secondary=""
+          <ShowPosterCardProvider
             postId={post.id}
             budget={postData.budget}
             userId={postData.userDocId}
             postDesc={postData.postDesc}
             apartmentSize={postData.apartmentSize}
-          />
+          >
+            <ClientCard secondary="" />
+          </ShowPosterCardProvider>
         )}
       </Fragment>
     );
@@ -80,7 +84,7 @@ function showPostCard(post: IShowPostCard) {
 
 function PostCards() {
   const posts = useLoaderData() as IShowPostCard[];
-  return <>{posts.length > 0 && posts.map(showPostCard)}</>;
+  return <>{posts.length > 0 && posts.map(ShowPostCard)}</>;
 }
 
 export async function postLoader() {

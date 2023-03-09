@@ -1,60 +1,34 @@
+import { useContext } from "react";
 import PostCard from "./ClientCard";
-import { IlikeOrUnlike } from "../../firebaseCRUD";
+import { ShowPostCardContext } from "../../context/ShowPostCard";
 import { ImageContainer, StyledHouseDetails } from "./StyledAgentCard";
+import { ShowPosterCardProps } from "../../utilities/typesAndInitialStateObj";
 
-interface IHouseDetails {
-  budget: number;
-  location: string;
-  dealStatus: string;
-  apartmentSize: string;
-}
-interface IAgentCard extends IHouseDetails, IlikeOrUnlike {
-  bgImage: string;
-  postDesc: string;
-  postTitle: string;
+interface IAgentCard {
   secondary?: string;
 }
 
-export default function AgentCard({
-  userId,
-  postId,
-  budget,
-  bgImage,
-  location,
-  postDesc,
-  postTitle,
-  secondary,
-  dealStatus,
-  apartmentSize,
-}: IAgentCard) {
+export default function AgentCard({ secondary }: IAgentCard) {
+  const { postTitle, bgImage } = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
+
   return (
-    <PostCard
-      postDesc={postDesc}
-      budget={budget}
-      userId={userId}
-      postId={postId}
-      secondary={secondary}
-    >
+    <PostCard secondary={secondary}>
       <>
         <h3>{postTitle}</h3>
-        <ImageContainer bgImage={bgImage} />
-        <HouseDetails
-          budget={budget}
-          location={location}
-          dealStatus={dealStatus}
-          apartmentSize={apartmentSize}
-        />
+        <ImageContainer bgImage={bgImage as string} />
+        <HouseDetails />
       </>
     </PostCard>
   );
 }
 
-function HouseDetails({
-  budget,
-  location,
-  dealStatus,
-  apartmentSize,
-}: IHouseDetails) {
+function HouseDetails() {
+  const { budget, location, dealStatus, apartmentSize } = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
+
   return (
     <StyledHouseDetails>
       <ul>

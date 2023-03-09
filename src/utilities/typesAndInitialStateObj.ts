@@ -175,3 +175,17 @@ export interface contextProps {
 export interface PageProps {
   children: React.ReactNode;
 }
+
+export interface ShowPosterCardProps {
+  postId: string;
+  budget: string;
+  userId: string;
+  bgImage?: string;
+  postDesc: string;
+  location?: string;
+  postTitle?: string;
+  dealStatus?: string;
+  apartmentSize: string;
+}
+
+export interface IAppDataProvider extends PageProps, ShowPosterCardProps {}

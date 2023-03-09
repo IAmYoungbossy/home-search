@@ -13,6 +13,7 @@ import { AppContext } from "../../context/AppContext";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { useLoaderData, useParams } from "react-router-dom";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
+import ShowPosterCardProvider from "../../context/ShowPostCard";
 import { useState, useContext, Fragment, useEffect } from "react";
 import { ClientCard, OriginalPoster } from "../PostCards/ClientCard";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
@@ -58,19 +59,18 @@ export default function Comment() {
       <SC.StyledComment>
         <div>
           {!postObj.data.postAsAgent && (
-            <ClientCard
-              secondary="white"
-              key={postObj.data.postId}
+            <ShowPosterCardProvider
               postId={postObj.data.postId}
               budget={postObj.data.budget}
               userId={postObj.data.userDocId}
               postDesc={postObj.data.postDesc}
               apartmentSize={postObj.data.apartmentSize}
-            />
+            >
+              <ClientCard secondary="white" />
+            </ShowPosterCardProvider>
           )}
           {postObj.data.postAsAgent && (
-            <AgentCard
-              secondary="white"
+            <ShowPosterCardProvider
               key={postObj.data.postId}
               postId={postObj.data.postId}
               budget={postObj.data.budget}
@@ -81,7 +81,9 @@ export default function Comment() {
               postTitle={postObj.data.postTitle}
               dealStatus={postObj.data.dealStatus}
               apartmentSize={postObj.data.apartmentSize}
-            />
+            >
+              <AgentCard secondary="white" />
+            </ShowPosterCardProvider>
           )}
           <TextArea
             postId={postObj.data.postId}
