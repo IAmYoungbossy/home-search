@@ -268,13 +268,16 @@ export function editAgentCard({ dispatch, snapshot }: IEditCard) {
     },
   });
   dispatch({
-    type: APP_ACTION_TYPES.BUTTON_TAGS_TOGGLE_OBJECT,
-    payload: {
-      ...APP_INITIAL_STATE.tagButton,
-      Budget: budget,
-      Location: location,
-      "Apartment Size": apartmentSize,
-    },
+    type: APP_ACTION_TYPES.tagButton.Location,
+    payload: location,
+  });
+  dispatch({
+    type: APP_ACTION_TYPES.tagButton.Budget,
+    payload: budget,
+  });
+  dispatch({
+    type: APP_ACTION_TYPES.tagButton["Apartment Size"],
+    payload: apartmentSize,
   });
   dispatch({
     payload: userDocId,
@@ -307,12 +310,12 @@ export function editClientCard({ dispatch, snapshot }: IEditCard) {
     },
   });
   dispatch({
-    type: APP_ACTION_TYPES.BUTTON_TAGS_TOGGLE_OBJECT,
-    payload: {
-      ...APP_INITIAL_STATE.tagButton,
-      Budget: budget,
-      "Apartment Size": apartmentSize,
-    },
+    type: APP_ACTION_TYPES.tagButton.Budget,
+    payload: budget,
+  });
+  dispatch({
+    type: APP_ACTION_TYPES.tagButton["Apartment Size"],
+    payload: apartmentSize,
   });
   dispatch({
     payload: userDocId,
