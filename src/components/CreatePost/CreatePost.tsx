@@ -343,12 +343,13 @@ function ChooseCommunity() {
 }
 
 function PostAs() {
-  const { dispatch } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(AppContext) as contextProps;
 
   return (
     <SC.StyledPostAs
       id="post-as"
       name="post-as"
+      value={state.post.postAsAgent ? "agent" : "client"}
       onChange={(e) => Helper.onChangeSetPostAs(e, dispatch)}
     >
       <option value="client">a Client</option>
