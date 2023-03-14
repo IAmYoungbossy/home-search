@@ -76,28 +76,43 @@ export type appStateType = {
 
 export type actionType = {
   type: string;
-  payload: boolean | string | number | userType | IShowPostCard[];
+  payload:
+    | boolean
+    | string
+    | number
+    | userType
+    | postInterface
+    | tagButtonType
+    | IShowPostCard[];
 };
+
+interface IPostType {
+  IMAGE: string;
+  imageURL: string;
+  POST_BODY: string;
+  POST_TITLE: string;
+  POST_AS_AGENT: string;
+}
 
 export type IAppActionTypes = {
   postId: string;
+  POST: IPostType;
   postFeed: string;
   userDocId: string;
   uploadImage: string;
+  POST_OBJECT: string;
   uploadProgress: string;
-  POST: {
-    IMAGE: string;
-    imageURL: string;
-    POST_BODY: string;
-    POST_TITLE: string;
-    POST_AS_AGENT: string;
-  };
+  SHOW_SIGN_IN_PAGE: string;
+  EditAndDeleteButton: string;
+  BUTTON_TAGS_TOGGLE_OBJECT: string;
+
   tagButton: {
     Budget: string;
     Location: string;
     "Deal Status": string;
     "Apartment Size": string;
   };
+
   buttonTagsToggle: {
     APP: string;
     BUDGET: string;
@@ -105,16 +120,19 @@ export type IAppActionTypes = {
     APARTMENT: string;
     DEAL_STATUS: string;
   };
-  EditAndDeleteButton: string;
-  SHOW_SIGN_IN_PAGE: string;
 };
 
 export const APP_ACTION_TYPES: IAppActionTypes = {
   userDocId: "USER",
   postId: "POST_ID",
   postFeed: "POSTFEED",
+  POST_OBJECT: "POST OBJECT",
   uploadImage: "UPLOAD IMAGE",
   uploadProgress: "UPLOAD PROGRESS",
+  EditAndDeleteButton: "EDIT AND DELETE",
+  SHOW_SIGN_IN_PAGE: "SHOW SIGN IN PAGE",
+  BUTTON_TAGS_TOGGLE_OBJECT: "BUTTON TAGS",
+
   POST: {
     IMAGE: "IMAGE TRUE",
     POST_BODY: "POST BODY",
@@ -122,12 +140,14 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
     POST_TITLE: "POST TITLE",
     POST_AS_AGENT: "POST AS AGENT",
   },
+
   tagButton: {
     Budget: "Budget",
     Location: "Location",
     "Deal Status": "Deal Open",
     "Apartment Size": "Apartment Size",
   },
+
   buttonTagsToggle: {
     APP: "APP",
     BUDGET: "BUDGET",
@@ -135,14 +155,17 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
     APARTMENT: "APARTMENT",
     DEAL_STATUS: "DEAL STATUS",
   },
-  EditAndDeleteButton: "EDIT AND DELETE",
-  SHOW_SIGN_IN_PAGE: "SHOW SIGN IN PAGE",
 };
 
 export const APP_INITIAL_STATE: appStateType = {
+  postId: "",
   postFeed: [],
   userDocId: null,
-  postId: "",
+  uploadProgress: 0,
+  uploadImage: false,
+  showSignInPage: false,
+  EditAndDeleteButton: false,
+
   post: {
     image: false,
     postBody: "",
@@ -150,22 +173,20 @@ export const APP_INITIAL_STATE: appStateType = {
     postTitle: "",
     postAsAgent: false,
   },
+
   tagButton: {
     Budget: "",
     Location: "",
     "Apartment Size": "",
     "Deal Status": "Deal Status",
   },
+
   buttonTagsToggle: {
     budget: false,
     location: false,
     apartment: false,
     dealStatus: false,
   },
-  uploadImage: false,
-  showSignInPage: false,
-  uploadProgress: 0,
-  EditAndDeleteButton: false,
 };
 
 export interface contextProps {

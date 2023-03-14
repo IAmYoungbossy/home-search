@@ -8,22 +8,16 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import {
   actionType,
-  APP_ACTION_TYPES,
   contextProps,
   ShowPosterCardProps,
 } from "../../utilities/typesAndInitialStateObj";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
+import { editPost } from "../../utilities/createPostHelperFn";
 import { IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
-import {
-  collection,
-  doc,
-  DocumentData,
-  getDoc,
-  onSnapshot,
-} from "firebase/firestore";
+import { doc, collection, onSnapshot, DocumentData } from "firebase/firestore";
 
 interface IClientCard {
   secondary?: string;
@@ -216,98 +210,7 @@ function EditAndDeleteButtons({
   return (
     <SC.StyledEditAndDeleteButtons onClick={(e) => e.stopPropagation()}>
       <li>
-        <button
-          onClick={() => {
-            (async () => {
-              const postRef = doc(db, "USERS", userId, "POSTS", postId);
-              const snapshot = await getDoc(postRef);
-              const snapshotData = snapshot.data() as DocumentData;
-              if (snapshotData.postAsAgent) {
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.POST.POST_AS_AGENT,
-                  payload: snapshotData.postAsAgent,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.POST.POST_TITLE,
-                  payload: snapshotData.postTitle,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.POST.POST_BODY,
-                  payload: snapshotData.postDesc,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.POST.imageURL,
-                  payload: snapshotData.imageUrl,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.tagButton["Apartment Size"],
-                  payload: snapshotData.apartmentSize,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.tagButton.Budget,
-                  payload: snapshotData.budget,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.tagButton.Location,
-                  payload: snapshotData.location,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.userDocId,
-                  payload: snapshotData.userDocId,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.postId,
-                  payload: snapshotData.postId,
-                });
-              } else if (!snapshotData.postAsAgent) {
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.POST.POST_AS_AGENT,
-                  payload: snapshotData.postAsAgent,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.POST.POST_TITLE,
-                  payload: snapshotData.postTitle,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.POST.POST_BODY,
-                  payload: snapshotData.postDesc,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.tagButton["Apartment Size"],
-                  payload: snapshotData.apartmentSize,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.tagButton.Budget,
-                  payload: snapshotData.budget,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.userDocId,
-                  payload: snapshotData.userDocId,
-                });
-                getPostFields({
-                  dispatch,
-                  type: APP_ACTION_TYPES.postId,
-                  payload: snapshotData.postId,
-                });
-              }
-            })();
-          }}
-        >
+        <button onClick={async () => await editPost(userId, postId, dispatch)}>
           <Link to={`edit/${postId as string}`}>Edit Post</Link>
         </button>
       </li>

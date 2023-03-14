@@ -175,6 +175,16 @@ export const appReducer = (
         ...JSON.parse(JSON.stringify(state)),
         postId: action.payload as boolean,
       };
+    case APP_ACTION_TYPES.POST_OBJECT:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        post: action.payload as boolean,
+      };
+    case APP_ACTION_TYPES.BUTTON_TAGS_TOGGLE_OBJECT:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        buttonTagsToggle: action.payload as boolean,
+      };
 
     default:
       return state;

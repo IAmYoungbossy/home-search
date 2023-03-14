@@ -4,7 +4,10 @@ import {
   IAppActionTypes,
   APP_ACTION_TYPES,
   IButtonTagsToggle,
+  APP_INITIAL_STATE,
 } from "./typesAndInitialStateObj";
+import { db } from "../firebaseConfig";
+import { doc, DocumentData, getDoc } from "firebase/firestore";
 
 type buttonTagsType = {
   svg: JSX.Element;
@@ -229,3 +232,80 @@ export function onClickToggleButtonTags(
     type: APP_ACTION_TYPES.EditAndDeleteButton,
   });
 }
+
+export function editAgentCard(
+  dispatch: React.Dispatch<actionType>,
+  snapshotData: DocumentData
+) {
+  dispatch({
+    type: APP_ACTION_TYPES.POST_OBJECT,
+    payload: {
+      ...APP_INITIAL_STATE.post,
+      image: true,
+      postBody: snapshotData.postDesc,
+      imageURL: snapshotData.imageUrl,
+      postTitle: snapshotData.postTitle,
+      postAsAgent: snapshotData.postAsAgent,
+    },
+  });
+  dispatch({
+    type: APP_ACTION_TYPES.BUTTON_TAGS_TOGGLE_OBJECT,
+    payload: {
+      ...APP_INITIAL_STATE.tagButton,
+      Budget: snapshotData.budget,
+      Location: snapshotData.location,
+      "Apartment Size": snapshotData.apartmentSize,
+    },
+  });
+  dispatch({
+    payload: snapshotData.userDocId,
+    type: APP_ACTION_TYPES.userDocId,
+  });
+  dispatch({
+    payload: snapshotData.postId,
+    type: APP_ACTION_TYPES.postId,
+  });
+}
+
+export function editClientCard(
+  dispatch: React.Dispatch<actionType>,
+  snapshotData: DocumentData
+) {
+  dispatch({
+    type: APP_ACTION_TYPES.POST_OBJECT,
+    payload: {
+      ...APP_INITIAL_STATE.post,
+      postBody: snapshotData.postDesc,
+      postTitle: snapshotData.postTitle,
+      postAsAgent: snapshotData.postAsAgent,
+    },
+  });
+  dispatch({
+    type: APP_ACTION_TYPES.BUTTON_TAGS_TOGGLE_OBJECT,
+    payload: {
+      ...APP_INITIAL_STATE.tagButton,
+      Budget: snapshotData.budget,
+      "Apartment Size": snapshotData.apartmentSize,
+    },
+  });
+  dispatch({
+    payload: snapshotData.userDocId,
+    type: APP_ACTION_TYPES.userDocId,
+  });
+  dispatch({
+    payload: snapshotData.postId,
+    type: APP_ACTION_TYPES.postId,
+  });
+}
+
+export const editPost = async (
+  userId: string,
+  postId: string,
+  dispatch: React.Dispatch<actionType>
+) => {
+  const postRef = doc(db, "USERS", userId, "POSTS", postId);
+  const snapshot = await getDoc(postRef);
+  const snapshotData = snapshot.data() as DocumentData;
+  if (snapshotData.postAsAgent) editAgentCard(dispatch, snapshotData);
+  if (!snapshotData.postAsAgent) editClientCard(dispatch, snapshotData);
+};
