@@ -7,7 +7,12 @@ import {
   APP_INITIAL_STATE,
 } from "./typesAndInitialStateObj";
 import { db } from "../firebaseConfig";
-import { doc, DocumentData, getDoc } from "firebase/firestore";
+import {
+  doc,
+  DocumentData,
+  DocumentSnapshot,
+  getDoc,
+} from "firebase/firestore";
 
 type buttonTagsType = {
   svg: JSX.Element;
@@ -233,79 +238,103 @@ export function onClickToggleButtonTags(
   });
 }
 
-export function editAgentCard(
-  dispatch: React.Dispatch<actionType>,
-  snapshotData: DocumentData
-) {
+interface IEditCard {
+  dispatch: React.Dispatch<actionType>;
+  snapshot: DocumentSnapshot<DocumentData>;
+}
+
+export function editAgentCard({ dispatch, snapshot }: IEditCard) {
+  const {
+    budget,
+    postId,
+    imageUrl,
+    postDesc,
+    location,
+    postTitle,
+    userDocId,
+    postAsAgent,
+    apartmentSize,
+  } = snapshot.data() as DocumentData;
+
   dispatch({
     type: APP_ACTION_TYPES.POST_OBJECT,
     payload: {
       ...APP_INITIAL_STATE.post,
       image: true,
-      postBody: snapshotData.postDesc,
-      imageURL: snapshotData.imageUrl,
-      postTitle: snapshotData.postTitle,
-      postAsAgent: snapshotData.postAsAgent,
+      postBody: postDesc,
+      imageURL: imageUrl,
+      postTitle: postTitle,
+      postAsAgent: postAsAgent,
     },
   });
   dispatch({
     type: APP_ACTION_TYPES.BUTTON_TAGS_TOGGLE_OBJECT,
     payload: {
       ...APP_INITIAL_STATE.tagButton,
-      Budget: snapshotData.budget,
-      Location: snapshotData.location,
-      "Apartment Size": snapshotData.apartmentSize,
+      Budget: budget,
+      Location: location,
+      "Apartment Size": apartmentSize,
     },
   });
   dispatch({
-    payload: snapshotData.userDocId,
+    payload: userDocId,
     type: APP_ACTION_TYPES.userDocId,
   });
   dispatch({
-    payload: snapshotData.postId,
+    payload: postId,
     type: APP_ACTION_TYPES.postId,
   });
 }
 
-export function editClientCard(
-  dispatch: React.Dispatch<actionType>,
-  snapshotData: DocumentData
-) {
+export function editClientCard({ dispatch, snapshot }: IEditCard) {
+  const {
+    budget,
+    postId,
+    postDesc,
+    postTitle,
+    userDocId,
+    postAsAgent,
+    apartmentSize,
+  } = snapshot.data() as DocumentData;
+
   dispatch({
     type: APP_ACTION_TYPES.POST_OBJECT,
     payload: {
       ...APP_INITIAL_STATE.post,
-      postBody: snapshotData.postDesc,
-      postTitle: snapshotData.postTitle,
-      postAsAgent: snapshotData.postAsAgent,
+      postBody: postDesc,
+      postTitle: postTitle,
+      postAsAgent: postAsAgent,
     },
   });
   dispatch({
     type: APP_ACTION_TYPES.BUTTON_TAGS_TOGGLE_OBJECT,
     payload: {
       ...APP_INITIAL_STATE.tagButton,
-      Budget: snapshotData.budget,
-      "Apartment Size": snapshotData.apartmentSize,
+      Budget: budget,
+      "Apartment Size": apartmentSize,
     },
   });
   dispatch({
-    payload: snapshotData.userDocId,
+    payload: userDocId,
     type: APP_ACTION_TYPES.userDocId,
   });
   dispatch({
-    payload: snapshotData.postId,
+    payload: postId,
     type: APP_ACTION_TYPES.postId,
   });
 }
 
-export const editPost = async (
-  userId: string,
-  postId: string,
-  dispatch: React.Dispatch<actionType>
-) => {
-  const postRef = doc(db, "USERS", userId, "POSTS", postId);
-  const snapshot = await getDoc(postRef);
-  const snapshotData = snapshot.data() as DocumentData;
-  if (snapshotData.postAsAgent) editAgentCard(dispatch, snapshotData);
-  if (!snapshotData.postAsAgent) editClientCard(dispatch, snapshotData);
+interface IEditPost {
+  userId: string;
+  postId: string;
+  dispatch: React.Dispatch<actionType>;
+}
+
+// Function checks which post card type to edit
+export const editPost = async ({ userId, postId, dispatch }: IEditPost) => {
+  const snapshot = await getDoc(doc(db, "USERS", userId, "POSTS", postId));
+  const { postAsAgent } = snapshot.data() as DocumentData;
+
+  if (postAsAgent) editAgentCard({ dispatch, snapshot });
+  if (!postAsAgent) editClientCard({ dispatch, snapshot });
 };

@@ -210,7 +210,9 @@ function EditAndDeleteButtons({
   return (
     <SC.StyledEditAndDeleteButtons onClick={(e) => e.stopPropagation()}>
       <li>
-        <button onClick={async () => await editPost(userId, postId, dispatch)}>
+        <button
+          onClick={async () => await editPost({ userId, postId, dispatch })}
+        >
           <Link to={`edit/${postId as string}`}>Edit Post</Link>
         </button>
       </li>
