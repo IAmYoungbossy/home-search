@@ -257,15 +257,8 @@ export function editAgentCard({ dispatch, snapshot }: IEditCard) {
   } = snapshot.data() as DocumentData;
 
   dispatch({
-    type: APP_ACTION_TYPES.POST_OBJECT,
-    payload: {
-      ...APP_INITIAL_STATE.post,
-      image: true,
-      postBody: postDesc,
-      imageURL: imageUrl,
-      postTitle: postTitle,
-      postAsAgent: postAsAgent,
-    },
+    type: APP_ACTION_TYPES.tagButton["Apartment Size"],
+    payload: apartmentSize,
   });
   dispatch({
     type: APP_ACTION_TYPES.tagButton.Location,
@@ -276,8 +269,15 @@ export function editAgentCard({ dispatch, snapshot }: IEditCard) {
     payload: budget,
   });
   dispatch({
-    type: APP_ACTION_TYPES.tagButton["Apartment Size"],
-    payload: apartmentSize,
+    type: APP_ACTION_TYPES.POST_OBJECT,
+    payload: {
+      ...APP_INITIAL_STATE.post,
+      image: true,
+      postBody: postDesc,
+      imageURL: imageUrl,
+      postTitle: postTitle,
+      postAsAgent: postAsAgent,
+    },
   });
   dispatch({
     payload: userDocId,
@@ -301,6 +301,14 @@ export function editClientCard({ dispatch, snapshot }: IEditCard) {
   } = snapshot.data() as DocumentData;
 
   dispatch({
+    type: APP_ACTION_TYPES.tagButton["Apartment Size"],
+    payload: apartmentSize,
+  });
+  dispatch({
+    type: APP_ACTION_TYPES.tagButton.Budget,
+    payload: budget,
+  });
+  dispatch({
     type: APP_ACTION_TYPES.POST_OBJECT,
     payload: {
       ...APP_INITIAL_STATE.post,
@@ -308,14 +316,6 @@ export function editClientCard({ dispatch, snapshot }: IEditCard) {
       postTitle: postTitle,
       postAsAgent: postAsAgent,
     },
-  });
-  dispatch({
-    type: APP_ACTION_TYPES.tagButton.Budget,
-    payload: budget,
-  });
-  dispatch({
-    type: APP_ACTION_TYPES.tagButton["Apartment Size"],
-    payload: apartmentSize,
   });
   dispatch({
     payload: userDocId,

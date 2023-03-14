@@ -238,7 +238,7 @@ function Tags() {
     showApartment,
     buttonTagsToggle,
   } = Helper.showTags(state);
-  // console.log(state.tagButton);
+
   return (
     <SC.StyledTag>
       {!buttonTagsToggle.dealStatus && state.post.postAsAgent && (
