@@ -162,6 +162,37 @@ async function addPostId({ db, userDocId, postId }: IAddPostId) {
   });
 }
 
+interface IEditPostInDatabase extends IaddPostToFirestore {
+  postId: string;
+}
+
+async function editPostInDatabase({
+  budget,
+  postId,
+  postDesc,
+  imageUrl,
+  location,
+  postTitle,
+  userDocId,
+  dealStatus,
+  postAsAgent,
+  apartmentSize,
+}: IEditPostInDatabase) {
+  const docRef = doc(db, "USERS", userDocId as string, "POSTS", postId);
+  await updateDoc(docRef, {
+    budget,
+    postId,
+    postDesc,
+    imageUrl,
+    location,
+    postTitle,
+    userDocId,
+    dealStatus,
+    postAsAgent,
+    apartmentSize,
+  });
+}
+
 interface IUploadFileToStorage {
   file: File;
   dispatch: React.Dispatch<actionType>;
