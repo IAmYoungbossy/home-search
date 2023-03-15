@@ -84,6 +84,7 @@ export const createNewUserData = async (
 };
 
 interface IaddPostToFirestore {
+  postId?: string;
   postDesc: string;
   postTitle: string;
   location?: string;
@@ -93,11 +94,16 @@ interface IaddPostToFirestore {
   apartmentSize?: string;
   budget: string | number;
   userDocId: string | null;
+  postType?: "create" | "edit";
+  dispatch?: React.Dispatch<actionType>;
 }
 
 export const addPostToFirestore = async ({
   budget,
+  postId,
   postDesc,
+  dispatch,
+  postType,
   imageUrl,
   location,
   postTitle,
@@ -119,17 +125,53 @@ export const addPostToFirestore = async ({
     Downvotes: arrayUnion(),
   };
 
+  console.log(postType);
+
   const postData = postAsAgent
     ? { ...commonData, imageUrl, location, dealStatus }
     : { ...commonData };
 
-  const document = await addDoc(
-    collection(db, "USERS", userDocId as string, "POSTS"),
-    postData
-  );
+  if (postType === "create") {
+    console.log(1);
+    const document = await addDoc(
+      collection(db, "USERS", userDocId as string, "POSTS"),
+      postData
+    );
+    const postId = document.id;
+    await addPostId({ db, userDocId, postId });
+  }
 
-  const postId = document.id;
-  addPostId({ db, userDocId, postId });
+  if (postType === "edit" && dispatch) {
+    console.log(2);
+    console.log({
+      budget,
+      postId,
+      postDesc,
+      imageUrl,
+      location,
+      postTitle,
+      userDocId,
+      dealStatus,
+      postAsAgent,
+      apartmentSize,
+    });
+    await editPostInDatabase({
+      budget,
+      postId,
+      postDesc,
+      imageUrl,
+      location,
+      postTitle,
+      userDocId,
+      dealStatus,
+      postAsAgent,
+      apartmentSize,
+    });
+    dispatch({
+      payload: "create",
+      type: APP_ACTION_TYPES.POST_TYPE,
+    });
+  }
 };
 
 interface IAddPostId {
@@ -145,9 +187,7 @@ async function addPostId({ db, userDocId, postId }: IAddPostId) {
   });
 }
 
-interface IEditPostInDatabase extends IaddPostToFirestore {
-  postId: string;
-}
+interface IEditPostInDatabase extends IaddPostToFirestore {}
 
 export async function editPostInDatabase({
   budget,
@@ -161,18 +201,22 @@ export async function editPostInDatabase({
   postAsAgent,
   apartmentSize,
 }: IEditPostInDatabase) {
-  const docRef = doc(db, "USERS", userDocId as string, "POSTS", postId);
-  const updates: Record<string, any> = {
-    budget,
-    postId,
+  const docRef = doc(
+    db,
+    "USERS",
+    userDocId as string,
+    "POSTS",
+    postId as string
+  );
+  const updates: Record<string, string | boolean> = {
     postDesc,
-    imageUrl,
-    location,
     postTitle,
-    userDocId,
-    dealStatus,
     postAsAgent,
-    apartmentSize,
+    budget: budget as string,
+    imageUrl: imageUrl as string,
+    location: location as string,
+    dealStatus: dealStatus as string,
+    apartmentSize: apartmentSize as string,
   };
 
   if (!postAsAgent) {

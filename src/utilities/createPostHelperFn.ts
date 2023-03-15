@@ -237,14 +237,14 @@ export function onClickToggleButtonTags(
 }
 
 interface IEditCard {
+  postId: string;
   dispatch: React.Dispatch<actionType>;
   snapshot: DocumentSnapshot<DocumentData>;
 }
 
-export function editAgentCard({ dispatch, snapshot }: IEditCard) {
+export function editAgentCard({ dispatch, snapshot, postId }: IEditCard) {
   const {
     budget,
-    postId,
     imageUrl,
     postDesc,
     location,
@@ -253,7 +253,7 @@ export function editAgentCard({ dispatch, snapshot }: IEditCard) {
     postAsAgent,
     apartmentSize,
   } = snapshot.data() as DocumentData;
-
+  console.log(postId);
   dispatch({
     type: APP_ACTION_TYPES.tagButton["Apartment Size"],
     payload: apartmentSize,
@@ -287,17 +287,10 @@ export function editAgentCard({ dispatch, snapshot }: IEditCard) {
   });
 }
 
-export function editClientCard({ dispatch, snapshot }: IEditCard) {
-  const {
-    budget,
-    postId,
-    postDesc,
-    postTitle,
-    userDocId,
-    postAsAgent,
-    apartmentSize,
-  } = snapshot.data() as DocumentData;
-
+export function editClientCard({ dispatch, snapshot, postId }: IEditCard) {
+  const { budget, postDesc, postTitle, userDocId, postAsAgent, apartmentSize } =
+    snapshot.data() as DocumentData;
+  console.log(postId);
   dispatch({
     type: APP_ACTION_TYPES.tagButton["Apartment Size"],
     payload: apartmentSize,
@@ -336,6 +329,6 @@ export const editPost = async ({ userId, postId, dispatch }: IEditPost) => {
   const snapshot = await getDoc(doc(db, "USERS", userId, "POSTS", postId));
   const { postAsAgent } = snapshot.data() as DocumentData;
 
-  if (postAsAgent) editAgentCard({ dispatch, snapshot });
-  if (!postAsAgent) editClientCard({ dispatch, snapshot });
+  if (postAsAgent) editAgentCard({ dispatch, snapshot, postId });
+  if (!postAsAgent) editClientCard({ dispatch, snapshot, postId });
 };

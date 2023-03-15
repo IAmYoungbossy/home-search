@@ -8,6 +8,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import {
   actionType,
+  APP_ACTION_TYPES,
   contextProps,
   ShowPosterCardProps,
 } from "../../utilities/typesAndInitialStateObj";
@@ -211,7 +212,14 @@ function EditAndDeleteButtons({
     <SC.StyledEditAndDeleteButtons onClick={(e) => e.stopPropagation()}>
       <li>
         <button
-          onClick={async () => await editPost({ userId, postId, dispatch })}
+          onClick={async () => {
+            await editPost({ userId, postId, dispatch });
+            console.log(postId);
+            dispatch({
+              payload: "edit",
+              type: APP_ACTION_TYPES.POST_TYPE,
+            });
+          }}
         >
           <Link to={`edit/${postId as string}`}>Edit Post</Link>
         </button>

@@ -69,6 +69,7 @@ export type appStateType = {
   uploadProgress: number;
   showSignInPage: boolean;
   tagButton: tagButtonType;
+  postType: "create" | "edit";
   EditAndDeleteButton: boolean;
   postFeed: IShowPostCard[] | [];
   buttonTagsToggle: IButtonTagsToggle;
@@ -101,6 +102,7 @@ export type IAppActionTypes = {
   userDocId: string;
   uploadImage: string;
   POST_OBJECT: string;
+  POST_TYPE: "POST TYPE";
   uploadProgress: string;
   SHOW_SIGN_IN_PAGE: string;
   EditAndDeleteButton: string;
@@ -126,6 +128,7 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
   userDocId: "USER",
   postId: "POST_ID",
   postFeed: "POSTFEED",
+  POST_TYPE: "POST TYPE",
   POST_OBJECT: "POST OBJECT",
   uploadImage: "UPLOAD IMAGE",
   uploadProgress: "UPLOAD PROGRESS",
@@ -162,6 +165,7 @@ export const APP_INITIAL_STATE: appStateType = {
   postFeed: [],
   userDocId: null,
   uploadProgress: 0,
+  postType: "create",
   uploadImage: false,
   showSignInPage: false,
   EditAndDeleteButton: false,

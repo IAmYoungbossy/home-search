@@ -378,7 +378,7 @@ function Draft() {
 }
 
 function ActionButtons() {
-  const { state } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(AppContext) as contextProps;
   const allFieldsFilled = Helper.preventEmptyFieldSubmition(state);
 
   return (
@@ -389,6 +389,9 @@ function ActionButtons() {
         <button
           onClick={() => {
             addPostToFirestore({
+              dispatch,
+              postId: state.postId,
+              postType: state.postType,
               userDocId: state.userDocId,
               postDesc: state.post.postDesc,
               imageUrl: state.post.imageURL,
@@ -401,7 +404,7 @@ function ActionButtons() {
             });
           }}
         >
-          Post
+          {state.postType === "create" ? "Create Post" : "Save Edit"}
         </button>
       </div>
     </SC.StyleActionButtons>

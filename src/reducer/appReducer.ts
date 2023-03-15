@@ -186,6 +186,12 @@ export const appReducer = (
         buttonTagsToggle: action.payload as boolean,
       };
 
+    case APP_ACTION_TYPES.POST_TYPE:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        postType: action.payload as "create" | "edit",
+      };
+
     default:
       return state;
   }
