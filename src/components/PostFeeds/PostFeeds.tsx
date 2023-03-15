@@ -41,7 +41,7 @@ function SideBar() {
   );
 }
 
-function ShowPostCard(post: IShowPostCard) {
+function ShowPostCard(post: IShowPostCard, index: number) {
   const postData = post.data;
   if (post.data.postAsAgent) {
     return (
@@ -58,7 +58,7 @@ function ShowPostCard(post: IShowPostCard) {
             dealStatus={postData.dealStatus}
             apartmentSize={postData.apartmentSize}
           >
-            <AgentCard />
+            {post && <AgentCard />}
           </ShowPosterCardProvider>
         )}
       </Fragment>
@@ -74,7 +74,7 @@ function ShowPostCard(post: IShowPostCard) {
             postDesc={postData.postDesc}
             apartmentSize={postData.apartmentSize}
           >
-            <ClientCard secondary="" />
+            {post && <ClientCard secondary="" />}
           </ShowPosterCardProvider>
         )}
       </Fragment>

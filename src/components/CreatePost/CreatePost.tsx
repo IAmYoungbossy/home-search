@@ -1,3 +1,8 @@
+import {
+  getAllUserDocs,
+  addPostToFirestore,
+  uploadFileToStorage,
+} from "../../firebaseCRUD";
 import { useContext } from "react";
 import { GrAdd } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
@@ -15,21 +20,9 @@ import { RiErrorWarningLine } from "react-icons/ri";
 import { AppContext } from "../../context/AppContext";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import * as Helper from "../../utilities/createPostHelperFn";
-import {
-  contextProps,
-  IShowPostCard,
-} from "../../utilities/typesAndInitialStateObj";
-import {
-  addPostToFirestore,
-  getAllUserDocs,
-  uploadFileToStorage,
-} from "../../firebaseCRUD";
-import { useLoaderData } from "react-router-dom";
+import { contextProps } from "../../utilities/typesAndInitialStateObj";
 
 export default function CreatePostPage() {
-  // const posts = useLoaderData() as IShowPostCard[];
-  // const postObj = posts.filter((post) => post.data.postId === id)[0];
-  // console.log(posts);
   return (
     <>
       <SC.StyledCreatePostPage>

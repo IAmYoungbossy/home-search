@@ -22,6 +22,7 @@ import {
   DocumentData,
   QuerySnapshot,
   DocumentReference,
+  deleteDoc,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 import {
@@ -125,14 +126,12 @@ export const addPostToFirestore = async ({
     Downvotes: arrayUnion(),
   };
 
-  console.log(postType);
-
   const postData = postAsAgent
     ? { ...commonData, imageUrl, location, dealStatus }
     : { ...commonData };
 
   if (postType === "create") {
-    console.log(1);
+    console.log(postData);
     const document = await addDoc(
       collection(db, "USERS", userDocId as string, "POSTS"),
       postData
@@ -142,19 +141,6 @@ export const addPostToFirestore = async ({
   }
 
   if (postType === "edit" && dispatch) {
-    console.log(2);
-    console.log({
-      budget,
-      postId,
-      postDesc,
-      imageUrl,
-      location,
-      postTitle,
-      userDocId,
-      dealStatus,
-      postAsAgent,
-      apartmentSize,
-    });
     await editPostInDatabase({
       budget,
       postId,
@@ -455,3 +441,13 @@ export async function addComment({
     commentId,
   });
 }
+
+interface IDeletePost {
+  postId: string;
+  userId: string;
+}
+
+export const deletePost = async ({ postId, userId }: IDeletePost) => {
+  const docRef = doc(db, "USERS", userId, "POSTS", postId);
+  await deleteDoc(docRef);
+};

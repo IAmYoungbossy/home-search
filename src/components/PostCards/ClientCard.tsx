@@ -15,7 +15,7 @@ import {
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { editPost } from "../../utilities/createPostHelperFn";
-import { IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
+import { deletePost, IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 import { doc, collection, onSnapshot, DocumentData } from "firebase/firestore";
@@ -71,7 +71,7 @@ export function VoteArrow({ primary, secondary }: VoteArrowProps) {
   const [upvotes, setUpvotes] = useState<string[]>([]);
 
   const togglevotesColor = (votes: string[]) => {
-    if (votes.includes(user?.uid as string)) return true;
+    if (votes && votes.includes(user?.uid as string)) return true;
     return false;
   };
 
@@ -79,7 +79,6 @@ export function VoteArrow({ primary, secondary }: VoteArrowProps) {
     const postDocId = postId as string;
     const posterDocId = userId as string;
     const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
-
     const unsubUpvotes = onSnapshot(docRef, (snapshot) => {
       setUpvotes(snapshot.data()?.Upvotes);
     });
@@ -91,7 +90,7 @@ export function VoteArrow({ primary, secondary }: VoteArrowProps) {
       unsubUpvotes();
       unsubDownvotes();
     };
-  }, [db]);
+  }, [db, postId, userId]);
 
   return (
     <SC.StyledVoteArrow
@@ -113,7 +112,7 @@ export function VoteArrow({ primary, secondary }: VoteArrowProps) {
           }}
         />
       </div>
-      <p>{upvotes.length - downvotes.length}</p>
+      <p>{upvotes && downvotes && upvotes.length - downvotes.length}</p>
       <div>
         <ArrowDownSVG
           onClick={() => {
@@ -225,7 +224,13 @@ function EditAndDeleteButtons({
         </button>
       </li>
       <li>
-        <button>Delete Post</button>
+        <button
+          onClick={async () => {
+            await deletePost({ postId, userId });
+          }}
+        >
+          Delete Post
+        </button>
       </li>
     </SC.StyledEditAndDeleteButtons>
   );
@@ -291,7 +296,7 @@ function InteractWithPostIcons() {
   }, [db]);
 
   const toggleLikeColor = () => {
-    if (likes.includes(user?.uid as string)) return true;
+    if (likes && likes.includes(user?.uid as string)) return true;
     return false;
   };
 
@@ -313,7 +318,7 @@ function InteractWithPostIcons() {
             }))();
         }}
       >
-        <SlLike /> {likes.length} Like
+        <SlLike /> {likes && likes.length} Like
       </div>
     </SC.StyledInteractWithPostIcons>
   );
