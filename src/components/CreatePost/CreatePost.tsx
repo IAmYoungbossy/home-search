@@ -261,7 +261,7 @@ function PostTextArea() {
         cols={10}
         rows={10}
         name="text"
-        value={state.post.postBody}
+        value={state.post.postDesc}
         placeholder="Enter description here."
         onChange={(e) => Helper.handleInputChange(e, dispatch)}
       ></textarea>
@@ -390,7 +390,7 @@ function ActionButtons() {
           onClick={() => {
             addPostToFirestore({
               userDocId: state.userDocId,
-              postDesc: state.post.postBody,
+              postDesc: state.post.postDesc,
               imageUrl: state.post.imageURL,
               budget: state.tagButton.Budget,
               postTitle: state.post.postTitle,

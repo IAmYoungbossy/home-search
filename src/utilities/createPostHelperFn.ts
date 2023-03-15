@@ -127,12 +127,12 @@ export const inputValue = (
 };
 
 export const preventEmptyFieldSubmition = (state: appStateType) => {
-  const postBody = state.post.postBody;
+  const postDesc = state.post.postDesc;
   const postTitle = state.post.postTitle;
   return (
-    postBody.length > 0 &&
+    postDesc.length > 0 &&
     postTitle.length > 0 &&
-    postBody.trim() !== "" &&
+    postDesc.trim() !== "" &&
     postTitle.trim() !== ""
   );
 };
@@ -153,7 +153,7 @@ export const handleInputChange = (
   dispatch: React.Dispatch<actionType>
 ) => {
   const updateObj = {
-    type: APP_ACTION_TYPES.POST.POST_BODY,
+    type: APP_ACTION_TYPES.POST.POST_DESC,
     payload: e.target.value,
   };
   dispatch(updateObj);
@@ -167,9 +167,7 @@ export const showTags = (state: appStateType) => {
   const showLocation =
     !buttonTagsToggle.location && postAsAgent && tagButton.Location !== "";
   const showApartment =
-    !buttonTagsToggle.apartment &&
-    postAsAgent &&
-    tagButton["Apartment Size"] !== "";
+    !buttonTagsToggle.apartment && tagButton["Apartment Size"] !== "";
   return {
     showBudget,
     showLocation,
@@ -273,7 +271,7 @@ export function editAgentCard({ dispatch, snapshot }: IEditCard) {
     payload: {
       ...APP_INITIAL_STATE.post,
       image: true,
-      postBody: postDesc,
+      postDesc: postDesc,
       imageURL: imageUrl,
       postTitle: postTitle,
       postAsAgent: postAsAgent,
@@ -312,7 +310,7 @@ export function editClientCard({ dispatch, snapshot }: IEditCard) {
     type: APP_ACTION_TYPES.POST_OBJECT,
     payload: {
       ...APP_INITIAL_STATE.post,
-      postBody: postDesc,
+      postDesc: postDesc,
       postTitle: postTitle,
       postAsAgent: postAsAgent,
     },

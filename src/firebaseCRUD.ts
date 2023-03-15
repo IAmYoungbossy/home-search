@@ -106,47 +106,30 @@ export const addPostToFirestore = async ({
   postAsAgent,
   apartmentSize,
 }: IaddPostToFirestore) => {
-  if (postAsAgent) {
-    const document = await addDoc(
-      collection(db, "USERS", userDocId as string, "POSTS"),
-      {
-        budget,
-        postDesc,
-        imageUrl,
-        location,
-        postTitle,
-        userDocId,
-        dealStatus,
-        postAsAgent,
-        apartmentSize,
-        Likes: arrayUnion(),
-        Upvotes: arrayUnion(),
-        Comments: arrayUnion(),
-        Downvotes: arrayUnion(),
-      }
-    );
-    const postId = document.id;
-    addPostId({ db, userDocId, postId });
-  }
-  if (!postAsAgent) {
-    const document = await addDoc(
-      collection(db, "USERS", userDocId as string, "POSTS"),
-      {
-        budget,
-        postDesc,
-        postTitle,
-        userDocId,
-        postAsAgent,
-        apartmentSize,
-        Likes: arrayUnion(),
-        Upvotes: arrayUnion(),
-        Comments: arrayUnion(),
-        Downvotes: arrayUnion(),
-      }
-    );
-    const postId = document.id;
-    addPostId({ db, userDocId, postId });
-  }
+  const commonData = {
+    budget,
+    postDesc,
+    postTitle,
+    userDocId,
+    postAsAgent,
+    apartmentSize,
+    Likes: arrayUnion(),
+    Upvotes: arrayUnion(),
+    Comments: arrayUnion(),
+    Downvotes: arrayUnion(),
+  };
+
+  const postData = postAsAgent
+    ? { ...commonData, imageUrl, location, dealStatus }
+    : { ...commonData };
+
+  const document = await addDoc(
+    collection(db, "USERS", userDocId as string, "POSTS"),
+    postData
+  );
+
+  const postId = document.id;
+  addPostId({ db, userDocId, postId });
 };
 
 interface IAddPostId {
@@ -166,7 +149,7 @@ interface IEditPostInDatabase extends IaddPostToFirestore {
   postId: string;
 }
 
-async function editPostInDatabase({
+export async function editPostInDatabase({
   budget,
   postId,
   postDesc,
@@ -179,7 +162,7 @@ async function editPostInDatabase({
   apartmentSize,
 }: IEditPostInDatabase) {
   const docRef = doc(db, "USERS", userDocId as string, "POSTS", postId);
-  await updateDoc(docRef, {
+  const updates: Record<string, any> = {
     budget,
     postId,
     postDesc,
@@ -190,7 +173,15 @@ async function editPostInDatabase({
     dealStatus,
     postAsAgent,
     apartmentSize,
-  });
+  };
+
+  if (!postAsAgent) {
+    delete updates.location;
+    delete updates.imageUrl;
+    delete updates.dealStatus;
+  }
+
+  await updateDoc(docRef, updates);
 }
 
 interface IUploadFileToStorage {

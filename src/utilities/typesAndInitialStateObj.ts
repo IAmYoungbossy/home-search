@@ -32,7 +32,7 @@ export interface IShowPostCard {
 
 export interface appActionPostType {
   IMAGE: string;
-  POST_BODY: string;
+  POST_DESC: string;
   POST_TITLE: string;
   POST_AS_AGENT: string;
 }
@@ -46,7 +46,7 @@ export interface IButtonTagsToggle {
 
 export interface postInterface {
   image: boolean;
-  postBody: string;
+  postDesc: string;
   imageURL: string;
   postTitle: string;
   postAsAgent: boolean;
@@ -89,7 +89,7 @@ export type actionType = {
 interface IPostType {
   IMAGE: string;
   imageURL: string;
-  POST_BODY: string;
+  POST_DESC: string;
   POST_TITLE: string;
   POST_AS_AGENT: string;
 }
@@ -135,7 +135,7 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
 
   POST: {
     IMAGE: "IMAGE TRUE",
-    POST_BODY: "POST BODY",
+    POST_DESC: "POST BODY",
     imageURL: "IMAGE URL",
     POST_TITLE: "POST TITLE",
     POST_AS_AGENT: "POST AS AGENT",
@@ -168,7 +168,7 @@ export const APP_INITIAL_STATE: appStateType = {
 
   post: {
     image: false,
-    postBody: "",
+    postDesc: "",
     imageURL: "",
     postTitle: "",
     postAsAgent: false,

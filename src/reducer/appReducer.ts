@@ -33,12 +33,12 @@ export const appReducer = (
           postTitle: action.payload as string,
         },
       };
-    case APP_ACTION_TYPES.POST.POST_BODY:
+    case APP_ACTION_TYPES.POST.POST_DESC:
       return {
         ...JSON.parse(JSON.stringify(state)),
         post: {
           ...state.post,
-          postBody: action.payload as string,
+          postDesc: action.payload as string,
         },
       };
     case APP_ACTION_TYPES.POST.IMAGE:
