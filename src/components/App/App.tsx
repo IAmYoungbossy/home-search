@@ -15,15 +15,29 @@ import { onClickToggleButtonTags } from "../../utilities/createPostHelperFn";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<SocialPageLayout />}>
-      <Route index element={<SocialPage />} loader={postLoader} />
+    <Route
+      path="/"
+      element={<SocialPageLayout />}
+    >
       <Route
-        path="edit/:id"
+        index
+        element={<SocialPage />}
+        loader={postLoader}
+      />
+      <Route
+        path="edit-post/:id"
         element={<CreatePostPage />}
         loader={editPostLoader}
       />
-      <Route path="post" element={<CreatePostPage />} />
-      <Route path="comment/:id" element={<Comment />} loader={commentLoader} />
+      <Route
+        path="create-post"
+        element={<CreatePostPage />}
+      />
+      <Route
+        path="comment/:id"
+        element={<Comment />}
+        loader={commentLoader}
+      />
     </Route>
   )
 );

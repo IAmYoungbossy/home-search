@@ -19,6 +19,8 @@ import { ClientCard, OriginalPoster } from "../PostCards/ClientCard";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 import { addComment, getAllUserDocs, postReaction } from "../../firebaseCRUD";
 import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
+import { AddCommentButton, IAddCommentButton } from "./AddCommentButton";
+import { CommentReactions, ICommentReaction } from "./CommentReactions";
 
 export default function Comment() {
   const [comments, setComments] = useState<
@@ -120,14 +122,7 @@ export async function commentLoader() {
   return listOfPosts;
 }
 
-interface ICommentVote {
-  userId: string;
-  postId: string;
-  commentId: string;
-  commentIndex: number;
-}
-
-interface ICommentCard extends ICommentVote {
+interface ICommentCard extends ICommentReaction {
   comment: string;
 }
 
@@ -162,7 +157,7 @@ function CommentBox({
   return (
     <SC.StyledCommentBox>
       <p>{comment}</p>
-      <CommentVote
+      <CommentReactions
         postId={postId}
         userId={userId}
         commentId={commentId}
@@ -172,109 +167,7 @@ function CommentBox({
   );
 }
 
-function CommentVote({
-  userId,
-  postId,
-  commentIndex,
-  commentId,
-}: ICommentVote) {
-  const [downvotes, setDownvotes] = useState<string[]>([]);
-  const { user } = useContext(AppContext) as contextProps;
-  const [upvotes, setUpvotes] = useState<string[]>([]);
-  const [likes, setLikes] = useState<string[]>([]);
-
-  const togglevotesColor = (votes: string[]) => {
-    if (votes.includes(user?.uid as string)) return true;
-    return false;
-  };
-
-  useEffect(() => {
-    const postDocId = postId as string;
-    const posterDocId = userId as string;
-    const docRef = doc(
-      db,
-      "USERS",
-      posterDocId,
-      "POSTS",
-      postDocId,
-      "Comments",
-      commentId
-    );
-
-    const unsubUpvotes = onSnapshot(docRef, (snapshot) => {
-      setUpvotes(snapshot.data()?.Upvotes);
-    });
-    const unsubDownvotes = onSnapshot(docRef, (snapshot) => {
-      setDownvotes(snapshot.data()?.Downvotes);
-    });
-    const unsubLikes = onSnapshot(docRef, (snapshot) => {
-      setLikes(snapshot.data()?.Likes);
-    });
-
-    return () => {
-      unsubLikes();
-      unsubUpvotes();
-      unsubDownvotes();
-    };
-  }, [db]);
-  return (
-    <SC.StyledReactionButtons>
-      <ul>
-        <li>
-          <ArrowUpSVG
-            onClick={() => {
-              (async () =>
-                await postReaction({
-                  userId,
-                  postId,
-                  commentId,
-                  commentIndex,
-                  voteType: "upvote",
-                  user: user as User,
-                }))();
-            }}
-          />
-          <p>{upvotes.length - downvotes.length}</p>
-          <ArrowDownSVG
-            onClick={() => {
-              (async () =>
-                await postReaction({
-                  userId,
-                  postId,
-                  commentId,
-                  commentIndex,
-                  user: user as User,
-                  voteType: "downvote",
-                }))();
-            }}
-          />
-        </li>
-        <SlLike
-          onClick={() => {
-            (async () =>
-              await postReaction({
-                userId,
-                postId,
-                commentId,
-                commentIndex,
-                voteType: "like",
-                user: user as User,
-              }))();
-          }}
-        />{" "}
-        {likes.length} Like
-      </ul>
-    </SC.StyledReactionButtons>
-  );
-}
-
-interface IRichTextEditor {
-  userId: string;
-  postId: string;
-  textValue?: string;
-}
-
-interface ITextArea extends IRichTextEditor {}
+interface ITextArea extends IAddCommentButton {}
 
 export function TextArea({ postId, userId }: ITextArea) {
   const [textValue, setTextValue] = useState("");
@@ -291,7 +184,11 @@ export function TextArea({ postId, userId }: ITextArea) {
         placeholder="What are your thought?"
         onChange={(e) => setTextValue(e.target.value)}
       ></textarea>
-      <RichTextEditor textValue={textValue} postId={postId} userId={userId} />
+      <AddCommentButton
+        textValue={textValue}
+        postId={postId}
+        userId={userId}
+      />
       <SortBy />
     </SC.StyledTextArea>
   );
@@ -315,27 +212,5 @@ function SortBy() {
       </h6>
       <hr />
     </SC.StyledSortBy>
-  );
-}
-
-function RichTextEditor({ userId, postId, textValue }: IRichTextEditor) {
-  const { user } = useContext(AppContext) as contextProps;
-  const name = user?.displayName as string;
-  const textareaValue = textValue as string;
-  const handleAddComment = () => {
-    if (textareaValue.length < 1) return;
-    (async () => {
-      await addComment({ name, userId, postId, comment: textareaValue });
-    })();
-  };
-
-  return (
-    <SC.StyledRichTextEditor bgColor={textareaValue.length > 0 ? true : false}>
-      <div>
-        <AiOutlineQuestionCircle />
-        <p>Switch to Fancy Pants Editor</p>
-      </div>
-      <button onClick={handleAddComment}>Comment</button>
-    </SC.StyledRichTextEditor>
   );
 }
