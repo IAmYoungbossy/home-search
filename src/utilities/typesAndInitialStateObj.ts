@@ -209,12 +209,16 @@ export interface ShowPosterCardProps {
   postId: string;
   budget: string;
   userId: string;
+  likes?: string[];
   bgImage?: string;
   postDesc: string;
+  upvotes?: string[];
   location?: string;
   postTitle?: string;
+  downvotes?: string[];
   dealStatus?: string;
   apartmentSize: string;
+  comments?: DocumentData[];
 }
 
 export interface IAppDataProvider extends PageProps, ShowPosterCardProps {}

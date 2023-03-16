@@ -2,23 +2,21 @@ import { User } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { SlLike } from "react-icons/sl";
 import * as SC from "./StyledClientCard";
-import { db } from "../../firebaseConfig";
 import { BiComment } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import {
   actionType,
-  APP_ACTION_TYPES,
   contextProps,
+  APP_ACTION_TYPES,
   ShowPosterCardProps,
 } from "../../utilities/typesAndInitialStateObj";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { editPost } from "../../utilities/createPostHelperFn";
-import { deletePost, IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
-import { doc, collection, onSnapshot, DocumentData } from "firebase/firestore";
+import { deletePost, IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
 
 interface IClientCard {
   secondary?: string;
@@ -63,41 +61,22 @@ export interface VoteArrowProps extends IClientCard {
 }
 
 export function VoteArrow({ primary, secondary }: VoteArrowProps) {
-  const { userId, postId } = useContext(
+  const { user } = useContext(AppContext) as contextProps;
+  const { userId, postId, upvotes, downvotes } = useContext(
     ShowPostCardContext
   ) as ShowPosterCardProps;
-  const [downvotes, setDownvotes] = useState<string[]>([]);
-  const { user } = useContext(AppContext) as contextProps;
-  const [upvotes, setUpvotes] = useState<string[]>([]);
 
   const togglevotesColor = (votes: string[]) => {
-    if (votes && votes.includes(user?.uid as string)) return true;
+    if (votes.includes(user?.uid as string)) return true;
     return false;
   };
-
-  useEffect(() => {
-    const postDocId = postId as string;
-    const posterDocId = userId as string;
-    const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
-    const unsubUpvotes = onSnapshot(docRef, (snapshot) => {
-      setUpvotes(snapshot.data()?.Upvotes);
-    });
-    const unsubDownvotes = onSnapshot(docRef, (snapshot) => {
-      setDownvotes(snapshot.data()?.Downvotes);
-    });
-
-    return () => {
-      unsubUpvotes();
-      unsubDownvotes();
-    };
-  }, [db, postId, userId]);
 
   return (
     <SC.StyledVoteArrow
       primary={primary}
       secondary={secondary}
-      upvoted={togglevotesColor(upvotes)}
-      downvoted={togglevotesColor(downvotes)}
+      upvoted={togglevotesColor(upvotes as string[])}
+      downvoted={togglevotesColor(downvotes as string[])}
     >
       <div>
         <ArrowUpSVG
@@ -261,42 +240,13 @@ export function Description() {
 }
 
 function InteractWithPostIcons() {
-  const { userId, postId } = useContext(
+  const { userId, postId, likes, comments } = useContext(
     ShowPostCardContext
   ) as ShowPosterCardProps;
   const { user } = useContext(AppContext) as contextProps;
-  const [likes, setLikes] = useState<string[]>([]);
-  const [comments, setComments] = useState<DocumentData[]>([]);
-
-  useEffect(() => {
-    const postDocId = postId as string;
-    const posterDocId = userId as string;
-    const docRef = doc(db, "USERS", posterDocId, "POSTS", postDocId);
-    const collectionRef = collection(
-      db,
-      "USERS",
-      posterDocId,
-      "POSTS",
-      postDocId,
-      "Comments"
-    );
-
-    const unsub = onSnapshot(docRef, (snapshot) => {
-      setLikes(snapshot.data()?.Likes);
-    });
-    const unSubCollectionRef = onSnapshot(collectionRef, (snapshot) => {
-      const comments = snapshot.docs.map((doc) => doc.data());
-      setComments(comments);
-    });
-
-    return () => {
-      unsub();
-      unSubCollectionRef();
-    };
-  }, [db]);
 
   const toggleLikeColor = () => {
-    if (likes && likes.includes(user?.uid as string)) return true;
+    if (likes?.includes(user?.uid as string)) return true;
     return false;
   };
 
@@ -304,7 +254,7 @@ function InteractWithPostIcons() {
     <SC.StyledInteractWithPostIcons liked={toggleLikeColor()}>
       <div>
         <Link to={`comment/${postId as string}`}>
-          <BiComment /> {comments.length} Comment
+          <BiComment /> {comments?.length} Comment
         </Link>
       </div>
       <div
@@ -318,7 +268,7 @@ function InteractWithPostIcons() {
             }))();
         }}
       >
-        <SlLike /> {likes && likes.length} Like
+        <SlLike /> {likes?.length} Like
       </div>
     </SC.StyledInteractWithPostIcons>
   );

@@ -5,6 +5,8 @@ import {
   APP_ACTION_TYPES,
   IButtonTagsToggle,
   APP_INITIAL_STATE,
+  IShowPostCard,
+  ICardProps,
 } from "./typesAndInitialStateObj";
 import { db } from "../firebaseConfig";
 import {
@@ -332,3 +334,38 @@ export const editPost = async ({ userId, postId, dispatch }: IEditPost) => {
   if (postAsAgent) editAgentCard({ dispatch, snapshot, postId });
   if (!postAsAgent) editClientCard({ dispatch, snapshot, postId });
 };
+
+interface IPostCardProps {
+  likes: string[];
+  upvotes: string[];
+  downvotes: string[];
+  post: IShowPostCard;
+  comments: DocumentData[];
+  postData: DocumentData | ICardProps;
+}
+
+export function postCardProps({
+  post,
+  likes,
+  upvotes,
+  postData,
+  comments,
+  downvotes,
+}: IPostCardProps) {
+  const props = {
+    likes,
+    postId: post.id,
+    upvotes: upvotes,
+    comments: comments,
+    downvotes: downvotes,
+    budget: postData.budget,
+    bgImage: postData.imageUrl,
+    userId: postData.userDocId,
+    location: postData.location,
+    postDesc: postData.postDesc,
+    postTitle: postData.postTitle,
+    dealStatus: postData.dealStatus,
+    apartmentSize: postData.apartmentSize,
+  };
+  return { props };
+}

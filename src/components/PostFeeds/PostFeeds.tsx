@@ -1,5 +1,5 @@
-import { Fragment } from "react";
 import * as SC from "./StyledPostFeeds";
+import { db } from "../../firebaseConfig";
 import AgentCard from "../PostCards/AgentCard";
 import FilterBar from "../SocialPage/FilterBar";
 import { useLoaderData } from "react-router-dom";
@@ -7,10 +7,13 @@ import CreatePost from "../SocialPage/CreatePost";
 import { ShieldSVG } from "../assets/Svg/SocialSVG";
 import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
+import { Fragment, useEffect, useState } from "react";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
+import { postCardProps } from "../../utilities/createPostHelperFn";
 import { IShowPostCard } from "../../utilities/typesAndInitialStateObj";
+import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 
 export default function PostFeeds() {
   return (
@@ -41,45 +44,68 @@ function SideBar() {
   );
 }
 
-function ShowPostCard(post: IShowPostCard, index: number) {
+function ShowPostCard(post: IShowPostCard) {
+  const [comments, setComments] = useState<DocumentData[]>([]);
+  const [downvotes, setDownvotes] = useState<string[]>([]);
+  const [upvotes, setUpvotes] = useState<string[]>([]);
+  const [likes, setLikes] = useState<string[]>([]);
   const postData = post.data;
-  if (post.data.postAsAgent) {
-    return (
-      <Fragment key={post.id}>
-        {post.id && (
-          <ShowPosterCardProvider
-            postId={post.id}
-            budget={postData.budget}
-            bgImage={postData.imageUrl}
-            userId={postData.userDocId}
-            location={postData.location}
-            postDesc={postData.postDesc}
-            postTitle={postData.postTitle}
-            dealStatus={postData.dealStatus}
-            apartmentSize={postData.apartmentSize}
-          >
-            {post && <AgentCard />}
-          </ShowPosterCardProvider>
-        )}
-      </Fragment>
+
+  useEffect(() => {
+    const postId = post.id as string;
+    const posterId = postData.userDocId as string;
+    const docRef = doc(db, "USERS", posterId, "POSTS", postId);
+    const colRef = collection(
+      db,
+      "USERS",
+      posterId,
+      "POSTS",
+      postId,
+      "Comments"
     );
-  } else {
-    return (
-      <Fragment key={post.id}>
-        {post.id && (
-          <ShowPosterCardProvider
-            postId={post.id}
-            budget={postData.budget}
-            userId={postData.userDocId}
-            postDesc={postData.postDesc}
-            apartmentSize={postData.apartmentSize}
-          >
-            {post && <ClientCard secondary="" />}
-          </ShowPosterCardProvider>
-        )}
-      </Fragment>
-    );
-  }
+
+    const unSubComment = onSnapshot(colRef, (snapshot) => {
+      const comments = snapshot.docs.map((doc) => doc.data());
+      setComments(comments);
+    });
+    const unsubDownvotes = onSnapshot(docRef, (snapshot) => {
+      setDownvotes(snapshot.data()?.Downvotes);
+    });
+    const unsubUpvotes = onSnapshot(docRef, (snapshot) => {
+      setUpvotes(snapshot.data()?.Upvotes);
+    });
+    const unsubLike = onSnapshot(docRef, (snapshot) => {
+      setLikes(snapshot.data()?.Likes);
+    });
+
+    return () => {
+      unsubLike();
+      unsubUpvotes();
+      unSubComment();
+      unsubDownvotes();
+    };
+  }, [db]);
+
+  const params = { post, likes, upvotes, postData, comments, downvotes };
+  const { props } = postCardProps(params);
+
+  return post.data.postAsAgent ? (
+    <Fragment key={post.id}>
+      {upvotes && downvotes && (
+        <ShowPosterCardProvider {...props}>
+          {post && <AgentCard />}
+        </ShowPosterCardProvider>
+      )}
+    </Fragment>
+  ) : (
+    <Fragment key={post.id}>
+      {upvotes && downvotes && (
+        <ShowPosterCardProvider {...props}>
+          {post && <ClientCard secondary="" />}
+        </ShowPosterCardProvider>
+      )}
+    </Fragment>
+  );
 }
 
 function PostCards() {
