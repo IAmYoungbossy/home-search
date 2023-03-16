@@ -1,33 +1,24 @@
-import { User } from "firebase/auth";
+import { TextArea } from "./TextArea";
 import * as SC from "./StyledComment";
-import { SlLike } from "react-icons/sl";
 import { db } from "../../firebaseConfig";
+import { CommentCard } from "./CommentCard";
 import SignInContainer from "../SignIn/SignIn";
 import AgentCard from "../PostCards/AgentCard";
-import {
-  contextProps,
-  IShowPostCard,
-} from "../../utilities/typesAndInitialStateObj";
-import { AiFillCaretDown } from "react-icons/ai";
-import { AppContext } from "../../context/AppContext";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { getAllUserDocs } from "../../firebaseCRUD";
+import { ClientCard } from "../PostCards/ClientCard";
+import { useState, Fragment, useEffect } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
-import { RedditRules, Warning } from "../CreatePost/CreatePost";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
-import { useState, useContext, Fragment, useEffect } from "react";
-import { ClientCard, OriginalPoster } from "../PostCards/ClientCard";
-import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
-import { addComment, getAllUserDocs, postReaction } from "../../firebaseCRUD";
-import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
-import { AddCommentButton, IAddCommentButton } from "./AddCommentButton";
-import { CommentReactions, ICommentReaction } from "./CommentReactions";
+import { RedditRules, Warning } from "../CreatePost/CreatePost";
+import { IShowPostCard } from "../../utilities/typesAndInitialStateObj";
+import { collection, DocumentData, onSnapshot } from "firebase/firestore";
+
+interface Icomments {
+  data: DocumentData;
+}
 
 export default function Comment() {
-  const [comments, setComments] = useState<
-    {
-      data: DocumentData;
-    }[]
-  >([]);
+  const [comments, setComments] = useState<Icomments[]>([]);
   const { id } = useParams();
   const posts = useLoaderData() as IShowPostCard[];
   const postObj = posts.filter((post) => post.data.postId === id)[0];
@@ -120,97 +111,4 @@ export default function Comment() {
 export async function commentLoader() {
   const listOfPosts = await getAllUserDocs();
   return listOfPosts;
-}
-
-interface ICommentCard extends ICommentReaction {
-  comment: string;
-}
-
-function CommentCard({
-  userId,
-  postId,
-  comment,
-  commentIndex,
-  commentId,
-}: ICommentCard) {
-  return (
-    <SC.StyledcommentCard>
-      <OriginalPoster />
-      <CommentBox
-        userId={userId}
-        postId={postId}
-        comment={comment}
-        commentId={commentId}
-        commentIndex={commentIndex}
-      />
-    </SC.StyledcommentCard>
-  );
-}
-
-function CommentBox({
-  userId,
-  postId,
-  comment,
-  commentIndex,
-  commentId,
-}: ICommentCard) {
-  return (
-    <SC.StyledCommentBox>
-      <p>{comment}</p>
-      <CommentReactions
-        postId={postId}
-        userId={userId}
-        commentId={commentId}
-        commentIndex={commentIndex}
-      />
-    </SC.StyledCommentBox>
-  );
-}
-
-interface ITextArea extends IAddCommentButton {}
-
-export function TextArea({ postId, userId }: ITextArea) {
-  const [textValue, setTextValue] = useState("");
-
-  return (
-    <SC.StyledTextArea>
-      <CommentAs />
-      <textarea
-        cols={30}
-        rows={10}
-        id="textbox"
-        name="textbox"
-        value={textValue}
-        placeholder="What are your thought?"
-        onChange={(e) => setTextValue(e.target.value)}
-      ></textarea>
-      <AddCommentButton
-        textValue={textValue}
-        postId={postId}
-        userId={userId}
-      />
-      <SortBy />
-    </SC.StyledTextArea>
-  );
-}
-
-function CommentAs() {
-  return (
-    <SC.StyledCommentAs>
-      <p>
-        Comment as <span>Severe-Cheek2859</span>
-      </p>
-    </SC.StyledCommentAs>
-  );
-}
-
-function SortBy() {
-  return (
-    <SC.StyledSortBy>
-      <h6>
-        Sort By: Best <AiFillCaretDown />
-      </h6>
-      <hr />
-    </SC.StyledSortBy>
-  );
 }
