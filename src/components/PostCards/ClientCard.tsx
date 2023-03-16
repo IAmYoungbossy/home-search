@@ -65,9 +65,11 @@ export function VoteArrow({ primary, secondary }: VoteArrowProps) {
   const { userId, postId, upvotes, downvotes } = useContext(
     ShowPostCardContext
   ) as ShowPosterCardProps;
+  const votesCount = () =>
+    upvotes && downvotes ? upvotes.length - downvotes.length : null;
 
   const togglevotesColor = (votes: string[]) => {
-    if (votes.includes(user?.uid as string)) return true;
+    if (votes && votes.includes(user?.uid as string)) return true;
     return false;
   };
 
@@ -91,7 +93,7 @@ export function VoteArrow({ primary, secondary }: VoteArrowProps) {
           }}
         />
       </div>
-      <p>{upvotes && downvotes && upvotes.length - downvotes.length}</p>
+      <p>{votesCount()}</p>
       <div>
         <ArrowDownSVG
           onClick={() => {
@@ -268,7 +270,7 @@ function InteractWithPostIcons() {
             }))();
         }}
       >
-        <SlLike /> {likes?.length} Like
+        <SlLike /> {likes && likes.length} Like
       </div>
     </SC.StyledInteractWithPostIcons>
   );

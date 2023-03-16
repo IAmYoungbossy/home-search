@@ -9,22 +9,30 @@ export const ShowPostCardContext = createContext<ShowPosterCardProps | null>(
 );
 
 const ShowPosterCardProvider = ({
+  likes,
   postId,
   budget,
   userId,
   bgImage,
+  upvotes,
   children,
   location,
   postDesc,
+  comments,
+  downvotes,
   postTitle,
   dealStatus,
   apartmentSize,
 }: IAppDataProvider) => {
   const value = {
+    likes,
     postId,
     budget,
     userId,
+    upvotes,
     postDesc,
+    comments,
+    downvotes,
     apartmentSize,
     ...(bgImage && { bgImage }),
     ...(location && { location }),
