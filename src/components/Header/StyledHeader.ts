@@ -57,3 +57,59 @@ export const StyledNotificationIcons = styled.div`
     opacity: 0.7;
   }
 `;
+
+export const Button = styled.button`
+  cursor: pointer;
+  padding: 6px 12px;
+  width: max-content;
+  border-radius: 5px;
+  border: 1px solid #a0a0a0;
+  background-color: transparent;
+
+  &:hover {
+    background-color: #f4f4f4;
+  }
+`;
+
+export const StyledUserButton = styled(Button)`
+  width: 80px;
+  display: flex;
+  padding: 2px 10px;
+  align-items: center;
+  border-radius: 20px;
+  justify-content: space-evenly;
+
+  &:hover {
+    background: none;
+    svg {
+      path {
+        fill: red;
+      }
+      &:hover {
+        fill: red;
+      }
+    }
+  }
+`;
+
+export const StyledUserIcon = styled.div`
+  gap: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledCTAButtons = styled.div`
+  gap: 20px;
+  display: flex;
+  width: min-content;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const StyledHeaderLogo = styled.div`
+  & > img {
+    width: 150px;
+    cursor: pointer;
+  }
+`;
