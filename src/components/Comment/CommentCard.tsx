@@ -16,7 +16,11 @@ export function CommentCard({
 }: ICommentCard) {
   return (
     <StyledcommentCard>
-      <OriginalPoster />
+      <OriginalPoster
+        commentUserId={userId}
+        commentPostId={postId}
+        commentId={commentId}
+      />
       <CommentBox
         userId={userId}
         postId={postId}

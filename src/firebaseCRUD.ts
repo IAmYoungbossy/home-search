@@ -27,6 +27,7 @@ import {
 import { User } from "firebase/auth";
 import { actionType, APP_ACTION_TYPES } from "./utilities/types";
 import { db, storage } from "./firebaseConfig";
+import { IPosterNameAndEditButtons } from "./components/PostCards/ClientCard";
 
 export const checkIfOldUser = async (
   user: User,
@@ -439,12 +440,35 @@ export async function addComment({
   });
 }
 
-interface IDeletePost {
-  postId: string;
-  userId: string;
+interface IDeletePost extends IPosterNameAndEditButtons {
+  postId?: string;
+  userId?: string;
 }
 
-export const deletePost = async ({ postId, userId }: IDeletePost) => {
-  const docRef = doc(db, "USERS", userId, "POSTS", postId);
-  await deleteDoc(docRef);
+export const deletePost = async ({
+  postId,
+  userId,
+  commentId,
+}: IDeletePost) => {
+  if (commentId) {
+    const docRef = doc(
+      db,
+      "USERS",
+      userId as string,
+      "POSTS",
+      postId as string,
+      "Comments",
+      commentId
+    );
+    await deleteDoc(docRef);
+  } else {
+    const docRef = doc(
+      db,
+      "USERS",
+      userId as string,
+      "POSTS",
+      postId as string
+    );
+    await deleteDoc(docRef);
+  }
 };

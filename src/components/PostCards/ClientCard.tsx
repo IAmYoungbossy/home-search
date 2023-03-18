@@ -130,7 +130,15 @@ function PostDetails({ children }: IPostDetailsProps) {
   );
 }
 
-interface OriginalPosterProps extends IPostDetailsProps {}
+export interface IPosterNameAndEditButtons {
+  commentId?: string;
+  commentUserId?: string;
+  commentPostId?: string;
+}
+
+interface OriginalPosterProps
+  extends IPostDetailsProps,
+    IPosterNameAndEditButtons {}
 
 export function OriginalPoster({ children }: OriginalPosterProps) {
   return (
@@ -144,7 +152,11 @@ export function OriginalPoster({ children }: OriginalPosterProps) {
   );
 }
 
-function PosterNameAndEditButtons() {
+function PosterNameAndEditButtons({
+  commentId,
+  commentUserId,
+  commentPostId,
+}: IPosterNameAndEditButtons) {
   const [toggleButtons, setToggleButtons] = useState(false);
 
   return (
@@ -159,6 +171,9 @@ function PosterNameAndEditButtons() {
         />
         {toggleButtons && (
           <EditAndDeleteButtons
+            commentId={commentId}
+            commentPostId={commentPostId}
+            commentUserId={commentUserId}
             toggleButtons={toggleButtons}
             setToggleButtons={setToggleButtons}
           />
@@ -168,20 +183,25 @@ function PosterNameAndEditButtons() {
   );
 }
 
-interface IEditAndDeleteButtons {
+interface IEditAndDeleteButtons extends IPosterNameAndEditButtons {
   toggleButtons: boolean;
   setToggleButtons: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function EditAndDeleteButtons({
+  commentId,
+  commentUserId,
+  commentPostId,
   toggleButtons,
   setToggleButtons,
 }: IEditAndDeleteButtons) {
-  const { postId, userId } = useContext(
-    ShowPostCardContext
-  ) as ShowPosterCardProps;
+  // Check if this is a comment card or a post card
+  const commentCard = !commentId && !commentPostId && !commentUserId;
+
+  // Get the dispatch function from AppContext
   const { dispatch } = useContext(AppContext) as contextProps;
 
+  // Listen for clicks outside of the edit/delete buttons and close them if necessary
   useEffect(() => {
     const removeButtons = () => setToggleButtons(false);
     document.addEventListener("click", removeButtons);
@@ -191,30 +211,40 @@ function EditAndDeleteButtons({
     };
   }, [toggleButtons]);
 
+  // Get the post card data from the ShowPostCardContext
+  const postCard = useContext(ShowPostCardContext) as ShowPosterCardProps;
+
+  // Handler for deleting a post/comment
+  const deletePostHandler = async () => {
+    await deletePost({
+      postId: postCard ? postCard.postId : commentPostId,
+      userId: postCard ? postCard.userId : commentUserId,
+      commentId: commentId ? commentId : undefined,
+    });
+  };
+
+  // Handler for editing a post
+  const editPostHandler = async () => {
+    await editPost({
+      userId: postCard.userId,
+      postId: postCard.postId,
+      dispatch,
+    });
+    dispatch({ payload: "edit", type: APP_ACTION_TYPES.POST_TYPE });
+  };
+
   return (
     <SC.StyledEditAndDeleteButtons onClick={(e) => e.stopPropagation()}>
+      {/* Show the edit post button only on post cards */}
+      {postCard && commentCard && (
+        <li>
+          <button onClick={editPostHandler}>
+            <Link to={`edit-post/${postCard.postId}`}>Edit Post</Link>
+          </button>
+        </li>
+      )}
       <li>
-        <button
-          onClick={async () => {
-            await editPost({ userId, postId, dispatch });
-            console.log(postId);
-            dispatch({
-              payload: "edit",
-              type: APP_ACTION_TYPES.POST_TYPE,
-            });
-          }}
-        >
-          <Link to={`edit/${postId as string}`}>Edit Post</Link>
-        </button>
-      </li>
-      <li>
-        <button
-          onClick={async () => {
-            await deletePost({ postId, userId });
-          }}
-        >
-          Delete Post
-        </button>
+        <button onClick={deletePostHandler}>Delete Post</button>
       </li>
     </SC.StyledEditAndDeleteButtons>
   );
