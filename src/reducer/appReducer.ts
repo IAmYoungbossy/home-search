@@ -5,7 +5,7 @@ import {
   APP_INITIAL_STATE,
   IShowPostCard,
   userType,
-} from "../utilities/typesAndInitialStateObj";
+} from "../utilities/types";
 
 export const appReducer = (
   state: appStateType,

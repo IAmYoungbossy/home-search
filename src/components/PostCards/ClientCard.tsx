@@ -10,7 +10,7 @@ import {
   contextProps,
   APP_ACTION_TYPES,
   ShowPosterCardProps,
-} from "../../utilities/typesAndInitialStateObj";
+} from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { editPost } from "../../utilities/createPostHelperFn";
@@ -44,7 +44,10 @@ interface IPostCard extends IPost, IlikeOrUnlike {}
 export default function PostCard({ children, secondary }: IPostCard) {
   return (
     <SC.StyledPostCard>
-      <VoteArrow primary="#f8f9fa" secondary={secondary} />
+      <VoteArrow
+        primary="#f8f9fa"
+        secondary={secondary}
+      />
       <PostDetails>
         <SC.StyledHouseSpec>{children}</SC.StyledHouseSpec>
       </PostDetails>

@@ -10,91 +10,81 @@ import { useState, Fragment, useEffect } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
-import { IShowPostCard } from "../../utilities/typesAndInitialStateObj";
-import { collection, DocumentData, onSnapshot } from "firebase/firestore";
-
-interface Icomments {
-  data: DocumentData;
-}
+import { ICardProps, IShowPostCard } from "../../utilities/types";
+import { postCardProps } from "../../utilities/createPostHelperFn";
+import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 
 export default function Comment() {
-  const [comments, setComments] = useState<Icomments[]>([]);
   const { id } = useParams();
-  const posts = useLoaderData() as IShowPostCard[];
-  const postObj = posts.filter((post) => post.data.postId === id)[0];
 
+  // Get the post with the specified ID
+  const posts = useLoaderData() as IShowPostCard[];
+  const post = posts.find((p) => p.data.postId === id) as IShowPostCard;
+  const postData = post.data;
+
+  // Subscribe to the post and comment data
+  const [likes, setLikes] = useState<string[]>([]);
+  const [upvotes, setUpvotes] = useState<string[]>([]);
+  const [downvotes, setDownvotes] = useState<string[]>([]);
+  const [comments, setComments] = useState<DocumentData[]>([]);
   useEffect(() => {
-    const postDocId = postObj.data.postId as string;
-    const posterDocId = postObj.data.userDocId as string;
-    const docRef = collection(
+    const posterId = postData.userDocId as string;
+    const postId = post.id as string;
+
+    const docRef = doc(db, "USERS", posterId, "POSTS", postId);
+    const colRef = collection(
       db,
       "USERS",
-      posterDocId,
+      posterId,
       "POSTS",
-      postDocId,
+      postId,
       "Comments"
     );
 
-    const unsub = onSnapshot(docRef, (snapshot) => {
-      const comments = snapshot.docs?.map((comment) => ({
-        data: comment?.data(),
-      }));
+    // Subscribe to comment data
+    const unSubComment = onSnapshot(colRef, (snapshot) => {
+      const comments = snapshot.docs.map((doc) => ({ data: doc.data() }));
       setComments(comments);
     });
 
-    return () => {
-      unsub();
-    };
-  }, [db]);
+    // Subscribe to post data
+    const unsubPost = onSnapshot(docRef, (snapshot) => {
+      const data = snapshot.data();
+      setLikes(data?.Likes || []);
+      setUpvotes(data?.Upvotes || []);
+      setDownvotes(data?.Downvotes || []);
+    });
 
+    return () => {
+      // Unsubscribe when the component is unmounted
+      unSubComment();
+      unsubPost();
+    };
+  }, [db, postData.userDocId, post.id]);
+
+  // Render the component
+  const params = { post, likes, upvotes, postData, comments, downvotes };
+  const { props } = postCardProps(params);
+
+  const posterCard = !postData.postAsAgent ? (
+    <ClientCard secondary="white" />
+  ) : (
+    <AgentCard secondary="white" />
+  );
   return (
     <>
       <SC.StyledComment>
         <div>
-          {!postObj.data.postAsAgent && (
-            <ShowPosterCardProvider
-              postId={postObj.data.postId}
-              budget={postObj.data.budget}
-              userId={postObj.data.userDocId}
-              postDesc={postObj.data.postDesc}
-              apartmentSize={postObj.data.apartmentSize}
-            >
-              <ClientCard secondary="white" />
-            </ShowPosterCardProvider>
-          )}
-          {postObj.data.postAsAgent && (
-            <ShowPosterCardProvider
-              key={postObj.data.postId}
-              postId={postObj.data.postId}
-              budget={postObj.data.budget}
-              bgImage={postObj.data.imageUrl}
-              userId={postObj.data.userDocId}
-              location={postObj.data.location}
-              postDesc={postObj.data.postDesc}
-              postTitle={postObj.data.postTitle}
-              dealStatus={postObj.data.dealStatus}
-              apartmentSize={postObj.data.apartmentSize}
-            >
-              <AgentCard secondary="white" />
-            </ShowPosterCardProvider>
-          )}
+          <ShowPosterCardProvider {...props}>
+            {posterCard}
+          </ShowPosterCardProvider>
           <TextArea
-            postId={postObj.data.postId}
-            userId={postObj.data.userDocId}
+            postId={postData.postId}
+            userId={postData.userDocId}
           />
-          {comments.map((comment, index) => (
-            <Fragment key={index}>
-              {comment.data.commentId && (
-                <CommentCard
-                  commentIndex={index}
-                  postId={postObj.data.postId}
-                  userId={postObj.data.userDocId}
-                  commentId={comment.data.commentId}
-                  comment={comment.data.commentText}
-                />
-              )}
-            </Fragment>
-          ))}
+          {comments.map((comment, index) =>
+            CreateCommentCard(comment, index)(postData)
+          )}
         </div>
         <div>
           <div>
@@ -105,6 +95,22 @@ export default function Comment() {
       </SC.StyledComment>
       <SignInContainer />
     </>
+  );
+}
+
+function CreateCommentCard(comment: DocumentData, index: number) {
+  return (postData: DocumentData | ICardProps) => (
+    <Fragment key={index}>
+      {comment.data.commentId && (
+        <CommentCard
+          commentIndex={index}
+          postId={postData.postId}
+          userId={postData.userDocId}
+          commentId={comment.data.commentId}
+          comment={comment.data.commentText}
+        />
+      )}
+    </Fragment>
   );
 }
 

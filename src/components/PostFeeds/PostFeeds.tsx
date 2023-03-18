@@ -12,7 +12,7 @@ import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
 import { postCardProps } from "../../utilities/createPostHelperFn";
-import { IShowPostCard } from "../../utilities/typesAndInitialStateObj";
+import { IShowPostCard } from "../../utilities/types";
 import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 
 export default function PostFeeds() {
@@ -155,7 +155,10 @@ function CreateCard() {
 function HomeBannerImage() {
   return (
     <div>
-      <img src={HomeBanner} alt="home-banner" />
+      <img
+        src={HomeBanner}
+        alt="home-banner"
+      />
     </div>
   );
 }
@@ -164,7 +167,10 @@ function SnooBannerImage() {
   return (
     <div>
       <div>
-        <img src={SnooBanner} alt="snoo-banner" />
+        <img
+          src={SnooBanner}
+          alt="snoo-banner"
+        />
       </div>
       <div>Home</div>
     </div>

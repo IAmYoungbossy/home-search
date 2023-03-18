@@ -1,9 +1,5 @@
 import { auth } from "../firebaseConfig";
-import {
-  PageProps,
-  contextProps,
-  APP_INITIAL_STATE,
-} from "../utilities/typesAndInitialStateObj";
+import { PageProps, contextProps, APP_INITIAL_STATE } from "../utilities/types";
 import { createContext, useReducer } from "react";
 import { appReducer } from "../reducer/appReducer";
 import { useAuthState } from "react-firebase-hooks/auth";

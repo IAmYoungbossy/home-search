@@ -15,7 +15,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "./firebaseConfig";
-import { actionType } from "./utilities/typesAndInitialStateObj";
+import { actionType } from "./utilities/types";
 
 // Google Auth
 const googleProvider = new GoogleAuthProvider();

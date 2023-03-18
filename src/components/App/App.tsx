@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { postLoader } from "../PostFeeds/PostFeeds";
 import { AppContext } from "../../context/AppContext";
 import Comment, { commentLoader } from "../Comment/Comment";
-import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import { contextProps } from "../../utilities/types";
 import SocialPageLayout, { SocialPage } from "../SocialPage/SocialPage";
 import CreatePostPage, { editPostLoader } from "../CreatePost/CreatePost";
 import { onClickToggleButtonTags } from "../../utilities/createPostHelperFn";

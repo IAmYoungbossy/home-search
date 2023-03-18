@@ -20,7 +20,7 @@ import { RiErrorWarningLine } from "react-icons/ri";
 import { AppContext } from "../../context/AppContext";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import * as Helper from "../../utilities/createPostHelperFn";
-import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import { contextProps } from "../../utilities/types";
 
 export default function CreatePostPage() {
   return (
@@ -104,7 +104,10 @@ interface IButtonTag {
 }
 
 const tagsArray = tagsContent.map((item) => (
-  <BtnAndInput key={item.name} item={item} />
+  <BtnAndInput
+    key={item.name}
+    item={item}
+  />
 ));
 
 function ButtonTags() {
@@ -408,7 +411,11 @@ function Check() {
   return (
     <SC.StyledCheck>
       <div>
-        <input type="checkbox" name="check" id="check" />
+        <input
+          type="checkbox"
+          name="check"
+          id="check"
+        />
         <label htmlFor="check">Send me post reply notifications</label>
       </div>
       <p>

@@ -7,7 +7,7 @@ import {
   APP_INITIAL_STATE,
   IShowPostCard,
   ICardProps,
-} from "./typesAndInitialStateObj";
+} from "./types";
 import { db } from "../firebaseConfig";
 import {
   doc,

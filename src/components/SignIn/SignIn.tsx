@@ -2,7 +2,7 @@ import {
   appStateType,
   contextProps,
   APP_ACTION_TYPES,
-} from "../../utilities/typesAndInitialStateObj";
+} from "../../utilities/types";
 import {
   StyledSignIn,
   StyledSignInFields,
@@ -108,8 +108,16 @@ function SignInFields() {
   return (
     <StyledSignInFields>
       <div>
-        <input type="text" name="username" placeholder="Username" />
-        <input type="password" name="password" placeholder="Password" />
+        <input
+          type="text"
+          name="username"
+          placeholder="Username"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Password"
+        />
       </div>
       <div>
         <p>

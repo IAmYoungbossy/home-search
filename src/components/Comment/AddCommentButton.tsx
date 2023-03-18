@@ -3,7 +3,7 @@ import { addComment } from "../../firebaseCRUD";
 import { AppContext } from "../../context/AppContext";
 import { StyledRichTextEditor } from "./StyledComment";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
-import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import { contextProps } from "../../utilities/types";
 
 export interface IAddCommentButton {
   userId: string;

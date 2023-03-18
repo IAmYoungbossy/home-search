@@ -6,7 +6,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { StyledReactionButtons } from "./StyledComment";
-import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import { contextProps } from "../../utilities/types";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
 export interface ICommentReaction {

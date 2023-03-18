@@ -25,10 +25,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
-import {
-  actionType,
-  APP_ACTION_TYPES,
-} from "./utilities/typesAndInitialStateObj";
+import { actionType, APP_ACTION_TYPES } from "./utilities/types";
 import { db, storage } from "./firebaseConfig";
 
 export const checkIfOldUser = async (

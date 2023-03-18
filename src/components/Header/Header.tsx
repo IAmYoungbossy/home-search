@@ -9,7 +9,7 @@ import { MdOutlineOutbond } from "react-icons/md";
 import { AppContext } from "../../context/AppContext";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { buttonContent } from "../../constant/textConstant";
-import { contextProps } from "../../utilities/typesAndInitialStateObj";
+import { contextProps } from "../../utilities/types";
 import { ArrowDownSVG, HeartSVG, UserSVG } from "../assets/header/SvgMarkUp";
 
 export function Header() {

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import PostCard from "./ClientCard";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import { ImageContainer, StyledHouseDetails } from "./StyledAgentCard";
-import { ShowPosterCardProps } from "../../utilities/typesAndInitialStateObj";
+import { ShowPosterCardProps } from "../../utilities/types";
 
 interface IAgentCard {
   secondary?: string;

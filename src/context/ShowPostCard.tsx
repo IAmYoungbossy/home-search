@@ -1,8 +1,5 @@
 import { createContext } from "react";
-import {
-  IAppDataProvider,
-  ShowPosterCardProps,
-} from "../utilities/typesAndInitialStateObj";
+import { IAppDataProvider, ShowPosterCardProps } from "../utilities/types";
 
 export const ShowPostCardContext = createContext<ShowPosterCardProps | null>(
   null
