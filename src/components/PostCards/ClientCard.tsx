@@ -16,7 +16,11 @@ import { useContext, useEffect, useState } from "react";
 import { editPost } from "../../utilities/createPostHelperFn";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
-import { deletePost, IlikeOrUnlike, postReaction } from "../../firebaseCRUD";
+import {
+  deletePostOrComment,
+  IlikeOrUnlike,
+  postReaction,
+} from "../../firebaseCRUD";
 
 interface IClientCard {
   secondary?: string;
@@ -140,12 +144,21 @@ interface OriginalPosterProps
   extends IPostDetailsProps,
     IPosterNameAndEditButtons {}
 
-export function OriginalPoster({ children }: OriginalPosterProps) {
+export function OriginalPoster({
+  children,
+  commentId,
+  commentPostId,
+  commentUserId,
+}: OriginalPosterProps) {
   return (
     <SC.StyledOriginalPoster>
       <FaUserCircle />
       <div>
-        <PosterNameAndEditButtons />
+        <PosterNameAndEditButtons
+          commentId={commentId}
+          commentPostId={commentPostId}
+          commentUserId={commentUserId}
+        />
         {children}
       </div>
     </SC.StyledOriginalPoster>
@@ -216,9 +229,10 @@ function EditAndDeleteButtons({
 
   // Handler for deleting a post/comment
   const deletePostHandler = async () => {
-    await deletePost({
-      postId: postCard ? postCard.postId : commentPostId,
-      userId: postCard ? postCard.userId : commentUserId,
+    await deletePostOrComment({
+      setToggleButtons,
+      postId: postCard ? postCard.postId : (commentPostId as string),
+      userId: postCard ? postCard.userId : (commentUserId as string),
       commentId: commentId ? commentId : undefined,
     });
   };

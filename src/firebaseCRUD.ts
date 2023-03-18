@@ -25,8 +25,8 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
-import { actionType, APP_ACTION_TYPES } from "./utilities/types";
 import { db, storage } from "./firebaseConfig";
+import { actionType, APP_ACTION_TYPES, deleteTuple } from "./utilities/types";
 import { IPosterNameAndEditButtons } from "./components/PostCards/ClientCard";
 
 export const checkIfOldUser = async (
@@ -441,34 +441,24 @@ export async function addComment({
 }
 
 interface IDeletePost extends IPosterNameAndEditButtons {
-  postId?: string;
-  userId?: string;
+  postId: string;
+  userId: string;
+  setToggleButtons: (value: React.SetStateAction<boolean>) => void;
 }
 
-export const deletePost = async ({
+export const deletePostOrComment = async ({
   postId,
   userId,
   commentId,
+  setToggleButtons,
 }: IDeletePost) => {
+  // Path to delete a post
+  const path: deleteTuple = [db, "USERS", userId, "POSTS", postId];
   if (commentId) {
-    const docRef = doc(
-      db,
-      "USERS",
-      userId as string,
-      "POSTS",
-      postId as string,
-      "Comments",
-      commentId
-    );
-    await deleteDoc(docRef);
-  } else {
-    const docRef = doc(
-      db,
-      "USERS",
-      userId as string,
-      "POSTS",
-      postId as string
-    );
-    await deleteDoc(docRef);
+    // Path to delete a comment
+    path.push("Comments", commentId);
+    setToggleButtons(false);
   }
+  const docRef = doc(...path);
+  await deleteDoc(docRef);
 };

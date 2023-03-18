@@ -221,6 +221,9 @@ export interface ShowPosterCardProps {
   comments?: DocumentData[];
 }
 
+export type deleteTuple =
+  | [Firestore, string, string, string, string]
+  | [Firestore, string, string, string, string, string, string];
 export type tuple = [Firestore, string, string, string, string, string];
 
 export interface IAppDataProvider extends PageProps, ShowPosterCardProps {}
