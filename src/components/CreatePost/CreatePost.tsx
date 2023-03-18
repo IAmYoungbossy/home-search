@@ -21,6 +21,7 @@ import { AppContext } from "../../context/AppContext";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import * as Helper from "../../utilities/createPostHelperFn";
 import { contextProps } from "../../utilities/types";
+import { Link } from "react-router-dom";
 
 export default function CreatePostPage() {
   return (
@@ -400,7 +401,9 @@ function ActionButtons() {
             });
           }}
         >
-          {state.postType === "create" ? "Create Post" : "Save Edit"}
+          <Link to="/">
+            {state.postType === "create" ? "Create Post" : "Save Edit"}
+          </Link>
         </button>
       </div>
     </SC.StyleActionButtons>

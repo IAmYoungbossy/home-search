@@ -181,6 +181,11 @@ export const StyledEditAndDeleteButtons = styled.ul`
   background-color: #f9f9f9;
   box-shadow: 3px 3px 4px 0px #00000033;
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   button {
     width: 100%;
     border: none;

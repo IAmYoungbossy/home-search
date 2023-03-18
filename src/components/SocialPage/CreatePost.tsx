@@ -2,12 +2,19 @@ import styled from "styled-components";
 import { SlPicture } from "react-icons/sl";
 import { BsLink45Deg } from "react-icons/bs";
 import { AvatarSVG } from "../assets/Svg/SocialSVG";
+import { Link } from "react-router-dom";
 
 export default function CreatePost() {
   return (
     <StyledCreatePost>
       <AvatarSVG />
-      <input type="text" name="post" placeholder="Create Post" />
+      <Link to="/create-post">
+        <input
+          type="text"
+          name="post"
+          placeholder="Create Post"
+        />
+      </Link>
       <SlPicture />
       <BsLink45Deg />
     </StyledCreatePost>
@@ -25,13 +32,19 @@ const StyledCreatePost = styled.div`
   justify-content: space-between;
   background-color: var(--light-bg-color-primary);
 
-  input {
+  a {
     width: 100%;
-    border: none;
-    padding: 8px;
-    border-radius: 5px;
-    outline: 1px solid var(--social-page-outline-color);
-    background-color: var(--social-light-secondary-bg-color);
+    color: inherit;
+    text-decoration: none;
+
+    input {
+      width: 100%;
+      border: none;
+      padding: 8px;
+      border-radius: 5px;
+      outline: 1px solid var(--social-page-outline-color);
+      background-color: var(--social-light-secondary-bg-color);
+    }
   }
 
   & > svg:first-child {

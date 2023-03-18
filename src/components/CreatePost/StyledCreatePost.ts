@@ -41,6 +41,11 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
   justify-content: space-between;
   background-color: var(--light-bg-color-primary);
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   button {
     margin: 5px;
     border: none;

@@ -253,7 +253,7 @@ function EditAndDeleteButtons({
       {postCard && commentCard && (
         <li>
           <button onClick={editPostHandler}>
-            <Link to={`edit-post/${postCard.postId}`}>Edit Post</Link>
+            <Link to={`/edit-post/${postCard.postId}`}>Edit Post</Link>
           </button>
         </li>
       )}
