@@ -1,3 +1,13 @@
+import {
+  postReaction,
+  IlikeOrUnlike,
+  deletePostOrComment,
+} from "../../firebaseCRUD";
+import {
+  contextProps,
+  APP_ACTION_TYPES,
+  ShowPosterCardProps,
+} from "../../utilities/types";
 import { User } from "firebase/auth";
 import { Link } from "react-router-dom";
 import { SlLike } from "react-icons/sl";
@@ -5,22 +15,18 @@ import * as SC from "./StyledClientCard";
 import { BiComment } from "react-icons/bi";
 import { BsThreeDots } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
-import {
-  actionType,
-  contextProps,
-  APP_ACTION_TYPES,
-  ShowPosterCardProps,
-} from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { editPost } from "../../utilities/createPostHelperFn";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
+import { db } from "../../firebaseConfig";
 import {
-  deletePostOrComment,
-  IlikeOrUnlike,
-  postReaction,
-} from "../../firebaseCRUD";
+  doc,
+  DocumentData,
+  DocumentReference,
+  getDoc,
+} from "firebase/firestore";
 
 interface IClientCard {
   secondary?: string;
@@ -170,11 +176,35 @@ function PosterNameAndEditButtons({
   commentUserId,
   commentPostId,
 }: IPosterNameAndEditButtons) {
+  const [posterName, setPosterName] = useState("NEW");
   const [toggleButtons, setToggleButtons] = useState(false);
+  const postCard = useContext(ShowPostCardContext) as ShowPosterCardProps;
+  const setName = async (docRef: DocumentReference<DocumentData>) => {
+    const doc = await getDoc(docRef);
+    setPosterName(doc.data()?.name);
+  };
+
+  useEffect(() => {
+    if (postCard) {
+      const docRef = doc(db, "USERS", postCard.userId);
+      setName(docRef);
+    } else {
+      const docRef = doc(
+        db,
+        "USERS",
+        commentUserId as string,
+        "POSTS",
+        commentPostId as string,
+        "Comments",
+        commentId as string
+      );
+      setName(docRef);
+    }
+  });
 
   return (
     <SC.StyledPosterNameAndEditButtons>
-      <p>Letam Bossman Barinua</p>{" "}
+      <p>{posterName}</p>{" "}
       <div>
         <BsThreeDots
           onClick={(e) => {
@@ -264,21 +294,6 @@ function EditAndDeleteButtons({
   );
 }
 
-function getPostFields({
-  type,
-  payload,
-  dispatch,
-}: {
-  type: string;
-  payload: string | boolean;
-  dispatch: React.Dispatch<actionType>;
-}) {
-  dispatch({
-    type,
-    payload,
-  });
-}
-
 export function Description() {
   const { postDesc } = useContext(ShowPostCardContext) as ShowPosterCardProps;
   return (
@@ -302,7 +317,7 @@ function InteractWithPostIcons() {
   return (
     <SC.StyledInteractWithPostIcons liked={toggleLikeColor()}>
       <div>
-        <Link to={`comment/${postId as string}`}>
+        <Link to={`/comment/${postId as string}`}>
           <BiComment /> {comments?.length} Comment
         </Link>
       </div>
