@@ -2,9 +2,11 @@ import { CommentBox } from "./CommentBox";
 import { StyledcommentCard } from "./StyledComment";
 import { ICommentReactions } from "./CommentReactions";
 import { OriginalPoster } from "../PostCards/ClientCard";
+import { DocumentData } from "firebase/firestore";
 
 export interface ICommentCard extends ICommentReactions {
-  comment: string;
+  commentText: string;
+  comment: DocumentData;
 }
 
 export function CommentCard({
@@ -12,6 +14,7 @@ export function CommentCard({
   postId,
   comment,
   commentId,
+  commentText,
   commentIndex,
 }: ICommentCard) {
   return (
@@ -26,6 +29,7 @@ export function CommentCard({
         postId={postId}
         comment={comment}
         commentId={commentId}
+        commentText={commentText}
         commentIndex={commentIndex}
       />
     </StyledcommentCard>

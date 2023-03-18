@@ -9,14 +9,16 @@ export function CommentBox({
   postId,
   comment,
   commentId,
+  commentText,
   commentIndex,
 }: ICommentBox) {
   return (
     <StyledCommentBox>
-      <p>{comment}</p>
+      <p>{commentText}</p>
       <CommentReactions
         postId={postId}
         userId={userId}
+        comment={comment}
         commentId={commentId}
         commentIndex={commentIndex}
       />

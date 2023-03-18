@@ -2,11 +2,11 @@ import { User } from "firebase/auth";
 import { SlLike } from "react-icons/sl";
 import { db } from "../../firebaseConfig";
 import { postReaction } from "../../firebaseCRUD";
-import { doc, onSnapshot } from "firebase/firestore";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { StyledReactionButtons } from "./StyledComment";
+import { doc, DocumentData, onSnapshot } from "firebase/firestore";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
 export interface ICommentReactions {
@@ -14,6 +14,7 @@ export interface ICommentReactions {
   postId: string;
   commentId: string;
   commentIndex: number;
+  comment: DocumentData;
 }
 
 interface IVotes {
@@ -31,6 +32,7 @@ const votesInitalObj = {
 export function CommentReactions({
   userId,
   postId,
+  comment,
   commentId,
   commentIndex,
 }: ICommentReactions) {
@@ -69,7 +71,7 @@ export function CommentReactions({
     return () => {
       unsubVotes();
     };
-  }, [db]);
+  }, [db, comment]);
 
   const handleVote = async (voteType: "upvote" | "downvote" | "like") => {
     // Call the postReaction function with the parameters passed to this component.

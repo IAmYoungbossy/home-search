@@ -3,16 +3,27 @@ import { CommentCard } from "./CommentCard";
 import { DocumentData } from "firebase/firestore";
 import { ICardProps } from "../../utilities/types";
 
-export function DisplayCommentCard(comment: DocumentData, index: number) {
-  return (postData: DocumentData | ICardProps) => (
-    <Fragment key={index}>
+interface IDisplayCommentCard {
+  index: number;
+  comment: DocumentData;
+  postData: DocumentData | ICardProps;
+}
+
+export function DisplayCommentCard({
+  index,
+  comment,
+  postData,
+}: IDisplayCommentCard) {
+  return (
+    <Fragment key={comment.data.commentId}>
       {comment.data.commentId && (
         <CommentCard
+          comment={comment}
           commentIndex={index}
           postId={postData.postId}
           userId={postData.userDocId}
           commentId={comment.data.commentId}
-          comment={comment.data.commentText}
+          commentText={comment.data.commentText}
         />
       )}
     </Fragment>

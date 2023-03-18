@@ -27,34 +27,40 @@ export default function Comment() {
   const [upvotes, setUpvotes] = useState<string[]>([]);
   const [downvotes, setDownvotes] = useState<string[]>([]);
   const [comments, setComments] = useState<DocumentData[]>([]);
-  useEffect(() => {
-    const posterId = postData.userDocId as string;
-    const postId = post.id as string;
+  const posterId = postData.userDocId as string;
+  const postId = post.id as string;
 
+  useEffect(() => {
     const docRef = doc(db, "USERS", posterId, "POSTS", postId);
+
+    // Subscribe to post data
+    const unsubPost = onSnapshot(docRef, (snapshot) => {
+      const data = snapshot.data();
+      setLikes(data?.Likes);
+      setUpvotes(data?.Upvotes);
+      setDownvotes(data?.Downvotes);
+    });
+
+    return () => {
+      // Unsubscribe when the component is unmounted
+      unsubPost();
+    };
+  }, [comments]);
+
+  useEffect(() => {
     const colPath: tuple = [db, "USERS", posterId, "POSTS", postId, "Comments"];
     const colRef = collection(...colPath);
-
     // Subscribe to comment data
     const unSubComment = onSnapshot(colRef, (snapshot) => {
       const comments = snapshot.docs.map((doc) => ({ data: doc.data() }));
       setComments(comments);
     });
 
-    // Subscribe to post data
-    const unsubPost = onSnapshot(docRef, (snapshot) => {
-      const data = snapshot.data();
-      setLikes(data?.Likes || []);
-      setUpvotes(data?.Upvotes || []);
-      setDownvotes(data?.Downvotes || []);
-    });
-
+    // Unsubscribe from comment data
     return () => {
-      // Unsubscribe when the component is unmounted
       unSubComment();
-      unsubPost();
     };
-  }, [db, postData.userDocId, post.id]);
+  }, [db]);
 
   // Render the component
   const params = { post, likes, upvotes, postData, comments, downvotes };
@@ -76,9 +82,14 @@ export default function Comment() {
             postId={postData.postId}
             userId={postData.userDocId}
           />
-          {comments.map((comment, index) =>
-            DisplayCommentCard(comment, index)(postData)
-          )}
+          {comments.map((comment, index) => (
+            <DisplayCommentCard
+              index={index}
+              comment={comment}
+              postData={postData}
+              key={comment.data.commentId}
+            />
+          ))}
         </div>
         <div>
           <div>
