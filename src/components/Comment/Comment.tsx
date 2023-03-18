@@ -1,16 +1,16 @@
 import { TextArea } from "./TextArea";
 import * as SC from "./StyledComment";
 import { db } from "../../firebaseConfig";
-import { CommentCard } from "./CommentCard";
+import { useState, useEffect } from "react";
 import SignInContainer from "../SignIn/SignIn";
 import AgentCard from "../PostCards/AgentCard";
 import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
-import { useState, Fragment, useEffect } from "react";
+import { DisplayCommentCard } from "./DisplayCommentCard";
 import { useLoaderData, useParams } from "react-router-dom";
+import { IShowPostCard, tuple } from "../../utilities/types";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
 import { RedditRules, Warning } from "../CreatePost/CreatePost";
-import { ICardProps, IShowPostCard } from "../../utilities/types";
 import { postCardProps } from "../../utilities/createPostHelperFn";
 import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 
@@ -32,14 +32,8 @@ export default function Comment() {
     const postId = post.id as string;
 
     const docRef = doc(db, "USERS", posterId, "POSTS", postId);
-    const colRef = collection(
-      db,
-      "USERS",
-      posterId,
-      "POSTS",
-      postId,
-      "Comments"
-    );
+    const colPath: tuple = [db, "USERS", posterId, "POSTS", postId, "Comments"];
+    const colRef = collection(...colPath);
 
     // Subscribe to comment data
     const unSubComment = onSnapshot(colRef, (snapshot) => {
@@ -83,7 +77,7 @@ export default function Comment() {
             userId={postData.userDocId}
           />
           {comments.map((comment, index) =>
-            CreateCommentCard(comment, index)(postData)
+            DisplayCommentCard(comment, index)(postData)
           )}
         </div>
         <div>
@@ -98,23 +92,4 @@ export default function Comment() {
   );
 }
 
-function CreateCommentCard(comment: DocumentData, index: number) {
-  return (postData: DocumentData | ICardProps) => (
-    <Fragment key={index}>
-      {comment.data.commentId && (
-        <CommentCard
-          commentIndex={index}
-          postId={postData.postId}
-          userId={postData.userDocId}
-          commentId={comment.data.commentId}
-          comment={comment.data.commentText}
-        />
-      )}
-    </Fragment>
-  );
-}
-
-export async function commentLoader() {
-  const listOfPosts = await getAllUserDocs();
-  return listOfPosts;
-}
+export const commentLoader = async () => await getAllUserDocs();

@@ -1,5 +1,5 @@
 import { User } from "firebase/auth";
-import { DocumentData } from "firebase/firestore";
+import { DocumentData, Firestore } from "firebase/firestore";
 
 export interface Icomment {
   name: string;
@@ -220,5 +220,7 @@ export interface ShowPosterCardProps {
   apartmentSize: string;
   comments?: DocumentData[];
 }
+
+export type tuple = [Firestore, string, string, string, string, string];
 
 export interface IAppDataProvider extends PageProps, ShowPosterCardProps {}
