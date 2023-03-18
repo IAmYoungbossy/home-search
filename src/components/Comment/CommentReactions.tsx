@@ -3,13 +3,13 @@ import { SlLike } from "react-icons/sl";
 import { db } from "../../firebaseConfig";
 import { postReaction } from "../../firebaseCRUD";
 import { doc, onSnapshot } from "firebase/firestore";
+import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { StyledReactionButtons } from "./StyledComment";
-import { contextProps } from "../../utilities/types";
 import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
 
-export interface ICommentReaction {
+export interface ICommentReactions {
   userId: string;
   postId: string;
   commentId: string;
@@ -33,8 +33,10 @@ export function CommentReactions({
   postId,
   commentId,
   commentIndex,
-}: ICommentReaction) {
+}: ICommentReactions) {
   const { user } = useContext(AppContext) as contextProps;
+
+  // Use an object for the initial state of votes.
   const [votes, setVotes] = useState<IVotes>(votesInitalObj);
 
   const toggleVotesColor = (voteType: "upvotes" | "downvotes" | "likes") => {
@@ -42,18 +44,18 @@ export function CommentReactions({
   };
 
   useEffect(() => {
-    const postDocId = postId as string;
-    const posterDocId = userId as string;
+    // Construct the document reference for the comment.
     const docRef = doc(
       db,
       "USERS",
-      posterDocId,
+      userId as string,
       "POSTS",
-      postDocId,
+      postId as string,
       "Comments",
-      commentId
+      commentId as string
     );
 
+    // Subscribe to the changes of the comment document and update the state.
     const unsubVotes = onSnapshot(docRef, (snapshot) => {
       const data = snapshot.data();
       setVotes({
@@ -63,12 +65,14 @@ export function CommentReactions({
       });
     });
 
+    // Unsubscribe from the snapshot listener when the component is unmounted.
     return () => {
       unsubVotes();
     };
   }, [db]);
 
   const handleVote = async (voteType: "upvote" | "downvote" | "like") => {
+    // Call the postReaction function with the parameters passed to this component.
     await postReaction({
       userId,
       postId,
@@ -84,11 +88,13 @@ export function CommentReactions({
       <ul>
         <li>
           <ArrowUpSVG onClick={() => handleVote("upvote")} />
+          {/* Calculate the vote count by subtracting the number of downvotes from the number of upvotes. */}
           <p>{votes.upvotes.length - votes.downvotes.length}</p>
           <ArrowDownSVG onClick={() => handleVote("downvote")} />
         </li>
         <li>
           <SlLike onClick={() => handleVote("like")} />
+          {/* Display the number of likes. */}
           {votes.likes.length} Like
         </li>
       </ul>

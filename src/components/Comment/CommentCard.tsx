@@ -1,9 +1,9 @@
 import { CommentBox } from "./CommentBox";
 import { StyledcommentCard } from "./StyledComment";
-import { ICommentReaction } from "./CommentReactions";
+import { ICommentReactions } from "./CommentReactions";
 import { OriginalPoster } from "../PostCards/ClientCard";
 
-export interface ICommentCard extends ICommentReaction {
+export interface ICommentCard extends ICommentReactions {
   comment: string;
 }
 
