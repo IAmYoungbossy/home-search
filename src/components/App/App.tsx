@@ -9,8 +9,12 @@ import { postLoader } from "../PostFeeds/PostFeeds";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import Comment, { commentLoader } from "../Comment/Comment";
-import SocialPageLayout, { SocialPage } from "../SocialPage/SocialPage";
-import CreatePostPage, { editPostLoader } from "../CreatePost/CreatePost";
+import SocialPageLayout, {
+  SocialPage,
+} from "../SocialPage/SocialPage";
+import CreatePostPage, {
+  editPostLoader,
+} from "../CreatePost/CreatePost";
 import { onClickToggleButtonTags } from "../../utilities/createPostHelperFn";
 
 const router = createBrowserRouter(
@@ -39,11 +43,14 @@ const router = createBrowserRouter(
         loader={commentLoader}
       />
     </Route>
-  )
+  ),
+  { basename: "/home-search" }
 );
 
 function App() {
-  const { dispatch } = useContext(AppContext) as contextProps;
+  const { dispatch } = useContext(
+    AppContext
+  ) as contextProps;
 
   return (
     <div onClick={() => onClickToggleButtonTags(dispatch)}>

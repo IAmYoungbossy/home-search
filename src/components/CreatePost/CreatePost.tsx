@@ -16,12 +16,12 @@ import { TbCircleDotted } from "react-icons/tb";
 import { IoImageOutline } from "react-icons/io5";
 import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { BsFillCameraFill } from "react-icons/bs";
+import { Link, useParams } from "react-router-dom";
 import { RiErrorWarningLine } from "react-icons/ri";
+import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import * as Helper from "../../utilities/createPostHelperFn";
-import { contextProps } from "../../utilities/types";
-import { Link } from "react-router-dom";
 
 export default function CreatePostPage() {
   return (
@@ -82,8 +82,8 @@ export function Warning() {
   return (
     <div>
       <SC.StyledWarning>
-        Please be mindful of reddit's <span>content policy</span> and practice
-        good
+        Please be mindful of reddit's{" "}
+        <span>content policy</span> and practice good
         <span>reddiquette</span>.
       </SC.StyledWarning>
     </div>
@@ -113,7 +113,9 @@ const tagsArray = tagsContent.map((item) => (
 
 function ButtonTags() {
   return (
-    <SC.StyledButtonTagsContainer>{tagsArray}</SC.StyledButtonTagsContainer>
+    <SC.StyledButtonTagsContainer>
+      {tagsArray}
+    </SC.StyledButtonTagsContainer>
   );
 }
 
@@ -121,41 +123,61 @@ function BtnAndInput({ item }: IButtonTag) {
   const { state } = useContext(AppContext) as contextProps;
   return (
     <>
-      {Helper.toggleBtnAndInputField(item.name, state.buttonTagsToggle) && (
-        <ButtonTag item={item} />
-      )}
-      {!Helper.toggleBtnAndInputField(item.name, state.buttonTagsToggle) && (
-        <InputTag name={item.name} />
-      )}
+      {Helper.toggleBtnAndInputField(
+        item.name,
+        state.buttonTagsToggle
+      ) && <ButtonTag item={item} />}
+      {!Helper.toggleBtnAndInputField(
+        item.name,
+        state.buttonTagsToggle
+      ) && <InputTag name={item.name} />}
     </>
   );
 }
 
 function ButtonTag({ item }: IButtonTag) {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(
+    AppContext
+  ) as contextProps;
   const dealStatus = state.tagButton["Deal Status"];
 
   return (
     <SC.StyledButtonTags
-      disabled={Helper.makeBudgetBtnAlwaysActive(item, state)}
+      disabled={Helper.makeBudgetBtnAlwaysActive(
+        item,
+        state
+      )}
     >
       <button
-        disabled={Helper.makeBudgetBtnAlwaysActive(item, state)}
+        disabled={Helper.makeBudgetBtnAlwaysActive(
+          item,
+          state
+        )}
         onClick={(e) => {
           e.stopPropagation();
           Helper.btnTagsOnClick(item.name, true, dispatch);
-          Helper.toggleDealStatus({ e, dealStatus, dispatch });
+          Helper.toggleDealStatus({
+            e,
+            dealStatus,
+            dispatch,
+          });
         }}
       >
         {item.svg}{" "}
-        <span>{item.name !== "Deal Status" ? item.name : dealStatus}</span>
+        <span>
+          {item.name !== "Deal Status"
+            ? item.name
+            : dealStatus}
+        </span>
       </button>
     </SC.StyledButtonTags>
   );
 }
 
 function InputTag({ name }: { name: string }) {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(
+    AppContext
+  ) as contextProps;
 
   return (
     <SC.StyledInputTag>
@@ -163,8 +185,12 @@ function InputTag({ name }: { name: string }) {
         placeholder={name}
         type={Helper.setInputType(name)}
         onClick={(e) => e.stopPropagation()}
-        value={Helper.inputValue(state, name) as string | number}
-        onChange={(e) => Helper.updateStateObj(e, name, dispatch)}
+        value={
+          Helper.inputValue(state, name) as string | number
+        }
+        onChange={(e) =>
+          Helper.updateStateObj(e, name, dispatch)
+        }
       />
       <button
         onClick={(e) => {
@@ -213,7 +239,9 @@ function Markdown() {
 }
 
 function TitleInput() {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(
+    AppContext
+  ) as contextProps;
 
   return (
     <input
@@ -238,18 +266,21 @@ function Tags() {
 
   return (
     <SC.StyledTag>
-      {!buttonTagsToggle.dealStatus && state.post.postAsAgent && (
-        <div>Deal Open</div>
-      )}
+      {!buttonTagsToggle.dealStatus &&
+        state.post.postAsAgent && <div>Deal Open</div>}
       {showBudget && <div>${tagButton.Budget}</div>}
       {showLocation && <div>{tagButton.Location}</div>}
-      {showApartment && <div>{tagButton["Apartment Size"]}</div>}
+      {showApartment && (
+        <div>{tagButton["Apartment Size"]}</div>
+      )}
     </SC.StyledTag>
   );
 }
 
 function PostTextArea() {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(
+    AppContext
+  ) as contextProps;
 
   return (
     <SC.StyledPostTextArea>
@@ -260,17 +291,28 @@ function PostTextArea() {
         name="text"
         value={state.post.postDesc}
         placeholder="Enter description here."
-        onChange={(e) => Helper.handleInputChange(e, dispatch)}
+        onChange={(e) =>
+          Helper.handleInputChange(e, dispatch)
+        }
       ></textarea>
     </SC.StyledPostTextArea>
   );
 }
 
 function UploadImage() {
-  const { dispatch } = useContext(AppContext) as contextProps;
-  const fileTypes = ["image/png", "image/jpeg", "image/webp", "image/jpeg"];
+  const { dispatch } = useContext(
+    AppContext
+  ) as contextProps;
+  const fileTypes = [
+    "image/png",
+    "image/jpeg",
+    "image/webp",
+    "image/jpeg",
+  ];
 
-  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadImage = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     let file = e.target.files?.item(0);
     if (file && fileTypes.includes(file.type)) {
       uploadFileToStorage({ file, dispatch });
@@ -297,7 +339,9 @@ function UploadImage() {
 
 function ProgressBar() {
   const { state } = useContext(AppContext) as contextProps;
-  return <SC.StyledProgressBar width={state.uploadProgress} />;
+  return (
+    <SC.StyledProgressBar width={state.uploadProgress} />
+  );
 }
 
 const postOptionsArray = [
@@ -309,7 +353,9 @@ const postOptionsArray = [
 ];
 
 function PostOptions() {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(
+    AppContext
+  ) as contextProps;
 
   return (
     <SC.StyledPostOptions post={state.uploadImage}>
@@ -317,7 +363,12 @@ function PostOptions() {
         <button
           key={index}
           disabled={Helper.disableButton(item.name, state)}
-          onClick={Helper.toggleTextarea.bind(null, item.name, state, dispatch)}
+          onClick={Helper.toggleTextarea.bind(
+            null,
+            item.name,
+            state,
+            dispatch
+          )}
         >
           {item.svg}
           <p>{item.name}</p>
@@ -340,14 +391,18 @@ function ChooseCommunity() {
 }
 
 function PostAs() {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(
+    AppContext
+  ) as contextProps;
 
   return (
     <SC.StyledPostAs
       id="post-as"
       name="post-as"
       value={state.post.postAsAgent ? "agent" : "client"}
-      onChange={(e) => Helper.onChangeSetPostAs(e, dispatch)}
+      onChange={(e) =>
+        Helper.onChangeSetPostAs(e, dispatch)
+      }
     >
       <option value="client">a Client</option>
       <option value="agent">an Agent</option>
@@ -375,8 +430,11 @@ function Draft() {
 }
 
 function ActionButtons() {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
-  const allFieldsFilled = Helper.preventEmptyFieldSubmition(state);
+  const { state, dispatch } = useContext(
+    AppContext
+  ) as contextProps;
+  const allFieldsFilled =
+    Helper.preventEmptyFieldSubmition(state);
 
   return (
     <SC.StyleActionButtons bg={allFieldsFilled}>
@@ -397,12 +455,15 @@ function ActionButtons() {
               location: state.tagButton.Location,
               postAsAgent: state.post.postAsAgent,
               dealStatus: state.tagButton["Deal Status"],
-              apartmentSize: state.tagButton["Apartment Size"],
+              apartmentSize:
+                state.tagButton["Apartment Size"],
             });
           }}
         >
           <Link to="/">
-            {state.postType === "create" ? "Create Post" : "Save Edit"}
+            {state.postType === "create"
+              ? "Create Post"
+              : "Save Edit"}
           </Link>
         </button>
       </div>
@@ -419,10 +480,13 @@ function Check() {
           name="check"
           id="check"
         />
-        <label htmlFor="check">Send me post reply notifications</label>
+        <label htmlFor="check">
+          Send me post reply notifications
+        </label>
       </div>
       <p>
-        Connect accounts to share your post <RiErrorWarningLine />
+        Connect accounts to share your post{" "}
+        <RiErrorWarningLine />
       </p>
     </SC.StyledCheck>
   );

@@ -1,3 +1,17 @@
+import {
+  doc,
+  collection,
+  onSnapshot,
+  DocumentData,
+} from "firebase/firestore";
+import {
+  tuple,
+  IShowPostCard,
+} from "../../utilities/types";
+import {
+  Warning,
+  RedditRules,
+} from "../CreatePost/CreatePost";
 import { TextArea } from "./TextArea";
 import * as SC from "./StyledComment";
 import { db } from "../../firebaseConfig";
@@ -8,30 +22,37 @@ import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
 import { DisplayCommentCard } from "./DisplayCommentCard";
 import { useLoaderData, useParams } from "react-router-dom";
-import { IShowPostCard, tuple } from "../../utilities/types";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
-import { RedditRules, Warning } from "../CreatePost/CreatePost";
 import { postCardProps } from "../../utilities/createPostHelperFn";
-import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
 
 export default function Comment() {
   const { id } = useParams();
 
   // Get the post with the specified ID
   const posts = useLoaderData() as IShowPostCard[];
-  const post = posts.find((p) => p.data.postId === id) as IShowPostCard;
+  const post = posts.find(
+    (p) => p.data.postId === id
+  ) as IShowPostCard;
   const postData = post.data;
 
   // Subscribe to the post and comment data
   const [likes, setLikes] = useState<string[]>([]);
   const [upvotes, setUpvotes] = useState<string[]>([]);
   const [downvotes, setDownvotes] = useState<string[]>([]);
-  const [comments, setComments] = useState<DocumentData[]>([]);
+  const [comments, setComments] = useState<DocumentData[]>(
+    []
+  );
   const posterId = postData.userDocId as string;
   const postId = post.id as string;
 
   useEffect(() => {
-    const docRef = doc(db, "USERS", posterId, "POSTS", postId);
+    const docRef = doc(
+      db,
+      "USERS",
+      posterId,
+      "POSTS",
+      postId
+    );
 
     // Subscribe to post data
     const unsubPost = onSnapshot(docRef, (snapshot) => {
@@ -48,11 +69,20 @@ export default function Comment() {
   }, [comments]);
 
   useEffect(() => {
-    const colPath: tuple = [db, "USERS", posterId, "POSTS", postId, "Comments"];
+    const colPath: tuple = [
+      db,
+      "USERS",
+      posterId,
+      "POSTS",
+      postId,
+      "Comments",
+    ];
     const colRef = collection(...colPath);
     // Subscribe to comment data
     const unSubComment = onSnapshot(colRef, (snapshot) => {
-      const comments = snapshot.docs.map((doc) => ({ data: doc.data() }));
+      const comments = snapshot.docs.map((doc) => ({
+        data: doc.data(),
+      }));
       setComments(comments);
     });
 
@@ -63,7 +93,14 @@ export default function Comment() {
   }, [db]);
 
   // Render the component
-  const params = { post, likes, upvotes, postData, comments, downvotes };
+  const params = {
+    post,
+    likes,
+    upvotes,
+    postData,
+    comments,
+    downvotes,
+  };
   const { props } = postCardProps(params);
 
   const posterCard = !postData.postAsAgent ? (
@@ -84,10 +121,10 @@ export default function Comment() {
           />
           {comments.map((comment, index) => (
             <DisplayCommentCard
+              key={comment.data.commentId}
               index={index}
               comment={comment}
               postData={postData}
-              key={comment.data.commentId}
             />
           ))}
         </div>
@@ -103,4 +140,5 @@ export default function Comment() {
   );
 }
 
-export const commentLoader = async () => await getAllUserDocs();
+export const commentLoader = async () =>
+  await getAllUserDocs();

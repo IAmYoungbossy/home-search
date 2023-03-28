@@ -1,3 +1,9 @@
+import {
+  doc,
+  collection,
+  onSnapshot,
+  DocumentData,
+} from "firebase/firestore";
 import * as SC from "./StyledPostFeeds";
 import { db } from "../../firebaseConfig";
 import AgentCard from "../PostCards/AgentCard";
@@ -7,13 +13,22 @@ import CreatePost from "../SocialPage/CreatePost";
 import { ShieldSVG } from "../assets/Svg/SocialSVG";
 import { getAllUserDocs } from "../../firebaseCRUD";
 import { ClientCard } from "../PostCards/ClientCard";
-import { Fragment, useEffect, useState } from "react";
+import { AppContext } from "../../context/AppContext";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
+import {
+  Fragment,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
 import { postCardProps } from "../../utilities/createPostHelperFn";
-import { IShowPostCard } from "../../utilities/types";
-import { collection, doc, DocumentData, onSnapshot } from "firebase/firestore";
+import {
+  APP_ACTION_TYPES,
+  contextProps,
+  IShowPostCard,
+} from "../../utilities/types";
 
 export default function PostFeeds() {
   return (
@@ -45,7 +60,9 @@ function SideBar() {
 }
 
 function ShowPostCard(post: IShowPostCard) {
-  const [comments, setComments] = useState<DocumentData[]>([]);
+  const [comments, setComments] = useState<DocumentData[]>(
+    []
+  );
   const [downvotes, setDownvotes] = useState<string[]>([]);
   const [upvotes, setUpvotes] = useState<string[]>([]);
   const [likes, setLikes] = useState<string[]>([]);
@@ -54,7 +71,13 @@ function ShowPostCard(post: IShowPostCard) {
   useEffect(() => {
     const postId = post.id as string;
     const posterId = postData.userDocId as string;
-    const docRef = doc(db, "USERS", posterId, "POSTS", postId);
+    const docRef = doc(
+      db,
+      "USERS",
+      posterId,
+      "POSTS",
+      postId
+    );
     const colRef = collection(
       db,
       "USERS",
@@ -65,12 +88,17 @@ function ShowPostCard(post: IShowPostCard) {
     );
 
     const unSubComment = onSnapshot(colRef, (snapshot) => {
-      const comments = snapshot.docs.map((doc) => doc.data());
+      const comments = snapshot.docs.map((doc) =>
+        doc.data()
+      );
       setComments(comments);
     });
-    const unsubDownvotes = onSnapshot(docRef, (snapshot) => {
-      setDownvotes(snapshot.data()?.Downvotes);
-    });
+    const unsubDownvotes = onSnapshot(
+      docRef,
+      (snapshot) => {
+        setDownvotes(snapshot.data()?.Downvotes);
+      }
+    );
     const unsubUpvotes = onSnapshot(docRef, (snapshot) => {
       setUpvotes(snapshot.data()?.Upvotes);
     });
@@ -86,7 +114,14 @@ function ShowPostCard(post: IShowPostCard) {
     };
   }, [db]);
 
-  const params = { post, likes, upvotes, postData, comments, downvotes };
+  const params = {
+    post,
+    likes,
+    upvotes,
+    postData,
+    comments,
+    downvotes,
+  };
   const { props } = postCardProps(params);
 
   return post.data.postAsAgent ? (
@@ -110,13 +145,24 @@ function ShowPostCard(post: IShowPostCard) {
 
 function PostCards() {
   const posts = useLoaderData() as IShowPostCard[];
-  return <>{posts.length > 0 && posts.map(ShowPostCard)}</>;
+  const {
+    state: { postFeed },
+    dispatch,
+  } = useContext(AppContext) as contextProps;
+
+  useEffect(() => {
+    dispatch({
+      type: APP_ACTION_TYPES.postFeed,
+      payload: posts,
+    });
+  }, []);
+  return (
+    <>{postFeed.length > 0 && postFeed.map(ShowPostCard)}</>
+  );
 }
 
-export async function postLoader() {
-  const listOfPosts = await getAllUserDocs();
-  return listOfPosts;
-}
+export const postLoader = async () =>
+  await getAllUserDocs();
 
 function RedditPremium() {
   return (
@@ -181,8 +227,8 @@ function PromoText() {
   return (
     <div>
       <p>
-        Your personal Reddit frontpage. Come here to check in with your favorite
-        communities.
+        Your personal Reddit frontpage. Come here to check
+        in with your favorite communities.
       </p>
     </div>
   );
@@ -192,7 +238,9 @@ function Buttons() {
   return (
     <div>
       <SC.StyledButton>Create Post</SC.StyledButton>
-      <SC.StyledCommunityButton>Create Community</SC.StyledCommunityButton>
+      <SC.StyledCommunityButton>
+        Create Community
+      </SC.StyledCommunityButton>
     </div>
   );
 }
@@ -201,7 +249,10 @@ const userPoliciesAndLang = {
   policy: ["User Agreement", "Privacy Policy"],
   language1: ["English", "Français", "Italiano"],
   language2: ["Deutsch", "Español", "Português"],
-  moderation: ["Content Policy", "Moderator Code Of Conduct"],
+  moderation: [
+    "Content Policy",
+    "Moderator Code Of Conduct",
+  ],
 };
 
 function RedditPolicies() {
