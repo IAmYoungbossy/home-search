@@ -1,4 +1,8 @@
 import {
+  onSnapshot,
+  collectionGroup,
+} from "firebase/firestore";
+import {
   contextProps,
   IShowPostCard,
   APP_ACTION_TYPES,
@@ -11,11 +15,6 @@ import PostFeeds from "../PostFeeds/PostFeeds";
 import SignInContainer from "../SignIn/SignIn";
 import { AppContext } from "../../context/AppContext";
 import { StyledSocialPage } from "../Header/StyledHeader";
-import {
-  collection,
-  collectionGroup,
-  onSnapshot,
-} from "firebase/firestore";
 
 export default function SocialPageLayout() {
   const { dispatch } = useContext(
@@ -38,7 +37,7 @@ export default function SocialPageLayout() {
     return () => {
       unSubPosts();
     };
-  }, []);
+  }, [db, dispatch]);
 
   return (
     <StyledSocialPage>

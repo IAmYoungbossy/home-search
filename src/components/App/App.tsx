@@ -4,17 +4,17 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import { useContext } from "react";
-import { postLoader } from "../PostFeeds/PostFeeds";
-import { contextProps } from "../../utilities/types";
-import { AppContext } from "../../context/AppContext";
-import Comment, { commentLoader } from "../Comment/Comment";
 import SocialPageLayout, {
   SocialPage,
 } from "../SocialPage/SocialPage";
 import CreatePostPage, {
   editPostLoader,
 } from "../CreatePost/CreatePost";
+import { useContext } from "react";
+import { postLoader } from "../PostFeeds/PostFeeds";
+import { contextProps } from "../../utilities/types";
+import { AppContext } from "../../context/AppContext";
+import Comment, { commentLoader } from "../Comment/Comment";
 import { onClickToggleButtonTags } from "../../utilities/createPostHelperFn";
 
 const router = createBrowserRouter(

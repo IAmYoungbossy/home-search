@@ -26,14 +26,21 @@ import {
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 import { db, storage } from "./firebaseConfig";
-import { actionType, APP_ACTION_TYPES, deleteTuple } from "./utilities/types";
+import {
+  actionType,
+  APP_ACTION_TYPES,
+  deleteTuple,
+} from "./utilities/types";
 import { IPosterNameAndEditButtons } from "./components/PostCards/ClientCard";
 
 export const checkIfOldUser = async (
   user: User,
   dispatch: React.Dispatch<actionType>
 ) => {
-  const q = query(collection(db, "USERS"), where("userId", "==", user.uid));
+  const q = query(
+    collection(db, "USERS"),
+    where("userId", "==", user.uid)
+  );
   const documents = await getDocs(q);
   if (documents.docs.length > 0) {
     dispatch({
@@ -48,7 +55,9 @@ const updateDocument = async (
   docRef: DocumentReference<DocumentData>,
   dispatch: React.Dispatch<actionType>
 ) => {
-  await updateDoc(doc(db, "USERS", docRef["id"]), { docId: docRef["id"] });
+  await updateDoc(doc(db, "USERS", docRef["id"]), {
+    docId: docRef["id"],
+  });
   dispatch({
     type: APP_ACTION_TYPES.userDocId,
     payload: docRef.id,
@@ -129,7 +138,6 @@ export const addPostToFirestore = async ({
     : { ...commonData };
 
   if (postType === "create") {
-    console.log(postData);
     const document = await addDoc(
       collection(db, "USERS", userDocId as string, "POSTS"),
       postData
@@ -164,8 +172,18 @@ interface IAddPostId {
   postId: string;
 }
 
-async function addPostId({ db, userDocId, postId }: IAddPostId) {
-  const docRef = doc(db, "USERS", userDocId as string, "POSTS", postId);
+async function addPostId({
+  db,
+  userDocId,
+  postId,
+}: IAddPostId) {
+  const docRef = doc(
+    db,
+    "USERS",
+    userDocId as string,
+    "POSTS",
+    postId
+  );
   await updateDoc(docRef, {
     postId: postId,
   });
@@ -221,7 +239,10 @@ export async function uploadFileToStorage({
   file,
   dispatch,
 }: IUploadFileToStorage) {
-  const storageRef = ref(storage, `PostImages/${file.name}`);
+  const storageRef = ref(
+    storage,
+    `PostImages/${file.name}`
+  );
   const uploadTask = uploadBytesResumable(storageRef, file);
 
   uploadTask.on(
@@ -246,17 +267,26 @@ interface IUpdateProgressBar {
   dispatch: React.Dispatch<actionType>;
 }
 
-function updateProgressBar({ snapshot, dispatch }: IUpdateProgressBar) {
-  let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+function updateProgressBar({
+  snapshot,
+  dispatch,
+}: IUpdateProgressBar) {
+  let progress =
+    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
   dispatch({
     payload: progress,
     type: APP_ACTION_TYPES.uploadProgress,
   });
 }
 
-function setImageUrl({ uploadTask, dispatch }: ISetImageUrl) {
+function setImageUrl({
+  uploadTask,
+  dispatch,
+}: ISetImageUrl) {
   (async () => {
-    const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+    const downloadURL = await getDownloadURL(
+      uploadTask.snapshot.ref
+    );
     dispatch({
       type: APP_ACTION_TYPES.POST.imageURL,
       payload: downloadURL,
@@ -272,7 +302,9 @@ export const getAllUserDocs = async () => {
   const users = collection(db, "USERS");
   const userDocs = await getDocs(users);
   const postList = await Promise.all(
-    userDocs.docs.map((doc) => (async () => await getPostFromUserDoc(doc.id))())
+    userDocs.docs.map((doc) =>
+      (async () => await getPostFromUserDoc(doc.id))()
+    )
   );
   return postList.flat();
 };
@@ -312,11 +344,21 @@ interface IUpdatePostReactionArray extends IDocRef {
   };
 }
 
-async function getPostDetails({ user, userId, postId }: IlikeOrUnlike) {
+async function getPostDetails({
+  user,
+  userId,
+  postId,
+}: IlikeOrUnlike) {
   const userID = userId as string;
   const postID = postId as string;
   const currentUserId = user?.uid as string;
-  const postDocRef = doc(db, "USERS", userID, "POSTS", postID);
+  const postDocRef = doc(
+    db,
+    "USERS",
+    userID,
+    "POSTS",
+    postID
+  );
   const postDocSnapshot = await getDoc(postDocRef);
 
   return { postDocRef, currentUserId, postDocSnapshot };
@@ -331,12 +373,13 @@ export async function postReaction({
   commentId,
 }: IVote) {
   const props = { user, userId, postId };
-  const { postDocRef, currentUserId, postDocSnapshot } = await getPostDetails(
-    props
-  );
+  const { postDocRef, currentUserId, postDocSnapshot } =
+    await getPostDetails(props);
 
-  let votes = voteType === "upvote" ? "Upvotes" : "Downvotes";
-  let oppositeVotes = voteType === "upvote" ? "Downvotes" : "Upvotes";
+  let votes =
+    voteType === "upvote" ? "Upvotes" : "Downvotes";
+  let oppositeVotes =
+    voteType === "upvote" ? "Downvotes" : "Upvotes";
   if (voteType === "like") votes = "Likes";
 
   if (commentIndex !== undefined) {
@@ -352,7 +395,9 @@ export async function postReaction({
     const commentDocSnapshot = await getDoc(commentDocRef);
     if (
       commentDocSnapshot.exists() &&
-      commentDocSnapshot.data()[votes].includes(currentUserId)
+      commentDocSnapshot
+        .data()
+        [votes].includes(currentUserId)
     ) {
       await updatePostReactionArray({
         updatedObj: { [votes]: arrayRemove(currentUserId) },
@@ -363,9 +408,14 @@ export async function postReaction({
         updatedObj: { [votes]: arrayUnion(currentUserId) },
         postDocRef: commentDocRef,
       });
-      if (voteType === "downvote" || voteType === "upvote") {
+      if (
+        voteType === "downvote" ||
+        voteType === "upvote"
+      ) {
         await updatePostReactionArray({
-          updatedObj: { [oppositeVotes]: arrayRemove(currentUserId) },
+          updatedObj: {
+            [oppositeVotes]: arrayRemove(currentUserId),
+          },
           postDocRef: commentDocRef,
         });
       }
@@ -386,9 +436,14 @@ export async function postReaction({
         updatedObj: { [votes]: arrayUnion(currentUserId) },
         postDocRef,
       });
-      if (voteType === "downvote" || voteType === "upvote") {
+      if (
+        voteType === "downvote" ||
+        voteType === "upvote"
+      ) {
         await updatePostReactionArray({
-          updatedObj: { [oppositeVotes]: arrayRemove(currentUserId) },
+          updatedObj: {
+            [oppositeVotes]: arrayRemove(currentUserId),
+          },
           postDocRef,
         });
       }
@@ -433,17 +488,33 @@ export async function addComment({
     Comments: arrayUnion(),
     Downvotes: arrayUnion(),
   };
-  const document = await addDoc(commentCollection, commentFields);
+  const document = await addDoc(
+    commentCollection,
+    commentFields
+  );
   const commentId = document.id;
-  updateDoc(doc(db, "USERS", userID, "POSTS", postID, "Comments", commentId), {
-    commentId,
-  });
+  updateDoc(
+    doc(
+      db,
+      "USERS",
+      userID,
+      "POSTS",
+      postID,
+      "Comments",
+      commentId
+    ),
+    {
+      commentId,
+    }
+  );
 }
 
 interface IDeletePost extends IPosterNameAndEditButtons {
   postId: string;
   userId: string;
-  setToggleButtons: (value: React.SetStateAction<boolean>) => void;
+  setToggleButtons: (
+    value: React.SetStateAction<boolean>
+  ) => void;
 }
 
 export const deletePostOrComment = async ({
@@ -453,7 +524,13 @@ export const deletePostOrComment = async ({
   setToggleButtons,
 }: IDeletePost) => {
   // Path to delete a post
-  const path: deleteTuple = [db, "USERS", userId, "POSTS", postId];
+  const path: deleteTuple = [
+    db,
+    "USERS",
+    userId,
+    "POSTS",
+    postId,
+  ];
   if (commentId) {
     // Path to delete a comment
     path.push("Comments", commentId);

@@ -1,9 +1,20 @@
 import {
+  Fragment,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
+import {
   doc,
   collection,
   onSnapshot,
   DocumentData,
 } from "firebase/firestore";
+import {
+  contextProps,
+  IShowPostCard,
+  APP_ACTION_TYPES,
+} from "../../utilities/types";
 import * as SC from "./StyledPostFeeds";
 import { db } from "../../firebaseConfig";
 import AgentCard from "../PostCards/AgentCard";
@@ -17,18 +28,7 @@ import { AppContext } from "../../context/AppContext";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
-import {
-  Fragment,
-  useEffect,
-  useState,
-  useContext,
-} from "react";
 import { postCardProps } from "../../utilities/createPostHelperFn";
-import {
-  APP_ACTION_TYPES,
-  contextProps,
-  IShowPostCard,
-} from "../../utilities/types";
 
 export default function PostFeeds() {
   return (
@@ -59,14 +59,14 @@ function SideBar() {
   );
 }
 
-function ShowPostCard(post: IShowPostCard) {
+function ShowPostCard({ post }: { post: IShowPostCard }) {
+  const postData = post.data;
   const [comments, setComments] = useState<DocumentData[]>(
     []
   );
   const [downvotes, setDownvotes] = useState<string[]>([]);
   const [upvotes, setUpvotes] = useState<string[]>([]);
   const [likes, setLikes] = useState<string[]>([]);
-  const postData = post.data;
 
   useEffect(() => {
     const postId = post.id as string;
@@ -124,19 +124,16 @@ function ShowPostCard(post: IShowPostCard) {
   };
   const { props } = postCardProps(params);
 
-  return post.data.postAsAgent ? (
+  return (
     <Fragment key={post.id}>
       {upvotes && downvotes && (
         <ShowPosterCardProvider {...props}>
-          {post && <AgentCard />}
-        </ShowPosterCardProvider>
-      )}
-    </Fragment>
-  ) : (
-    <Fragment key={post.id}>
-      {upvotes && downvotes && (
-        <ShowPosterCardProvider {...props}>
-          {post && <ClientCard secondary="" />}
+          {post &&
+            (post.data.postAsAgent ? (
+              <AgentCard />
+            ) : (
+              <ClientCard secondary="" />
+            ))}
         </ShowPosterCardProvider>
       )}
     </Fragment>
@@ -144,20 +141,28 @@ function ShowPostCard(post: IShowPostCard) {
 }
 
 function PostCards() {
-  const posts = useLoaderData() as IShowPostCard[];
   const {
     state: { postFeed },
     dispatch,
   } = useContext(AppContext) as contextProps;
+  const posts = useLoaderData() as IShowPostCard[];
 
   useEffect(() => {
     dispatch({
       type: APP_ACTION_TYPES.postFeed,
       payload: posts,
     });
-  }, []);
+  }, [db]);
+
   return (
-    <>{postFeed.length > 0 && postFeed.map(ShowPostCard)}</>
+    <>
+      {postFeed.map((post) => (
+        <ShowPostCard
+          post={post}
+          key={post.id}
+        />
+      ))}
+    </>
   );
 }
 

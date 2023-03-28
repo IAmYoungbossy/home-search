@@ -34,7 +34,8 @@ export const makeBudgetBtnAlwaysActive = (
   item: buttonTagsType,
   state: appStateType
 ) =>
-  item["name"] === "Budget" || item["name"] === "Apartment Size"
+  item["name"] === "Budget" ||
+  item["name"] === "Apartment Size"
     ? false
     : setButtonState(state);
 
@@ -43,9 +44,14 @@ export const toggleDealStatus = ({
   dispatch,
   dealStatus,
 }: IToggleDealStatus) => {
-  const btnContent = e.currentTarget.children[1].textContent;
-  const status = btnContent === "Deal Status" && dealStatus === "Deal Status";
-  const open = btnContent === "Deal Open" && dealStatus === "Deal Open";
+  const btnContent =
+    e.currentTarget.children[1].textContent;
+  const status =
+    btnContent === "Deal Status" &&
+    dealStatus === "Deal Status";
+  const open =
+    btnContent === "Deal Open" &&
+    dealStatus === "Deal Open";
   const updateStateObj = (textContent: string) => ({
     type: APP_ACTION_TYPES.tagButton["Deal Status"],
     payload: textContent,
@@ -81,8 +87,10 @@ export const btnTagsOnClick = (
   boolean: boolean,
   dispatch: React.Dispatch<actionType>
 ) => {
-  const BUTTON_TAGS_TYPES = APP_ACTION_TYPES.buttonTagsToggle;
-  const updateStateObj = (type: string) => dispatch({ type, payload: boolean });
+  const BUTTON_TAGS_TYPES =
+    APP_ACTION_TYPES.buttonTagsToggle;
+  const updateStateObj = (type: string) =>
+    dispatch({ type, payload: boolean });
   if (btnName === "App") {
     updateStateObj(BUTTON_TAGS_TYPES.APP);
   } else if (btnName === "Budget") {
@@ -128,7 +136,9 @@ export const inputValue = (
   return "Error";
 };
 
-export const preventEmptyFieldSubmition = (state: appStateType) => {
+export const preventEmptyFieldSubmition = (
+  state: appStateType
+) => {
   const postDesc = state.post.postDesc;
   const postTitle = state.post.postTitle;
   return (
@@ -165,11 +175,15 @@ export const showTags = (state: appStateType) => {
   const tagButton = state.tagButton;
   const postAsAgent = state.post.postAsAgent;
   const buttonTagsToggle = state.buttonTagsToggle;
-  const showBudget = !buttonTagsToggle.budget && tagButton.Budget !== "";
+  const showBudget =
+    !buttonTagsToggle.budget && tagButton.Budget !== "";
   const showLocation =
-    !buttonTagsToggle.location && postAsAgent && tagButton.Location !== "";
+    !buttonTagsToggle.location &&
+    postAsAgent &&
+    tagButton.Location !== "";
   const showApartment =
-    !buttonTagsToggle.apartment && tagButton["Apartment Size"] !== "";
+    !buttonTagsToggle.apartment &&
+    tagButton["Apartment Size"] !== "";
   return {
     showBudget,
     showLocation,
@@ -202,8 +216,12 @@ export const updateStateObj = (
   dispatch(updatedObj);
 };
 
-export const disableButton = (btnName: string, state: appStateType) =>
-  btnName === "Post" || (btnName === "Images & Video" && state.post.postAsAgent)
+export const disableButton = (
+  btnName: string,
+  state: appStateType
+) =>
+  btnName === "Post" ||
+  (btnName === "Images & Video" && state.post.postAsAgent)
     ? false
     : true;
 
@@ -244,7 +262,11 @@ interface IEditCard {
   snapshot: DocumentSnapshot<DocumentData>;
 }
 
-export function editAgentCard({ dispatch, snapshot, postId }: IEditCard) {
+export function editAgentCard({
+  dispatch,
+  snapshot,
+  postId,
+}: IEditCard) {
   const {
     budget,
     imageUrl,
@@ -255,7 +277,6 @@ export function editAgentCard({ dispatch, snapshot, postId }: IEditCard) {
     postAsAgent,
     apartmentSize,
   } = snapshot.data() as DocumentData;
-  console.log(postId);
   dispatch({
     type: APP_ACTION_TYPES.tagButton["Apartment Size"],
     payload: apartmentSize,
@@ -289,10 +310,19 @@ export function editAgentCard({ dispatch, snapshot, postId }: IEditCard) {
   });
 }
 
-export function editClientCard({ dispatch, snapshot, postId }: IEditCard) {
-  const { budget, postDesc, postTitle, userDocId, postAsAgent, apartmentSize } =
-    snapshot.data() as DocumentData;
-  console.log(postId);
+export function editClientCard({
+  dispatch,
+  snapshot,
+  postId,
+}: IEditCard) {
+  const {
+    budget,
+    postDesc,
+    postTitle,
+    userDocId,
+    postAsAgent,
+    apartmentSize,
+  } = snapshot.data() as DocumentData;
   dispatch({
     type: APP_ACTION_TYPES.tagButton["Apartment Size"],
     payload: apartmentSize,
@@ -327,12 +357,20 @@ interface IEditPost {
 }
 
 // Function checks which post card type to edit
-export const editPost = async ({ userId, postId, dispatch }: IEditPost) => {
-  const snapshot = await getDoc(doc(db, "USERS", userId, "POSTS", postId));
+export const editPost = async ({
+  userId,
+  postId,
+  dispatch,
+}: IEditPost) => {
+  const snapshot = await getDoc(
+    doc(db, "USERS", userId, "POSTS", postId)
+  );
   const { postAsAgent } = snapshot.data() as DocumentData;
 
-  if (postAsAgent) editAgentCard({ dispatch, snapshot, postId });
-  if (!postAsAgent) editClientCard({ dispatch, snapshot, postId });
+  if (postAsAgent)
+    editAgentCard({ dispatch, snapshot, postId });
+  if (!postAsAgent)
+    editClientCard({ dispatch, snapshot, postId });
 };
 
 interface IPostCardProps {

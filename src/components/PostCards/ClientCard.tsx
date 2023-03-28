@@ -1,4 +1,10 @@
 import {
+  doc,
+  getDoc,
+  DocumentData,
+  DocumentReference,
+} from "firebase/firestore";
+import {
   postReaction,
   IlikeOrUnlike,
   deletePostOrComment,
@@ -19,14 +25,11 @@ import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { editPost } from "../../utilities/createPostHelperFn";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
-import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
-import { db } from "../../firebaseConfig";
 import {
-  doc,
-  DocumentData,
-  DocumentReference,
-  getDoc,
-} from "firebase/firestore";
+  ArrowDownSVG,
+  ArrowUpSVG,
+} from "../assets/socialPage/SocialSVG";
+import { db } from "../../firebaseConfig";
 
 interface IClientCard {
   secondary?: string;
@@ -51,7 +54,10 @@ export function ClientCard({ secondary }: IClientCard) {
 
 interface IPostCard extends IPost, IlikeOrUnlike {}
 
-export default function PostCard({ children, secondary }: IPostCard) {
+export default function PostCard({
+  children,
+  secondary,
+}: IPostCard) {
   return (
     <SC.StyledPostCard>
       <VoteArrow
@@ -65,7 +71,11 @@ export default function PostCard({ children, secondary }: IPostCard) {
   );
 }
 
-export function HouseSpec({ apartmentSize }: { apartmentSize?: string }) {
+export function HouseSpec({
+  apartmentSize,
+}: {
+  apartmentSize?: string;
+}) {
   return <h3>Looking for {apartmentSize}.</h3>;
 }
 
@@ -73,16 +83,22 @@ export interface VoteArrowProps extends IClientCard {
   primary?: string;
 }
 
-export function VoteArrow({ primary, secondary }: VoteArrowProps) {
+export function VoteArrow({
+  primary,
+  secondary,
+}: VoteArrowProps) {
   const { user } = useContext(AppContext) as contextProps;
   const { userId, postId, upvotes, downvotes } = useContext(
     ShowPostCardContext
   ) as ShowPosterCardProps;
   const votesCount = () =>
-    upvotes && downvotes ? upvotes.length - downvotes.length : null;
+    upvotes && downvotes
+      ? upvotes.length - downvotes.length
+      : null;
 
   const togglevotesColor = (votes: string[]) => {
-    if (votes && votes.includes(user?.uid as string)) return true;
+    if (votes && votes.includes(user?.uid as string))
+      return true;
     return false;
   };
 
@@ -125,7 +141,9 @@ export function VoteArrow({ primary, secondary }: VoteArrowProps) {
 }
 
 function PostDetails({ children }: IPostDetailsProps) {
-  const { budget } = useContext(ShowPostCardContext) as ShowPosterCardProps;
+  const { budget } = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
   return (
     <SC.StyledPostDetails>
       <OriginalPoster>
@@ -178,8 +196,12 @@ function PosterNameAndEditButtons({
 }: IPosterNameAndEditButtons) {
   const [posterName, setPosterName] = useState("NEW");
   const [toggleButtons, setToggleButtons] = useState(false);
-  const postCard = useContext(ShowPostCardContext) as ShowPosterCardProps;
-  const setName = async (docRef: DocumentReference<DocumentData>) => {
+  const postCard = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
+  const setName = async (
+    docRef: DocumentReference<DocumentData>
+  ) => {
     const doc = await getDoc(docRef);
     setPosterName(doc.data()?.name);
   };
@@ -226,9 +248,12 @@ function PosterNameAndEditButtons({
   );
 }
 
-interface IEditAndDeleteButtons extends IPosterNameAndEditButtons {
+interface IEditAndDeleteButtons
+  extends IPosterNameAndEditButtons {
   toggleButtons: boolean;
-  setToggleButtons: React.Dispatch<React.SetStateAction<boolean>>;
+  setToggleButtons: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
 }
 
 function EditAndDeleteButtons({
@@ -239,10 +264,13 @@ function EditAndDeleteButtons({
   setToggleButtons,
 }: IEditAndDeleteButtons) {
   // Check if this is a comment card or a post card
-  const commentCard = !commentId && !commentPostId && !commentUserId;
+  const commentCard =
+    !commentId && !commentPostId && !commentUserId;
 
   // Get the dispatch function from AppContext
-  const { dispatch } = useContext(AppContext) as contextProps;
+  const { dispatch } = useContext(
+    AppContext
+  ) as contextProps;
 
   // Listen for clicks outside of the edit/delete buttons and close them if necessary
   useEffect(() => {
@@ -255,14 +283,20 @@ function EditAndDeleteButtons({
   }, [toggleButtons]);
 
   // Get the post card data from the ShowPostCardContext
-  const postCard = useContext(ShowPostCardContext) as ShowPosterCardProps;
+  const postCard = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
 
   // Handler for deleting a post/comment
   const deletePostHandler = async () => {
     await deletePostOrComment({
       setToggleButtons,
-      postId: postCard ? postCard.postId : (commentPostId as string),
-      userId: postCard ? postCard.userId : (commentUserId as string),
+      postId: postCard
+        ? postCard.postId
+        : (commentPostId as string),
+      userId: postCard
+        ? postCard.userId
+        : (commentUserId as string),
       commentId: commentId ? commentId : undefined,
     });
   };
@@ -274,28 +308,39 @@ function EditAndDeleteButtons({
       postId: postCard.postId,
       dispatch,
     });
-    dispatch({ payload: "edit", type: APP_ACTION_TYPES.POST_TYPE });
+    dispatch({
+      payload: "edit",
+      type: APP_ACTION_TYPES.POST_TYPE,
+    });
   };
 
   return (
-    <SC.StyledEditAndDeleteButtons onClick={(e) => e.stopPropagation()}>
+    <SC.StyledEditAndDeleteButtons
+      onClick={(e) => e.stopPropagation()}
+    >
       {/* Show the edit post button only on post cards */}
       {postCard && commentCard && (
         <li>
           <button onClick={editPostHandler}>
-            <Link to={`/edit-post/${postCard.postId}`}>Edit Post</Link>
+            <Link to={`/edit-post/${postCard.postId}`}>
+              Edit Post
+            </Link>
           </button>
         </li>
       )}
       <li>
-        <button onClick={deletePostHandler}>Delete Post</button>
+        <button onClick={deletePostHandler}>
+          Delete Post
+        </button>
       </li>
     </SC.StyledEditAndDeleteButtons>
   );
 }
 
 export function Description() {
-  const { postDesc } = useContext(ShowPostCardContext) as ShowPosterCardProps;
+  const { postDesc } = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
   return (
     <SC.StyledDescription>
       <p>{postDesc}</p>
@@ -315,7 +360,9 @@ function InteractWithPostIcons() {
   };
 
   return (
-    <SC.StyledInteractWithPostIcons liked={toggleLikeColor()}>
+    <SC.StyledInteractWithPostIcons
+      liked={toggleLikeColor()}
+    >
       <div>
         <Link to={`/comment/${postId as string}`}>
           <BiComment /> {comments?.length} Comment
