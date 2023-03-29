@@ -3,7 +3,7 @@ import {
   promoText,
 } from "../../constant/textConstant";
 import * as SC from "./StyledPostFeeds";
-import PostCards from "../PostCards/PostCards";
+import PostCards from "../Cards/PostCards";
 import FilterBar from "../SocialPage/FilterBar";
 import CreatePost from "../SocialPage/CreatePost";
 import { ShieldSVG } from "../assets/Svg/SocialSVG";

@@ -1,7 +1,7 @@
 import { CommentBox } from "./CommentBox";
 import { StyledcommentCard } from "./StyledComment";
 import { ICommentReactions } from "./CommentReactions";
-import { OriginalPoster } from "../PostCards/ClientCard";
+import { OriginalPoster } from "../Cards/ClientCard";
 import { DocumentData } from "firebase/firestore";
 
 export interface ICommentCard extends ICommentReactions {

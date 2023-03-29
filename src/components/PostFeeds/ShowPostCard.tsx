@@ -5,9 +5,9 @@ import {
   DocumentData,
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
-import AgentCard from "../PostCards/AgentCard";
+import AgentCard from "../Cards/AgentCard";
 import { useState, useEffect, Fragment } from "react";
-import { ClientCard } from "../PostCards/ClientCard";
+import { ClientCard } from "../Cards/ClientCard";
 import { IShowPostCard } from "../../utilities/types";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
 import { postCardProps } from "../../utilities/createPostHelperFn";

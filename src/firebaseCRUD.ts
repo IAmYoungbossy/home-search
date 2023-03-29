@@ -31,7 +31,7 @@ import {
   APP_ACTION_TYPES,
   deleteTuple,
 } from "./utilities/types";
-import { IPosterNameAndEditButtons } from "./components/PostCards/ClientCard";
+import { IPosterNameAndEditButtons } from "./components/Cards/ClientCard";
 
 export const checkIfOldUser = async (
   user: User,
