@@ -22,8 +22,9 @@ import {
 import GetPosterName, {
   IGetPosterName,
 } from "./GetPostName";
+import { VoteArrow } from "./VoteArrow";
 
-interface IClientCard {
+export interface IClientCard {
   secondary?: string;
 }
 
@@ -69,67 +70,6 @@ export function HouseSpec({
   apartmentSize?: string;
 }) {
   return <h3>Looking for {apartmentSize}.</h3>;
-}
-
-export interface VoteArrowProps extends IClientCard {
-  primary?: string;
-}
-
-export function VoteArrow({
-  primary,
-  secondary,
-}: VoteArrowProps) {
-  const { user } = useContext(AppContext) as contextProps;
-  const { userId, postId, upvotes, downvotes } = useContext(
-    ShowPostCardContext
-  ) as ShowPosterCardProps;
-  const votesCount = () =>
-    upvotes && downvotes
-      ? upvotes.length - downvotes.length
-      : null;
-
-  const togglevotesColor = (votes: string[]) => {
-    if (votes && votes.includes(user?.uid as string))
-      return true;
-    return false;
-  };
-
-  return (
-    <SC.StyledVoteArrow
-      primary={primary}
-      secondary={secondary}
-      upvoted={togglevotesColor(upvotes as string[])}
-      downvoted={togglevotesColor(downvotes as string[])}
-    >
-      <div>
-        <ArrowUpSVG
-          onClick={() => {
-            (async () =>
-              await postReaction({
-                userId,
-                postId,
-                voteType: "upvote",
-                user: user as User,
-              }))();
-          }}
-        />
-      </div>
-      <p>{votesCount()}</p>
-      <div>
-        <ArrowDownSVG
-          onClick={() => {
-            (async () =>
-              await postReaction({
-                userId,
-                postId,
-                user: user as User,
-                voteType: "downvote",
-              }))();
-          }}
-        />
-      </div>
-    </SC.StyledVoteArrow>
-  );
 }
 
 function PostDetails({ children }: IPostDetailsProps) {
