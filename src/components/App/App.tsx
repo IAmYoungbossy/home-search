@@ -11,7 +11,7 @@ import CreatePostPage, {
   editPostLoader,
 } from "../CreatePost/CreatePost";
 import { useContext } from "react";
-import { postLoader } from "../PostFeeds/PostFeeds";
+import { postLoader } from "../PostCards/PostCards";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import Comment, { commentLoader } from "../Comment/Comment";

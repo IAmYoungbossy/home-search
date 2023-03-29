@@ -21,8 +21,13 @@ export default function SocialPageLayout() {
     AppContext
   ) as contextProps;
 
+  /********************************************************
+   ** Listens to Posts collection for any changes in its ***
+   ** documents and update in realtime *********************
+   *********************************************************/
   useEffect(() => {
     const postsRef = collectionGroup(db, "POSTS");
+
     const unSubPosts = onSnapshot(postsRef, (snapshot) => {
       const posts = snapshot.docs.map((doc) => ({
         data: doc.data(),
