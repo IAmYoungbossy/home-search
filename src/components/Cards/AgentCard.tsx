@@ -1,11 +1,9 @@
 import { useContext } from "react";
-import { ShowPostCardContext } from "../../context/ShowPostCard";
-import {
-  ImageContainer,
-  StyledHouseDetails,
-} from "./StyledAgentCard";
-import { ShowPosterCardProps } from "../../utilities/types";
 import CardContainer from "./CardContainer";
+import AgentPostTags from "./AgentPostTags";
+import { ImageContainer } from "./StyledAgentCard";
+import { ShowPosterCardProps } from "../../utilities/types";
+import { ShowPostCardContext } from "../../context/ShowPostCard";
 
 interface IAgentCard {
   secondary?: string;
@@ -23,24 +21,8 @@ export default function AgentCard({
       <>
         <h3>{postTitle}</h3>
         <ImageContainer bgImage={bgImage as string} />
-        <HouseDetails />
+        <AgentPostTags />
       </>
     </CardContainer>
-  );
-}
-
-function HouseDetails() {
-  const { budget, location, dealStatus, apartmentSize } =
-    useContext(ShowPostCardContext) as ShowPosterCardProps;
-
-  return (
-    <StyledHouseDetails>
-      <ul>
-        <li>{apartmentSize}</li>
-        <li>{location}</li>
-        <li>$ {budget}</li>
-        <li>{dealStatus}</li>
-      </ul>
-    </StyledHouseDetails>
   );
 }

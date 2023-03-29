@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledHouseDetails = styled.div`
+export const StyledAgentPostTags = styled.div`
   ul {
     display: flex;
     align-items: center;
@@ -15,7 +15,9 @@ export const StyledHouseDetails = styled.div`
   }
 `;
 
-export const ImageContainer = styled.div<{ bgImage: string }>`
+export const ImageContainer = styled.div<{
+  bgImage: string;
+}>`
   height: 300px;
   max-width: 625px;
   border-radius: 0;
