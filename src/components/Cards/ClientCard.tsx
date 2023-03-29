@@ -1,28 +1,14 @@
-import {
-  postReaction,
-  IlikeOrUnlike,
-} from "../../firebaseCRUD";
-import {
-  contextProps,
-  ShowPosterCardProps,
-} from "../../utilities/types";
-import { User } from "firebase/auth";
-import { Link } from "react-router-dom";
-import { SlLike } from "react-icons/sl";
-import * as SC from "./StyledClientCard";
-import { BiComment } from "react-icons/bi";
-import { FaUserCircle } from "react-icons/fa";
-import { AppContext } from "../../context/AppContext";
-import { useContext } from "react";
-import { ShowPostCardContext } from "../../context/ShowPostCard";
-import {
-  ArrowDownSVG,
-  ArrowUpSVG,
-} from "../assets/socialPage/SocialSVG";
 import GetPosterName, {
   IGetPosterName,
 } from "./GetPostName";
+import { useContext } from "react";
 import { VoteArrow } from "./VoteArrow";
+import * as SC from "./StyledClientCard";
+import { FaUserCircle } from "react-icons/fa";
+import { IlikeOrUnlike } from "../../firebaseCRUD";
+import PostIconsInteraction from "./PostIconsInteraction";
+import { ShowPosterCardProps } from "../../utilities/types";
+import { ShowPostCardContext } from "../../context/ShowPostCard";
 
 export interface IClientCard {
   secondary?: string;
@@ -85,7 +71,7 @@ function PostDetails({ children }: IPostDetailsProps) {
       </OriginalPoster>
       {children}
       <Description />
-      <InteractWithPostIcons />
+      <PostIconsInteraction />
     </SC.StyledPostDetails>
   );
 }
@@ -123,42 +109,5 @@ export function Description() {
     <SC.StyledDescription>
       <p>{postDesc}</p>
     </SC.StyledDescription>
-  );
-}
-
-function InteractWithPostIcons() {
-  const { userId, postId, likes, comments } = useContext(
-    ShowPostCardContext
-  ) as ShowPosterCardProps;
-  const { user } = useContext(AppContext) as contextProps;
-
-  const toggleLikeColor = () => {
-    if (likes?.includes(user?.uid as string)) return true;
-    return false;
-  };
-
-  return (
-    <SC.StyledInteractWithPostIcons
-      liked={toggleLikeColor()}
-    >
-      <div>
-        <Link to={`/comment/${postId as string}`}>
-          <BiComment /> {comments?.length} Comment
-        </Link>
-      </div>
-      <div
-        onClick={() => {
-          (async () =>
-            await postReaction({
-              userId,
-              postId,
-              voteType: "like",
-              user: user as User,
-            }))();
-        }}
-      >
-        <SlLike /> {likes && likes.length} Like
-      </div>
-    </SC.StyledInteractWithPostIcons>
   );
 }
