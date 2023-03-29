@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { Description } from "./ClientCard";
 import { OriginalPoster } from "./OriginalPoster";
+import { HouseDescription } from "./HouseDescription";
 import { StyledPostDetails } from "./StyledClientCard";
 import PostIconsInteraction from "./PostIconsInteraction";
 import { ShowPosterCardProps } from "../../utilities/types";
@@ -25,7 +25,7 @@ export default function PostDetails({
         </p>
       </OriginalPoster>
       {children}
-      <Description />
+      <HouseDescription />
       <PostIconsInteraction />
     </StyledPostDetails>
   );
