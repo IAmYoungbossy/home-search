@@ -5,15 +5,14 @@ import {
 } from "../../utilities/types";
 import { Link } from "react-router-dom";
 import { useContext, useEffect } from "react";
+import { IGetPosterName } from "./GetPostName";
 import { AppContext } from "../../context/AppContext";
 import { deletePostOrComment } from "../../firebaseCRUD";
-import { IPosterNameAndEditButtons } from "./ClientCard";
 import { editPost } from "../../utilities/createPostHelperFn";
 import { StyledEditAndDeleteButtons } from "./StyledClientCard";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 
-interface IEditAndDeleteButtons
-  extends IPosterNameAndEditButtons {
+interface IEditAndDeleteButtons extends IGetPosterName {
   toggleButtons: boolean;
   setToggleButtons: React.Dispatch<
     React.SetStateAction<boolean>

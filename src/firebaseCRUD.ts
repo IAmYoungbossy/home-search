@@ -31,7 +31,7 @@ import {
   APP_ACTION_TYPES,
   deleteTuple,
 } from "./utilities/types";
-import { IPosterNameAndEditButtons } from "./components/Cards/ClientCard";
+import { IGetPosterName } from "./components/Cards/GetPostName";
 
 export const checkIfOldUser = async (
   user: User,
@@ -509,7 +509,7 @@ export async function addComment({
   );
 }
 
-interface IDeletePost extends IPosterNameAndEditButtons {
+interface IDeletePost extends IGetPosterName {
   postId: string;
   userId: string;
   setToggleButtons: (

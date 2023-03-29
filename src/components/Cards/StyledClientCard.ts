@@ -1,13 +1,16 @@
 import styled from "styled-components";
 
-export const StyledInteractWithPostIcons = styled.div<{ liked: boolean }>`
+export const StyledInteractWithPostIcons = styled.div<{
+  liked: boolean;
+}>`
   gap: 10px;
   display: flex;
   align-items: center;
   margin: -3px 31px 0 23px;
   padding: 5px 14px 6px 0px;
   border-top-left-radius: 5px;
-  border-top: 1px solid var(--interact-with-post-border-color);
+  border-top: 1px solid
+    var(--interact-with-post-border-color);
 
   a {
     gap: 5px;
@@ -129,7 +132,8 @@ export const StyledVoteArrow = styled.div<{
   display: flex;
   align-items: center;
   padding: ${({ primary }) => (primary ? "10px 9px" : "0")};
-  flex-direction: ${({ primary }) => (primary ? "column" : "row")};
+  flex-direction: ${({ primary }) =>
+    primary ? "column" : "row"};
   background-color: ${({ primary, secondary }) =>
     !primary || secondary ? "transparent" : primary};
 
@@ -146,7 +150,8 @@ export const StyledVoteArrow = styled.div<{
   }
 
   & > div:last-of-type {
-    color: ${({ downvoted }) => (downvoted ? "blue" : "black")};
+    color: ${({ downvoted }) =>
+      downvoted ? "blue" : "black"};
   }
 
   p {
@@ -154,7 +159,7 @@ export const StyledVoteArrow = styled.div<{
   }
 `;
 
-export const StyledPosterNameAndEditButtons = styled.div`
+export const StyledPosterName = styled.div`
   gap: 10px;
   display: flex;
   width: max-content;

@@ -1,10 +1,4 @@
 import {
-  doc,
-  getDoc,
-  DocumentData,
-  DocumentReference,
-} from "firebase/firestore";
-import {
   postReaction,
   IlikeOrUnlike,
 } from "../../firebaseCRUD";
@@ -17,17 +11,17 @@ import { Link } from "react-router-dom";
 import { SlLike } from "react-icons/sl";
 import * as SC from "./StyledClientCard";
 import { BiComment } from "react-icons/bi";
-import { BsThreeDots } from "react-icons/bs";
 import { FaUserCircle } from "react-icons/fa";
 import { AppContext } from "../../context/AppContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import {
   ArrowDownSVG,
   ArrowUpSVG,
 } from "../assets/socialPage/SocialSVG";
-import { db } from "../../firebaseConfig";
-import EditAndDelete from "./EditAndDelete";
+import GetPosterName, {
+  IGetPosterName,
+} from "./GetPostName";
 
 interface IClientCard {
   secondary?: string;
@@ -156,15 +150,9 @@ function PostDetails({ children }: IPostDetailsProps) {
   );
 }
 
-export interface IPosterNameAndEditButtons {
-  commentId?: string;
-  commentUserId?: string;
-  commentPostId?: string;
-}
-
 interface OriginalPosterProps
   extends IPostDetailsProps,
-    IPosterNameAndEditButtons {}
+    IGetPosterName {}
 
 export function OriginalPoster({
   children,
@@ -176,7 +164,7 @@ export function OriginalPoster({
     <SC.StyledOriginalPoster>
       <FaUserCircle />
       <div>
-        <PosterNameAndEditButtons
+        <GetPosterName
           commentId={commentId}
           commentPostId={commentPostId}
           commentUserId={commentUserId}
@@ -184,65 +172,6 @@ export function OriginalPoster({
         {children}
       </div>
     </SC.StyledOriginalPoster>
-  );
-}
-
-function PosterNameAndEditButtons({
-  commentId,
-  commentUserId,
-  commentPostId,
-}: IPosterNameAndEditButtons) {
-  const [posterName, setPosterName] = useState("NEW");
-  const [toggleButtons, setToggleButtons] = useState(false);
-  const postCard = useContext(
-    ShowPostCardContext
-  ) as ShowPosterCardProps;
-  const setName = async (
-    docRef: DocumentReference<DocumentData>
-  ) => {
-    const doc = await getDoc(docRef);
-    setPosterName(doc.data()?.name);
-  };
-
-  useEffect(() => {
-    if (postCard) {
-      const docRef = doc(db, "USERS", postCard.userId);
-      setName(docRef);
-    } else {
-      const docRef = doc(
-        db,
-        "USERS",
-        commentUserId as string,
-        "POSTS",
-        commentPostId as string,
-        "Comments",
-        commentId as string
-      );
-      setName(docRef);
-    }
-  });
-
-  return (
-    <SC.StyledPosterNameAndEditButtons>
-      <p>{posterName}</p>{" "}
-      <div>
-        <BsThreeDots
-          onClick={(e) => {
-            e.stopPropagation();
-            setToggleButtons(toggleButtons ? false : true);
-          }}
-        />
-        {toggleButtons && (
-          <EditAndDelete
-            commentId={commentId}
-            commentPostId={commentPostId}
-            commentUserId={commentUserId}
-            toggleButtons={toggleButtons}
-            setToggleButtons={setToggleButtons}
-          />
-        )}
-      </div>
-    </SC.StyledPosterNameAndEditButtons>
   );
 }
 
