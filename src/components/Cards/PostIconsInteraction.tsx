@@ -17,7 +17,9 @@ export default function PostIconsInteraction() {
     ShowPostCardContext
   ) as ShowPosterCardProps;
 
-  const { user } = useContext(AppContext) as contextProps;
+  const {
+    state: { user },
+  } = useContext(AppContext) as contextProps;
 
   const toggleLikeColor = () => {
     if (likes?.includes(user?.uid as string)) return true;

@@ -16,19 +16,29 @@ export function AddCommentButton({
   postId,
   textValue,
 }: IAddCommentButton) {
-  const { user } = useContext(AppContext) as contextProps;
+  const {
+    state: { user },
+  } = useContext(AppContext) as contextProps;
   const name = user?.displayName as string;
   const textareaValue = textValue as string;
 
   const handleAddComment = () => {
     if (textareaValue.length < 1) return;
     (async () => {
-      await addComment({ name, userId, postId, comment: textareaValue });
+      await addComment({
+        name,
+        userId,
+        postId,
+        comment: textareaValue,
+        currentUser: user?.uid as string,
+      });
     })();
   };
 
   return (
-    <StyledRichTextEditor bgColor={textareaValue.length > 0 ? true : false}>
+    <StyledRichTextEditor
+      bgColor={textareaValue.length > 0 ? true : false}
+    >
       <div>
         <AiOutlineQuestionCircle />
         <p>Switch to Fancy Pants Editor</p>

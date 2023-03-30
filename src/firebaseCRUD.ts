@@ -462,6 +462,7 @@ async function updatePostReactionArray({
 interface IAddComment extends IlikeOrUnlike {
   name: string;
   comment: string;
+  currentUser: string;
 }
 
 export async function addComment({
@@ -469,7 +470,10 @@ export async function addComment({
   userId,
   postId,
   comment,
+  currentUser,
 }: IAddComment) {
+  console.log({ currentUser, userId });
+
   const userID = userId as string;
   const postID = postId as string;
   const commentCollection = collection(
@@ -505,6 +509,7 @@ export async function addComment({
     ),
     {
       commentId,
+      currentUser,
     }
   );
 }

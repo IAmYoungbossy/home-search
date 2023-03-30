@@ -1,5 +1,8 @@
 import { User } from "firebase/auth";
-import { DocumentData, Firestore } from "firebase/firestore";
+import {
+  DocumentData,
+  Firestore,
+} from "firebase/firestore";
 
 export interface Icomment {
   name: string;
@@ -71,6 +74,7 @@ export type appStateType = {
   tagButton: tagButtonType;
   postType: "create" | "edit";
   EditAndDeleteButton: boolean;
+  user: User | null | undefined;
   postFeed: IShowPostCard[] | [];
   buttonTagsToggle: IButtonTagsToggle;
 };
@@ -78,10 +82,13 @@ export type appStateType = {
 export type actionType = {
   type: string;
   payload:
-    | boolean
+    | null
+    | User
     | string
     | number
+    | boolean
     | userType
+    | undefined
     | postInterface
     | tagButtonType
     | IShowPostCard[];
@@ -96,6 +103,7 @@ interface IPostType {
 }
 
 export type IAppActionTypes = {
+  USER: string;
   postId: string;
   POST: IPostType;
   postFeed: string;
@@ -127,6 +135,7 @@ export type IAppActionTypes = {
 export const APP_ACTION_TYPES: IAppActionTypes = {
   userDocId: "USER",
   postId: "POST_ID",
+  USER: "CURRENT USER",
   postFeed: "POSTFEED",
   POST_TYPE: "POST TYPE",
   POST_OBJECT: "POST OBJECT",
@@ -163,6 +172,7 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
 export const APP_INITIAL_STATE: appStateType = {
   postId: "",
   postFeed: [],
+  user: undefined,
   userDocId: null,
   uploadProgress: 0,
   postType: "create",
@@ -197,7 +207,6 @@ export interface contextProps {
   loading: boolean;
   state: appStateType;
   error: Error | undefined;
-  user: User | null | undefined;
   dispatch: React.Dispatch<actionType>;
 }
 
@@ -223,7 +232,24 @@ export interface ShowPosterCardProps {
 
 export type deleteTuple =
   | [Firestore, string, string, string, string]
-  | [Firestore, string, string, string, string, string, string];
-export type tuple = [Firestore, string, string, string, string, string];
+  | [
+      Firestore,
+      string,
+      string,
+      string,
+      string,
+      string,
+      string
+    ];
+export type tuple = [
+  Firestore,
+  string,
+  string,
+  string,
+  string,
+  string
+];
 
-export interface IAppDataProvider extends PageProps, ShowPosterCardProps {}
+export interface IAppDataProvider
+  extends PageProps,
+    ShowPosterCardProps {}

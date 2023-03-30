@@ -15,7 +15,7 @@ import {
 import { TextArea } from "./TextArea";
 import * as SC from "./StyledComment";
 import { db } from "../../firebaseConfig";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import SignInContainer from "../SignIn/SignIn";
 import AgentCard from "../Cards/AgentCard";
 import { getAllUserDocs } from "../../firebaseCRUD";
@@ -120,12 +120,13 @@ export default function Comment() {
             userId={postData.userDocId}
           />
           {comments.map((comment, index) => (
-            <DisplayCommentCard
-              key={comment.data.commentId}
-              index={index}
-              comment={comment}
-              postData={postData}
-            />
+            <Fragment key={comment.data.commentId}>
+              <DisplayCommentCard
+                index={index}
+                comment={comment}
+                postData={postData}
+              />
+            </Fragment>
           ))}
         </div>
         <div>

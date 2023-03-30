@@ -1,3 +1,4 @@
+import { User } from "firebase/auth";
 import {
   actionType,
   appStateType,
@@ -190,6 +191,12 @@ export const appReducer = (
       return {
         ...JSON.parse(JSON.stringify(state)),
         postType: action.payload as "create" | "edit",
+      };
+
+    case APP_ACTION_TYPES.USER:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        user: action.payload as User,
       };
 
     default:

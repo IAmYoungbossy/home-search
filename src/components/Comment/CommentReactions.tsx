@@ -6,8 +6,15 @@ import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { StyledReactionButtons } from "./StyledComment";
-import { doc, DocumentData, onSnapshot } from "firebase/firestore";
-import { ArrowDownSVG, ArrowUpSVG } from "../assets/socialPage/SocialSVG";
+import {
+  doc,
+  DocumentData,
+  onSnapshot,
+} from "firebase/firestore";
+import {
+  ArrowDownSVG,
+  ArrowUpSVG,
+} from "../assets/socialPage/SocialSVG";
 
 export interface ICommentReactions {
   userId: string;
@@ -36,12 +43,17 @@ export function CommentReactions({
   commentId,
   commentIndex,
 }: ICommentReactions) {
-  const { user } = useContext(AppContext) as contextProps;
+  const {
+    state: { user },
+  } = useContext(AppContext) as contextProps;
 
   // Use an object for the initial state of votes.
-  const [votes, setVotes] = useState<IVotes>(votesInitalObj);
+  const [votes, setVotes] =
+    useState<IVotes>(votesInitalObj);
 
-  const toggleVotesColor = (voteType: "upvotes" | "downvotes" | "likes") => {
+  const toggleVotesColor = (
+    voteType: "upvotes" | "downvotes" | "likes"
+  ) => {
     return votes[voteType].includes(user?.uid as string);
   };
 
@@ -73,7 +85,9 @@ export function CommentReactions({
     };
   }, [db, comment]);
 
-  const handleVote = async (voteType: "upvote" | "downvote" | "like") => {
+  const handleVote = async (
+    voteType: "upvote" | "downvote" | "like"
+  ) => {
     // Call the postReaction function with the parameters passed to this component.
     await postReaction({
       userId,
@@ -89,10 +103,16 @@ export function CommentReactions({
     <StyledReactionButtons>
       <ul>
         <li>
-          <ArrowUpSVG onClick={() => handleVote("upvote")} />
+          <ArrowUpSVG
+            onClick={() => handleVote("upvote")}
+          />
           {/* Calculate the vote count by subtracting the number of downvotes from the number of upvotes. */}
-          <p>{votes.upvotes.length - votes.downvotes.length}</p>
-          <ArrowDownSVG onClick={() => handleVote("downvote")} />
+          <p>
+            {votes.upvotes.length - votes.downvotes.length}
+          </p>
+          <ArrowDownSVG
+            onClick={() => handleVote("downvote")}
+          />
         </li>
         <li>
           <SlLike onClick={() => handleVote("like")} />

@@ -22,7 +22,10 @@ export function VoteArrow({
   primary,
   secondary,
 }: VoteArrowProps) {
-  const { user } = useContext(AppContext) as contextProps;
+  const {
+    state: { user },
+  } = useContext(AppContext) as contextProps;
+
   const { userId, postId, upvotes, downvotes } = useContext(
     ShowPostCardContext
   ) as ShowPosterCardProps;
