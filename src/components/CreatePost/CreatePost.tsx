@@ -22,6 +22,13 @@ import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { RuleSVG } from "../assets/socialPage/SocialSVG";
 import * as Helper from "../../utilities/createPostHelperFn";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 
 export default function CreatePostPage() {
   return (
@@ -442,12 +449,21 @@ function ActionButtons() {
       <div>
         <button>Save Draft</button>
         <button
-          onClick={() => {
+          onClick={async () => {
+            // Gets current user doc id
+            const q = query(
+              collection(db, "USERS"),
+              where("userId", "==", state.user?.uid)
+            );
+            const documents = await getDocs(q);
+            const userDocId =
+              documents.docs[0].data().docId;
+
             addPostToFirestore({
               dispatch,
+              userDocId,
               postId: state.postId,
               postType: state.postType,
-              userDocId: state.userDocId,
               postDesc: state.post.postDesc,
               imageUrl: state.post.imageURL,
               budget: state.tagButton.Budget,
