@@ -4,6 +4,10 @@ import {
   DocumentData,
   DocumentReference,
 } from "firebase/firestore";
+import {
+  contextProps,
+  ShowPosterCardProps,
+} from "../../utilities/types";
 import { db } from "../../firebaseConfig";
 import EditAndDelete from "./EditAndDelete";
 import { BsThreeDots } from "react-icons/bs";
@@ -11,10 +15,6 @@ import { StyledPosterName } from "./StyledClientCard";
 import { AppContext } from "../../context/AppContext";
 import { useState, useContext, useEffect } from "react";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
-import {
-  contextProps,
-  ShowPosterCardProps,
-} from "../../utilities/types";
 
 export interface IGetPosterName {
   commentId?: string;
@@ -72,26 +72,36 @@ export default function GetPosterName({
    ** and delete button *******************************
    ***************************************************/
   (async () => {
+    let docRef, userId;
+
+    // Check if it's a post card
     if (postCard && !commentId) {
-      const docRef = doc(db, "USERS", postCard.userId);
-      const userDoc = await getDoc(docRef);
-      const userId = userDoc.data()?.userId;
-      if (user && userId && user.uid === userId)
-        setIsPostAuthor(true);
-    } else if (commentId && !postCard) {
-      const docRef = doc(
+      docRef = doc(db, "USERS", postCard.userId);
+    }
+
+    // Check if it's a comment
+    else if (commentId && !postCard) {
+      docRef = doc(
         db,
         "USERS",
         commentUserId as string,
         "POSTS",
         commentPostId as string,
         "Comments",
-        commentId as string
+        commentId
       );
-      const userDoc = await getDoc(docRef);
-      const userId = userDoc.data()?.currentUser;
-      if (user && userId && user.uid === userId)
-        setIsPostAuthor(true);
+    }
+
+    // Get user document from Firestore
+    const userDoc = await getDoc(
+      docRef as DocumentReference<DocumentData>
+    );
+    userId =
+      userDoc.data()?.userId || userDoc.data()?.currentUser;
+
+    // Check if user is the post author
+    if (user && userId && user.uid === userId) {
+      setIsPostAuthor(true);
     }
   })();
 

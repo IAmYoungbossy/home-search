@@ -1,14 +1,14 @@
-import { db } from "../../firebaseConfig";
-import { useContext, useEffect } from "react";
-import { useLoaderData } from "react-router-dom";
-import { AppContext } from "../../context/AppContext";
 import {
   contextProps,
   IShowPostCard,
   APP_ACTION_TYPES,
 } from "../../utilities/types";
+import { db } from "../../firebaseConfig";
+import { useContext, useEffect } from "react";
+import { useLoaderData } from "react-router-dom";
 import { getAllUserDocs } from "../../firebaseCRUD";
 import ShowPostCard from "../PostFeeds/ShowPostCard";
+import { AppContext } from "../../context/AppContext";
 
 export default function PostCards() {
   const {
@@ -17,23 +17,21 @@ export default function PostCards() {
   } = useContext(AppContext) as contextProps;
   const posts = useLoaderData() as IShowPostCard[];
 
-  useEffect(() => {
-    dispatch({
-      type: APP_ACTION_TYPES.postFeed,
-      payload: posts,
-    });
-  }, [db]);
+  const updatedState = {
+    payload: posts,
+    type: APP_ACTION_TYPES.postFeed,
+  };
 
-  return (
-    <>
-      {postFeed.map((post) => (
-        <ShowPostCard
-          post={post}
-          key={post.id}
-        />
-      ))}
-    </>
+  useEffect(() => dispatch(updatedState), [db]);
+
+  const post = (post: IShowPostCard) => (
+    <ShowPostCard
+      post={post}
+      key={post.id}
+    />
   );
+
+  return <>{postFeed.map(post)}</>;
 }
 
 export const postLoader = async () =>

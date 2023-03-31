@@ -1,3 +1,7 @@
+import {
+  contextProps,
+  ShowPosterCardProps,
+} from "../../utilities/types";
 import { useContext } from "react";
 import { User } from "firebase/auth";
 import { SlLike } from "react-icons/sl";
@@ -5,10 +9,6 @@ import { Link } from "react-router-dom";
 import { BiComment } from "react-icons/bi";
 import { postReaction } from "../../firebaseCRUD";
 import { AppContext } from "../../context/AppContext";
-import {
-  contextProps,
-  ShowPosterCardProps,
-} from "../../utilities/types";
 import { StyledInteractWithPostIcons } from "./StyledClientCard";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 
