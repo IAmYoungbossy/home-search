@@ -42,7 +42,9 @@ export const StyledSearchBarSocial = styled.div`
     padding: 9.7px 35px;
     border-radius: 20px;
     outline: 1px solid var(--social-page-outline-color);
-    background-color: var(--social-light-secondary-bg-color);
+    background-color: var(
+      --social-light-secondary-bg-color
+    );
   }
 `;
 
@@ -72,12 +74,19 @@ export const Button = styled.button`
 `;
 
 export const StyledUserButton = styled(Button)`
-  width: 80px;
+  width: 65px;
   display: flex;
-  padding: 2px 10px;
+  padding: 2px 3px;
+  position: relative;
   align-items: center;
   border-radius: 20px;
-  justify-content: space-evenly;
+  justify-content: space-between;
+
+  & > div:last-of-type {
+    top: 4px;
+    right: 3px;
+    position: absolute;
+  }
 
   &:hover {
     background: none;
@@ -89,6 +98,11 @@ export const StyledUserButton = styled(Button)`
         fill: red;
       }
     }
+  }
+
+  img {
+    width: 28px;
+    border-radius: 20px;
   }
 `;
 
