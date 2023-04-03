@@ -89,7 +89,7 @@ export function UserIcon() {
     dispatch(signInToggle);
 
   return (
-    <SC.StyledUserIcon onClick={handleSignInPageToggle}>
+    <SC.StyledUserIcon>
       <HeartSVG />
       <UserButton />
     </SC.StyledUserIcon>
@@ -112,7 +112,10 @@ function UserButton() {
 
   return (
     <SC.StyledUserButton
-      onClick={() => setLoginPanel(!loginPanel)}
+      onClick={(e) => {
+        e.stopPropagation();
+        setLoginPanel(!loginPanel);
+      }}
     >
       {user?.photoURL ? (
         <img
@@ -130,22 +133,22 @@ function UserButton() {
 
 function LoginPanel() {
   return (
-    <div>
+    <SC.StyledLoginPanel>
       {LOG_IN_PANEL.map((item) => {
         if (item.arrow) {
           return (
-            <button>
+            <button key={item.name}>
               {item.icon} <span>{item.name}</span>{" "}
               {item.arrow}
             </button>
           );
         }
         return (
-          <button>
+          <button key={item.name}>
             {item.icon} <span>{item.name}</span>
           </button>
         );
       })}
-    </div>
+    </SC.StyledLoginPanel>
   );
 }

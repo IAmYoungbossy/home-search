@@ -82,7 +82,7 @@ export const StyledUserButton = styled(Button)`
   border-radius: 20px;
   justify-content: space-between;
 
-  & > div:last-of-type {
+  & > div:nth-child(2) {
     top: 4px;
     right: 3px;
     position: absolute;
@@ -90,7 +90,7 @@ export const StyledUserButton = styled(Button)`
 
   &:hover {
     background: none;
-    svg {
+    & > svg {
       path {
         fill: red;
       }
@@ -125,5 +125,45 @@ export const StyledHeaderLogo = styled.div`
   & > img {
     width: 150px;
     cursor: pointer;
+  }
+`;
+
+export const StyledLoginPanel = styled.div`
+  top: 33px;
+  right: -3px;
+  width: 213px;
+  display: flex;
+  padding-top: 5px;
+  border-radius: 5px;
+  position: absolute;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 1px 4px 15px #00000030;
+  border: 1px solid var(--social-border-color);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  button {
+    gap: 10px;
+    border: none;
+    outline: none;
+    display: flex;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: left;
+    position: relative;
+    align-items: center;
+    padding: 10px 10px 10px 20px;
+    background-color: transparent;
+    color: var(--social-dark-font-color);
+    font-family: var(--social-ibm-plex-sans-font-family);
+
+    & > svg:nth-of-type(2) {
+      right: 10px;
+      position: absolute;
+    }
   }
 `;
