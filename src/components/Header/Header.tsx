@@ -6,17 +6,17 @@ import {
 import * as SC from "./StyledHeader";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
-import { useContext, useEffect, useState } from "react";
+import { logout } from "../../firebaseAuth";
 import { signInObj } from "../SignIn/SignIn";
 import Logo from "../assets/header/Logo.svg";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineOutbond } from "react-icons/md";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
+import { useContext, useEffect, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { buttonContent } from "../../constant/textConstant";
 import { LOG_IN_PANEL } from "../../constant/objectConstant";
-import { logout } from "../../firebaseAuth";
 
 export function Header() {
   return (

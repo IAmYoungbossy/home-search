@@ -36,7 +36,11 @@ export function VoteArrow({
       : null;
 
   const togglevotesColor = (votes: string[]) => {
-    if (votes && votes.includes(user?.uid as string))
+    if (
+      user &&
+      votes &&
+      votes.includes(user?.uid as string)
+    )
       return true;
     return false;
   };
@@ -51,13 +55,16 @@ export function VoteArrow({
       <div>
         <ArrowUpSVG
           onClick={() => {
-            (async () =>
-              await postReaction({
-                userId,
-                postId,
-                voteType: "upvote",
-                user: user as User,
-              }))();
+            (async () => {
+              if (user) {
+                await postReaction({
+                  userId,
+                  postId,
+                  voteType: "upvote",
+                  user: user as User,
+                });
+              }
+            })();
           }}
         />
       </div>
@@ -65,13 +72,16 @@ export function VoteArrow({
       <div>
         <ArrowDownSVG
           onClick={() => {
-            (async () =>
-              await postReaction({
-                userId,
-                postId,
-                user: user as User,
-                voteType: "downvote",
-              }))();
+            (async () => {
+              if (user) {
+                await postReaction({
+                  userId,
+                  postId,
+                  user: user as User,
+                  voteType: "downvote",
+                });
+              }
+            })();
           }}
         />
       </div>

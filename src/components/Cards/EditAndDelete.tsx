@@ -3,9 +3,9 @@ import {
   APP_ACTION_TYPES,
   ShowPosterCardProps,
 } from "../../utilities/types";
-import { Link, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { IGetPosterName } from "./GetPostName";
+import { Link, useParams } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import { deletePostOrComment } from "../../firebaseCRUD";
 import { editPost } from "../../utilities/createPostHelperFn";

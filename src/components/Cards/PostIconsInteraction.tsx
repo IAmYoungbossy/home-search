@@ -22,7 +22,8 @@ export default function PostIconsInteraction() {
   } = useContext(AppContext) as contextProps;
 
   const toggleLikeColor = () => {
-    if (likes?.includes(user?.uid as string)) return true;
+    if (user && likes?.includes(user?.uid as string))
+      return true;
     return false;
   };
 
@@ -35,13 +36,16 @@ export default function PostIconsInteraction() {
       </div>
       <div
         onClick={() => {
-          (async () =>
-            await postReaction({
-              userId,
-              postId,
-              voteType: "like",
-              user: user as User,
-            }))();
+          (async () => {
+            if (user) {
+              await postReaction({
+                userId,
+                postId,
+                voteType: "like",
+                user: user as User,
+              });
+            }
+          })();
         }}
       >
         <SlLike /> {likes && likes.length} Like

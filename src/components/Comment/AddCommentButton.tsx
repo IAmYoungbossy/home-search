@@ -19,19 +19,21 @@ export function AddCommentButton({
   const {
     state: { user },
   } = useContext(AppContext) as contextProps;
-  const name = user?.displayName as string;
   const textareaValue = textValue as string;
 
   const handleAddComment = () => {
     if (textareaValue.length < 1) return;
     (async () => {
-      await addComment({
-        name,
-        userId,
-        postId,
-        comment: textareaValue,
-        currentUser: user?.uid as string,
-      });
+      if (user) {
+        const name = user.displayName as string;
+        await addComment({
+          name,
+          userId,
+          postId,
+          comment: textareaValue,
+          currentUser: user.uid as string,
+        });
+      }
     })();
   };
 

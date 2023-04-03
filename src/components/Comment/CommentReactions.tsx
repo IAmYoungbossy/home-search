@@ -89,14 +89,16 @@ export function CommentReactions({
     voteType: "upvote" | "downvote" | "like"
   ) => {
     // Call the postReaction function with the parameters passed to this component.
-    await postReaction({
-      userId,
-      postId,
-      commentId,
-      commentIndex,
-      voteType,
-      user: user as User,
-    });
+    if (user) {
+      await postReaction({
+        userId,
+        postId,
+        commentId,
+        commentIndex,
+        voteType,
+        user: user as User,
+      });
+    }
   };
 
   return (

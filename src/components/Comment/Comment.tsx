@@ -15,11 +15,11 @@ import {
 import { TextArea } from "./TextArea";
 import * as SC from "./StyledComment";
 import { db } from "../../firebaseConfig";
-import { useState, useEffect, Fragment } from "react";
-import SignInContainer from "../SignIn/SignIn";
 import AgentCard from "../Cards/AgentCard";
-import { getAllUserDocs } from "../../firebaseCRUD";
+import SignInContainer from "../SignIn/SignIn";
 import { ClientCard } from "../Cards/ClientCard";
+import { getAllUserDocs } from "../../firebaseCRUD";
+import { useState, useEffect, Fragment } from "react";
 import { DisplayCommentCard } from "./DisplayCommentCard";
 import { useLoaderData, useParams } from "react-router-dom";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
