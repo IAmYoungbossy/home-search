@@ -6,13 +6,13 @@ import {
 import * as SC from "./StyledHeader";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
+import { useContext, useEffect, useState } from "react";
 import { signInObj } from "../SignIn/SignIn";
 import Logo from "../assets/header/Logo.svg";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineOutbond } from "react-icons/md";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
-import { useContext, useEffect, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { buttonContent } from "../../constant/textConstant";
 import { LOG_IN_PANEL } from "../../constant/objectConstant";
@@ -97,29 +97,33 @@ export function UserIcon() {
 }
 
 function UserButton() {
-  const [avatarUrl, setAvatarUrl] = useState<
-    string | boolean
-  >(false);
-
   const {
     state: { user },
   } = useContext(AppContext) as contextProps;
+  const [loginPanel, setLoginPanel] = useState(false);
 
   useEffect(() => {
-    if (user?.photoURL) setAvatarUrl(user.photoURL);
-  }, [user]);
+    const hideLoginPanel = () => setLoginPanel(false);
+    document.addEventListener("click", hideLoginPanel);
+    return () => {
+      document.removeEventListener("click", hideLoginPanel);
+    };
+  });
 
   return (
-    <SC.StyledUserButton>
-      {typeof avatarUrl === "string" ? (
+    <SC.StyledUserButton
+      onClick={() => setLoginPanel(!loginPanel)}
+    >
+      {user?.photoURL ? (
         <img
           alt="Avatar"
-          src={avatarUrl}
+          src={user?.photoURL}
         />
       ) : (
         <UserSVG />
       )}
       <ArrowDownSVG />
+      {loginPanel && <LoginPanel />}
     </SC.StyledUserButton>
   );
 }
