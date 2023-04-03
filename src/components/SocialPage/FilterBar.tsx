@@ -1,24 +1,12 @@
-import { IoMdRocket } from "react-icons/io";
-import { BsGearWide } from "react-icons/bs";
-import { BsThreeDots } from "react-icons/bs";
-import { BsArrowBarUp } from "react-icons/bs";
-import { BiChevronDown } from "react-icons/bi";
-import { HiOutlineFire } from "react-icons/hi";
-import { RxViewHorizontal } from "react-icons/rx";
 import styled from "styled-components";
+import { BiChevronDown } from "react-icons/bi";
+import { RxViewHorizontal } from "react-icons/rx";
+import { iconsArray } from "../../constant/objectConstant";
 
 interface FilterIconsProps {
   icon: JSX.Element;
   name: string;
 }
-
-const iconsArray = [
-  { icon: <IoMdRocket />, name: "Best" },
-  { icon: <HiOutlineFire />, name: "Hot" },
-  { icon: <BsGearWide />, name: "New" },
-  { icon: <BsArrowBarUp />, name: "Top" },
-  { icon: <BsThreeDots />, name: "" },
-];
 
 export default function FilterBar() {
   const filterList = iconsArray.map(filterIcons);
@@ -30,7 +18,10 @@ export default function FilterBar() {
   );
 }
 
-function filterIcons(item: FilterIconsProps, index: number) {
+function filterIcons(
+  item: FilterIconsProps,
+  index: number
+) {
   return (
     <StyledFilterIcons key={index}>
       {item.icon}

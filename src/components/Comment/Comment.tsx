@@ -8,17 +8,15 @@ import {
   tuple,
   IShowPostCard,
 } from "../../utilities/types";
-import {
-  Warning,
-  RedditRules,
-} from "../CreatePost/CreatePost";
 import { TextArea } from "./TextArea";
 import * as SC from "./StyledComment";
 import { db } from "../../firebaseConfig";
 import AgentCard from "../Cards/AgentCard";
+import Warning from "../CreatePost/Warning";
 import SignInContainer from "../SignIn/SignIn";
 import { ClientCard } from "../Cards/ClientCard";
 import { getAllUserDocs } from "../../firebaseCRUD";
+import RedditRules from "../CreatePost/RedditRules";
 import { useState, useEffect, Fragment } from "react";
 import { DisplayCommentCard } from "./DisplayCommentCard";
 import { useLoaderData, useParams } from "react-router-dom";
