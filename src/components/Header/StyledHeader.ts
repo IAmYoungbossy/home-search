@@ -82,6 +82,18 @@ export const StyledUserButton = styled(Button)`
   border-radius: 20px;
   justify-content: space-between;
 
+  & > div:first-child {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    padding-right: 2px;
+    border-radius: 20px;
+    padding-bottom: 3px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--social-border-color);
+  }
+
   & > div:nth-child(2) {
     top: 4px;
     right: 3px;

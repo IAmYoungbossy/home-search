@@ -24,6 +24,7 @@ export default function UserButton() {
 
   return (
     <StyledUserButton
+      as="div"
       onClick={(e) => {
         e.stopPropagation();
         setLoginPanel(!loginPanel);
