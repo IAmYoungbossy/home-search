@@ -102,7 +102,7 @@ export default function GetPosterName({
     // Check if user is the post author
     if (user && userId && user.uid === userId) {
       setIsPostAuthor(true);
-    }
+    } else setIsPostAuthor(false);
   })();
 
   return (
