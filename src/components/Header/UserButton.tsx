@@ -3,6 +3,7 @@ import {
   ArrowDownSVG,
 } from "../assets/header/SvgMarkUp";
 import LoginPanel from "./LoginPanel";
+import FallbackAvatar from "../assets/avatar.png";
 import { StyledUserButton } from "./StyledHeader";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
@@ -13,6 +14,9 @@ export default function UserButton() {
     state: { user },
   } = useContext(AppContext) as contextProps;
   const [loginPanel, setLoginPanel] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     const hideLoginPanel = () => setLoginPanel(false);
@@ -20,7 +24,12 @@ export default function UserButton() {
     return () => {
       document.removeEventListener("click", hideLoginPanel);
     };
-  });
+  }, [loginPanel]);
+
+  useEffect(() => {
+    if (user && user.photoURL) setImageUrl(user.photoURL);
+    console.log(user?.photoURL);
+  }, [user, user?.photoURL]);
 
   return (
     <StyledUserButton
@@ -30,10 +39,16 @@ export default function UserButton() {
         setLoginPanel(!loginPanel);
       }}
     >
-      {user?.photoURL ? (
+      {imageUrl ? (
         <img
+          width="28px"
           alt="Avatar"
-          src={user?.photoURL}
+          height="28px"
+          src={imageUrl}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = `${FallbackAvatar}`;
+          }}
         />
       ) : (
         <UserSVG />
