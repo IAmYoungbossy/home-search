@@ -8,9 +8,11 @@ import {
   contextProps,
   ShowPosterCardProps,
 } from "../../utilities/types";
+import enGB from "date-fns/locale/en-GB";
 import { db } from "../../firebaseConfig";
 import EditAndDelete from "./EditAndDelete";
 import { BsThreeDots } from "react-icons/bs";
+import { formatDistanceToNow } from "date-fns/esm";
 import { StyledPosterName } from "./StyledClientCard";
 import { AppContext } from "../../context/AppContext";
 import { useState, useContext, useEffect } from "react";
@@ -19,20 +21,23 @@ import { ShowPostCardContext } from "../../context/ShowPostCard";
 export interface IGetPosterName {
   commentId?: string;
   timeCreated?: string;
+  comment?: DocumentData;
   commentUserId?: string;
   commentPostId?: string;
 }
 
 export default function GetPosterName({
+  comment,
   commentId,
-  timeCreated,
   commentUserId,
   commentPostId,
 }: IGetPosterName) {
-  const [posterName, setPosterName] = useState("name");
   const {
     state: { user },
   } = useContext(AppContext) as contextProps;
+  const createdAt = comment?.data.createdAt;
+  const [date, setDate] = useState<Date>(new Date());
+  const [posterName, setPosterName] = useState("name");
   const [isPostAuthor, setIsPostAuthor] = useState(false);
 
   // Toggles Edit and Delete Pop-Up Modal
@@ -66,7 +71,18 @@ export default function GetPosterName({
       );
       setName(docRef);
     }
-  });
+  }, [commentUserId, commentPostId, commentId, postCard]);
+
+  useEffect(() => {
+    if (createdAt) {
+      const timestamp = createdAt;
+      const date = new Date(
+        timestamp.seconds * 1000 +
+          timestamp.nanoseconds / 1000000
+      );
+      setDate(date);
+    }
+  }, [createdAt]);
 
   /****************************************************
    ** This IIFE checks if the current Signed in user is
@@ -110,7 +126,14 @@ export default function GetPosterName({
   return (
     <StyledPosterName>
       <p>{posterName}</p>{" "}
-      {commentId && <small>{timeCreated}</small>}
+      {commentId && (
+        <small>
+          {formatDistanceToNow(date, {
+            locale: enGB,
+            includeSeconds: true,
+          })}
+        </small>
+      )}
       <div>
         {isPostAuthor && (
           <BsThreeDots

@@ -3,18 +3,19 @@ import GetPosterName, {
 } from "./GetPostName";
 import { FaUserCircle } from "react-icons/fa";
 import { IPostDetailsProps } from "./PostDetails";
+import { DocumentData } from "firebase/firestore";
 import { StyledOriginalPoster } from "./StyledClientCard";
 
 interface OriginalPosterProps
   extends IPostDetailsProps,
     IGetPosterName {
-  timeCreated?: string;
+  comment?: DocumentData;
 }
 
 export function OriginalPoster({
+  comment,
   children,
   commentId,
-  timeCreated,
   commentPostId,
   commentUserId,
 }: OriginalPosterProps) {
@@ -23,8 +24,8 @@ export function OriginalPoster({
       <FaUserCircle />
       <div>
         <GetPosterName
+          comment={comment}
           commentId={commentId}
-          timeCreated={timeCreated}
           commentPostId={commentPostId}
           commentUserId={commentUserId}
         />

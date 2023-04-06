@@ -173,6 +173,10 @@ export const StyledPosterName = styled.div`
     fill: red;
     margin-left: 0px;
   }
+
+  small {
+    color: #a72727;
+  }
 `;
 
 export const StyledEditAndDeleteButtons = styled.ul`

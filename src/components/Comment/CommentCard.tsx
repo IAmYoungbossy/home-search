@@ -1,8 +1,5 @@
-import enGB from "date-fns/locale/en-GB";
 import { CommentBox } from "./CommentBox";
-import { useEffect, useState } from "react";
 import { DocumentData } from "firebase/firestore";
-import { formatDistanceToNow } from "date-fns/esm";
 import { StyledcommentCard } from "./StyledComment";
 import { ICommentReactions } from "./CommentReactions";
 import { OriginalPoster } from "../Cards/OriginalPoster";
@@ -20,32 +17,13 @@ export function CommentCard({
   commentText,
   commentIndex,
 }: ICommentCard) {
-  const [date, setDate] = useState<Date>(new Date());
-  const createdAt = comment.createdAt;
-
-  useEffect(() => {
-    if (createdAt) {
-      const timestamp = createdAt;
-      const date = new Date(
-        timestamp.seconds * 1000 +
-          timestamp.nanoseconds / 1000000
-      );
-      setDate(date);
-    }
-  }, [createdAt]);
-
-  const timeCreated = formatDistanceToNow(date, {
-    locale: enGB,
-    includeSeconds: true,
-  });
-
   return (
     <StyledcommentCard>
       <OriginalPoster
-        timeCreated={timeCreated}
         commentUserId={userId}
         commentPostId={postId}
         commentId={commentId}
+        comment={comment}
       />
       <CommentBox
         userId={userId}
