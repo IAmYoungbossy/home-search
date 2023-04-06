@@ -69,7 +69,7 @@ export default function ShowPostCard({
       unSubComment();
       unsubDownvotes();
     };
-  }, [db]);
+  }, [db, post.id, postData.userDocId]);
 
   const params = {
     post,

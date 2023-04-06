@@ -23,6 +23,7 @@ import {
   QuerySnapshot,
   DocumentReference,
   deleteDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 import { db, storage } from "./firebaseConfig";
@@ -134,8 +135,14 @@ export const addPostToFirestore = async ({
   };
 
   const postData = postAsAgent
-    ? { ...commonData, imageUrl, location, dealStatus }
-    : { ...commonData };
+    ? {
+        ...commonData,
+        imageUrl,
+        location,
+        dealStatus,
+        createdAt: serverTimestamp(),
+      }
+    : { ...commonData, createdAt: serverTimestamp() };
 
   if (postType === "create") {
     const document = await addDoc(

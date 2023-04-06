@@ -402,6 +402,7 @@ export function postCardProps({
     location: postData.location,
     postDesc: postData.postDesc,
     postTitle: postData.postTitle,
+    createdAt: postData.createdAt,
     dealStatus: postData.dealStatus,
     apartmentSize: postData.apartmentSize,
   };

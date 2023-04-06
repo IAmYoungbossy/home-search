@@ -26,6 +26,7 @@ export interface ICardProps {
   Comments: Icomment[];
   postAsAgent: boolean;
   apartmentSize: string;
+  createdAt: { seconds: number; nanoseconds: number };
 }
 
 export interface IShowPostCard {
@@ -228,6 +229,7 @@ export interface ShowPosterCardProps {
   dealStatus?: string;
   apartmentSize: string;
   comments?: DocumentData[];
+  createdAt: { seconds: number; nanoseconds: number };
 }
 
 export type deleteTuple =

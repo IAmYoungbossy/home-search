@@ -1,9 +1,11 @@
 import { createContext } from "react";
-import { IAppDataProvider, ShowPosterCardProps } from "../utilities/types";
+import {
+  IAppDataProvider,
+  ShowPosterCardProps,
+} from "../utilities/types";
 
-export const ShowPostCardContext = createContext<ShowPosterCardProps | null>(
-  null
-);
+export const ShowPostCardContext =
+  createContext<ShowPosterCardProps | null>(null);
 
 const ShowPosterCardProvider = ({
   likes,
@@ -16,6 +18,7 @@ const ShowPosterCardProvider = ({
   location,
   postDesc,
   comments,
+  createdAt,
   downvotes,
   postTitle,
   dealStatus,
@@ -29,6 +32,7 @@ const ShowPosterCardProvider = ({
     upvotes,
     postDesc,
     comments,
+    createdAt,
     downvotes,
     apartmentSize,
     ...(bgImage && { bgImage }),
