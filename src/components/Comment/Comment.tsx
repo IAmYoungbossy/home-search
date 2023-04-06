@@ -3,6 +3,8 @@ import {
   collection,
   onSnapshot,
   DocumentData,
+  orderBy,
+  query,
 } from "firebase/firestore";
 import {
   tuple,
@@ -76,19 +78,23 @@ export default function Comment() {
       "Comments",
     ];
     const colRef = collection(...colPath);
-    // Subscribe to comment data
-    const unSubComment = onSnapshot(colRef, (snapshot) => {
-      const comments = snapshot.docs.map((doc) => ({
-        data: doc.data(),
-      }));
-      setComments(comments);
-    });
+
+    // Subscribe to comment data and order by createdAt field in descending order
+    const unSubComment = onSnapshot(
+      query(colRef, orderBy("createdAt", "desc")),
+      (snapshot) => {
+        const comments = snapshot.docs.map((doc) => ({
+          data: doc.data(),
+        }));
+        setComments(comments);
+      }
+    );
 
     // Unsubscribe from comment data
     return () => {
       unSubComment();
     };
-  }, [db]);
+  }, [db, posterId, postId]);
 
   // Render the component
   const params = {

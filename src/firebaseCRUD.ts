@@ -24,6 +24,7 @@ import {
   DocumentReference,
   deleteDoc,
   serverTimestamp,
+  orderBy,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
 import { db, storage } from "./firebaseConfig";
@@ -317,9 +318,12 @@ export const getAllUserDocs = async () => {
 };
 
 export async function getPostFromUserDoc(docId: string) {
-  const posts = collection(db, "USERS", docId, "POSTS");
-  const userDocs = await getDocs(posts);
-  return userDocs.docs.map((doc) => ({
+  const posts = query(
+    collection(db, "USERS", docId, "POSTS"),
+    orderBy("createdAt", "desc")
+  );
+  const postDocs = await getDocs(posts);
+  return postDocs.docs.map((doc) => ({
     data: doc.data(),
     id: doc.id,
   }));
@@ -479,8 +483,6 @@ export async function addComment({
   comment,
   currentUser,
 }: IAddComment) {
-  console.log({ currentUser, userId });
-
   const userID = userId as string;
   const postID = postId as string;
   const commentCollection = collection(
