@@ -7,11 +7,14 @@ import { StyledOriginalPoster } from "./StyledClientCard";
 
 interface OriginalPosterProps
   extends IPostDetailsProps,
-    IGetPosterName {}
+    IGetPosterName {
+  timeCreated?: string;
+}
 
 export function OriginalPoster({
   children,
   commentId,
+  timeCreated,
   commentPostId,
   commentUserId,
 }: OriginalPosterProps) {
@@ -21,6 +24,7 @@ export function OriginalPoster({
       <div>
         <GetPosterName
           commentId={commentId}
+          timeCreated={timeCreated}
           commentPostId={commentPostId}
           commentUserId={commentUserId}
         />

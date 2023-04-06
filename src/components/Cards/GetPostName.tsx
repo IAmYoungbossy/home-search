@@ -18,12 +18,14 @@ import { ShowPostCardContext } from "../../context/ShowPostCard";
 
 export interface IGetPosterName {
   commentId?: string;
+  timeCreated?: string;
   commentUserId?: string;
   commentPostId?: string;
 }
 
 export default function GetPosterName({
   commentId,
+  timeCreated,
   commentUserId,
   commentPostId,
 }: IGetPosterName) {
@@ -108,6 +110,7 @@ export default function GetPosterName({
   return (
     <StyledPosterName>
       <p>{posterName}</p>{" "}
+      {commentId && <small>{timeCreated}</small>}
       <div>
         {isPostAuthor && (
           <BsThreeDots

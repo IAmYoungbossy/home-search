@@ -118,7 +118,9 @@ export default function Comment() {
             userId={postData.userDocId}
           />
           {comments.map((comment, index) => (
-            <Fragment key={comment.data.commentId}>
+            <Fragment
+              key={`{comment.data.commentId} ${index}`}
+            >
               <DisplayCommentCard
                 index={index}
                 comment={comment}

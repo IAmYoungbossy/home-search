@@ -498,6 +498,7 @@ export async function addComment({
     Upvotes: arrayUnion(),
     Comments: arrayUnion(),
     Downvotes: arrayUnion(),
+    createdAt: serverTimestamp(),
   };
   const document = await addDoc(
     commentCollection,

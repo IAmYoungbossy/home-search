@@ -28,7 +28,6 @@ export default function UserButton() {
 
   useEffect(() => {
     if (user && user.photoURL) setImageUrl(user.photoURL);
-    console.log(user?.photoURL);
   }, [user, user?.photoURL]);
 
   return (
