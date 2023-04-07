@@ -8,7 +8,7 @@ import {
   APP_ACTION_TYPES,
 } from "../../utilities/types";
 import { Outlet } from "react-router-dom";
-import { db } from "../../firebaseConfig";
+import { db } from "../../firebase/firebaseConfig";
 import { Header } from "../Header/Header";
 import { useContext, useEffect } from "react";
 import PostFeeds from "../PostFeeds/PostFeeds";

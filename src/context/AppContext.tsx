@@ -5,7 +5,7 @@ import {
   APP_ACTION_TYPES,
 } from "../utilities/types";
 import { useEffect } from "react";
-import { auth } from "../firebaseConfig";
+import { auth } from "../firebase/firebaseConfig";
 import { createContext, useReducer } from "react";
 import { appReducer } from "../reducer/appReducer";
 import { useAuthState } from "react-firebase-hooks/auth";

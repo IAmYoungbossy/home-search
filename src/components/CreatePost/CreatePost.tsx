@@ -6,8 +6,8 @@ import RedditRules from "./RedditRules";
 import TitleHeader from "./TitleHeader";
 import SignInContainer from "../SignIn/SignIn";
 import ChooseCommunity from "./ChooseCommunity";
-import { getAllUserDocs } from "../../firebaseCRUD";
 import { StyledCreatePostPage } from "./StyledCreatePost";
+import getAllUserDocs from "../../firebase/firebaseCRUD/getAllUserDocs";
 
 export default function CreatePostPage() {
   return (

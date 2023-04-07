@@ -7,10 +7,10 @@ import { User } from "firebase/auth";
 import { SlLike } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { BiComment } from "react-icons/bi";
-import { postReaction } from "../../firebaseCRUD";
 import { AppContext } from "../../context/AppContext";
 import { StyledInteractWithPostIcons } from "./StyledClientCard";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
+import postReaction from "../../firebase/firebaseCRUD/postReaction";
 
 export default function PostIconsInteraction() {
   const { userId, postId, likes, comments } = useContext(

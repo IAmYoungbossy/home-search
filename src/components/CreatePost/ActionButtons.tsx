@@ -1,18 +1,19 @@
-import Tags from "./Tags";
 import {
   query,
   where,
   getDocs,
   collection,
 } from "firebase/firestore";
+
+import Tags from "./Tags";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { db } from "../../firebaseConfig";
+import { db } from "../../firebase/firebaseConfig";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
-import { addPostToFirestore } from "../../firebaseCRUD";
 import { StyleActionButtons } from "./StyledCreatePost";
 import { preventEmptyFieldSubmition } from "../../utilities/createPostHelperFn";
+import { addPostToFirestore } from "../../firebase/firebaseCRUD/addPostToFirestore";
 
 export default function ActionButtons() {
   const { state, dispatch } = useContext(
@@ -33,8 +34,7 @@ export default function ActionButtons() {
               where("userId", "==", state.user?.uid)
             );
             const documents = await getDocs(q);
-            const userDocId =
-              documents.docs[0].data().docId;
+            const userDocId = documents.docs[0].data().docId;
 
             addPostToFirestore({
               dispatch,
@@ -48,8 +48,7 @@ export default function ActionButtons() {
               location: state.tagButton.Location,
               postAsAgent: state.post.postAsAgent,
               dealStatus: state.tagButton["Deal Status"],
-              apartmentSize:
-                state.tagButton["Apartment Size"],
+              apartmentSize: state.tagButton["Apartment Size"],
             });
           }}
         >

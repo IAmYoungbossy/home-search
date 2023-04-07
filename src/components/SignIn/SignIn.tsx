@@ -1,22 +1,28 @@
 import {
-  appStateType,
-  contextProps,
-  APP_ACTION_TYPES,
-} from "../../utilities/types";
-import {
   StyledSignIn,
   StyledSignInFields,
   StyledLoginAgreement,
   StyledSignInContainer,
 } from "./StyledSignIn";
+
+import {
+  appStateType,
+  contextProps,
+  APP_ACTION_TYPES,
+} from "../../utilities/types";
+
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { SyntheticEvent, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-import { signInWithFacebook, signInWithGoogle } from "../../firebaseAuth";
+import signInWithGoogle from "../../firebase/firebaseAuth/googleAuth";
+import signInWithFacebook from "../../firebase/firebaseAuth/facebookAuth";
 
 export default function SignInContainer() {
-  const { state, dispatch } = useContext(AppContext) as contextProps;
+  const { state, dispatch } = useContext(
+    AppContext
+  ) as contextProps;
+
   const { signInToggle } = signInObj(state);
   const handleSignInPageToggle = () => dispatch(signInToggle);
 
@@ -41,7 +47,8 @@ export function signInObj(state: appStateType) {
 
 export function SignIn() {
   const { dispatch } = useContext(AppContext) as contextProps;
-  const handleOnClick = (e: SyntheticEvent<HTMLElement>) => e.stopPropagation();
+  const handleOnClick = (e: SyntheticEvent<HTMLElement>) =>
+    e.stopPropagation();
 
   return (
     <StyledSignIn onClick={handleOnClick}>
@@ -78,8 +85,9 @@ function LoginAgreement() {
     <StyledLoginAgreement>
       <h2>Login</h2>
       <p>
-        By continuing, you agree are setting up a Reddit account and agree to
-        our <span>User Agreement</span> and <span>Privacy Policy</span>.
+        By continuing, you agree are setting up a Reddit account
+        and agree to our <span>User Agreement</span> and{" "}
+        <span>Privacy Policy</span>.
       </p>
     </StyledLoginAgreement>
   );
@@ -121,7 +129,8 @@ function SignInFields() {
       </div>
       <div>
         <p>
-          Forget your <span>username</span> or <span>password</span> ?
+          Forget your <span>username</span> or{" "}
+          <span>password</span> ?
         </p>
       </div>
       <button>Log In</button>

@@ -1,13 +1,11 @@
-import PostDetails, {
-  IPostDetailsProps,
-} from "./PostDetails";
+import PostDetails, { IPostDetailsProps } from "./PostDetails";
 import {
   StyledPostCard,
   StyledHouseSpec,
 } from "./StyledClientCard";
 import { VoteArrow } from "./VoteArrow";
 import { IClientCard } from "./ClientCard";
-import { IlikeOrUnlike } from "../../firebaseCRUD";
+import { IlikeOrUnlike } from "../../firebase/firebaseCRUD/postDetails";
 
 interface IPostCard
   extends IPostDetailsProps,

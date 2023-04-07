@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { addComment } from "../../firebaseCRUD";
+import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyledRichTextEditor } from "./StyledComment";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
-import { contextProps } from "../../utilities/types";
+import addComment from "../../firebase/firebaseCRUD/addComment";
 
 export interface IAddCommentButton {
   userId: string;

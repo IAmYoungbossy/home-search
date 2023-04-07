@@ -1,29 +1,27 @@
 import {
   doc,
+  query,
+  orderBy,
   collection,
   onSnapshot,
   DocumentData,
-  orderBy,
-  query,
 } from "firebase/firestore";
-import {
-  tuple,
-  IShowPostCard,
-} from "../../utilities/types";
+
 import { TextArea } from "./TextArea";
 import * as SC from "./StyledComment";
-import { db } from "../../firebaseConfig";
 import AgentCard from "../Cards/AgentCard";
 import Warning from "../CreatePost/Warning";
 import SignInContainer from "../SignIn/SignIn";
 import { ClientCard } from "../Cards/ClientCard";
-import { getAllUserDocs } from "../../firebaseCRUD";
+import { db } from "../../firebase/firebaseConfig";
 import RedditRules from "../CreatePost/RedditRules";
 import { useState, useEffect, Fragment } from "react";
 import { DisplayCommentCard } from "./DisplayCommentCard";
 import { useLoaderData, useParams } from "react-router-dom";
+import { tuple, IShowPostCard } from "../../utilities/types";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
 import { postCardProps } from "../../utilities/createPostHelperFn";
+import getAllUserDocs from "../../firebase/firebaseCRUD/getAllUserDocs";
 
 export default function Comment() {
   const { id } = useParams();
@@ -39,20 +37,12 @@ export default function Comment() {
   const [likes, setLikes] = useState<string[]>([]);
   const [upvotes, setUpvotes] = useState<string[]>([]);
   const [downvotes, setDownvotes] = useState<string[]>([]);
-  const [comments, setComments] = useState<DocumentData[]>(
-    []
-  );
+  const [comments, setComments] = useState<DocumentData[]>([]);
   const posterId = postData.userDocId as string;
   const postId = post.id as string;
 
   useEffect(() => {
-    const docRef = doc(
-      db,
-      "USERS",
-      posterId,
-      "POSTS",
-      postId
-    );
+    const docRef = doc(db, "USERS", posterId, "POSTS", postId);
 
     // Subscribe to post data
     const unsubPost = onSnapshot(docRef, (snapshot) => {
@@ -124,9 +114,7 @@ export default function Comment() {
             userId={postData.userDocId}
           />
           {comments.map((comment, index) => (
-            <Fragment
-              key={`{comment.data.commentId} ${index}`}
-            >
+            <Fragment key={`{comment.data.commentId} ${index}`}>
               <DisplayCommentCard
                 index={index}
                 comment={comment}
@@ -147,5 +135,4 @@ export default function Comment() {
   );
 }
 
-export const commentLoader = async () =>
-  await getAllUserDocs();
+export const commentLoader = async () => await getAllUserDocs();

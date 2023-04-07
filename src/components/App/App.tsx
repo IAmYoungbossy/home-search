@@ -4,12 +4,15 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+
 import SocialPageLayout, {
   SocialPage,
 } from "../SocialPage/SocialPage";
+
 import CreatePostPage, {
   editPostLoader,
 } from "../CreatePost/CreatePost";
+
 import { useContext } from "react";
 import { postLoader } from "../Cards/PostCards";
 import { contextProps } from "../../utilities/types";
@@ -48,9 +51,7 @@ const router = createBrowserRouter(
 );
 
 function App() {
-  const { dispatch } = useContext(
-    AppContext
-  ) as contextProps;
+  const { dispatch } = useContext(AppContext) as contextProps;
 
   return (
     <div onClick={() => onClickToggleButtonTags(dispatch)}>

@@ -2,17 +2,19 @@ import {
   contextProps,
   ShowPosterCardProps,
 } from "../../utilities/types";
-import { useContext } from "react";
-import { User } from "firebase/auth";
+
 import {
   ArrowUpSVG,
   ArrowDownSVG,
 } from "../assets/socialPage/SocialSVG";
+
+import { useContext } from "react";
+import { User } from "firebase/auth";
 import { IClientCard } from "./ClientCard";
-import { postReaction } from "../../firebaseCRUD";
 import { StyledVoteArrow } from "./StyledClientCard";
 import { AppContext } from "../../context/AppContext";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
+import postReaction from "../../firebase/firebaseCRUD/postReaction";
 
 export interface VoteArrowProps extends IClientCard {
   primary?: string;
@@ -36,11 +38,7 @@ export function VoteArrow({
       : null;
 
   const togglevotesColor = (votes: string[]) => {
-    if (
-      user &&
-      votes &&
-      votes.includes(user?.uid as string)
-    )
+    if (user && votes && votes.includes(user?.uid as string))
       return true;
     return false;
   };

@@ -9,7 +9,7 @@ import {
   ShowPosterCardProps,
 } from "../../utilities/types";
 import enGB from "date-fns/locale/en-GB";
-import { db } from "../../firebaseConfig";
+import { db } from "../../firebase/firebaseConfig";
 import EditAndDelete from "./EditAndDelete";
 import { BsThreeDots } from "react-icons/bs";
 import { formatDistanceToNow } from "date-fns/esm";

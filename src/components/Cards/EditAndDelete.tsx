@@ -7,10 +7,10 @@ import { useContext, useEffect } from "react";
 import { IGetPosterName } from "./GetPostName";
 import { Link, useParams } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
-import { deletePostOrComment } from "../../firebaseCRUD";
 import { editPost } from "../../utilities/createPostHelperFn";
 import { StyledEditAndDeleteButtons } from "./StyledClientCard";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
+import deletePostOrComment from "../../firebase/firebaseCRUD/deletePostOrComment";
 
 interface IEditAndDeleteButtons extends IGetPosterName {
   toggleButtons: boolean;
@@ -31,9 +31,7 @@ export default function EditAndDelete({
     !commentId && !commentPostId && !commentUserId;
 
   // Get the dispatch function from AppContext
-  const { dispatch } = useContext(
-    AppContext
-  ) as contextProps;
+  const { dispatch } = useContext(AppContext) as contextProps;
 
   const postCard = useContext(
     ShowPostCardContext
@@ -87,9 +85,7 @@ export default function EditAndDelete({
       {postCard && commentCard && (
         <li>
           <Link to={`/edit-post/${postId}`}>
-            <button onClick={editPostHandler}>
-              Edit Post
-            </button>
+            <button onClick={editPostHandler}>Edit Post</button>
           </Link>
         </li>
       )}

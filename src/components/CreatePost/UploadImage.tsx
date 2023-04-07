@@ -2,16 +2,15 @@ import {
   StyledProgressBar,
   StyledUplaodImage,
 } from "./StyledCreatePost";
+
 import { useContext } from "react";
 import { BsFillCameraFill } from "react-icons/bs";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
-import { uploadFileToStorage } from "../../firebaseCRUD";
+import uploadFileToStorage from "../../firebase/firebaseCRUD/uploadFileToStorage";
 
 export default function UploadImage() {
-  const { dispatch } = useContext(
-    AppContext
-  ) as contextProps;
+  const { dispatch } = useContext(AppContext) as contextProps;
   const fileTypes = [
     "image/png",
     "image/jpeg",

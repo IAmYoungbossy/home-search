@@ -3,12 +3,13 @@ import {
   IShowPostCard,
   APP_ACTION_TYPES,
 } from "../../utilities/types";
-import { db } from "../../firebaseConfig";
+
 import { useContext, useEffect } from "react";
 import { useLoaderData } from "react-router-dom";
-import { getAllUserDocs } from "../../firebaseCRUD";
+import { db } from "../../firebase/firebaseConfig";
 import ShowPostCard from "../PostFeeds/ShowPostCard";
 import { AppContext } from "../../context/AppContext";
+import getAllUserDocs from "../../firebase/firebaseCRUD/getAllUserDocs";
 
 export default function PostCards() {
   const {
@@ -34,5 +35,4 @@ export default function PostCards() {
   return <>{postFeed.map(post)}</>;
 }
 
-export const postLoader = async () =>
-  await getAllUserDocs();
+export const postLoader = async () => await getAllUserDocs();

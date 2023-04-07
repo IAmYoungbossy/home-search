@@ -1,20 +1,22 @@
+import {
+  doc,
+  onSnapshot,
+  DocumentData,
+} from "firebase/firestore";
+
+import {
+  ArrowUpSVG,
+  ArrowDownSVG,
+} from "../assets/socialPage/SocialSVG";
+
 import { User } from "firebase/auth";
 import { SlLike } from "react-icons/sl";
-import { db } from "../../firebaseConfig";
-import { postReaction } from "../../firebaseCRUD";
+import { db } from "../../firebase/firebaseConfig";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { StyledReactionButtons } from "./StyledComment";
-import {
-  doc,
-  DocumentData,
-  onSnapshot,
-} from "firebase/firestore";
-import {
-  ArrowDownSVG,
-  ArrowUpSVG,
-} from "../assets/socialPage/SocialSVG";
+import postReaction from "../../firebase/firebaseCRUD/postReaction";
 
 export interface ICommentReactions {
   userId: string;
@@ -48,8 +50,7 @@ export function CommentReactions({
   } = useContext(AppContext) as contextProps;
 
   // Use an object for the initial state of votes.
-  const [votes, setVotes] =
-    useState<IVotes>(votesInitalObj);
+  const [votes, setVotes] = useState<IVotes>(votesInitalObj);
 
   const toggleVotesColor = (
     voteType: "upvotes" | "downvotes" | "likes"
@@ -105,16 +106,10 @@ export function CommentReactions({
     <StyledReactionButtons>
       <ul>
         <li>
-          <ArrowUpSVG
-            onClick={() => handleVote("upvote")}
-          />
+          <ArrowUpSVG onClick={() => handleVote("upvote")} />
           {/* Calculate the vote count by subtracting the number of downvotes from the number of upvotes. */}
-          <p>
-            {votes.upvotes.length - votes.downvotes.length}
-          </p>
-          <ArrowDownSVG
-            onClick={() => handleVote("downvote")}
-          />
+          <p>{votes.upvotes.length - votes.downvotes.length}</p>
+          <ArrowDownSVG onClick={() => handleVote("downvote")} />
         </li>
         <li>
           <SlLike onClick={() => handleVote("like")} />

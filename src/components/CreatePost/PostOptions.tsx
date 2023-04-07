@@ -1,8 +1,9 @@
-import { useContext } from "react";
 import {
   disableButton,
   toggleTextarea,
 } from "../../utilities/createPostHelperFn";
+
+import { useContext } from "react";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyledPostOptions } from "./StyledCreatePost";

@@ -8,7 +8,7 @@ import {
   IShowPostCard,
   ICardProps,
 } from "./types";
-import { db } from "../firebaseConfig";
+import { db } from "../firebase/firebaseConfig";
 import {
   doc,
   DocumentData,

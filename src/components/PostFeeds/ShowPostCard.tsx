@@ -4,7 +4,7 @@ import {
   onSnapshot,
   DocumentData,
 } from "firebase/firestore";
-import { db } from "../../firebaseConfig";
+import { db } from "../../firebase/firebaseConfig";
 import AgentCard from "../Cards/AgentCard";
 import { useState, useEffect, Fragment } from "react";
 import { ClientCard } from "../Cards/ClientCard";
