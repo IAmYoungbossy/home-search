@@ -14,9 +14,7 @@ export default function UserButton() {
     state: { user },
   } = useContext(AppContext) as contextProps;
   const [loginPanel, setLoginPanel] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string | null>(
-    null
-  );
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const hideLoginPanel = () => setLoginPanel(false);
@@ -38,17 +36,19 @@ export default function UserButton() {
         setLoginPanel(!loginPanel);
       }}
     >
-      {imageUrl ? (
-        <img
-          width="28px"
-          alt="Avatar"
-          height="28px"
-          src={imageUrl}
-          onError={(e) => {
-            e.currentTarget.onerror = null;
-            e.currentTarget.src = `${FallbackAvatar}`;
-          }}
-        />
+      {user ? (
+        imageUrl && (
+          <img
+            width="28px"
+            alt="Avatar"
+            height="28px"
+            src={imageUrl}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = `${FallbackAvatar}`;
+            }}
+          />
+        )
       ) : (
         <UserSVG />
       )}
