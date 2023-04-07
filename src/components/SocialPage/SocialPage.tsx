@@ -1,7 +1,4 @@
-import {
-  onSnapshot,
-  collectionGroup,
-} from "firebase/firestore";
+import { onSnapshot, collectionGroup } from "firebase/firestore";
 import {
   contextProps,
   IShowPostCard,
@@ -17,9 +14,7 @@ import { AppContext } from "../../context/AppContext";
 import { StyledSocialPage } from "../Header/StyledHeader";
 
 export default function SocialPageLayout() {
-  const { dispatch } = useContext(
-    AppContext
-  ) as contextProps;
+  const { dispatch } = useContext(AppContext) as contextProps;
 
   /********************************************************
    ** Listens to Posts collection for any changes in its ***
@@ -33,6 +28,20 @@ export default function SocialPageLayout() {
         data: doc.data(),
         id: doc.id,
       })) as IShowPostCard[];
+
+      // Sort in descending order
+      posts.sort((a, b) => {
+        const dateA = new Date(
+          a.data.createdAt.seconds * 1000 +
+            a.data.createdAt.nanoseconds / 1000000
+        );
+        const dateB = new Date(
+          b.data.createdAt.seconds * 1000 +
+            b.data.createdAt.nanoseconds / 1000000
+        );
+        return dateB.getTime() - dateA.getTime();
+      });
+
       dispatch({
         type: APP_ACTION_TYPES.postFeed,
         payload: posts,
