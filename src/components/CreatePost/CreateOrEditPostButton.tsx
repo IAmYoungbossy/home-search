@@ -15,7 +15,7 @@ import { StyleActionButtons } from "./StyledCreatePost";
 import { preventEmptyFieldSubmition } from "../../utilities/createPostHelperFn";
 import { addPostToFirestore } from "../../firebase/firebaseCRUD/addPostToFirestore";
 
-export default function ActionButtons() {
+export default function CreateOrEditPostButton() {
   const { state, dispatch } = useContext(
     AppContext
   ) as contextProps;
