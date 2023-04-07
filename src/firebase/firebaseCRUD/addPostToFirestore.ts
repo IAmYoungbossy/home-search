@@ -53,6 +53,7 @@ export const addPostToFirestore = async ({
     Upvotes: arrayUnion(),
     Comments: arrayUnion(),
     Downvotes: arrayUnion(),
+    createdAt: serverTimestamp(),
   };
 
   const postData = postAsAgent
@@ -61,9 +62,8 @@ export const addPostToFirestore = async ({
         imageUrl,
         location,
         dealStatus,
-        createdAt: serverTimestamp(),
       }
-    : { ...commonData, createdAt: serverTimestamp() };
+    : { ...commonData };
 
   if (postType === "create") {
     const document = await addDoc(

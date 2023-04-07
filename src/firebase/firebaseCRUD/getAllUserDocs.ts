@@ -14,18 +14,6 @@ const getAllUserDocs = async () => {
 
   const postList = posts.flat() as IShowPostCard[];
 
-  postList.sort((a, b) => {
-    const dateA = new Date(
-      a.data.createdAt.seconds * 1000 +
-        a.data.createdAt.nanoseconds / 1000000
-    );
-    const dateB = new Date(
-      b.data.createdAt.seconds * 1000 +
-        b.data.createdAt.nanoseconds / 1000000
-    );
-    return dateB.getTime() - dateA.getTime(); // Sort in descending order
-  });
-
   return postList;
 };
 
