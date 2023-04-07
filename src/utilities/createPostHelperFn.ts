@@ -30,12 +30,11 @@ interface IToggleDealStatus {
 export const setButtonState = (state: appStateType) =>
   state["post"].postAsAgent ? false : true;
 
-export const makeBudgetBtnAlwaysActive = (
+export const isAlwaysActive = (
   item: buttonTagsType,
   state: appStateType
 ) =>
-  item["name"] === "Budget" ||
-  item["name"] === "Apartment Size"
+  item["name"] === "Budget" || item["name"] === "Apartment Size"
     ? false
     : setButtonState(state);
 
@@ -44,14 +43,11 @@ export const toggleDealStatus = ({
   dispatch,
   dealStatus,
 }: IToggleDealStatus) => {
-  const btnContent =
-    e.currentTarget.children[1].textContent;
+  const btnContent = e.currentTarget.children[1].textContent;
   const status =
-    btnContent === "Deal Status" &&
-    dealStatus === "Deal Status";
+    btnContent === "Deal Status" && dealStatus === "Deal Status";
   const open =
-    btnContent === "Deal Open" &&
-    dealStatus === "Deal Open";
+    btnContent === "Deal Open" && dealStatus === "Deal Open";
   const updateStateObj = (textContent: string) => ({
     type: APP_ACTION_TYPES.tagButton["Deal Status"],
     payload: textContent,
@@ -87,8 +83,7 @@ export const btnTagsOnClick = (
   boolean: boolean,
   dispatch: React.Dispatch<actionType>
 ) => {
-  const BUTTON_TAGS_TYPES =
-    APP_ACTION_TYPES.buttonTagsToggle;
+  const BUTTON_TAGS_TYPES = APP_ACTION_TYPES.buttonTagsToggle;
   const updateStateObj = (type: string) =>
     dispatch({ type, payload: boolean });
   if (btnName === "App") {
@@ -367,8 +362,7 @@ export const editPost = async ({
   );
   const { postAsAgent } = snapshot.data() as DocumentData;
 
-  if (postAsAgent)
-    editAgentCard({ dispatch, snapshot, postId });
+  if (postAsAgent) editAgentCard({ dispatch, snapshot, postId });
   if (!postAsAgent)
     editClientCard({ dispatch, snapshot, postId });
 };

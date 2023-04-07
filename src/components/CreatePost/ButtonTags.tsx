@@ -8,7 +8,7 @@ import {
   btnTagsOnClick,
   toggleDealStatus,
   toggleBtnAndInputField,
-  makeBudgetBtnAlwaysActive,
+  isAlwaysActive,
 } from "../../utilities/createPostHelperFn";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
@@ -59,11 +59,9 @@ function ButtonTag({ item }: IButtonTag) {
   const dealStatus = state.tagButton["Deal Status"];
 
   return (
-    <StyledButtonTags
-      disabled={makeBudgetBtnAlwaysActive(item, state)}
-    >
+    <StyledButtonTags disabled={isAlwaysActive(item, state)}>
       <button
-        disabled={makeBudgetBtnAlwaysActive(item, state)}
+        disabled={isAlwaysActive(item, state)}
         onClick={(e) => {
           e.stopPropagation();
           btnTagsOnClick(item.name, true, dispatch);
@@ -76,9 +74,7 @@ function ButtonTag({ item }: IButtonTag) {
       >
         {item.svg}{" "}
         <span>
-          {item.name !== "Deal Status"
-            ? item.name
-            : dealStatus}
+          {item.name !== "Deal Status" ? item.name : dealStatus}
         </span>
       </button>
     </StyledButtonTags>
