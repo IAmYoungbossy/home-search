@@ -6,7 +6,7 @@ import {
 import { useContext } from "react";
 import UploadImage from "./UploadImage";
 import PostTextArea from "./PostTextArea";
-import { ButtonTags } from "./ButtonTags";
+import { DisplayButtonTags } from "./DisplayButtonTags";
 import CreateOrEditPostButton from "./CreateOrEditPostButton";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { contextProps } from "../../utilities/types";
@@ -22,7 +22,7 @@ export default function Post() {
       {!state.uploadImage && <Markdown />}
       {!state.uploadImage && <PostTextArea />}
       {state.uploadImage && <UploadImage />}
-      <ButtonTags />
+      <DisplayButtonTags />
       <CreateOrEditPostButton />
     </StyledPost>
   );

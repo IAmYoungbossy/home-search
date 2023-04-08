@@ -3,18 +3,14 @@ import {
   inputValue,
   setInputType,
   updateStateObj,
-  btnTagsOnClick,
+  updateTagButtonsState,
 } from "../../utilities/createPostHelperFn";
 import { GiCheckMark } from "react-icons/gi";
 import { StyledInputTag } from "./StyledCreatePost";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 
-export default function InputTag({
-  name,
-}: {
-  name: string;
-}) {
+export default function InputTag({ name }: { name: string }) {
   const { state, dispatch } = useContext(
     AppContext
   ) as contextProps;
@@ -31,7 +27,7 @@ export default function InputTag({
       <button
         onClick={(e) => {
           e.stopPropagation();
-          btnTagsOnClick(name, false, dispatch);
+          updateTagButtonsState(name, false, dispatch);
         }}
       >
         <GiCheckMark />

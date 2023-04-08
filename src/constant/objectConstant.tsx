@@ -4,10 +4,7 @@ import {
   BsThreeDots,
   BsArrowBarUp,
 } from "react-icons/bs";
-import {
-  IoMoonOutline,
-  IoImageOutline,
-} from "react-icons/io5";
+import { IoMoonOutline, IoImageOutline } from "react-icons/io5";
 import { GrAdd } from "react-icons/gr";
 import { CgInfo } from "react-icons/cg";
 import { BiPoll } from "react-icons/bi";
@@ -46,7 +43,7 @@ export const postOptionsArray = [
   { svg: <BsMic />, name: "Talk" },
 ];
 
-export const tagsContent = [
+export const BUTTON_TAGS = [
   { svg: <GrAdd />, name: "Budget" },
   { svg: <GrAdd />, name: "Apartment Size" },
   { svg: <GrAdd />, name: "Location" },

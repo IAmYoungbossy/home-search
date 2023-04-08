@@ -78,7 +78,7 @@ export const toggleBtnAndInputField = (
   return true;
 };
 
-export const btnTagsOnClick = (
+export const updateTagButtonsState = (
   btnName: string,
   boolean: boolean,
   dispatch: React.Dispatch<actionType>
@@ -244,7 +244,7 @@ export function onClickToggleButtonTags(
   e?: React.MouseEvent<HTMLDivElement, MouseEvent>
 ) {
   if (e !== undefined) e.stopPropagation();
-  btnTagsOnClick("App", false, dispatch);
+  updateTagButtonsState("App", false, dispatch);
   dispatch({
     payload: false,
     type: APP_ACTION_TYPES.EditAndDeleteButton,

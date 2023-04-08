@@ -91,7 +91,7 @@ export const appReducer = (
         },
       };
 
-    // For ButtonTags component in CreatePost Module
+    // For DisplayButtonTags component in CreatePost Module
     case APP_ACTION_TYPES.buttonTagsToggle.BUDGET:
       return {
         ...JSON.parse(JSON.stringify(state)),
