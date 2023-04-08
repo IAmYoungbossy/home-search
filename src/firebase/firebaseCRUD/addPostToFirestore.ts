@@ -1,17 +1,17 @@
 import {
+  query,
+  where,
   addDoc,
+  getDocs,
   arrayUnion,
   collection,
-  getDocs,
-  query,
   serverTimestamp,
-  where,
 } from "firebase/firestore";
 
 import {
   actionType,
-  APP_ACTION_TYPES,
   appStateType,
+  APP_ACTION_TYPES,
 } from "../../utilities/types";
 import addPostId from "./addPostId";
 import { db } from "../firebaseConfig";
@@ -50,7 +50,6 @@ export const addPostToFirestore = async ({
   const commonData = {
     budget,
     postDesc,
-    postTitle,
     userDocId,
     postAsAgent,
     apartmentSize,
@@ -66,6 +65,7 @@ export const addPostToFirestore = async ({
         ...commonData,
         imageUrl,
         location,
+        postTitle,
         dealStatus,
       }
     : { ...commonData };

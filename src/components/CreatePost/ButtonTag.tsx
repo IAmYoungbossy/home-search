@@ -1,9 +1,9 @@
-import { useContext } from "react";
 import {
   isAlwaysActive,
   toggleDealStatus,
   updateTagButtonsState,
 } from "../../utilities/helper";
+import { useContext } from "react";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyledButtonTags } from "./StyledCreatePost";

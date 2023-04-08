@@ -18,7 +18,7 @@ export default function Post() {
 
   return (
     <StyledPost>
-      <PostInputFields />
+      {state.post.postAsAgent && <PostInputFields />}
       {!state.uploadImage && <Markdown />}
       {!state.uploadImage && <PostTextArea />}
       {state.uploadImage && <UploadImage />}
