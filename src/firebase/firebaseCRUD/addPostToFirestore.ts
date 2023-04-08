@@ -2,16 +2,21 @@ import {
   addDoc,
   arrayUnion,
   collection,
+  getDocs,
+  query,
   serverTimestamp,
+  where,
 } from "firebase/firestore";
 
 import {
   actionType,
   APP_ACTION_TYPES,
+  appStateType,
 } from "../../utilities/types";
 import addPostId from "./addPostId";
 import { db } from "../firebaseConfig";
 import { editPostInDatabase } from "./editPostInDatabase";
+import { addToPostObject } from "../../utilities/createPostHelperFn";
 
 export interface IaddPostToFirestore {
   postId?: string;
@@ -92,4 +97,25 @@ export const addPostToFirestore = async ({
       type: APP_ACTION_TYPES.POST_TYPE,
     });
   }
+};
+
+export const AddPostToDB = async (
+  state: appStateType,
+  dispatch: React.Dispatch<actionType>
+) => {
+  // Checks if there's signed in user
+  if (!state.user) return;
+
+  // Gets current user doc id
+  const q = query(
+    collection(db, "USERS"),
+    where("userId", "==", state.user?.uid)
+  );
+
+  const documents = await getDocs(q);
+  const userDocId = documents.docs[0].data().docId;
+
+  addPostToFirestore(
+    addToPostObject(userDocId, state, dispatch)
+  );
 };

@@ -402,3 +402,22 @@ export function postCardProps({
   };
   return { props };
 }
+
+export const addToPostObject = (
+  userDocId: string,
+  state: appStateType,
+  dispatch: React.Dispatch<actionType>
+) => ({
+  dispatch,
+  userDocId,
+  postId: state.postId,
+  postType: state.postType,
+  postDesc: state.post.postDesc,
+  imageUrl: state.post.imageURL,
+  budget: state.tagButton.Budget,
+  postTitle: state.post.postTitle,
+  location: state.tagButton.Location,
+  postAsAgent: state.post.postAsAgent,
+  dealStatus: state.tagButton["Deal Status"],
+  apartmentSize: state.tagButton["Apartment Size"],
+});
