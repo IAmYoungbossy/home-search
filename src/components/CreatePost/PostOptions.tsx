@@ -1,7 +1,7 @@
 import {
   disableButton,
   toggleTextarea,
-} from "../../utilities/createPostHelperFn";
+} from "../../utilities/helper";
 
 import { useContext } from "react";
 import { contextProps } from "../../utilities/types";

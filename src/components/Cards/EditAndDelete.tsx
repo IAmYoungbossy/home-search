@@ -7,7 +7,7 @@ import { useContext, useEffect } from "react";
 import { IGetPosterName } from "./GetPostName";
 import { Link, useParams } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
-import { editPost } from "../../utilities/createPostHelperFn";
+import { editPost } from "../../utilities/helper";
 import { StyledEditAndDeleteButtons } from "./StyledClientCard";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import deletePostOrComment from "../../firebase/firebaseCRUD/deletePostOrComment";

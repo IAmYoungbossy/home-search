@@ -18,7 +18,7 @@ import { postLoader } from "../Cards/PostCards";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import Comment, { commentLoader } from "../Comment/Comment";
-import { onClickToggleButtonTags } from "../../utilities/createPostHelperFn";
+import { onClickToggleButtonTags } from "../../utilities/helper";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

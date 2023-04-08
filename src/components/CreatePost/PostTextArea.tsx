@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyledPostTextArea } from "./StyledCreatePost";
-import { handleInputChange } from "../../utilities/createPostHelperFn";
+import { handleInputChange } from "../../utilities/helper";
 
 export default function PostTextArea() {
   const { state, dispatch } = useContext(

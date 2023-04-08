@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { StyledPostAs } from "./StyledCreatePost";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
-import { onChangeSetPostAs } from "../../utilities/createPostHelperFn";
+import { onChangeSetPostAs } from "../../utilities/helper";
 
 export default function PostAs() {
   const { state, dispatch } = useContext(

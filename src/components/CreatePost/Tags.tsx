@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { StyledTag } from "./StyledCreatePost";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
-import { showTags } from "../../utilities/createPostHelperFn";
+import { showTags } from "../../utilities/helper";
 
 export default function Tags() {
   const { state } = useContext(AppContext) as contextProps;
@@ -20,9 +20,7 @@ export default function Tags() {
         state.post.postAsAgent && <div>Deal Open</div>}
       {showBudget && <div>${tagButton.Budget}</div>}
       {showLocation && <div>{tagButton.Location}</div>}
-      {showApartment && (
-        <div>{tagButton["Apartment Size"]}</div>
-      )}
+      {showApartment && <div>{tagButton["Apartment Size"]}</div>}
     </StyledTag>
   );
 }

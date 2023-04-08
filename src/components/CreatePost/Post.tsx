@@ -11,7 +11,7 @@ import CreateOrEditPostButton from "./CreateOrEditPostButton";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
-import { handleInput } from "../../utilities/createPostHelperFn";
+import { handleInput } from "../../utilities/helper";
 
 export default function Post() {
   const { state } = useContext(AppContext) as contextProps;

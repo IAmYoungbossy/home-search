@@ -3,7 +3,7 @@ import {
   isAlwaysActive,
   toggleDealStatus,
   updateTagButtonsState,
-} from "../../utilities/createPostHelperFn";
+} from "../../utilities/helper";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyledButtonTags } from "./StyledCreatePost";

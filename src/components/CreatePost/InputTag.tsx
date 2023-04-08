@@ -4,7 +4,7 @@ import {
   setInputType,
   updateStateObj,
   updateTagButtonsState,
-} from "../../utilities/createPostHelperFn";
+} from "../../utilities/helper";
 import { GiCheckMark } from "react-icons/gi";
 import { StyledInputTag } from "./StyledCreatePost";
 import { contextProps } from "../../utilities/types";

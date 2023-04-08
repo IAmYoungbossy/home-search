@@ -16,7 +16,7 @@ import {
 import addPostId from "./addPostId";
 import { db } from "../firebaseConfig";
 import { editPostInDatabase } from "./editPostInDatabase";
-import { addToPostObject } from "../../utilities/createPostHelperFn";
+import { addToPostObject } from "../../utilities/helper";
 
 export interface IaddPostToFirestore {
   postId?: string;

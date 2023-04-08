@@ -5,7 +5,7 @@ import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { BUTTON_TAGS } from "../../constant/objectConstant";
 import { StyledButtonTagsContainer } from "./StyledCreatePost";
-import { toggleBtnAndInputField } from "../../utilities/createPostHelperFn";
+import { toggleBtnAndInputField } from "../../utilities/helper";
 
 export function DisplayButtonTags() {
   return (

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyleActionButtons } from "./StyledCreatePost";
-import { preventEmptyFieldSubmition } from "../../utilities/createPostHelperFn";
+import { preventEmptyFieldSubmition } from "../../utilities/helper";
 import { AddPostToDB } from "../../firebase/firebaseCRUD/addPostToFirestore";
 
 export default function CreateOrEditPostButton() {

@@ -20,7 +20,7 @@ import { DisplayCommentCard } from "./DisplayCommentCard";
 import { useLoaderData, useParams } from "react-router-dom";
 import { tuple, IShowPostCard } from "../../utilities/types";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
-import { postCardProps } from "../../utilities/createPostHelperFn";
+import { postCardProps } from "../../utilities/helper";
 import getAllUserDocs from "../../firebase/firebaseCRUD/getAllUserDocs";
 
 export default function Comment() {

@@ -10,7 +10,7 @@ import { useState, useEffect, Fragment } from "react";
 import { ClientCard } from "../Cards/ClientCard";
 import { IShowPostCard } from "../../utilities/types";
 import ShowPosterCardProvider from "../../context/ShowPostCard";
-import { postCardProps } from "../../utilities/createPostHelperFn";
+import { postCardProps } from "../../utilities/helper";
 
 export default function ShowPostCard({
   post,
@@ -18,9 +18,7 @@ export default function ShowPostCard({
   post: IShowPostCard;
 }) {
   const postData = post.data;
-  const [comments, setComments] = useState<DocumentData[]>(
-    []
-  );
+  const [comments, setComments] = useState<DocumentData[]>([]);
   const [downvotes, setDownvotes] = useState<string[]>([]);
   const [upvotes, setUpvotes] = useState<string[]>([]);
   const [likes, setLikes] = useState<string[]>([]);
@@ -28,13 +26,7 @@ export default function ShowPostCard({
   useEffect(() => {
     const postId = post.id as string;
     const posterId = postData.userDocId as string;
-    const docRef = doc(
-      db,
-      "USERS",
-      posterId,
-      "POSTS",
-      postId
-    );
+    const docRef = doc(db, "USERS", posterId, "POSTS", postId);
     const colRef = collection(
       db,
       "USERS",
@@ -45,17 +37,12 @@ export default function ShowPostCard({
     );
 
     const unSubComment = onSnapshot(colRef, (snapshot) => {
-      const comments = snapshot.docs.map((doc) =>
-        doc.data()
-      );
+      const comments = snapshot.docs.map((doc) => doc.data());
       setComments(comments);
     });
-    const unsubDownvotes = onSnapshot(
-      docRef,
-      (snapshot) => {
-        setDownvotes(snapshot.data()?.Downvotes);
-      }
-    );
+    const unsubDownvotes = onSnapshot(docRef, (snapshot) => {
+      setDownvotes(snapshot.data()?.Downvotes);
+    });
     const unsubUpvotes = onSnapshot(docRef, (snapshot) => {
       setUpvotes(snapshot.data()?.Upvotes);
     });
