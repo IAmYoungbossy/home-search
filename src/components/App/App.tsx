@@ -5,17 +5,14 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
-import SocialPageLayout, {
-  SocialPage,
-} from "../SocialPage/SocialPage";
-
 import CreatePostPage, {
   editPostLoader,
 } from "../CreatePost/CreatePost";
-
 import { useContext } from "react";
 import { postLoader } from "../Cards/PostCards";
+import PageLayout from "../../Layouts/PageLayout";
 import { contextProps } from "../../utilities/types";
+import { SocialPage } from "../SocialPage/SocialPage";
 import { AppContext } from "../../context/AppContext";
 import Comment, { commentLoader } from "../Comment/Comment";
 import { onClickToggleButtonTags } from "../../utilities/helper";
@@ -24,7 +21,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
       path="/"
-      element={<SocialPageLayout />}
+      element={<PageLayout />}
     >
       <Route
         index

@@ -436,3 +436,28 @@ export const addToPostObject = (
   dealStatus: state.tagButton["Deal Status"],
   apartmentSize: state.tagButton["Apartment Size"],
 });
+
+export function sortPostByCreatedAt(
+  posts: IShowPostCard[],
+  dispatch: React.Dispatch<actionType>
+) {
+  posts.sort((a, b) => {
+    if (a.data.createdAt && b.data.createdAt) {
+      const dateA = new Date(
+        a.data.createdAt.seconds * 1000 +
+          a.data.createdAt.nanoseconds / 1000000
+      );
+      const dateB = new Date(
+        b.data.createdAt.seconds * 1000 +
+          b.data.createdAt.nanoseconds / 1000000
+      );
+      return dateB.getTime() - dateA.getTime();
+    }
+    return b.data.postId - a.data.postId;
+  });
+
+  dispatch({
+    type: APP_ACTION_TYPES.postFeed,
+    payload: posts,
+  });
+}
