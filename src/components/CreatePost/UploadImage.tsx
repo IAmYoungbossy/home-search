@@ -26,8 +26,10 @@ export default function UploadImage() {
       uploadFileToStorage({ file, dispatch });
     }
   };
+
   return (
     <StyledUplaodImage>
+      <PreviewUploadImage />
       <div>
         <label htmlFor="image">
           <BsFillCameraFill /> <p>Click to upload image</p>
@@ -42,6 +44,21 @@ export default function UploadImage() {
       </div>
       <ProgressBar />
     </StyledUplaodImage>
+  );
+}
+
+function PreviewUploadImage() {
+  const { state } = useContext(AppContext) as contextProps;
+  return (
+    <>
+      {state.post.imageURL.length > 0 && (
+        <img
+          alt="House"
+          width="174.03px"
+          src={state.post.imageURL}
+        />
+      )}
+    </>
   );
 }
 
