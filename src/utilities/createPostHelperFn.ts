@@ -123,7 +123,7 @@ export const inputValue = (
     return actionType.tagButton.Location;
   }
   if (name === "Budget") {
-    return actionType.tagButton.Budget as number;
+    return actionType.tagButton.Budget;
   }
   if (name === "Apartment Size") {
     return actionType.tagButton["Apartment Size"];
@@ -131,17 +131,25 @@ export const inputValue = (
   return "Error";
 };
 
+// Checks all fields before activating post button
 export const preventEmptyFieldSubmition = (
   state: appStateType
 ) => {
   const postDesc = state.post.postDesc;
   const postTitle = state.post.postTitle;
-  return (
-    postDesc.length > 0 &&
-    postTitle.length > 0 &&
-    postDesc.trim() !== "" &&
-    postTitle.trim() !== ""
-  );
+  const generallTags =
+    state.tagButton["Apartment Size"].trim() !== "" &&
+    state.tagButton.Budget.trim() !== "";
+
+  const tags = state.post.postAsAgent
+    ? state.tagButton.Location.trim() !== "" &&
+      state.post.imageURL.trim() !== "" &&
+      postTitle.trim() !== "" &&
+      postDesc.trim() !== "" &&
+      generallTags
+    : generallTags;
+
+  return postDesc.trim() !== "" && tags;
 };
 
 export const onChangeSetPostAs = (

@@ -1,8 +1,5 @@
 import { User } from "firebase/auth";
-import {
-  DocumentData,
-  Firestore,
-} from "firebase/firestore";
+import { DocumentData, Firestore } from "firebase/firestore";
 
 export interface Icomment {
   name: string;
@@ -57,9 +54,9 @@ export interface postInterface {
 }
 
 export type tagButtonType = {
+  Budget: string;
   Location: string;
   "Deal Status": string;
-  Budget: number | string;
   "Apartment Size": string;
 };
 
@@ -234,15 +231,7 @@ export interface ShowPosterCardProps {
 
 export type deleteTuple =
   | [Firestore, string, string, string, string]
-  | [
-      Firestore,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string
-    ];
+  | [Firestore, string, string, string, string, string, string];
 export type tuple = [
   Firestore,
   string,
