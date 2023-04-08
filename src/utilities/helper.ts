@@ -160,7 +160,14 @@ export const onChangeSetPostAs = (
     type: APP_ACTION_TYPES.POST.POST_AS_AGENT,
     payload: e.target.value === "client" ? false : true,
   };
+
+  const imageUploadValue = {
+    type: APP_ACTION_TYPES.uploadImage,
+    payload: e.target.value === "client" ? false : true,
+  };
+
   dispatch(postAsValue);
+  dispatch(imageUploadValue);
 };
 
 export const handleInputChange = (
