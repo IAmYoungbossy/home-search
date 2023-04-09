@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import { StyledTag } from "./StyledCreatePost";
+import { showTags } from "../../utilities/helper";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
-import { showTags } from "../../utilities/helper";
 
 export default function Tags() {
   const { state } = useContext(AppContext) as contextProps;

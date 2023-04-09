@@ -5,9 +5,9 @@ import { CiSearch } from "react-icons/ci";
 import Logo from "../assets/header/Logo.svg";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdOutlineOutbond } from "react-icons/md";
-import { HeartSVG } from "../assets/header/SvgMarkUp";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { buttonContent } from "../../constant/textConstant";
+import { HeartSVG } from "../../assets/header/SvgMarkUp";
 
 export function Header() {
   return (

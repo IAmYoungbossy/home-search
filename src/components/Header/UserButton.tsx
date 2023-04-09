@@ -1,7 +1,7 @@
 import {
   UserSVG,
   ArrowDownSVG,
-} from "../assets/header/SvgMarkUp";
+} from "../../assets/header/SvgMarkUp";
 import LoginPanel from "./LoginPanel";
 import FallbackAvatar from "../assets/avatar.png";
 import { StyledUserButton } from "./StyledHeader";

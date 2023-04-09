@@ -4,13 +4,13 @@ import {
   onSnapshot,
   DocumentData,
 } from "firebase/firestore";
-import { db } from "../../firebase/firebaseConfig";
 import AgentCard from "../Cards/AgentCard";
-import { useState, useEffect, Fragment } from "react";
 import { ClientCard } from "../Cards/ClientCard";
+import { db } from "../../firebase/firebaseConfig";
+import { useState, useEffect, Fragment } from "react";
 import { IShowPostCard } from "../../utilities/types";
-import ShowPosterCardProvider from "../../context/ShowPostCard";
 import { postCardProps } from "../../utilities/helper";
+import ShowPosterCardProvider from "../../context/ShowPostCard";
 
 export default function ShowPostCard({
   post,

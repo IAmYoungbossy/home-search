@@ -1,10 +1,10 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { SlPicture } from "react-icons/sl";
 import { BsLink45Deg } from "react-icons/bs";
-import { AvatarSVG } from "../assets/Svg/SocialSVG";
-import { Link } from "react-router-dom";
+import { AvatarSVG } from "../../assets/Svg/SocialSVG";
 
-export default function CreatePost() {
+export default function GetCreatePostPage() {
   return (
     <StyledCreatePost>
       <AvatarSVG />

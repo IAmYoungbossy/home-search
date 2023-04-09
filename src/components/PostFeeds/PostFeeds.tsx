@@ -2,17 +2,17 @@ import {
   policies,
   promoText,
 } from "../../constant/textConstant";
+import FilterBar from "./FilterBar";
 import * as SC from "./StyledPostFeeds";
 import PostCards from "../Cards/PostCards";
-import FilterBar from "../SocialPage/FilterBar";
-import CreatePost from "../SocialPage/CreatePost";
-import { ShieldSVG } from "../assets/Svg/SocialSVG";
+import GetCreatePostPage from "./GetCreatePostPage";
+import { ShieldSVG } from "../../assets/Svg/SocialSVG";
 import SnooBanner from "../assets/socialPage/snoo-home.png";
 import HomeBanner from "../assets/socialPage/home-banner.png";
 
 const Feeds = () => (
   <div>
-    <CreatePost />
+    <GetCreatePostPage />
     <FilterBar />
     <PostCards />
   </div>

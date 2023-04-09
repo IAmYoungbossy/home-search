@@ -18,10 +18,7 @@ export default function FilterBar() {
   );
 }
 
-function filterIcons(
-  item: FilterIconsProps,
-  index: number
-) {
+function filterIcons(item: FilterIconsProps, index: number) {
   return (
     <StyledFilterIcons key={index}>
       {item.icon}

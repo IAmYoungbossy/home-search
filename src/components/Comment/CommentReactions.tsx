@@ -3,14 +3,13 @@ import {
   onSnapshot,
   DocumentData,
 } from "firebase/firestore";
+import { User } from "firebase/auth";
+import { SlLike } from "react-icons/sl";
 
 import {
   ArrowUpSVG,
   ArrowDownSVG,
-} from "../assets/socialPage/SocialSVG";
-
-import { User } from "firebase/auth";
-import { SlLike } from "react-icons/sl";
+} from "../../assets/socialPage/SocialSVG";
 import { db } from "../../firebase/firebaseConfig";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
@@ -107,7 +106,9 @@ export function CommentReactions({
       <ul>
         <li>
           <ArrowUpSVG onClick={() => handleVote("upvote")} />
-          {/* Calculate the vote count by subtracting the number of downvotes from the number of upvotes. */}
+
+          {/* Calculate the vote count by subtracting the number
+           of downvotes from the number of upvotes. */}
           <p>{votes.upvotes.length - votes.downvotes.length}</p>
           <ArrowDownSVG onClick={() => handleVote("downvote")} />
         </li>

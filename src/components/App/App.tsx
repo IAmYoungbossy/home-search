@@ -4,38 +4,38 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-
-import CreatePostPage, {
-  editPostLoader,
-} from "../CreatePost/CreatePost";
 import { useContext } from "react";
+
+import CreateOrEditPost, {
+  editPostLoader,
+} from "../../pages/CreateOrEditPost";
 import { postLoader } from "../Cards/PostCards";
-import PageLayout from "../../Layouts/PageLayout";
+import { HomeSearch } from "../../pages/HomeSearch";
 import { contextProps } from "../../utilities/types";
-import { SocialPage } from "../SocialPage/SocialPage";
 import { AppContext } from "../../context/AppContext";
-import Comment, { commentLoader } from "../Comment/Comment";
+import Comment, { commentLoader } from "../../pages/Comment";
+import HomeSearchLayout from "../../Layouts/HomeSearchLayout";
 import { onClickToggleButtonTags } from "../../utilities/helper";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
       path="/"
-      element={<PageLayout />}
+      element={<HomeSearchLayout />}
     >
       <Route
         index
-        element={<SocialPage />}
+        element={<HomeSearch />}
         loader={postLoader}
       />
       <Route
         path="edit-post/:id"
-        element={<CreatePostPage />}
+        element={<CreateOrEditPost />}
         loader={editPostLoader}
       />
       <Route
         path="create-post"
-        element={<CreatePostPage />}
+        element={<CreateOrEditPost />}
       />
       <Route
         path="comment/:id"

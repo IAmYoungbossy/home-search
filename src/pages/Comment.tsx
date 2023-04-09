@@ -6,22 +6,21 @@ import {
   onSnapshot,
   DocumentData,
 } from "firebase/firestore";
-
-import { TextArea } from "./TextArea";
-import * as SC from "./StyledComment";
-import AgentCard from "../Cards/AgentCard";
-import Warning from "../CreatePost/Warning";
-import SignInContainer from "../SignIn/SignIn";
-import { ClientCard } from "../Cards/ClientCard";
-import { db } from "../../firebase/firebaseConfig";
-import RedditRules from "../CreatePost/RedditRules";
-import { useState, useEffect, Fragment } from "react";
-import { DisplayCommentCard } from "./DisplayCommentCard";
+import { db } from "../firebase/firebaseConfig";
+import { postCardProps } from "../utilities/helper";
+import AgentCard from "../components/Cards/AgentCard";
+import { Fragment, useEffect, useState } from "react";
+import Warning from "../components/CreatePost/Warning";
+import { IShowPostCard, tuple } from "../utilities/types";
+import { TextArea } from "../components/Comment/TextArea";
+import SignInContainer from "../components/SignIn/SignIn";
 import { useLoaderData, useParams } from "react-router-dom";
-import { tuple, IShowPostCard } from "../../utilities/types";
-import ShowPosterCardProvider from "../../context/ShowPostCard";
-import { postCardProps } from "../../utilities/helper";
-import getAllUserDocs from "../../firebase/firebaseCRUD/getAllUserDocs";
+import { ClientCard } from "../components/Cards/ClientCard";
+import ShowPosterCardProvider from "../context/ShowPostCard";
+import RedditRules from "../components/CreatePost/RedditRules";
+import { StyledComment } from "../components/Comment/StyledComment";
+import getAllUserDocs from "../firebase/firebaseCRUD/getAllUserDocs";
+import { DisplayCommentCard } from "../components/Comment/DisplayCommentCard";
 
 export default function Comment() {
   const { id } = useParams();
@@ -104,7 +103,7 @@ export default function Comment() {
   );
   return (
     <>
-      <SC.StyledComment>
+      <StyledComment>
         <div>
           <ShowPosterCardProvider {...props}>
             {posterCard}
@@ -129,7 +128,7 @@ export default function Comment() {
             <Warning />
           </div>
         </div>
-      </SC.StyledComment>
+      </StyledComment>
       <SignInContainer />
     </>
   );

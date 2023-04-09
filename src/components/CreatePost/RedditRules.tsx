@@ -2,7 +2,7 @@ import {
   StyledRedditRules,
   StyledRedditRulesHeader,
 } from "./StyledCreatePost";
-import { RuleSVG } from "../assets/socialPage/SocialSVG";
+import { RuleSVG } from "../../assets/socialPage/SocialSVG";
 import { redditRulesArr } from "../../constant/textConstant";
 
 export default function RedditRules() {

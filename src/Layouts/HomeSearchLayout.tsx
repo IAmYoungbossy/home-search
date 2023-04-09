@@ -8,7 +8,7 @@ import { contextProps, IShowPostCard } from "../utilities/types";
 import { collectionGroup, onSnapshot } from "firebase/firestore";
 import { StyledSocialPage } from "../components/Header/StyledHeader";
 
-export default function PageLayout() {
+export default function HomeSearchLayout() {
   const { dispatch } = useContext(AppContext) as contextProps;
 
   /*********************************************************

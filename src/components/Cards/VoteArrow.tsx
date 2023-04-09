@@ -2,15 +2,14 @@ import {
   contextProps,
   ShowPosterCardProps,
 } from "../../utilities/types";
+import { useContext } from "react";
+import { User } from "firebase/auth";
+import { IClientCard } from "./ClientCard";
 
 import {
   ArrowUpSVG,
   ArrowDownSVG,
-} from "../assets/socialPage/SocialSVG";
-
-import { useContext } from "react";
-import { User } from "firebase/auth";
-import { IClientCard } from "./ClientCard";
+} from "../../assets/socialPage/SocialSVG";
 import { StyledVoteArrow } from "./StyledClientCard";
 import { AppContext } from "../../context/AppContext";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
