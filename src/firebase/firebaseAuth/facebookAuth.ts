@@ -44,7 +44,8 @@ export const updateUserCredentials = async (
 };
 
 const signInWithFacebook = async (
-  dispatch: React.Dispatch<actionType>
+  dispatch: React.Dispatch<actionType>,
+  handleSignInPageToggle: () => void
 ) => {
   try {
     const { user, response } = await facebookSignIn();
@@ -54,6 +55,7 @@ const signInWithFacebook = async (
     await updateUserCredentials({ photoURL: photoUrl });
     createNewUserData(documents, user, "Facebook", dispatch);
     dispatch({ payload: user, type: APP_ACTION_TYPES.USER });
+    handleSignInPageToggle();
   } catch (err) {
     alert(err);
   }

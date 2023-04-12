@@ -46,9 +46,15 @@ export function signInObj(state: appStateType) {
 }
 
 export function SignIn() {
-  const { dispatch } = useContext(AppContext) as contextProps;
+  const { dispatch, state } = useContext(
+    AppContext
+  ) as contextProps;
   const handleOnClick = (e: SyntheticEvent<HTMLElement>) =>
     e.stopPropagation();
+
+  const { signInToggle } = signInObj(state);
+
+  const handleSignInPageToggle = () => dispatch(signInToggle);
 
   return (
     <StyledSignIn onClick={handleOnClick}>
@@ -56,13 +62,21 @@ export function SignIn() {
         <LoginAgreement />
         <div>
           <ProviderButton
-            signIn={signInWithGoogle.bind(null, dispatch)}
+            signIn={signInWithGoogle.bind(
+              null,
+              dispatch,
+              handleSignInPageToggle
+            )}
             providerName="Google"
           >
             <FcGoogle />
           </ProviderButton>
           <ProviderButton
-            signIn={signInWithFacebook.bind(null, dispatch)}
+            signIn={signInWithFacebook.bind(
+              null,
+              dispatch,
+              handleSignInPageToggle
+            )}
             providerName="Facebook"
           >
             <FaFacebook />

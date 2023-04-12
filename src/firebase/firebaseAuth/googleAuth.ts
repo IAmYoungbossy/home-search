@@ -21,13 +21,15 @@ const googleSignIn = async () => {
 };
 
 const signInWithGoogle = async (
-  dispatch: React.Dispatch<actionType>
+  dispatch: React.Dispatch<actionType>,
+  handleSignInPageToggle: () => void
 ) => {
   try {
     const { user } = await googleSignIn();
     const { documents } = await checkIfOldUser(user, dispatch);
     createNewUserData(documents, user, "Google", dispatch);
     dispatch({ payload: user, type: APP_ACTION_TYPES.USER });
+    handleSignInPageToggle();
   } catch (err) {
     alert(err);
   }
