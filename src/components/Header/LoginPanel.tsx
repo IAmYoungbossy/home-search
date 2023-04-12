@@ -6,7 +6,15 @@ import { AppContext } from "../../context/AppContext";
 import logout from "../../firebase/firebaseAuth/signOut";
 import { LOG_IN_PANEL } from "../../constant/objectConstant";
 
-export default function LoginPanel() {
+interface ILoginPanel {
+  loginPanel: boolean;
+  setLoginPanel: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function LoginPanel({
+  loginPanel,
+  setLoginPanel,
+}: ILoginPanel) {
   const { dispatch, state } = useContext(
     AppContext
   ) as contextProps;
@@ -20,8 +28,16 @@ export default function LoginPanel() {
     else handleSignInPageToggle();
   };
 
+  const getCurrentUserName = (() =>
+    state.user && state.user.displayName
+      ? state.user.displayName.split(" ")[0]
+      : null)();
+
   return (
     <StyledLoginPanel onClick={(e) => e.stopPropagation()}>
+      {getCurrentUserName && (
+        <button>Hi {getCurrentUserName}</button>
+      )}
       {LOG_IN_PANEL.map((item) => {
         if (item.arrow) {
           return (
@@ -34,7 +50,10 @@ export default function LoginPanel() {
           return (
             <button
               key={item.name}
-              onClick={logoutOrLogin}
+              onClick={() => {
+                logoutOrLogin();
+                setLoginPanel(!loginPanel);
+              }}
             >
               {item.icon}{" "}
               <span>

@@ -53,7 +53,12 @@ export default function UserButton() {
         <UserSVG />
       )}
       <ArrowDownSVG />
-      {loginPanel && <LoginPanel />}
+      {loginPanel && (
+        <LoginPanel
+          setLoginPanel={setLoginPanel}
+          loginPanel={loginPanel}
+        />
+      )}
     </StyledUserButton>
   );
 }
