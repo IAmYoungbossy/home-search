@@ -4,7 +4,6 @@ import {
   BsThreeDots,
   BsArrowBarUp,
 } from "react-icons/bs";
-import { IoMoonOutline, IoImageOutline } from "react-icons/io5";
 import { GrAdd } from "react-icons/gr";
 import { CgInfo } from "react-icons/cg";
 import { BiPoll } from "react-icons/bi";
@@ -13,10 +12,11 @@ import { AiOutlineTag } from "react-icons/ai";
 import { HiOutlineFire } from "react-icons/hi";
 import { TbSpeakerphone } from "react-icons/tb";
 import { IoLogInOutline } from "react-icons/io5";
+import { NoteSVG } from "../assets/Svg/SocialSVG";
 import { IoNewspaperOutline } from "react-icons/io5";
 import { FiChevronDown, FiLink } from "react-icons/fi";
 import { RxQuestionMarkCircled } from "react-icons/rx";
-import { NoteSVG } from "../components/assets/Svg/SocialSVG";
+import { IoMoonOutline, IoImageOutline } from "react-icons/io5";
 
 export const LOG_IN_PANEL = [
   { icon: <IoMoonOutline />, name: "Dark Mode" },

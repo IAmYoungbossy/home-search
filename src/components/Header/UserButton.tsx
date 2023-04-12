@@ -3,8 +3,8 @@ import {
   ArrowDownSVG,
 } from "../../assets/header/SvgMarkUp";
 import LoginPanel from "./LoginPanel";
-import FallbackAvatar from "../assets/avatar.png";
 import { StyledUserButton } from "./StyledHeader";
+import FallbackAvatar from "../../assets/avatar.png";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { useContext, useEffect, useState } from "react";

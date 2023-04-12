@@ -2,12 +2,12 @@ import * as SC from "./StyledHeader";
 import UserButton from "./UserButton";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
-import Logo from "../assets/header/Logo.svg";
 import { AiOutlinePlus } from "react-icons/ai";
+import Logo from "../../assets/header/Logo.svg";
 import { MdOutlineOutbond } from "react-icons/md";
+import { HeartSVG } from "../../assets/header/SvgMarkUp";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { buttonContent } from "../../constant/textConstant";
-import { HeartSVG } from "../../assets/header/SvgMarkUp";
 
 export function Header() {
   return (

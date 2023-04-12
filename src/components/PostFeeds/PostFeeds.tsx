@@ -7,8 +7,8 @@ import * as SC from "./StyledPostFeeds";
 import PostCards from "../Cards/PostCards";
 import GetCreatePostPage from "./GetCreatePostPage";
 import { ShieldSVG } from "../../assets/Svg/SocialSVG";
-import SnooBanner from "../assets/socialPage/snoo-home.png";
-import HomeBanner from "../assets/socialPage/home-banner.png";
+import SnooBanner from "../../assets/socialPage/snoo-home.png";
+import HomeBanner from "../../assets/socialPage/home-banner.png";
 
 const Feeds = () => (
   <div>
