@@ -1,6 +1,6 @@
 {
   "name": "home-search",
-  "homepage": ".",
+  "homepage": "https://home-search-seven.vercel.app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
