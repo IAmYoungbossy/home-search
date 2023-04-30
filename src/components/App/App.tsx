@@ -44,7 +44,7 @@ const router = createBrowserRouter(
       />
     </Route>
   ),
-  { basename: "/home-search" }
+  { basename: "/" }
 );
 
 function App() {
