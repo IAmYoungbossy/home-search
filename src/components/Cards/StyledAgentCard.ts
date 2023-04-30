@@ -9,6 +9,7 @@ export const StyledAgentPostTags = styled.div`
 
   li {
     padding: 5px;
+    color: #514f51;
     font-size: 13px;
     list-style: none;
     background-color: #efefef;

@@ -5,6 +5,7 @@ export const StyledHeaderSocial = styled.header`
   position: fixed;
   padding: 0 0.5rem;
   width: -webkit-fill-available;
+  box-shadow: 0px 2px 11px 0px #00000045;
   background-color: var(--light-bg-color-primary);
 
   & > div {

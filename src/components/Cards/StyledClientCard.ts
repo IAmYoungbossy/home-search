@@ -6,10 +6,8 @@ export const StyledInteractWithPostIcons = styled.div<{
   gap: 10px;
   display: flex;
   align-items: center;
-  margin: -3px 31px 0 23px;
+  margin: 0 31px 0 23px;
   padding: 5px 14px 6px 0px;
-  border-top-left-radius: 5px;
-  border-top: 1px solid var(--interact-with-post-border-color);
 
   a {
     gap: 5px;
@@ -59,12 +57,13 @@ export const StyledDescription = styled.div`
 `;
 
 export const StyledHouseSpec = styled.div`
+  z-index: 3;
   position: relative;
   padding: 5px 0px 0 20px;
-  margin: -7px 31px 0 22px;
+  margin: -7px 31px -2px 22px;
   background: var(--light-bg-color-primary);
-  border-left: 1px solid var(--house-spec-border-color);
-  border-bottom: 1px solid var(--house-spec-border-color);
+  border-left: 1px solid var(--interact-with-post-border-color);
+  border-bottom: 1px solid var(--interact-with-post-border-color);
 
   & > div {
     flex: 1;
@@ -91,6 +90,7 @@ export const StyledOriginalPoster = styled.div`
 
   p {
     font-size: 13px;
+    color: darkslategrey;
   }
 
   & > div > p:last-child {
