@@ -9,9 +9,7 @@ interface IAgentCard {
   secondary?: string;
 }
 
-export default function AgentCard({
-  secondary,
-}: IAgentCard) {
+export default function AgentCard({ secondary }: IAgentCard) {
   const { postTitle, bgImage } = useContext(
     ShowPostCardContext
   ) as ShowPosterCardProps;
@@ -20,7 +18,12 @@ export default function AgentCard({
     <CardContainer secondary={secondary}>
       <>
         <h3>{postTitle}</h3>
-        <ImageContainer bgImage={bgImage as string} />
+        <ImageContainer>
+          <img
+            alt="Post"
+            src={bgImage as string}
+          />
+        </ImageContainer>
         <AgentPostTags />
       </>
     </CardContainer>
