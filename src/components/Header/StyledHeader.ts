@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 export const StyledHeaderSocial = styled.header`
   z-index: 20;
-  padding: 0 1rem;
   position: fixed;
+  padding: 0 0.5rem;
   width: -webkit-fill-available;
   background-color: var(--light-bg-color-primary);
 
@@ -15,6 +15,24 @@ export const StyledHeaderSocial = styled.header`
     max-width: 1280px;
     align-items: center;
     justify-content: space-between;
+
+    @media screen and (max-width: 850px) {
+      & > div:nth-child(4) {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 650px) {
+      & > div:nth-child(3) {
+        display: none;
+      }
+    }
+
+    @media screen and (max-width: 500px) {
+      & > div:nth-child(2) {
+        display: none;
+      }
+    }
   }
 `;
 
@@ -78,6 +96,7 @@ export const Button = styled.button`
 export const StyledUserButton = styled(Button)`
   width: 65px;
   display: flex;
+  margin: 5px 0;
   padding: 2px 3px;
   position: relative;
   align-items: center;
@@ -125,6 +144,12 @@ export const StyledUserIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 365px) {
+    & > div:first-child {
+      display: none;
+    }
+  }
 `;
 
 export const StyledCTAButtons = styled.div`
