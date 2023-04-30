@@ -6,7 +6,7 @@ To showcase my ability to replicate any design, I decided to clone Reddit's UI f
 
 ## Demo
 
-This is live link to [Home Search](https://home-search-seven.vercel.app/)
+Live link to [Home Search](https://home-search-seven.vercel.app/)
 
 ## Features
 
