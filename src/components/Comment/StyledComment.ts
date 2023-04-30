@@ -12,7 +12,6 @@ export const StyledRichTextEditor = styled.div<{
   justify-content: space-between;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  max-width: var(--social-max-width);
   border: 1px solid var(--rich-text-border-color);
   background-color: var(--social-light-secondary-bg-color);
 
@@ -77,7 +76,6 @@ export const StyledTextArea = styled.div`
   margin-top: -11px;
   flex-direction: column;
   padding: 30px 32px 40px 61px;
-  max-width: var(--social-max-width);
   background-color: var(--light-bg-color-primary);
 
   textarea {
@@ -115,7 +113,6 @@ export const StyledReactionButtons = styled.div`
 export const StyledCommentBox = styled.div`
   padding-left: 20px;
   margin: -5px 21px 0;
-  max-width: var(--social-max-width);
   border-left: 1px solid var(--social-border-left-darkgrey);
 
   p {
@@ -133,7 +130,7 @@ export const StyledComment = styled.div`
   margin: 0.875rem auto 1.5rem auto;
 
   & > div:first-of-type {
-    flex: 1;
+    flex: 70%;
 
     & > div:first-of-type {
       border-top-left-radius: 5px;
@@ -147,6 +144,7 @@ export const StyledComment = styled.div`
   }
 
   & > div:last-of-type {
+    flex: 30%;
     margin-top: -30px;
 
     & > div {
@@ -154,11 +152,16 @@ export const StyledComment = styled.div`
       position: sticky;
     }
   }
+
+  @media screen and (max-width: 850px) {
+    & > div:last-of-type {
+      display: none;
+    }
+  }
 `;
 
 export const StyledcommentCard = styled.div`
   width: 100%;
   padding-left: 37px;
-  max-width: var(--social-max-width);
   background-color: var(--light-bg-color-primary);
 `;

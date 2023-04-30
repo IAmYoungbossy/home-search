@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const StyledHeaderSocial = styled.header`
   z-index: 20;
+  padding: 0 1rem;
   position: fixed;
   width: -webkit-fill-available;
   background-color: var(--light-bg-color-primary);

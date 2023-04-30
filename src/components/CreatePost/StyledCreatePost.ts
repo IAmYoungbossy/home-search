@@ -71,7 +71,8 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
         bg
           ? "var(--social-secondary-font-color)"
           : "var(--social-disabled-button-bg-color)"};
-    box-shadow: ${({ bg }) => (bg ? "3px 1px 7px #00000038" : "none")};
+    box-shadow: ${({ bg }) =>
+      bg ? "3px 1px 7px #00000038" : "none"};
   }
 `;
 
@@ -167,7 +168,9 @@ export const StyledPostOptions = styled.div<{ post: boolean }>`
         ? "var(--social-font-color)"
         : "var(--social-secondary-font-color) !important"};
     border-bottom-color: ${({ post }) =>
-      post ? "none" : "var(--social-secondary-font-color) !important"};
+      post
+        ? "none"
+        : "var(--social-secondary-font-color) !important"};
     svg {
       fill: ${({ post }) =>
         post
@@ -181,7 +184,9 @@ export const StyledPostOptions = styled.div<{ post: boolean }>`
         ? "var(--social-secondary-font-color) !important"
         : "var(--social-font-color)"};
     border-bottom-color: ${({ post }) =>
-      post ? "var(--social-secondary-font-color) !important" : "none"};
+      post
+        ? "var(--social-secondary-font-color) !important"
+        : "none"};
     svg {
       fill: ${({ post }) =>
         post
@@ -218,7 +223,9 @@ export const StyledButtonTagsContainer = styled.div`
   flex-wrap: wrap;
 `;
 
-export const StyledButtonTags = styled.div<{ disabled: boolean }>`
+export const StyledButtonTags = styled.div<{
+  disabled: boolean;
+}>`
   display: flex;
   padding: 15px 10px 15px;
   background-color: var(--light-bg-color-primary);
@@ -238,9 +245,11 @@ export const StyledButtonTags = styled.div<{ disabled: boolean }>`
         : "var(--social-secondary-font-color)"};
     box-shadow: ${({ disabled }) =>
       disabled ? "none" : "3px 1px 7px #0000006b"};
-    cursor: ${({ disabled }) => (disabled ? "no-drop" : "pointer")};
+    cursor: ${({ disabled }) =>
+      disabled ? "no-drop" : "pointer"};
     outline: 2px solid
-      ${({ disabled }) => (disabled ? "var(--social-font-color)" : "#008eed94")};
+      ${({ disabled }) =>
+        disabled ? "var(--social-font-color)" : "#008eed94"};
   }
 `;
 
@@ -409,7 +418,16 @@ export const StyledCreatePostPage = styled.div`
   margin: 20px auto 50px;
 
   & > div:first-of-type {
-    flex: 1;
+    flex: 70%;
+  }
+  & > div:last-of-type {
+    flex: 30%;
+  }
+
+  @media screen and (max-width: 850px) {
+    & > div:last-of-type {
+      display: none;
+    }
   }
 `;
 
@@ -421,7 +439,7 @@ export const StyledPost = styled.div`
 
 export const StyledWarning = styled.div`
   margin: 0;
-  width: 312px;
+  flex: 30%;
   font-size: 12px;
   font-weight: 500;
   padding: 10px 62px 0 0;
@@ -444,7 +462,7 @@ export const StyledRedditRulesHeader = styled.div`
 `;
 
 export const StyledRedditRules = styled.div`
-  width: 312px;
+  width: 100%;
   padding: 12px;
   margin: 40px 0 0;
   border-radius: 5px;

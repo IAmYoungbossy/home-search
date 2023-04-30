@@ -153,10 +153,20 @@ export const StyledPostFeeds = styled.div`
   width: fit-content;
 
   & > div:last-child {
-    width: 312px;
+    flex: 30%;
+  }
+
+  & > div:first-child {
+    flex: 70%;
   }
 
   a {
     text-decoration: none;
+  }
+
+  @media screen and (max-width: 850px) {
+    & > div:last-of-type {
+      display: none;
+    }
   }
 `;
