@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledRedditPolicies = styled.div`
   width: 100%;
-  top: 3.875rem;
+  top: 3.5rem;
   font-size: 12px;
   margin-top: 15px;
   position: sticky;
