@@ -36,13 +36,11 @@ export const StyledInteractWithPostIcons = styled.div<{
     align-items: center;
   }
 
-  // & > div > svg:last-of-type > g > path:first-of-type {
-  //   fill: transparent;
-  // }
-
-  // & > div > svg:last-of-type > g > path:first-of-type:hover {
-  //   fill: #ff000021;
-  // }
+  @media screen and (max-width: 350px) {
+    span {
+      display: none;
+    }
+  }
 `;
 
 export const StyledDescription = styled.div`
@@ -159,7 +157,6 @@ export const StyledVoteArrow = styled.div<{
 export const StyledPosterName = styled.div`
   gap: 10px;
   display: flex;
-  width: max-content;
   align-items: center;
 
   & > div {

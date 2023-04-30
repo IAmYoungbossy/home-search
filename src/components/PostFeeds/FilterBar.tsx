@@ -20,10 +20,10 @@ export default function FilterBar() {
 
 function filterIcons(item: FilterIconsProps, index: number) {
   return (
-    <StyledFilterIcons key={index}>
+    <div key={index}>
       {item.icon}
       <span>{item.name}</span>
-    </StyledFilterIcons>
+    </div>
   );
 }
 
@@ -49,7 +49,6 @@ const StyledPageView = styled(StyledFilterIcons)`
 `;
 
 const StyledFilterBar = styled(StyledFilterIcons)`
-  max-width: 740px;
   padding: 12px 7px;
   border: 1px solid #d0d2d4;
   justify-content: space-between;
@@ -59,9 +58,25 @@ const StyledFilterBar = styled(StyledFilterIcons)`
     gap: 6px;
     width: 100%;
     display: flex;
-    max-width: 340px;
     align-items: center;
-    justify-content: space-between;
+
+    & > div {
+      gap: 5px;
+      display: flex;
+      align-items: center;
+    }
+
+    & > div:last-child {
+      margin-left: auto;
+    }
+
+    @media screen and (max-width: 365px) {
+      & > div:nth-child(2),
+      & > div:nth-child(3),
+      & > div:nth-child(4) {
+        display: none;
+      }
+    }
   }
 
   svg {

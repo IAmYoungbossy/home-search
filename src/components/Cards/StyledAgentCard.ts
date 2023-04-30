@@ -2,9 +2,9 @@ import styled from "styled-components";
 
 export const StyledAgentPostTags = styled.div`
   ul {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    gap: 5px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   }
 
   li {

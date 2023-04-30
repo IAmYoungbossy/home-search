@@ -60,7 +60,7 @@ const GlobalCSS = createGlobalStyle`
   }
 
   main {
-    padding: 0 1rem;
+    /* padding: 0 1rem; */
     margin-top: 2.5rem;
   }
 `;

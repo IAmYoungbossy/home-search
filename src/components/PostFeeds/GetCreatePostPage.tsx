@@ -25,7 +25,6 @@ const StyledCreatePost = styled.div`
   gap: 10px;
   width: 100%;
   display: flex;
-  max-width: 740px;
   padding: 8px 10px;
   margin: 20px 0 10px;
   align-items: center;

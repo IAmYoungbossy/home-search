@@ -31,7 +31,7 @@ export default function PostIconsInteraction() {
     <StyledInteractWithPostIcons liked={toggleLikeColor()}>
       <div>
         <Link to={`/comment/${postId as string}`}>
-          <BiComment /> {comments?.length} Comment
+          <BiComment /> {comments?.length} <span>Comment</span>
         </Link>
       </div>
       <div
@@ -48,7 +48,7 @@ export default function PostIconsInteraction() {
           })();
         }}
       >
-        <SlLike /> {likes && likes.length} Like
+        <SlLike /> {likes && likes.length} <span>Like</span>
       </div>
     </StyledInteractWithPostIcons>
   );
