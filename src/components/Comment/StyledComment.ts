@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
-export const StyledRichTextEditor = styled.div<{ bgColor: boolean }>`
+export const StyledRichTextEditor = styled.div<{
+  bgColor: boolean;
+}>`
   width: 100%;
   padding: 5px;
   display: flex;
@@ -33,7 +35,9 @@ export const StyledRichTextEditor = styled.div<{ bgColor: boolean }>`
     border-radius: 20px;
     color: var(--social-disabled-button-color);
     background-color: ${({ bgColor }) =>
-      bgColor ? "blue" : "var(--social-disabled-button-bg-color)"};
+      bgColor
+        ? "blue"
+        : "var(--social-disabled-button-bg-color)"};
   }
 `;
 
@@ -126,7 +130,7 @@ export const StyledComment = styled.div`
   width: 100%;
   display: flex;
   max-width: fit-content;
-  margin: 24px auto 24px auto;
+  margin: 0.875rem auto 1.5rem auto;
 
   & > div:first-of-type {
     flex: 1;
@@ -146,7 +150,7 @@ export const StyledComment = styled.div`
     margin-top: -30px;
 
     & > div {
-      top: 10px;
+      top: 3.875rem;
       position: sticky;
     }
   }

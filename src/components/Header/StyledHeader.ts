@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const StyledHeaderSocial = styled.header`
+  z-index: 20;
+  position: fixed;
+  width: -webkit-fill-available;
   background-color: var(--light-bg-color-primary);
 
   & > div {
@@ -42,9 +45,7 @@ export const StyledSearchBarSocial = styled.div`
     padding: 9.7px 35px;
     border-radius: 20px;
     outline: 1px solid var(--social-page-outline-color);
-    background-color: var(
-      --social-light-secondary-bg-color
-    );
+    background-color: var(--social-light-secondary-bg-color);
   }
 `;
 

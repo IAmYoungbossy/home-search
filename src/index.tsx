@@ -58,6 +58,10 @@ const GlobalCSS = createGlobalStyle`
     position: relative;
     font-family: var(--body-font-family);
   }
+
+  main {
+    margin-top: 2.5rem;
+  }
 `;
 
 root.render(
