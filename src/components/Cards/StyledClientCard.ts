@@ -59,8 +59,10 @@ export const StyledDescription = styled.div`
 `;
 
 export const StyledHouseSpec = styled.div`
+  position: relative;
   padding: 5px 0px 0 20px;
   margin: -7px 31px 0 22px;
+  background: var(--light-bg-color-primary);
   border-left: 1px solid var(--house-spec-border-color);
   border-bottom: 1px solid var(--house-spec-border-color);
 
