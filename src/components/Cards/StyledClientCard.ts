@@ -177,7 +177,7 @@ export const StyledPosterName = styled.div`
 
 export const StyledEditAndDeleteButtons = styled.ul`
   top: 17px;
-  z-index: 3;
+  z-index: 4;
   left: -32px;
   padding: 5px;
   width: max-content;

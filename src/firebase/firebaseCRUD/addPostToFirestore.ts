@@ -8,11 +8,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import {
-  actionType,
-  appStateType,
-  APP_ACTION_TYPES,
-} from "../../utilities/types";
+import { actionType, appStateType } from "../../utilities/types";
 import addPostId from "./addPostId";
 import { db } from "../firebaseConfig";
 import { editPostInDatabase } from "./editPostInDatabase";
@@ -29,16 +25,15 @@ export interface IaddPostToFirestore {
   apartmentSize?: string;
   budget: string | number;
   userDocId: string | null;
-  postType?: "create" | "edit";
+  editId?: string | undefined;
   dispatch?: React.Dispatch<actionType>;
 }
 
 export const addPostToFirestore = async ({
   budget,
+  editId,
   postId,
   postDesc,
-  dispatch,
-  postType,
   imageUrl,
   location,
   postTitle,
@@ -70,7 +65,7 @@ export const addPostToFirestore = async ({
       }
     : { ...commonData };
 
-  if (postType === "create") {
+  if (!editId) {
     const document = await addDoc(
       collection(db, "USERS", userDocId as string, "POSTS"),
       postData
@@ -78,8 +73,9 @@ export const addPostToFirestore = async ({
     const postId = document.id;
     await addPostId({ db, userDocId, postId });
   }
+  console.log(editId);
 
-  if (postType === "edit" && dispatch) {
+  if (editId) {
     await editPostInDatabase({
       budget,
       postId,
@@ -92,15 +88,12 @@ export const addPostToFirestore = async ({
       postAsAgent,
       apartmentSize,
     });
-    dispatch({
-      payload: "create",
-      type: APP_ACTION_TYPES.POST_TYPE,
-    });
   }
 };
 
 export const AddPostToDB = async (
   state: appStateType,
+  editId: string | undefined,
   dispatch: React.Dispatch<actionType>
 ) => {
   // Checks if there's signed in user
@@ -116,6 +109,6 @@ export const AddPostToDB = async (
   const userDocId = documents.docs[0].data().docId;
 
   addPostToFirestore(
-    addToPostObject(userDocId, state, dispatch)
+    addToPostObject(userDocId, state, editId, dispatch)
   );
 };

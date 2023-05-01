@@ -1,24 +1,25 @@
 import {
   actionType,
+  ICardProps,
   appStateType,
+  IShowPostCard,
   IAppActionTypes,
   APP_ACTION_TYPES,
   IButtonTagsToggle,
   APP_INITIAL_STATE,
-  IShowPostCard,
-  ICardProps,
 } from "./types";
-import { db } from "../firebase/firebaseConfig";
+
 import {
   doc,
+  getDoc,
   DocumentData,
   DocumentSnapshot,
-  getDoc,
 } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 type buttonTagsType = {
-  svg: JSX.Element;
   name: string;
+  svg: JSX.Element;
 };
 
 interface IToggleDealStatus {
@@ -421,12 +422,13 @@ export function postCardProps({
 export const addToPostObject = (
   userDocId: string,
   state: appStateType,
+  editId: string | undefined,
   dispatch: React.Dispatch<actionType>
 ) => ({
+  editId,
   dispatch,
   userDocId,
   postId: state.postId,
-  postType: state.postType,
   postDesc: state.post.postDesc,
   imageUrl: state.post.imageURL,
   budget: state.tagButton.Budget,

@@ -17,11 +17,7 @@ const checkIfOldUser = async (
   user: User,
   dispatch: React.Dispatch<actionType>
 ) => {
-  const q = query(
-    collection(db, "USERS"),
-    where("userId", "==", user.uid)
-  );
-  const documents = await getDocs(q);
+  const { documents } = await findUser(user.uid);
   if (documents.docs.length > 0) {
     dispatch({
       type: APP_ACTION_TYPES.userDocId,
@@ -30,5 +26,22 @@ const checkIfOldUser = async (
   }
   return { documents };
 };
+
+export async function findUser(field: string) {
+  let userDocId: string | undefined;
+  const q = query(
+    collection(db, "USERS"),
+    where("userId", "==", field)
+  );
+  const documents = await getDocs(q);
+
+  if (!documents.empty)
+    documents.forEach((doc) => {
+      userDocId = doc.id;
+    });
+  else userDocId = undefined;
+
+  return { documents, userDocId };
+}
 
 export default checkIfOldUser;

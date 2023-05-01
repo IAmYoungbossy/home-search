@@ -1,13 +1,11 @@
 import {
   contextProps,
-  APP_ACTION_TYPES,
   ShowPosterCardProps,
 } from "../../utilities/types";
 import { useContext, useEffect } from "react";
 import { IGetPosterName } from "./GetPostName";
 import { Link, useParams } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
-import { editPost } from "../../utilities/helper";
 import { StyledEditAndDeleteButtons } from "./StyledClientCard";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import deletePostOrComment from "../../firebase/firebaseCRUD/deletePostOrComment";
@@ -68,15 +66,6 @@ export default function EditAndDelete({
     });
   };
 
-  // Handler for editing a post
-  const editPostHandler = async () => {
-    await editPost({ userId, postId, dispatch });
-    dispatch({
-      payload: "edit",
-      type: APP_ACTION_TYPES.POST_TYPE,
-    });
-  };
-
   return (
     <StyledEditAndDeleteButtons
       onClick={(e) => e.stopPropagation()}
@@ -85,7 +74,7 @@ export default function EditAndDelete({
       {postCard && commentCard && (
         <li>
           <Link to={`/edit-post/${postId}`}>
-            <button onClick={editPostHandler}>Edit Post</button>
+            <button>Edit Post</button>
           </Link>
         </li>
       )}

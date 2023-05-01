@@ -147,10 +147,10 @@ export const StyledRedditPremium = styled.div`
 
 export const StyledPostFeeds = styled.div`
   gap: 24px;
+  width: 100%;
   display: flex;
   margin: 0 auto;
   max-width: 976px;
-  width: fit-content;
 
   & > div:last-child {
     flex: 30%;
