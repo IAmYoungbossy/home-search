@@ -79,6 +79,8 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
 export const StyledTag = styled.div`
   gap: 10px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   div {
     color: #9c27b0;
@@ -219,15 +221,19 @@ export const StyledChooseCommunity = styled.div`
 `;
 
 export const StyledButtonTagsContainer = styled.div`
+  gap: 0.625rem;
   display: flex;
   flex-wrap: wrap;
+  max-width: 30rem;
+  margin-top: 1.25rem;
+  justify-content: space-between;
 `;
 
 export const StyledButtonTags = styled.div<{
   disabled: boolean;
 }>`
   display: flex;
-  padding: 15px 10px 15px;
+  /* padding: 15px 0 15px; */
   background-color: var(--light-bg-color-primary);
   border-bottom: 1px solid var(--social-border-color);
 
@@ -419,6 +425,7 @@ export const StyledCreatePostPage = styled.div`
 
   & > div:first-of-type {
     flex: 70%;
+    width: 100%;
   }
   & > div:last-of-type {
     flex: 30%;
