@@ -13,6 +13,7 @@ import addPostId from "./addPostId";
 import { db } from "../firebaseConfig";
 import { editPostInDatabase } from "./editPostInDatabase";
 import { addToPostObject } from "../../utilities/helper";
+import { NavigateFunction } from "react-router-dom";
 
 export interface IaddPostToFirestore {
   postId?: string;
@@ -94,7 +95,8 @@ export const addPostToFirestore = async ({
 export const AddPostToDB = async (
   state: appStateType,
   editId: string | undefined,
-  dispatch: React.Dispatch<actionType>
+  dispatch: React.Dispatch<actionType>,
+  navigate: NavigateFunction
 ) => {
   // Checks if there's signed in user
   if (!state.user) return;
@@ -111,4 +113,7 @@ export const AddPostToDB = async (
   addPostToFirestore(
     addToPostObject(userDocId, state, editId, dispatch)
   );
+
+  // Redirects to homepage
+  navigate("/");
 };

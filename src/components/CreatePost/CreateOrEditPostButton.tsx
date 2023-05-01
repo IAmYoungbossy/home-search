@@ -4,15 +4,16 @@ import {
   preventEmptyFieldSubmition,
 } from "../../utilities/helper";
 import { useContext, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyleActionButtons } from "./StyledCreatePost";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { findUser } from "../../firebase/firebaseCRUD/checkIfOldUser";
 import { AddPostToDB } from "../../firebase/firebaseCRUD/addPostToFirestore";
 
 export default function CreateOrEditPostButton() {
   const editId = useParams().id;
+  const navigate = useNavigate();
   const { state, dispatch } = useContext(
     AppContext
   ) as contextProps;
@@ -44,12 +45,11 @@ export default function CreateOrEditPostButton() {
             null,
             state,
             editId,
-            dispatch
+            dispatch,
+            navigate
           )}
         >
-          <Link to="/">
-            {!editId ? "Create Post" : "Save Edit"}
-          </Link>
+          {!editId ? "Create Post" : "Save Edit"}
         </button>
       </div>
     </StyleActionButtons>
