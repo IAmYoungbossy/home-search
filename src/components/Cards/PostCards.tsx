@@ -1,38 +1,34 @@
 import {
   contextProps,
   IShowPostCard,
-  APP_ACTION_TYPES,
 } from "../../utilities/types";
-
 import { useContext, useEffect } from "react";
-import { useLoaderData } from "react-router-dom";
 import { db } from "../../firebase/firebaseConfig";
 import ShowPostCard from "../PostFeeds/ShowPostCard";
 import { AppContext } from "../../context/AppContext";
+import { updatedState } from "../../utilities/helper";
 import getAllUserDocs from "../../firebase/firebaseCRUD/getAllUserDocs";
 
 export default function PostCards() {
-  const {
-    state: { postFeed },
-    dispatch,
-  } = useContext(AppContext) as contextProps;
-  const posts = useLoaderData() as IShowPostCard[];
+  const { state, dispatch } = useContext(
+    AppContext
+  ) as contextProps;
 
-  const updatedState = {
-    payload: posts,
-    type: APP_ACTION_TYPES.postFeed,
-  };
+  useEffect(() => {
+    (async () => {
+      const posts = await getAllUserDocs();
+      dispatch(updatedState(posts));
+    })();
+  }, [db]);
 
-  useEffect(() => dispatch(updatedState), [db]);
+  return <>{state.postFeed.map(post)}</>;
+}
 
-  const post = (post: IShowPostCard) => (
+function post(post: IShowPostCard) {
+  return (
     <ShowPostCard
       post={post}
       key={post.id}
     />
   );
-
-  return <>{postFeed.map(post)}</>;
 }
-
-export const postLoader = async () => await getAllUserDocs();

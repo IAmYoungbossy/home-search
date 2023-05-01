@@ -9,7 +9,6 @@ import CreateOrEditPost, {
 import { HomeSearch } from "../pages/HomeSearch";
 import Comment, { commentLoader } from "../pages/Comment";
 import HomeSearchLayout from "../Layouts/HomeSearchLayout";
-import { postLoader } from "../components/Cards/PostCards";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,7 +19,6 @@ const router = createBrowserRouter(
       <Route
         index
         element={<HomeSearch />}
-        loader={postLoader}
       />
       <Route
         path="edit-post/:id"

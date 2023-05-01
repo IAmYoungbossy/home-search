@@ -461,3 +461,8 @@ export function sortPostByCreatedAt(
     payload: posts,
   });
 }
+
+export const updatedState = (posts: IShowPostCard[]) => ({
+  payload: posts,
+  type: APP_ACTION_TYPES.postFeed,
+});
