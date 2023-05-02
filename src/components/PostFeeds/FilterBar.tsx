@@ -82,7 +82,7 @@ const StyledFilterBar = styled(StyledFilterIcons)`
   svg {
     width: 22px;
     height: 22px;
-    fill: #878a8c;
+    fill: #2f4f4f96;
   }
 
   & > div:first-child > div:nth-child(2) > svg {

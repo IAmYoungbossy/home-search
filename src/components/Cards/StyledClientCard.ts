@@ -143,7 +143,7 @@ export const StyledVoteArrow = styled.div<{
     display: block;
     width: 20px;
     height: 20px;
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: pointer;
   }
 

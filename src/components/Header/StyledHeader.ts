@@ -184,6 +184,11 @@ export const StyledLoginPanel = styled.div`
   svg {
     width: 20px;
     height: 20px;
+    opacity: 0.7;
+  }
+
+  button:nth-child(5) svg {
+    opacity: 0.6;
   }
 
   button {
