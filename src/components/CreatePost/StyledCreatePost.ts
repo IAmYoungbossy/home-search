@@ -254,10 +254,11 @@ export const StyledButtonTags = styled.div<{
 
   button {
     gap: 5px;
-    display: flex;
     border: none;
+    display: flex;
     padding: 5px 12px;
     font-weight: bold;
+    height: min-content;
     border-radius: 20px;
     background-color: transparent;
     color: ${({ disabled }) =>
@@ -276,14 +277,14 @@ export const StyledButtonTags = styled.div<{
 
 export const StyledInputTag = styled.div`
   display: flex;
-  padding: 15px 10px;
+  /* padding: 15px 10px; */
   position: relative;
   align-items: center;
   border-bottom: 1px solid var(--social-border-color);
 
   button {
-    top: 15px;
-    right: 10px;
+    top: 0;
+    right: 0;
     border: none;
     display: flex;
     position: absolute;
