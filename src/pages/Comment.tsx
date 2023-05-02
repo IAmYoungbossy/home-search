@@ -9,9 +9,18 @@ import {
 import { db } from "../firebase/firebaseConfig";
 import { postCardProps } from "../utilities/helper";
 import AgentCard from "../components/Cards/AgentCard";
-import { Fragment, useEffect, useState } from "react";
+import {
+  Fragment,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
 import Warning from "../components/CreatePost/Warning";
-import { IShowPostCard, tuple } from "../utilities/types";
+import {
+  IShowPostCard,
+  contextProps,
+  tuple,
+} from "../utilities/types";
 import { TextArea } from "../components/Comment/TextArea";
 import SignInContainer from "../components/SignIn/SignIn";
 import { useLoaderData, useParams } from "react-router-dom";
@@ -21,9 +30,11 @@ import RedditRules from "../components/CreatePost/RedditRules";
 import { StyledComment } from "../components/Comment/StyledComment";
 import getAllUserDocs from "../firebase/firebaseCRUD/getAllUserDocs";
 import { DisplayCommentCard } from "../components/Comment/DisplayCommentCard";
+import { AppContext } from "../context/AppContext";
 
 export default function Comment() {
   const { id } = useParams();
+  const { state } = useContext(AppContext) as contextProps;
 
   // Get the post with the specified ID
   const posts = useLoaderData() as IShowPostCard[];

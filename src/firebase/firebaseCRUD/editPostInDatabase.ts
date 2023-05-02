@@ -37,6 +37,7 @@ export async function editPostInDatabase({
   if (!postAsAgent) {
     delete updates.location;
     delete updates.imageUrl;
+    delete updates.postTitle;
     delete updates.dealStatus;
   }
 

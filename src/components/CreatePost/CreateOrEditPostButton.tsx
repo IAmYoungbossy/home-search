@@ -4,7 +4,10 @@ import {
   preventEmptyFieldSubmition,
 } from "../../utilities/helper";
 import { useContext, useEffect } from "react";
-import { contextProps } from "../../utilities/types";
+import {
+  contextProps,
+  APP_ACTION_TYPES,
+} from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyleActionButtons } from "./StyledCreatePost";
 import { useNavigate, useParams } from "react-router-dom";
@@ -33,6 +36,23 @@ export default function CreateOrEditPostButton() {
     })();
   }, []);
 
+  const handleCreateOrEditPost = () => {
+    if (dispatch && !allFieldsFilled) {
+      dispatch({
+        type: APP_ACTION_TYPES.POST_TYPE,
+        payload: "Fill all the required fields.",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: APP_ACTION_TYPES.POST_TYPE,
+          payload: "",
+        });
+      }, 5000);
+      return;
+    }
+    AddPostToDB(state, editId, dispatch, navigate);
+  };
+
   const allFieldsFilled = preventEmptyFieldSubmition(state);
 
   return (
@@ -43,15 +63,7 @@ export default function CreateOrEditPostButton() {
           <small>{state.postType}</small>
         )}
         <button>Save Draft</button>
-        <button
-          onClick={AddPostToDB.bind(
-            null,
-            state,
-            editId,
-            dispatch,
-            navigate
-          )}
-        >
+        <button onClick={handleCreateOrEditPost}>
           {!editId ? "Create Post" : "Save Edit"}
         </button>
       </div>

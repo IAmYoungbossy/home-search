@@ -33,14 +33,12 @@ export interface IaddPostToFirestore {
   userDocId: string | null;
   navigate?: NavigateFunction;
   editId?: string | undefined;
-  dispatch?: React.Dispatch<actionType>;
 }
 
 export const addPostToFirestore = async ({
   budget,
   editId,
   postId,
-  dispatch,
   navigate,
   postDesc,
   imageUrl,
@@ -51,29 +49,7 @@ export const addPostToFirestore = async ({
   postAsAgent,
   apartmentSize,
 }: IaddPostToFirestore) => {
-  // Empty field validations
-  const editValidation =
-    postId?.trim() !== "" &&
-    budget?.trim() !== "" &&
-    postDesc?.trim() !== "" &&
-    imageUrl?.trim() !== "" &&
-    location?.trim() !== "" &&
-    postTitle?.trim() !== "" &&
-    userDocId?.trim() !== "" &&
-    dealStatus?.trim() !== "" &&
-    apartmentSize?.trim() !== "";
-  const commonValidation =
-    budget?.trim() !== "" &&
-    postDesc?.trim() !== "" &&
-    userDocId?.trim() !== "" &&
-    apartmentSize?.trim() !== "";
-  const agentValidation =
-    imageUrl?.trim() !== "" &&
-    location?.trim() !== "" &&
-    postTitle?.trim() !== "" &&
-    dealStatus?.trim() !== "";
-
-  const commonData = {
+  const postData = {
     budget,
     postDesc,
     userDocId,
@@ -84,30 +60,22 @@ export const addPostToFirestore = async ({
     Comments: arrayUnion(),
     Downvotes: arrayUnion(),
     createdAt: serverTimestamp(),
+    ...(postAsAgent && {
+      imageUrl,
+      location,
+      postTitle,
+      dealStatus,
+    }),
   };
 
-  const postData =
-    postAsAgent && commonValidation && agentValidation
-      ? {
-          ...commonData,
-          imageUrl,
-          location,
-          postTitle,
-          dealStatus,
-        }
-      : { ...commonData };
-
-  if (!editId && commonValidation) {
+  if (!editId) {
     const document = await addDoc(
       collection(db, "USERS", userDocId as string, "POSTS"),
       postData
     );
     const postId = document.id;
     await addPostId({ db, userDocId, postId });
-
-    // Redirects to homepage
-    if (navigate) navigate("/");
-  } else if (editId && editValidation) {
+  } else if (editId) {
     await editPostInDatabase({
       budget,
       postId,
@@ -120,22 +88,9 @@ export const addPostToFirestore = async ({
       postAsAgent,
       apartmentSize,
     });
-    // Redirects to homepage
-    if (navigate) navigate("/");
-  } else {
-    if (dispatch) {
-      dispatch({
-        type: APP_ACTION_TYPES.POST_TYPE,
-        payload: "Fill all the required fields.",
-      });
-      setTimeout(() => {
-        dispatch({
-          type: APP_ACTION_TYPES.POST_TYPE,
-          payload: "",
-        });
-      }, 5000);
-    }
   }
+
+  if (navigate) navigate("/");
 };
 
 export const AddPostToDB = async (
@@ -157,6 +112,6 @@ export const AddPostToDB = async (
   const userDocId = documents.docs[0].data().docId;
 
   addPostToFirestore(
-    addToPostObject(userDocId, state, editId, dispatch, navigate)
+    addToPostObject(userDocId, state, editId, navigate)
   );
 };

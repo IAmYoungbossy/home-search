@@ -1,11 +1,7 @@
-import {
-  contextProps,
-  ShowPosterCardProps,
-} from "../../utilities/types";
 import { useContext, useEffect } from "react";
 import { IGetPosterName } from "./GetPostName";
 import { Link, useParams } from "react-router-dom";
-import { AppContext } from "../../context/AppContext";
+import { ShowPosterCardProps } from "../../utilities/types";
 import { StyledEditAndDeleteButtons } from "./StyledClientCard";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
 import deletePostOrComment from "../../firebase/firebaseCRUD/deletePostOrComment";
@@ -27,9 +23,6 @@ export default function EditAndDelete({
   // Check if this is a comment card or a post card
   const commentCard =
     !commentId && !commentPostId && !commentUserId;
-
-  // Get the dispatch function from AppContext
-  const { dispatch } = useContext(AppContext) as contextProps;
 
   const postCard = useContext(
     ShowPostCardContext
