@@ -8,14 +8,20 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import { actionType, appStateType } from "../../utilities/types";
+import {
+  actionType,
+  appStateType,
+  APP_ACTION_TYPES,
+} from "../../utilities/types";
+
 import addPostId from "./addPostId";
 import { db } from "../firebaseConfig";
-import { editPostInDatabase } from "./editPostInDatabase";
-import { addToPostObject } from "../../utilities/helper";
 import { NavigateFunction } from "react-router-dom";
+import { addToPostObject } from "../../utilities/helper";
+import { editPostInDatabase } from "./editPostInDatabase";
 
 export interface IaddPostToFirestore {
+  budget: string;
   postId?: string;
   postDesc: string;
   postTitle: string;
@@ -24,8 +30,8 @@ export interface IaddPostToFirestore {
   dealStatus?: string;
   postAsAgent: boolean;
   apartmentSize?: string;
-  budget: string | number;
   userDocId: string | null;
+  navigate?: NavigateFunction;
   editId?: string | undefined;
   dispatch?: React.Dispatch<actionType>;
 }
@@ -34,6 +40,8 @@ export const addPostToFirestore = async ({
   budget,
   editId,
   postId,
+  dispatch,
+  navigate,
   postDesc,
   imageUrl,
   location,
@@ -43,6 +51,28 @@ export const addPostToFirestore = async ({
   postAsAgent,
   apartmentSize,
 }: IaddPostToFirestore) => {
+  // Empty field validations
+  const editValidation =
+    postId?.trim() !== "" &&
+    budget?.trim() !== "" &&
+    postDesc?.trim() !== "" &&
+    imageUrl?.trim() !== "" &&
+    location?.trim() !== "" &&
+    postTitle?.trim() !== "" &&
+    userDocId?.trim() !== "" &&
+    dealStatus?.trim() !== "" &&
+    apartmentSize?.trim() !== "";
+  const commonValidation =
+    budget?.trim() !== "" &&
+    postDesc?.trim() !== "" &&
+    userDocId?.trim() !== "" &&
+    apartmentSize?.trim() !== "";
+  const agentValidation =
+    imageUrl?.trim() !== "" &&
+    location?.trim() !== "" &&
+    postTitle?.trim() !== "" &&
+    dealStatus?.trim() !== "";
+
   const commonData = {
     budget,
     postDesc,
@@ -56,27 +86,28 @@ export const addPostToFirestore = async ({
     createdAt: serverTimestamp(),
   };
 
-  const postData = postAsAgent
-    ? {
-        ...commonData,
-        imageUrl,
-        location,
-        postTitle,
-        dealStatus,
-      }
-    : { ...commonData };
+  const postData =
+    postAsAgent && commonValidation && agentValidation
+      ? {
+          ...commonData,
+          imageUrl,
+          location,
+          postTitle,
+          dealStatus,
+        }
+      : { ...commonData };
 
-  if (!editId) {
+  if (!editId && commonValidation) {
     const document = await addDoc(
       collection(db, "USERS", userDocId as string, "POSTS"),
       postData
     );
     const postId = document.id;
     await addPostId({ db, userDocId, postId });
-  }
-  console.log(editId);
 
-  if (editId) {
+    // Redirects to homepage
+    if (navigate) navigate("/");
+  } else if (editId && editValidation) {
     await editPostInDatabase({
       budget,
       postId,
@@ -89,6 +120,21 @@ export const addPostToFirestore = async ({
       postAsAgent,
       apartmentSize,
     });
+    // Redirects to homepage
+    if (navigate) navigate("/");
+  } else {
+    if (dispatch) {
+      dispatch({
+        type: APP_ACTION_TYPES.POST_TYPE,
+        payload: "Fill all the required fields.",
+      });
+      setTimeout(() => {
+        dispatch({
+          type: APP_ACTION_TYPES.POST_TYPE,
+          payload: "",
+        });
+      }, 5000);
+    }
   }
 };
 
@@ -111,9 +157,6 @@ export const AddPostToDB = async (
   const userDocId = documents.docs[0].data().docId;
 
   addPostToFirestore(
-    addToPostObject(userDocId, state, editId, dispatch)
+    addToPostObject(userDocId, state, editId, dispatch, navigate)
   );
-
-  // Redirects to homepage
-  navigate("/");
 };

@@ -7,7 +7,7 @@ import { useContext, useEffect } from "react";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyleActionButtons } from "./StyledCreatePost";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { findUser } from "../../firebase/firebaseCRUD/checkIfOldUser";
 import { AddPostToDB } from "../../firebase/firebaseCRUD/addPostToFirestore";
 
@@ -39,6 +39,9 @@ export default function CreateOrEditPostButton() {
     <StyleActionButtons bg={allFieldsFilled}>
       <Tags />
       <div>
+        {state.postType.trim() !== "" && (
+          <small>{state.postType}</small>
+        )}
         <button>Save Draft</button>
         <button
           onClick={AddPostToDB.bind(

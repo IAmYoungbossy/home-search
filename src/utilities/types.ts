@@ -64,13 +64,13 @@ export type userType = string | null;
 
 export type appStateType = {
   postId: string;
+  postType: string;
   userDocId: userType;
   post: postInterface;
   uploadImage: boolean;
   uploadProgress: number;
   showSignInPage: boolean;
   tagButton: tagButtonType;
-  postType: "create" | "edit";
   EditAndDeleteButton: boolean;
   user: User | null | undefined;
   postFeed: IShowPostCard[] | [];
@@ -173,7 +173,7 @@ export const APP_INITIAL_STATE: appStateType = {
   user: undefined,
   userDocId: null,
   uploadProgress: 0,
-  postType: "create",
+  postType: "",
   uploadImage: false,
   showSignInPage: false,
   EditAndDeleteButton: false,

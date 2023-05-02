@@ -10,6 +10,7 @@ export const StyledInteractWithPostIcons = styled.div<{
   padding: 5px 14px 6px 0px;
 
   a {
+    all: unset;
     gap: 5px;
     display: flex;
     align-items: center;
@@ -178,7 +179,7 @@ export const StyledPosterName = styled.div`
 export const StyledEditAndDeleteButtons = styled.ul`
   top: 17px;
   z-index: 4;
-  left: -32px;
+  left: -62px;
   padding: 5px;
   width: max-content;
   border-radius: 5px;

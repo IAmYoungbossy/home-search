@@ -16,6 +16,7 @@ import {
   DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
+import { NavigateFunction } from "react-router-dom";
 
 type buttonTagsType = {
   name: string;
@@ -423,10 +424,12 @@ export const addToPostObject = (
   userDocId: string,
   state: appStateType,
   editId: string | undefined,
-  dispatch: React.Dispatch<actionType>
+  dispatch: React.Dispatch<actionType>,
+  navigate: NavigateFunction
 ) => ({
   editId,
   dispatch,
+  navigate,
   userDocId,
   postId: state.postId,
   postDesc: state.post.postDesc,

@@ -37,9 +37,19 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
   display: flex;
   padding: 15px 0;
   flex-wrap: wrap;
+  position: relative;
   align-items: center;
   justify-content: space-between;
   background-color: var(--light-bg-color-primary);
+
+  small {
+    top: 50px;
+    color: red;
+    right: 0px;
+    font-size: 0.7rem;
+    position: absolute;
+    font-family: var(--social-noto-sans-font-family);
+  }
 
   button {
     color: inherit;
@@ -57,8 +67,13 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
     outline: 2px solid var(--social-button-outline);
   }
 
+  & > div > button:first-child {
+    cursor: no-drop;
+  }
+
   & > div > button:last-child {
     margin-right: 0;
+    cursor: pointer;
     padding: 5px 9px;
     color: var(--social-border-color);
     outline: var(--social-secondary-font-color);
@@ -232,8 +247,8 @@ export const StyledButtonTagsContainer = styled.div`
 export const StyledButtonTags = styled.div<{
   disabled: boolean;
 }>`
+  z-index: 1;
   display: flex;
-  /* padding: 15px 0 15px; */
   background-color: var(--light-bg-color-primary);
   border-bottom: 1px solid var(--social-border-color);
 
@@ -312,10 +327,11 @@ export const StyledMarkdown = styled.div`
   background-color: var(--social-light-secondary-bg-color);
 
   p {
+    cursor: no-drop;
     padding: 4px 8px;
+    color: #878a8ca6;
     font-weight: bold;
     border-radius: 20px;
-    color: var(--social-secondary-font-color);
 
     &:hover {
       background-color: #1c1c1c24;
