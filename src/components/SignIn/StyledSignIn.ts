@@ -63,25 +63,29 @@ export const StyledLoginAgreement = styled.div`
 
 export const StyledSignInContainer = styled.div`
   top: 0;
+  left: 0;
   z-index: 3;
   width: 100%;
-  height: 100vh;
   display: flex;
-  position: fixed;
-  align-items: center;
+  padding: 0.5rem;
+  position: absolute;
   background-color: rgb(0 0 0 / 50%);
+  min-height: -webkit-fill-available;
 `;
 
 export const StyledSignIn = styled.div`
+  top: 100px;
   width: 100%;
-  margin: auto;
+  margin: 0 auto;
+  position: relative;
+  height: max-content;
   border-radius: 20px;
   max-width: max-content;
   box-shadow: 2px 10px 20px 0px #0000006e;
   background-color: var(--light-bg-color-primary);
 
   & > div {
-    margin: 40px;
+    margin: 20px;
     max-width: 280px;
     background-color: var(--light-bg-color-primary);
   }
@@ -97,7 +101,7 @@ export const StyledSignIn = styled.div`
       display: flex;
       border-radius: 20px;
       background-color: inherit;
-      padding: 10px 5px 10px 40px;
+      padding: 10px 5px 10px 20px;
       border: 1px solid var(--social-sign-in-border-color);
     }
 

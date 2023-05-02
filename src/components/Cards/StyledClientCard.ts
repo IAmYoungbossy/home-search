@@ -14,6 +14,7 @@ export const StyledInteractWithPostIcons = styled.div<{
     gap: 5px;
     display: flex;
     align-items: center;
+    color: darkslategrey;
     text-decoration: none;
   }
 
@@ -33,6 +34,7 @@ export const StyledInteractWithPostIcons = styled.div<{
     gap: 5px;
     display: flex;
     align-items: center;
+    color: darkslategrey;
   }
 
   @media screen and (max-width: 350px) {
@@ -74,7 +76,8 @@ export const StyledHouseSpec = styled.div`
   h3 {
     color: #222;
     font-size: 15px;
-    padding: 0px 0 5px;
+    padding: 0 0 5px;
+    color: darkslategrey;
     font-family: var(--social-ibm-plex-sans-font-family);
   }
 
