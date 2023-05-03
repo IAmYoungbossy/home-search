@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { signInObj } from "../SignIn/SignIn";
 import { StyledLoginPanel } from "./StyledHeader";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import logout from "../../firebase/firebaseAuth/signOut";
 import { LOG_IN_PANEL } from "../../constant/objectConstant";
+import { signInObj } from "../SignIn/SignInContainer";
 
 interface ILoginPanel {
   loginPanel: boolean;

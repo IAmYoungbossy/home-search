@@ -1,86 +1,18 @@
-import {
-  StyledSignIn,
-  StyledSignInFields,
-  StyledLoginAgreement,
-  StyledSignInContainer,
-} from "./StyledSignIn";
-
-import {
-  appStateType,
-  contextProps,
-  APP_ACTION_TYPES,
-} from "../../utilities/types";
-
-import { FcGoogle } from "react-icons/fc";
-import { FaFacebook } from "react-icons/fa";
-import { SyntheticEvent, useContext } from "react";
-import { AppContext } from "../../context/AppContext";
-import signInWithGoogle from "../../firebase/firebaseAuth/googleAuth";
-import signInWithFacebook from "../../firebase/firebaseAuth/facebookAuth";
-
-export default function SignInContainer() {
-  const { state, dispatch } = useContext(
-    AppContext
-  ) as contextProps;
-
-  const { signInToggle } = signInObj(state);
-  const handleSignInPageToggle = () => dispatch(signInToggle);
-
-  return (
-    <>
-      {state.showSignInPage && (
-        <StyledSignInContainer onClick={handleSignInPageToggle}>
-          <SignIn />
-        </StyledSignInContainer>
-      )}
-    </>
-  );
-}
-
-export function signInObj(state: appStateType) {
-  const signInToggle = {
-    type: APP_ACTION_TYPES.SHOW_SIGN_IN_PAGE,
-    payload: state["showSignInPage"] ? false : true,
-  };
-  return { signInToggle };
-}
+import * as SC from "./StyledSignIn";
+import { SyntheticEvent } from "react";
+import InputFields from "./InputFields";
+import SignInProviders from "./SignInProviders";
 
 export function SignIn() {
-  const { dispatch, state } = useContext(
-    AppContext
-  ) as contextProps;
   const handleOnClick = (e: SyntheticEvent<HTMLElement>) =>
     e.stopPropagation();
 
-  const { signInToggle } = signInObj(state);
-
-  const handleSignInPageToggle = () => dispatch(signInToggle);
-
   return (
-    <StyledSignIn onClick={handleOnClick}>
+    <SC.StyledSignIn onClick={handleOnClick}>
       <div>
         <LoginAgreement />
         <div>
-          <ProviderButton
-            signIn={signInWithGoogle.bind(
-              null,
-              dispatch,
-              handleSignInPageToggle
-            )}
-            providerName="Google"
-          >
-            <FcGoogle />
-          </ProviderButton>
-          <ProviderButton
-            signIn={signInWithFacebook.bind(
-              null,
-              dispatch,
-              handleSignInPageToggle
-            )}
-            providerName="Facebook"
-          >
-            <FaFacebook />
-          </ProviderButton>
+          <SignInProviders />
           <div>
             <div>
               <p>OR</p>
@@ -88,59 +20,37 @@ export function SignIn() {
             <hr />
           </div>
         </div>
-        <SignInFields />
+        <SignInFields>
+          <SignInputFields />
+        </SignInFields>
       </div>
-    </StyledSignIn>
+    </SC.StyledSignIn>
   );
 }
 
 function LoginAgreement() {
   return (
-    <StyledLoginAgreement>
+    <SC.StyledLoginAgreement>
       <h2>Login</h2>
       <p>
         By continuing, you agree are setting up a Reddit account
         and agree to our <span>User Agreement</span> and{" "}
         <span>Privacy Policy</span>.
       </p>
-    </StyledLoginAgreement>
+    </SC.StyledLoginAgreement>
   );
 }
 
-interface ProviderButtonProps {
-  providerName: string;
-  children: JSX.Element;
-  signIn: () => Promise<void>;
-}
-
-function ProviderButton({
-  signIn,
-  providerName,
-  children,
-}: ProviderButtonProps) {
+function SignInFields({ children }: { children: JSX.Element }) {
   return (
-    <button onClick={signIn}>
-      {children}
-      <div>Continue with {providerName}</div>
-    </button>
+    <SC.StyledSignInFields>{children}</SC.StyledSignInFields>
   );
 }
 
-function SignInFields() {
+function SignInputFields() {
   return (
-    <StyledSignInFields>
-      <div>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-        />
-      </div>
+    <>
+      <InputFields />
       <div>
         <p>
           Forget your <span>username</span> or{" "}
@@ -151,6 +61,6 @@ function SignInFields() {
       <p>
         New to Reddit? <span>Sign Up</span>
       </p>
-    </StyledSignInFields>
+    </>
   );
 }

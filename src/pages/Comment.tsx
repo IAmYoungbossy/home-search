@@ -22,7 +22,6 @@ import {
   tuple,
 } from "../utilities/types";
 import { TextArea } from "../components/Comment/TextArea";
-import SignInContainer from "../components/SignIn/SignIn";
 import { useLoaderData, useParams } from "react-router-dom";
 import { ClientCard } from "../components/Cards/ClientCard";
 import ShowPosterCardProvider from "../context/ShowPostCard";
@@ -31,6 +30,7 @@ import { StyledComment } from "../components/Comment/StyledComment";
 import getAllUserDocs from "../firebase/firebaseCRUD/getAllUserDocs";
 import { DisplayCommentCard } from "../components/Comment/DisplayCommentCard";
 import { AppContext } from "../context/AppContext";
+import SignInContainer from "../components/SignIn/SignInContainer";
 
 export default function Comment() {
   const { id } = useParams();
