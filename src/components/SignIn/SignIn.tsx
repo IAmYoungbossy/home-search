@@ -1,10 +1,17 @@
 import * as SC from "./StyledSignIn";
-import InputFields from "./InputFields";
 import { ISignUp } from "../SignUp/SignUp";
+import { useState, useContext } from "react";
 import SignInProviders from "./SignInProviders";
+import { contextProps } from "../../utilities/types";
+import { AppContext } from "../../context/AppContext";
 import { handleOnClick } from "../../utilities/helper";
+import InputFields, { IInputFields } from "./InputFields";
+import logInWithEmailAndPassword from "../../firebase/firebaseAuth/emailAndPasswordAuth";
 
 export function SignIn({ setSignUpToggle }: ISignUp) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <SC.StyledSignIn onClick={handleOnClick}>
       <div>
@@ -19,7 +26,13 @@ export function SignIn({ setSignUpToggle }: ISignUp) {
           </div>
         </div>
         <SignInFields color="#d93a00">
-          <SignInputFields setSignUpToggle={setSignUpToggle} />
+          <SignInputFields
+            setSignUpToggle={setSignUpToggle}
+            email={email}
+            password={password}
+            setEmail={setEmail}
+            setPassword={setPassword}
+          />
         </SignInFields>
       </div>
     </SC.StyledSignIn>
@@ -55,17 +68,44 @@ export function SignInFields({
   );
 }
 
-export function SignInputFields({ setSignUpToggle }: ISignUp) {
+interface ISignInputFields extends ISignUp, IInputFields {}
+
+export function SignInputFields({
+  setSignUpToggle,
+  email,
+  password,
+  setEmail,
+  setPassword,
+}: ISignInputFields) {
+  const { dispatch } = useContext(AppContext) as contextProps;
+
+  const handleSignIn = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    if (email === "" || password === "") return;
+    try {
+      await logInWithEmailAndPassword(email, password, dispatch);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
-      <InputFields />
+      <InputFields
+        email={email}
+        password={password}
+        setEmail={setEmail}
+        setPassword={setPassword}
+      />
       <div>
         <p>
           Forget your <span>username</span> or{" "}
           <span>password</span> ?
         </p>
       </div>
-      <button>Log In</button>
+      <button onClick={handleSignIn}>Log In</button>
       <p>
         New to Reddit?{" "}
         <span onClick={setSignUpToggle.bind(null, true)}>

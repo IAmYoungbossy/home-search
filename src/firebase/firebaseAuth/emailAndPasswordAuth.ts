@@ -53,6 +53,10 @@ export const registerWithEmailAndPassword = async (
       payload: user,
       type: APP_ACTION_TYPES.USER,
     });
+    dispatch({
+      type: APP_ACTION_TYPES.SHOW_SIGN_IN_PAGE,
+      payload: false,
+    });
   } catch (err) {
     console.error(err);
   }
@@ -61,7 +65,8 @@ export const registerWithEmailAndPassword = async (
 // Email/Password Auth
 const logInWithEmailAndPassword = async (
   email: string,
-  password: string
+  password: string,
+  dispatch: React.Dispatch<actionType>
 ) => {
   try {
     const result = await signInWithEmailAndPassword(
@@ -70,6 +75,14 @@ const logInWithEmailAndPassword = async (
       password
     );
     const user = result.user;
+    dispatch({
+      payload: user,
+      type: APP_ACTION_TYPES.USER,
+    });
+    dispatch({
+      type: APP_ACTION_TYPES.SHOW_SIGN_IN_PAGE,
+      payload: false,
+    });
     console.log(user);
   } catch (err) {
     console.error(err);
