@@ -4,11 +4,11 @@ import SignInProviders from "../SignIn/SignInProviders";
 import { SignInFields, Agreement } from "../SignIn/SignIn";
 import { StyledSignIn as StyledSignUp } from "../SignIn/StyledSignIn";
 
-export default function SignUp({
-  setSignUpToggle,
-}: {
+export interface ISignUp {
   setSignUpToggle: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+}
+
+export default function SignUp({ setSignUpToggle }: ISignUp) {
   return (
     <StyledSignUp onClick={handleOnClick}>
       <div>
@@ -22,7 +22,7 @@ export default function SignUp({
             <hr />
           </div>
         </div>
-        <SignInFields>
+        <SignInFields color="#0079d3">
           <>
             <SignUpFields />
             <InputFields />

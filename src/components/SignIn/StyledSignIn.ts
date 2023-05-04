@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledSignInFields = styled.form`
+export const StyledSignInFields = styled.form<{ color: string }>`
   input {
     width: 100%;
     outline: none;
@@ -17,9 +17,14 @@ export const StyledSignInFields = styled.form`
   }
 
   span {
+    cursor: pointer;
     font-weight: bold;
     text-decoration: underline;
     color: var(--social-secondary-font-color);
+
+    &:hover {
+      color: #d93a00;
+    }
   }
 
   button {
@@ -29,7 +34,7 @@ export const StyledSignInFields = styled.form`
     margin: 20px 0 15px;
     border-radius: 20px;
     font-weight: bolder;
-    background-color: #d93a00;
+    background-color: ${({ color }) => color};
     color: var(--social-light-font-color-primary);
   }
 

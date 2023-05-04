@@ -1,13 +1,10 @@
 import * as SC from "./StyledSignIn";
 import InputFields from "./InputFields";
+import { ISignUp } from "../SignUp/SignUp";
 import SignInProviders from "./SignInProviders";
 import { handleOnClick } from "../../utilities/helper";
 
-export function SignIn({
-  setSignUpToggle,
-}: {
-  setSignUpToggle: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export function SignIn({ setSignUpToggle }: ISignUp) {
   return (
     <SC.StyledSignIn onClick={handleOnClick}>
       <div>
@@ -21,7 +18,7 @@ export function SignIn({
             <hr />
           </div>
         </div>
-        <SignInFields>
+        <SignInFields color="#d93a00">
           <SignInputFields setSignUpToggle={setSignUpToggle} />
         </SignInFields>
       </div>
@@ -42,21 +39,23 @@ export function Agreement({ header }: { header: string }) {
   );
 }
 
+interface ISignInFields {
+  color: string;
+  children: JSX.Element;
+}
+
 export function SignInFields({
   children,
-}: {
-  children: JSX.Element;
-}) {
+  color,
+}: ISignInFields) {
   return (
-    <SC.StyledSignInFields>{children}</SC.StyledSignInFields>
+    <SC.StyledSignInFields color={color}>
+      {children}
+    </SC.StyledSignInFields>
   );
 }
 
-export function SignInputFields({
-  setSignUpToggle,
-}: {
-  setSignUpToggle: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export function SignInputFields({ setSignUpToggle }: ISignUp) {
   return (
     <>
       <InputFields />
