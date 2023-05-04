@@ -1,16 +1,17 @@
 import * as SC from "./StyledSignIn";
-import { SyntheticEvent } from "react";
 import InputFields from "./InputFields";
 import SignInProviders from "./SignInProviders";
+import { handleOnClick } from "../../utilities/helper";
 
-export function SignIn() {
-  const handleOnClick = (e: SyntheticEvent<HTMLElement>) =>
-    e.stopPropagation();
-
+export function SignIn({
+  setSignUpToggle,
+}: {
+  setSignUpToggle: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <SC.StyledSignIn onClick={handleOnClick}>
       <div>
-        <LoginAgreement />
+        <Agreement header="Login" />
         <div>
           <SignInProviders />
           <div>
@@ -21,17 +22,17 @@ export function SignIn() {
           </div>
         </div>
         <SignInFields>
-          <SignInputFields />
+          <SignInputFields setSignUpToggle={setSignUpToggle} />
         </SignInFields>
       </div>
     </SC.StyledSignIn>
   );
 }
 
-function LoginAgreement() {
+export function Agreement({ header }: { header: string }) {
   return (
     <SC.StyledLoginAgreement>
-      <h2>Login</h2>
+      <h2>{header}</h2>
       <p>
         By continuing, you agree are setting up a Reddit account
         and agree to our <span>User Agreement</span> and{" "}
@@ -41,13 +42,21 @@ function LoginAgreement() {
   );
 }
 
-function SignInFields({ children }: { children: JSX.Element }) {
+export function SignInFields({
+  children,
+}: {
+  children: JSX.Element;
+}) {
   return (
     <SC.StyledSignInFields>{children}</SC.StyledSignInFields>
   );
 }
 
-function SignInputFields() {
+export function SignInputFields({
+  setSignUpToggle,
+}: {
+  setSignUpToggle: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <>
       <InputFields />
@@ -59,7 +68,10 @@ function SignInputFields() {
       </div>
       <button>Log In</button>
       <p>
-        New to Reddit? <span>Sign Up</span>
+        New to Reddit?{" "}
+        <span onClick={setSignUpToggle.bind(null, true)}>
+          Sign Up
+        </span>
       </p>
     </>
   );

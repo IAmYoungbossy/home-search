@@ -4,11 +4,13 @@ import {
   APP_ACTION_TYPES,
 } from "../../utilities/types";
 import { SignIn } from "./SignIn";
-import { useContext } from "react";
+import SignUp from "../SignUp/SignUp";
+import { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
 import { StyledSignInContainer } from "./StyledSignIn";
 
 export default function SignInContainer() {
+  const [signUpToggle, setSignUpToggle] = useState(false);
   const { state, dispatch } = useContext(
     AppContext
   ) as contextProps;
@@ -20,7 +22,11 @@ export default function SignInContainer() {
     <>
       {state.showSignInPage && (
         <StyledSignInContainer onClick={handleSignInPageToggle}>
-          <SignIn />
+          {signUpToggle ? (
+            <SignUp setSignUpToggle={setSignUpToggle} />
+          ) : (
+            <SignIn setSignUpToggle={setSignUpToggle} />
+          )}
         </StyledSignInContainer>
       )}
     </>

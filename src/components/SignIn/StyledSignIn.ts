@@ -6,6 +6,7 @@ export const StyledSignInFields = styled.form`
     outline: none;
     padding: 10px 20px;
     border-radius: 20px;
+    margin-bottom: 0.625rem;
     border: 1px solid var(--social-sign-in-border-color);
   }
 

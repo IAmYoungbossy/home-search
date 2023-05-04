@@ -469,3 +469,7 @@ export const updatedState = (posts: IShowPostCard[]) => ({
   payload: posts,
   type: APP_ACTION_TYPES.postFeed,
 });
+
+export const handleOnClick = (
+  e: React.MouseEvent<HTMLDivElement, MouseEvent>
+) => e.stopPropagation();

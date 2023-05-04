@@ -6,11 +6,13 @@ export default function InputFields({
   return (
     <div>
       <input
-        type="text"
-        name="username"
-        placeholder="Username"
+        required
+        type="email"
+        name="email"
+        placeholder="Email"
       />
       <input
+        required
         type="password"
         name="password"
         placeholder="Password"
