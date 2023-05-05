@@ -1,3 +1,5 @@
+import Tags from "./Tags";
+
 import {
   editPost,
   preventEmptyFieldSubmition,
@@ -8,24 +10,18 @@ import {
   APP_ACTION_TYPES,
 } from "../../utilities/types";
 
-import Tags from "./Tags";
-import { useContext, useEffect, useState } from "react";
+import {
+  Button,
+  ButtonWrapper,
+} from "../LoadingSpinners/StyledSpinner";
+
 import { AppContext } from "../../context/AppContext";
-import styled, { keyframes } from "styled-components";
+import Spinner from "../LoadingSpinners/ButtonSpinner";
+import { useContext, useEffect, useState } from "react";
 import { StyleActionButtons } from "./StyledCreatePost";
 import { useNavigate, useParams } from "react-router-dom";
 import { findUser } from "../../firebase/firebaseCRUD/checkIfOldUser";
 import { AddPostToDB } from "../../firebase/firebaseCRUD/addPostToFirestore";
-
-const Spinner = () => (
-  <StyledSpinner>
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
-  </StyledSpinner>
-);
 
 export default function CreateOrEditPostButton() {
   const [loadSpinner, setLoadSpinner] = useState(false);
@@ -94,54 +90,3 @@ export default function CreateOrEditPostButton() {
     </StyleActionButtons>
   );
 }
-
-const Button = styled.button`
-  width: 95px;
-  height: 25px;
-  position: relative;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  position: relative;
-  align-items: center;
-`;
-
-const keyFrame = keyframes`
-0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }`;
-
-const StyledSpinner = styled.div`
-  top: 2px;
-  width: 20px;
-  right: 36px;
-  height: 20px;
-  position: absolute;
-  display: inline-block;
-
-  & div {
-    width: 19px;
-    height: 19px;
-    display: block;
-    position: absolute;
-    border-radius: 50%;
-    box-sizing: border-box;
-    border: 1px solid #fff;
-    border-color: #fff transparent transparent transparent;
-    animation: ${keyFrame} 1.2s cubic-bezier(0.5, 0, 0.5, 1)
-      infinite;
-  }
-  & div:nth-child(1) {
-    animation-delay: -0.45s;
-  }
-  & div:nth-child(2) {
-    animation-delay: -0.3s;
-  }
-  & div:nth-child(3) {
-    animation-delay: -0.15s;
-  }
-`;
