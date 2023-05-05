@@ -72,9 +72,9 @@ export const StyleActionButtons = styled.div<{ bg: boolean }>`
   }
 
   & > div > button:last-child {
+    padding: 0;
     margin-right: 0;
     cursor: pointer;
-    padding: 5px 9px;
     color: var(--social-border-color);
     outline: var(--social-secondary-font-color);
     background-color: ${({ bg }) =>
