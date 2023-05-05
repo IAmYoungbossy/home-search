@@ -12,7 +12,7 @@ export const ButtonWrapper = styled.div`
   align-items: center;
 `;
 
-export const keyFrame = keyframes`
+const keyFrame = keyframes`
 0% {
     transform: rotate(0deg);
   }
