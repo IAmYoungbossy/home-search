@@ -106,6 +106,7 @@ export type IAppActionTypes = {
   POST: IPostType;
   postFeed: string;
   userDocId: string;
+  POST_RESET: string;
   uploadImage: string;
   POST_OBJECT: string;
   POST_TYPE: "POST TYPE";
@@ -136,6 +137,7 @@ export const APP_ACTION_TYPES: IAppActionTypes = {
   USER: "CURRENT USER",
   postFeed: "POSTFEED",
   POST_TYPE: "POST TYPE",
+  POST_RESET: "POST_RESET",
   POST_OBJECT: "POST OBJECT",
   uploadImage: "UPLOAD IMAGE",
   uploadProgress: "UPLOAD PROGRESS",

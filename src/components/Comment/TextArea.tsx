@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
-import { AddCommentButton, IAddCommentButton } from "./AddCommentButton";
-import { StyledCommentAs, StyledSortBy, StyledTextArea } from "./StyledComment";
+import {
+  AddCommentButton,
+  IAddCommentButton,
+} from "./AddCommentButton";
+import {
+  StyledCommentAs,
+  StyledSortBy,
+  StyledTextArea,
+} from "./StyledComment";
 
 interface ITextArea extends IAddCommentButton {}
 
@@ -21,9 +28,10 @@ export function TextArea({ postId, userId }: ITextArea) {
         onChange={(e) => setTextValue(e.target.value)}
       ></textarea>
       <AddCommentButton
-        textValue={textValue}
         postId={postId}
         userId={userId}
+        textValue={textValue}
+        setTextValue={setTextValue}
       />
       <SortBy />
     </StyledTextArea>

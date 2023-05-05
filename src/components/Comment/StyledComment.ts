@@ -29,6 +29,7 @@ export const StyledRichTextEditor = styled.div<{
   button {
     border: none;
     outline: none;
+    cursor: pointer;
     padding: 3px 10px;
     font-weight: bold;
     border-radius: 20px;

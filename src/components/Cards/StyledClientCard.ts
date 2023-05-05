@@ -171,6 +171,7 @@ export const StyledPosterName = styled.div`
 
   & > div > svg {
     fill: red;
+    cursor: pointer;
     margin-left: 0px;
   }
 
@@ -200,6 +201,7 @@ export const StyledEditAndDeleteButtons = styled.ul`
     border: none;
     color: #00528f;
     font-size: 12px;
+    cursor: pointer;
     font-weight: 600;
     padding: 2px 5px;
     border-radius: 5px;

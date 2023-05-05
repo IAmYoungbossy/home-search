@@ -424,10 +424,12 @@ export const addToPostObject = (
   userDocId: string,
   state: appStateType,
   editId: string | undefined,
-  navigate: NavigateFunction
+  navigate: NavigateFunction,
+  dispatch: React.Dispatch<actionType>
 ) => ({
   editId,
   navigate,
+  dispatch,
   userDocId,
   postId: state.postId,
   postDesc: state.post.postDesc,

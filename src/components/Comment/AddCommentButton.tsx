@@ -9,12 +9,14 @@ export interface IAddCommentButton {
   userId: string;
   postId: string;
   textValue?: string;
+  setTextValue?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export function AddCommentButton({
   userId,
   postId,
   textValue,
+  setTextValue,
 }: IAddCommentButton) {
   const {
     state: { user },
@@ -23,16 +25,21 @@ export function AddCommentButton({
 
   const handleAddComment = () => {
     if (textareaValue.length < 1) return;
+    if (setTextValue) setTextValue("");
     (async () => {
-      if (user) {
-        const name = user.displayName as string;
-        await addComment({
-          name,
-          userId,
-          postId,
-          comment: textareaValue,
-          currentUser: user.uid as string,
-        });
+      try {
+        if (user) {
+          const name = user.displayName as string;
+          await addComment({
+            name,
+            userId,
+            postId,
+            comment: textareaValue,
+            currentUser: user.uid as string,
+          });
+        }
+      } catch (err) {
+        alert("Error Posting Comment");
       }
     })();
   };
@@ -45,7 +52,12 @@ export function AddCommentButton({
         <AiOutlineQuestionCircle />
         <p>Switch to Fancy Pants Editor</p>
       </div>
-      <button onClick={handleAddComment}>Comment</button>
+      <button
+        onClick={handleAddComment}
+        disabled={textareaValue.length < 0 ? true : false}
+      >
+        Comment
+      </button>
     </StyledRichTextEditor>
   );
 }

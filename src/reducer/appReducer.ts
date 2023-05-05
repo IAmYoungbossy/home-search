@@ -1,12 +1,13 @@
-import { User } from "firebase/auth";
 import {
+  userType,
   actionType,
   appStateType,
+  IShowPostCard,
+  postInterface,
   APP_ACTION_TYPES,
   APP_INITIAL_STATE,
-  IShowPostCard,
-  userType,
 } from "../utilities/types";
+import { User } from "firebase/auth";
 
 export const appReducer = (
   state: appStateType,
@@ -197,6 +198,13 @@ export const appReducer = (
       return {
         ...JSON.parse(JSON.stringify(state)),
         user: action.payload as User,
+      };
+
+    case APP_ACTION_TYPES.POST_RESET:
+      return {
+        ...JSON.parse(JSON.stringify(state)),
+        post: action.payload as postInterface,
+        tagButton: APP_INITIAL_STATE.tagButton,
       };
 
     default:

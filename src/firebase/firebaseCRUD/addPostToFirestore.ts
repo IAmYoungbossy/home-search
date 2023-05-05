@@ -12,6 +12,7 @@ import {
   actionType,
   appStateType,
   APP_ACTION_TYPES,
+  APP_INITIAL_STATE,
 } from "../../utilities/types";
 
 import addPostId from "./addPostId";
@@ -33,6 +34,7 @@ export interface IaddPostToFirestore {
   userDocId: string | null;
   navigate?: NavigateFunction;
   editId?: string | undefined;
+  dispatch?: React.Dispatch<actionType>;
 }
 
 export const addPostToFirestore = async ({
@@ -41,6 +43,7 @@ export const addPostToFirestore = async ({
   postId,
   navigate,
   postDesc,
+  dispatch,
   imageUrl,
   location,
   postTitle,
@@ -90,6 +93,11 @@ export const addPostToFirestore = async ({
     });
   }
 
+  if (dispatch)
+    dispatch({
+      payload: APP_INITIAL_STATE.post,
+      type: APP_ACTION_TYPES.POST_RESET,
+    });
   if (navigate) navigate("/");
 };
 
@@ -112,6 +120,6 @@ export const AddPostToDB = async (
   const userDocId = documents.docs[0].data().docId;
 
   addPostToFirestore(
-    addToPostObject(userDocId, state, editId, navigate)
+    addToPostObject(userDocId, state, editId, navigate, dispatch)
   );
 };
