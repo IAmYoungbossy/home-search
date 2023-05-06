@@ -9,6 +9,7 @@ import CreateOrEditPost, {
 import { HomeSearch } from "../pages/HomeSearch";
 import Comment, { commentLoader } from "../pages/Comment";
 import HomeSearchLayout from "../Layouts/HomeSearchLayout";
+import PageNotFound from "../components/PageNotFound/PageNotFound";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +34,10 @@ const router = createBrowserRouter(
         path="comment/:id"
         element={<Comment />}
         loader={commentLoader}
+      />
+      <Route
+        path="*"
+        element={<PageNotFound />}
       />
     </Route>
   ),
