@@ -1,10 +1,17 @@
-import GetPosterName, {
-  IGetPosterName,
-} from "./GetPostName";
-import { FaUserCircle } from "react-icons/fa";
+import {
+  doc,
+  getDoc,
+  DocumentData,
+  DocumentReference,
+} from "firebase/firestore";
 import { IPostDetailsProps } from "./PostDetails";
-import { DocumentData } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import FallbackAvatar from "../../assets/avatar.png";
+import { useContext, useEffect, useState } from "react";
 import { StyledOriginalPoster } from "./StyledClientCard";
+import { ShowPosterCardProps } from "../../utilities/types";
+import GetPosterName, { IGetPosterName } from "./GetPostName";
+import { ShowPostCardContext } from "../../context/ShowPostCard";
 
 interface OriginalPosterProps
   extends IPostDetailsProps,
@@ -19,9 +26,33 @@ export function OriginalPoster({
   commentPostId,
   commentUserId,
 }: OriginalPosterProps) {
+  const [photoUrl, setPhotoUrl] = useState("");
+
+  const postCard = useContext(
+    ShowPostCardContext
+  ) as ShowPosterCardProps;
+
+  const setAvatar = async (
+    docRef: DocumentReference<DocumentData>
+  ) => {
+    const doc = await getDoc(docRef);
+    setPhotoUrl(doc.data()?.avatar);
+  };
+
+  useEffect(() => {
+    setAvatar(doc(db, "USERS", postCard.userId));
+  }, []);
+
   return (
     <StyledOriginalPoster>
-      <FaUserCircle />
+      <img
+        alt="Avatar"
+        src={photoUrl}
+        onError={(e) => {
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = `${FallbackAvatar}`;
+        }}
+      />
       <div>
         <GetPosterName
           comment={comment}

@@ -103,12 +103,10 @@ export const StyledOriginalPoster = styled.div`
     font-size: 10px;
   }
 
-  svg {
+  img {
     width: 24px;
     height: 24px;
-    fill: #c7cdcf;
-    display: block;
-    margin-left: 1px;
+    border-radius: 50%;
   }
 `;
 
