@@ -14,6 +14,10 @@ const getAllUserDocs = async () => {
 
   const postList = posts.flat() as IShowPostCard[];
 
+  postList.sort(
+    (a, b) => b.data.createdAt.seconds - a.data.createdAt.seconds
+  );
+
   return postList;
 };
 
