@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledPageNotFound = styled.div`
   margin-top: 30px;
@@ -7,6 +8,10 @@ const StyledPageNotFound = styled.div`
 `;
 
 const PageNotFound = () => {
+  useEffect(() => {
+    document.title = "Home Search | 404";
+  }, []);
+
   return (
     <StyledPageNotFound>
       <h2>Oops, 404 Page Not Found</h2>

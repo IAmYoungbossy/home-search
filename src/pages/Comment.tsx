@@ -52,6 +52,10 @@ export default function Comment() {
   const postId = post.id as string;
 
   useEffect(() => {
+    document.title = "Home Search | Comment";
+  }, []);
+
+  useEffect(() => {
     const docRef = doc(db, "USERS", posterId, "POSTS", postId);
 
     // Subscribe to post data

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Post from "../components/CreatePost/Post";
 import Check from "../components/CreatePost/Check";
 import Warning from "../components/CreatePost/Warning";
@@ -10,6 +11,10 @@ import ChooseCommunity from "../components/CreatePost/ChooseCommunity";
 import { StyledCreatePostPage } from "../components/CreatePost/StyledCreatePost";
 
 export default function CreateOrEditPost() {
+  useEffect(() => {
+    document.title = "Home Search | Create";
+  }, []);
+
   return (
     <>
       <StyledCreatePostPage>
