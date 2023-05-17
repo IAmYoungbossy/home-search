@@ -1,8 +1,16 @@
 # House Search: A Social Networking Web Application for Home Seekers
 
+#### Homepage - Desktop
+
+![homepage](screenshots/HomePage-Desktop.png)
+
 Are you tired of endlessly scrolling through real estate websites, hoping to find your dream home or landed property? Look no further than House Search, a social networking web application designed for home seekers. With House Search, you can post a description of the type of property you're looking to buy or rent, and house agents can contact you if they have a property that meets your needs.
 
 To showcase my ability to replicate any design, I decided to clone Reddit's UI for this project. However, the functionalities and some designs of this web application differ greatly from Reddit's. In addition to allowing home seekers to post their requirements, House Search also offers features for house agents or real estate agents to post their properties, complete with tags such as price, location, availability, and size of the apartment. This web application is fully mobile responsive.
+
+#### Homepage - Mobile
+
+![homepage](screenshots/HomePage-mobile.png)
 
 ## Demo
 
