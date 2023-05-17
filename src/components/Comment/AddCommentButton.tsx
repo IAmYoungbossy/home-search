@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { toast } from "react-toastify";
 import { contextProps } from "../../utilities/types";
 import { AppContext } from "../../context/AppContext";
 import { StyledRichTextEditor } from "./StyledComment";
@@ -24,24 +25,28 @@ export function AddCommentButton({
   const textareaValue = textValue as string;
 
   const handleAddComment = () => {
-    if (textareaValue.length < 1) return;
-    if (setTextValue) setTextValue("");
-    (async () => {
-      try {
-        if (user) {
-          const name = user.displayName as string;
-          await addComment({
-            name,
-            userId,
-            postId,
-            comment: textareaValue,
-            currentUser: user.uid as string,
-          });
+    if (user) {
+      if (textareaValue.length < 1) return;
+      if (setTextValue) setTextValue("");
+      (async () => {
+        try {
+          if (user) {
+            const name = user.displayName as string;
+            await addComment({
+              name,
+              userId,
+              postId,
+              comment: textareaValue,
+              currentUser: user.uid as string,
+            });
+          }
+        } catch (err) {
+          alert("Error Posting Comment");
         }
-      } catch (err) {
-        alert("Error Posting Comment");
-      }
-    })();
+      })();
+    } else {
+      toast.error("Please login");
+    }
   };
 
   return (

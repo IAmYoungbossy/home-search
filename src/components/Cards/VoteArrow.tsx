@@ -4,12 +4,13 @@ import {
 } from "../../utilities/types";
 import { useContext } from "react";
 import { User } from "firebase/auth";
-import { IClientCard } from "./ClientCard";
+import { toast } from "react-toastify";
 
 import {
   ArrowUpSVG,
   ArrowDownSVG,
 } from "../../assets/socialPage/SocialSVG";
+import { IClientCard } from "./ClientCard";
 import { StyledVoteArrow } from "./StyledClientCard";
 import { AppContext } from "../../context/AppContext";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
@@ -60,6 +61,8 @@ export function VoteArrow({
                   voteType: "upvote",
                   user: user as User,
                 });
+              } else {
+                toast.error("Please login");
               }
             })();
           }}
@@ -77,6 +80,8 @@ export function VoteArrow({
                   user: user as User,
                   voteType: "downvote",
                 });
+              } else {
+                toast.error("Please login");
               }
             })();
           }}

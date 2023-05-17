@@ -31,6 +31,7 @@ export const StyledSignInFields = styled.form<{ color: string }>`
     width: 100%;
     border: none;
     padding: 12px;
+    cursor: pointer;
     margin: 20px 0 15px;
     border-radius: 20px;
     font-weight: bolder;
@@ -105,6 +106,7 @@ export const StyledSignIn = styled.div`
     button {
       gap: 20px;
       display: flex;
+      cursor: pointer;
       border-radius: 20px;
       background-color: inherit;
       padding: 10px 5px 10px 20px;

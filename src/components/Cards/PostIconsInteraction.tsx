@@ -4,6 +4,7 @@ import {
 } from "../../utilities/types";
 import { useContext } from "react";
 import { User } from "firebase/auth";
+import { toast } from "react-toastify";
 import { SlLike } from "react-icons/sl";
 import { Link } from "react-router-dom";
 import { BiComment } from "react-icons/bi";
@@ -44,6 +45,8 @@ export default function PostIconsInteraction() {
                 voteType: "like",
                 user: user as User,
               });
+            } else {
+              toast.error("Please login");
             }
           })();
         }}

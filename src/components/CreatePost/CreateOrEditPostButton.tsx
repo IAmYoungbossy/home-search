@@ -4,11 +4,11 @@ import {
   editPost,
   preventEmptyFieldSubmition,
 } from "../../utilities/helper";
-
 import {
   contextProps,
   APP_ACTION_TYPES,
 } from "../../utilities/types";
+import { toast } from "react-toastify";
 
 import {
   Button,
@@ -47,21 +47,25 @@ export default function CreateOrEditPostButton() {
   }, []);
 
   const handleCreateOrEditPost = () => {
-    if (dispatch && !allFieldsFilled) {
-      dispatch({
-        type: APP_ACTION_TYPES.POST_TYPE,
-        payload: "Fill all the required fields.",
-      });
-      setTimeout(() => {
+    if (state.user) {
+      if (dispatch && !allFieldsFilled) {
         dispatch({
           type: APP_ACTION_TYPES.POST_TYPE,
-          payload: "",
+          payload: "Fill all the required fields.",
         });
-      }, 5000);
-      return;
+        setTimeout(() => {
+          dispatch({
+            type: APP_ACTION_TYPES.POST_TYPE,
+            payload: "",
+          });
+        }, 5000);
+        return;
+      }
+      setLoadSpinner(true);
+      AddPostToDB(state, editId, dispatch, navigate);
+    } else {
+      toast.error("Please login");
     }
-    setLoadSpinner(true);
-    AddPostToDB(state, editId, dispatch, navigate);
   };
 
   const allFieldsFilled = preventEmptyFieldSubmition(state);
