@@ -127,7 +127,7 @@ export const StyledComment = styled.div`
   gap: 24px;
   width: 100%;
   display: flex;
-  max-width: fit-content;
+  max-width: 976px;
   margin: 0.875rem auto 1.5rem auto;
 
   & > div:first-of-type {
