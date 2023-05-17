@@ -211,4 +211,9 @@ export const StyledLoginPanel = styled.div`
       position: absolute;
     }
   }
+
+  button:hover {
+    color: black;
+    background-color: lightblue;
+  }
 `;
