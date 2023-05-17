@@ -9,6 +9,7 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
 } from "firebase/auth";
+import { toast } from "react-toastify";
 import { auth } from "../firebaseConfig";
 import checkIfOldUser from "../firebaseCRUD/checkIfOldUser";
 import createNewUserData from "../firebaseCRUD/createNewUserData";
@@ -57,7 +58,7 @@ const signInWithFacebook = async (
     dispatch({ payload: user, type: APP_ACTION_TYPES.USER });
     handleSignInPageToggle();
   } catch (err) {
-    alert(err);
+    toast.error("Something went wrong");
   }
 };
 

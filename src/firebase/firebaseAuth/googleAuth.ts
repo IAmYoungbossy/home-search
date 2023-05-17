@@ -2,6 +2,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+import { toast } from "react-toastify";
 
 import {
   actionType,
@@ -31,7 +32,7 @@ const signInWithGoogle = async (
     dispatch({ payload: user, type: APP_ACTION_TYPES.USER });
     handleSignInPageToggle();
   } catch (err) {
-    alert(err);
+    toast.error("Something went wrong");
   }
 };
 

@@ -8,6 +8,7 @@ import {
   actionType,
   APP_ACTION_TYPES,
 } from "../../utilities/types";
+import { toast } from "react-toastify";
 
 import { auth } from "../firebaseConfig";
 import { updateUserCredentials } from "./facebookAuth";
@@ -58,7 +59,7 @@ export const registerWithEmailAndPassword = async (
       payload: false,
     });
   } catch (err) {
-    console.error(err);
+    toast.error("Something went wrong");
   }
 };
 
@@ -83,9 +84,8 @@ const logInWithEmailAndPassword = async (
       type: APP_ACTION_TYPES.SHOW_SIGN_IN_PAGE,
       payload: false,
     });
-    console.log(user);
   } catch (err) {
-    console.error(err);
+    toast.error("Wrong email/password");
   }
 };
 
