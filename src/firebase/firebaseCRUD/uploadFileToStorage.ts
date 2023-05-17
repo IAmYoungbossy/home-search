@@ -6,6 +6,7 @@ import {
   UploadTaskSnapshot,
   uploadBytesResumable,
 } from "firebase/storage";
+import { toast } from "react-toastify";
 
 import {
   actionType,
@@ -34,7 +35,7 @@ async function uploadFileToStorage({
 }
 
 function alertError(error: StorageError) {
-  alert(error);
+  toast.error("Please login");
 }
 
 interface ISetImageUrl {

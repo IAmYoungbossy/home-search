@@ -12,6 +12,7 @@ import { StyledOriginalPoster } from "./StyledClientCard";
 import { ShowPosterCardProps } from "../../utilities/types";
 import GetPosterName, { IGetPosterName } from "./GetPostName";
 import { ShowPostCardContext } from "../../context/ShowPostCard";
+import { useParams } from "react-router-dom";
 
 interface OriginalPosterProps
   extends IPostDetailsProps,
@@ -40,7 +41,9 @@ export function OriginalPoster({
   };
 
   useEffect(() => {
-    setAvatar(doc(db, "USERS", postCard.userId));
+    setAvatar(
+      doc(db, "USERS", commentUserId || postCard.userId)
+    );
   }, []);
 
   return (

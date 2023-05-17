@@ -2,6 +2,7 @@ import {
   StyledProgressBar,
   StyledUplaodImage,
 } from "./StyledCreatePost";
+import { toast } from "react-toastify";
 
 import { useContext } from "react";
 import { BsFillCameraFill } from "react-icons/bs";
@@ -10,7 +11,10 @@ import { AppContext } from "../../context/AppContext";
 import uploadFileToStorage from "../../firebase/firebaseCRUD/uploadFileToStorage";
 
 export default function UploadImage() {
-  const { dispatch } = useContext(AppContext) as contextProps;
+  const {
+    dispatch,
+    state: { user },
+  } = useContext(AppContext) as contextProps;
   const fileTypes = [
     "image/png",
     "image/jpeg",
@@ -21,9 +25,13 @@ export default function UploadImage() {
   const uploadImage = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    let file = e.target.files?.item(0);
-    if (file && fileTypes.includes(file.type)) {
-      uploadFileToStorage({ file, dispatch });
+    if (user) {
+      let file = e.target.files?.item(0);
+      if (file && fileTypes.includes(file.type)) {
+        uploadFileToStorage({ file, dispatch });
+      }
+    } else {
+      toast.error("Please login");
     }
   };
 
